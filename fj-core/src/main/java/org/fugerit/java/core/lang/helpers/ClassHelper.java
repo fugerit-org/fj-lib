@@ -14,7 +14,7 @@
 		http://www.fugerit.org/java/
 	
 	SCM site :
-		https://github.com/fugerit79/fj-core
+		https://github.com/fugerit79/fj-lib
 	
  *
  */
