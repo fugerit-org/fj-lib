@@ -117,16 +117,7 @@
 	</dependencyManagement>
 
 	<build>
-		<!-- <sourceDirectory>src/main/java</sourceDirectory> -->
-		<resources>
-			<resource>
-				<directory>src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		
+
 	</build>
 
 	<dependencies>
@@ -172,6 +163,41 @@
 			</build>
 		</profile>
 
+		<profile>
+			<id>singlepackage</id>
+			<build>
+				<plugins>
+					<plugin>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-jar-plugin</artifactId>
+								<configuration>
+									<archive>
+										<manifest>
+											<addClasspath>true</addClasspath>
+											<mainClass>org.fugerit.java.tool.Launcher</mainClass>
+										</manifest>
+									</archive>
+								</configuration>
+							</plugin>				
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>shade</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<finalName>dist-${artifactId}-${version}</finalName>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 	</profiles>
 
 	<reporting>
@@ -188,5 +214,7 @@
 		<url>http://www.fugerit.org</url>
 		<name>Fugerit</name>
 	</organization>
+	
+	
 	
 </project>

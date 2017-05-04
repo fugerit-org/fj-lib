@@ -1,0 +1,80 @@
+package org.fugerit.java.tool;
+
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
+import org.fugerit.java.core.cli.ArgUtils;
+import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.fugerit.java.core.util.PropsIO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * <p>The launcher for all the tools.</p>
+ * 
+ * @author Fugerit
+ *
+ */
+public class Launcher {
+
+	protected static final Logger logger = LoggerFactory.getLogger(Launcher.class);
+	
+	/**
+	 * Argument for the tool handler to use
+	 */
+	public static final String ARG_TOOL = "tool";
+	
+	/**
+	 * Argumento for the help
+	 */
+	public static final String ARG_HELP = "help";
+	
+	private final static Properties HANDLER_LIST = loadSafe();
+	private static Properties loadSafe() {
+		Properties props = new Properties();
+		try {
+			props = PropsIO.loadFromClassLoader( "tool/config/handler-list.properties" );
+		} catch (Exception e) {
+			logger.error( "init error", e );
+		}
+		return props;
+	}
+	
+	private static int handle( Properties params ) throws Exception {
+		int exit = ToolHandlerHelper.EXIT_OK;
+		String toolName = params.getProperty( ARG_TOOL );
+		String help = params.getProperty( ARG_HELP );
+		if ( toolName == null || help != null ) {
+			printHelp();
+		} else {
+			String toolType = HANDLER_LIST.getProperty( toolName );
+			ToolHandler handler = (ToolHandler)ClassHelper.newInstance( toolType );
+			exit = handler.handle( params );
+		}
+		return exit;
+	}
+	
+	private static void printHelp() {
+		logger.info( "fj-tool launcher v 0.0.1 [2017-05-04] quickstart : " );
+		logger.info( "		--tool tool name [run the named tool]" );
+		logger.info( "		--help [print this help" );
+		logger.info( "	tool valid options : " );
+		Iterator<Object> toolIt = HANDLER_LIST.keySet().iterator();
+		while ( toolIt.hasNext() ) {
+			logger.info( "		"+toolIt.next() );	
+		}
+	}
+	
+	public static void main( String[] args ) {
+		try {
+			Properties params = ArgUtils.getArgs( args );
+			int exit = handle( params );
+			logger.info( "EXIT -> "+exit );
+		} catch ( Exception e ) {
+			logger.error( "Errore during fj-tool launcher", e );
+			printHelp();
+		}
+	}
+	
+}

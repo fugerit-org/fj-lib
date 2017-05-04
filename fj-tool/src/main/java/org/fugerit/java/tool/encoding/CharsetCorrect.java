@@ -6,55 +6,24 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.nio.ByteBuffer;
-import java.nio.charset.CharacterCodingException;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CodingErrorAction;
 import java.util.Properties;
 
 import org.fugerit.java.core.charset.EncodingCheck;
-import org.fugerit.java.core.cli.ArgUtils;
 import org.fugerit.java.core.io.StreamIO;
+import org.fugerit.java.tool.ToolHandlerHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CharsetCorrect {
+/**
+ * <p>Tool to correct character encoding.</p>
+ * 
+ * @author Fugerit
+ *
+ */
+public class CharsetCorrect extends ToolHandlerHelper {
 
 	private static final Logger logger = LoggerFactory.getLogger(CharsetCorrect.class);
 
-//	private static List<Point> checkEncodingErrors( final byte[] bytes, final String encoding ) {
-//		List<Point> errors = new ArrayList<Point>();
-//		int line = 1;
-//		int col = 0;
-//		for ( int k=0; k<bytes.length; k++ ) {
-//			col++;
-//			byte[] current = { bytes[k] };
-//			String s = null;
-//			try {
-//				 s = new String( current, encoding );
-//				 if ( !checkEncoding( current, encoding) ) {
-//					 Point p = new Point( line, col );
-//					 errors.add( p );	 
-//				 }
-//			} catch (UnsupportedEncodingException e) {
-//				logger.debug( "Unmappable character at line : "+line+" column : "+col );
-//				Point p = new Point( line, col );
-//				errors.add( p );
-//			}
-//			if ( s != null ) {
-//				char c = s.charAt( 0 );
-//				if ( c == '\n' || c == '\r' ) {
-//					line++;
-//					col = 0;
-//				}
-//			}
-//		}
-//		return errors;
-//    }
-	
-
-	
 	private static void handleFile( File input, File output, String sourceCharset, String targetCharset, boolean infoComment ) throws Exception {
 		FileInputStream is = new FileInputStream( input );
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -76,6 +45,9 @@ public class CharsetCorrect {
 			StreamIO.pipeStream( new ByteArrayInputStream( destData ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
 			if ( infoComment && input.getName().endsWith( "java" ) ) {
 				StreamIO.pipeStream( new ByteArrayInputStream( infoCommentBuffer.toString().getBytes( targetCharset ) ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
+			} else if ( infoComment && input.getName().endsWith( "properties" ) ) {
+				String comment = "# "+infoCommentBuffer.toString();
+				StreamIO.pipeStream( new ByteArrayInputStream( comment.getBytes( targetCharset ) ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
 			}
 			logger.info( "input : " + input.getAbsolutePath()+ " , output : " +output.getAbsolutePath() + " , comment : " + infoCommentBuffer+"" );
 			fos.close();
@@ -97,25 +69,60 @@ public class CharsetCorrect {
 		}
 	}
 	
+	/**
+	 * Arg for input file
+	 */
 	public static final String PARAM_INPUT_FILE = "input-file";
+	
+	/**
+	 * Arg for output file (default to input-file)
+	 */
 	public static final String PARAM_OUTPUT_FILE = "output-file";
 	
+	/**
+	 * Arg for a folder to recurse on
+	 */
 	public static final String PARAM_FOLDER_RECURSE = "folder-recurse";
+	
+	/**
+	 * Arg for a name filter to apply on the recursion
+	 */
 	public static final String PARAM_FOLDER_FILTER = "folder-filter";
 	
+	/**
+	 * This Arg should be set to '1' in case you want to add comment to corrected files
+	 */
 	public static final String PARAM_APPEND_INFO_AS_COMMENT = "info-comment";
 	
+	/**
+	 * Path to a report file for the whole operation
+	 */
+	public static final String PARAM_REPORT_FILE = "report-file";
+	
+	/**
+	 * Arg for Target charset
+	 */
 	public static final String PARAM_TARGET_CHARSET = "target-charset";
 	public static final String PARAM_TARGET_CHARSET_DEFAULT = "utf-8";
 	
+	/**
+	 * Arg for Source charset
+	 */
 	public static final String PARAM_SOURCE_CHARSET = "source-charset";
 	public static final String PARAM_SOURCE_CHARSET_DEFAULT = "Windows-1252";
 	
-	public static void handle( Properties params ) throws Exception {
+	/**
+	 * <p>The main method of this Class.</P>
+	 * 
+	 * 
+	 * @param params		the arguments
+	 * @throws Exception	if issues arise.
+	 */
+	public static void correct( Properties params ) throws Exception {
 		String inputFile = params.getProperty( PARAM_INPUT_FILE );
 		String outputFile = params.getProperty( PARAM_OUTPUT_FILE, inputFile );
 		String folderRecurse = params.getProperty( PARAM_FOLDER_RECURSE );
-		String folderFilter = params.getProperty( PARAM_FOLDER_FILTER, "." );
+		String folderFilter = params.getProperty( PARAM_FOLDER_FILTER, "." )+"*";
 		String targetCharset = params.getProperty( PARAM_TARGET_CHARSET, PARAM_TARGET_CHARSET_DEFAULT );
 		String sourceCharset = params.getProperty( PARAM_SOURCE_CHARSET, PARAM_SOURCE_CHARSET_DEFAULT );
 		boolean infoComment = ( params.getProperty( PARAM_APPEND_INFO_AS_COMMENT ) != null );
@@ -132,19 +139,14 @@ public class CharsetCorrect {
 			File output = new File( outputFile );
 			handleFile( input , output, sourceCharset, targetCharset, infoComment );	
 		}
-		
-		
 	}
-	
-	public static void main( String[] args ) {
-		try {
-			Properties params = ArgUtils.getArgs( args );
-			handle( params );
-		} catch ( Exception e ) {
-			e.printStackTrace();
-		}
+
+	@Override
+	public int handleWorker(Properties params) throws Exception {
+		correct( params );
+		return EXIT_OK;
 	}
-	
+		
 }
 
 class RecurseFilter implements FileFilter {
