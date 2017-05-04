@@ -2,7 +2,6 @@ package org.fugerit.java.tool;
 
 import java.util.Iterator;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import org.fugerit.java.core.cli.ArgUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
@@ -24,6 +23,11 @@ public class Launcher {
 	 * Argument for the tool handler to use
 	 */
 	public static final String ARG_TOOL = "tool";
+
+	/**
+	 * Argument for the the verbose version
+	 */
+	public static final String ARG_VERBOSE = "verbose";
 	
 	/**
 	 * Argumento for the help
@@ -45,6 +49,10 @@ public class Launcher {
 		int exit = ToolHandlerHelper.EXIT_OK;
 		String toolName = params.getProperty( ARG_TOOL );
 		String help = params.getProperty( ARG_HELP );
+		String verbose = params.getProperty( ARG_VERBOSE );
+		if ( verbose != null ) {
+			logger.info( "Setting to verbose output..." );
+		}
 		if ( toolName == null || help != null ) {
 			printHelp();
 		} else {
@@ -58,7 +66,8 @@ public class Launcher {
 	private static void printHelp() {
 		logger.info( "fj-tool launcher v 0.0.1 [2017-05-04] quickstart : " );
 		logger.info( "		--tool tool name [run the named tool]" );
-		logger.info( "		--help [print this help" );
+		logger.info( "		--help [print this help]" );
+		logger.info( "		--verbose [verbose output]" );
 		logger.info( "	tool valid options : " );
 		Iterator<Object> toolIt = HANDLER_LIST.keySet().iterator();
 		while ( toolIt.hasNext() ) {
