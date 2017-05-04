@@ -14,7 +14,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<fj-lib-version>0.1.1-SNAPSHOT</fj-lib-version>
 	</properties>
 
 	<licenses>
@@ -55,10 +54,18 @@
 
 	<modules>
 		<module>fj-core</module>
+		<module>fj-tool</module>
 	</modules>
 
 	<dependencyManagement>
+	
 		<dependencies>
+
+			<dependency>
+				<groupId>org.fugerit.java</groupId>
+				<artifactId>fj-core</artifactId>
+				<version>${version}</version>
+			</dependency>
 
 			<!-- java core dependancies -->
 			<dependency>
@@ -166,6 +173,16 @@
 		</profile>
 
 	</profiles>
+
+	<reporting>
+	    <plugins>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-changelog-plugin</artifactId>
+	        <version>2.3</version>
+	      </plugin>
+	    </plugins>
+	  </reporting>
 
 	<organization>
 		<url>http://www.fugerit.org</url>
