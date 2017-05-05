@@ -1,0 +1,9 @@
+CharsetHandler is a tool to correct file charset encoding
+---------------------------------------------------------
+Arguments :
+--folder-recurse	recurse all file in a folder and subfolders (warning! files are overwritten)
+--folder-filter		filter (regex) to apply on folder recursion 
+--input-file		file to process (mainly used for pretesting, use folder-recurs for massive processing)
+--output-file		file to output
+--info-comment		(no value or '1') add a comment at the end of encoded java file to flag the modified ones
+--report-file		create a report of the operations on a txt file

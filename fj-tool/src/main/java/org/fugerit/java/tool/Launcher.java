@@ -53,11 +53,17 @@ public class Launcher {
 		if ( verbose != null ) {
 			logger.info( "Setting to verbose output..." );
 		}
+		ToolHandler handler = null;
+		if ( toolName != null ) {
+			String toolType = HANDLER_LIST.getProperty( toolName );
+			handler = (ToolHandler)ClassHelper.newInstance( toolType );
+		}
 		if ( toolName == null || help != null ) {
 			printHelp();
+			if ( handler instanceof ToolHandlerHelper ) {
+				logger.info( "Handler help : \n"+((ToolHandlerHelper)handler).getHelp() );		
+			}
 		} else {
-			String toolType = HANDLER_LIST.getProperty( toolName );
-			ToolHandler handler = (ToolHandler)ClassHelper.newInstance( toolType );
 			exit = handler.handle( params );
 		}
 		return exit;

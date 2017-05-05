@@ -1,7 +1,13 @@
 package org.fugerit.java.tool;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
+import javax.sql.rowset.serial.SerialStruct;
+
+import org.fugerit.java.core.io.StreamIO;
+import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,5 +43,23 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 		}
 		return exit;
 	}
-
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getHelp() {
+		String help = "";
+		String resName = "tool/handler/help/"+this.getClass().getSimpleName()+".txt";
+		try {
+			InputStream is = ClassHelper.getDefaultClassLoader().getResourceAsStream( resName );
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			StreamIO.pipeStream( is , os , StreamIO.MODE_CLOSE_BOTH );
+			help = os.toString();
+		} catch (Exception e) {
+			logger.info( "Failed to load help : "+resName );
+		}
+		return help;
+	}
+	
 }
