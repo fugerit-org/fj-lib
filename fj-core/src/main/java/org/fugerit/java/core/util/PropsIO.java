@@ -14,11 +14,11 @@
 		http://www.fugerit.org/java/
 	
 	SCM site :
-		https://github.com/fugerit79/fj-core
+		https://github.com/fugerit79/fj-lib
 	
  *
  */
-package org.fugerit.java.core.lang.util;
+package org.fugerit.java.core.util;
 
 import java.io.File;
 import java.io.FileInputStream;

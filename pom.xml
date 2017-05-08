@@ -5,7 +5,7 @@
 	<groupId>org.fugerit.java</groupId>
 	<artifactId>fj-lib</artifactId>
 
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.6-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -14,7 +14,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<fj-lib-version>0.1.1-SNAPSHOT</fj-lib-version>
 	</properties>
 
 	<licenses>
@@ -55,10 +54,18 @@
 
 	<modules>
 		<module>fj-core</module>
+		<module>fj-tool</module>
 	</modules>
 
 	<dependencyManagement>
+	
 		<dependencies>
+
+			<dependency>
+				<groupId>org.fugerit.java</groupId>
+				<artifactId>fj-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<!-- java core dependancies -->
 			<dependency>
@@ -110,16 +117,7 @@
 	</dependencyManagement>
 
 	<build>
-		<!-- <sourceDirectory>src/main/java</sourceDirectory> -->
-		<resources>
-			<resource>
-				<directory>src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-		
+
 	</build>
 
 	<dependencies>
@@ -165,11 +163,58 @@
 			</build>
 		</profile>
 
+		<profile>
+			<id>singlepackage</id>
+			<build>
+				<plugins>
+					<plugin>
+								<groupId>org.apache.maven.plugins</groupId>
+								<artifactId>maven-jar-plugin</artifactId>
+								<configuration>
+									<archive>
+										<manifest>
+											<addClasspath>true</addClasspath>
+											<mainClass>org.fugerit.java.tool.Launcher</mainClass>
+										</manifest>
+									</archive>
+								</configuration>
+							</plugin>				
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>shade</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<finalName>dist-${artifactId}-${version}</finalName>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 	</profiles>
+
+	<reporting>
+	    <plugins>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-changelog-plugin</artifactId>
+	        <version>2.3</version>
+	      </plugin>
+	    </plugins>
+	  </reporting>
 
 	<organization>
 		<url>http://www.fugerit.org</url>
 		<name>Fugerit</name>
 	</organization>
+	
+	
 	
 </project>

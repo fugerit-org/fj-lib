@@ -2,16 +2,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>fj-core</artifactId>
+	<artifactId>fj-tool</artifactId>
 
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
 		<version>0.1.6-SNAPSHOT</version>
 	</parent>
-
-	<name>fj-core</name>
-	<description>Fugerit Java Core Library for JDK 1.6 and up</description>
+	
+	<name>fj-tool</name>
+	<description>Fugerit Java Tool Library for JDK 1.6 and up</description>
+	
+	<organization>
+		<url>http://www.fugerit.org</url>
+		<name>Fugerit</name>
+	</organization>
+	<url>http://www.fugerit.org/java/</url>
 
 	<licenses>
 		<license>
@@ -66,7 +72,6 @@
 				</executions>
 			</plugin>
 
-
 		</plugins>
 	</build>
 
@@ -110,21 +115,11 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.fugerit.java</groupId>
+			<artifactId>fj-core</artifactId>
+		</dependency>
+
 	</dependencies>
 
-	<reporting>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-changelog-plugin</artifactId>
-	        <version>2.3</version>
-	      </plugin>
-	    </plugins>
-	  </reporting>
-
-	<organization>
-		<url>http://www.fugerit.org</url>
-		<name>Fugerit</name>
-	</organization>
-	<url>http://www.fugerit.org/java/</url>
 </project>
