@@ -138,6 +138,18 @@ public class StreamIO {
     }
 	
     /**
+	 * <p>Pipe the content of a java.io.InputStream into a java.io.OutputStream.</p>
+	 * 
+	 * @param src				the source
+	 * @param dst				the destination
+	 * @return					the number of char read/written
+	 * @throws IOException		in case of troubles during the operation
+	 */
+    public static long pipeCharCloseBoth(Reader src, Writer dst) throws IOException {
+        return pipeChar(src, dst, StreamIO.MODE_CLOSE_BOTH );
+    }
+    
+    /**
      * <p>Pipe the content of a java.io.Reader into a java.io.Writer.</p>
      * 
 	 * @param src				the source
@@ -148,6 +160,18 @@ public class StreamIO {
      */
     public static long pipeStream(InputStream src, OutputStream dst, int modeClose) throws IOException {
     	  return StreamHelper.pipe(src, dst, BUFFERSIZE_DEFAULT, modeClose );
-    }	
+    }
 
+    /**
+     * <p>Pipe the content of a java.io.Reader into a java.io.Writer.</p>
+     * 
+	 * @param src				the source
+	 * @param dst				the destination
+     * @return					the number of byte read/written
+     * @throws IOException		in case of troubles during the operation
+     */
+    public static long pipeStreamCloseBoth(InputStream src, OutputStream dst) throws IOException {
+    	  return pipeStream(src, dst, StreamIO.MODE_CLOSE_BOTH);
+    }
+    
 }

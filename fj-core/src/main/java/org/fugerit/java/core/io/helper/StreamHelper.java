@@ -18,6 +18,9 @@
  */
 package org.fugerit.java.core.io.helper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,6 +29,7 @@ import java.io.Writer;
 
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.lang.compare.ComparePrimitiveFacade;
+import org.fugerit.java.core.lang.helpers.ClassHelper;
 
 /**
  * 
@@ -36,6 +40,62 @@ import org.fugerit.java.core.lang.compare.ComparePrimitiveFacade;
  */
 public class StreamHelper {
 
+
+	public static final String PATH_CLASSLOADER = "cl://";
+	
+	public static final String PATH_JNDI = "jndi://";
+	
+	public static final String PATH_FILE = "file://";
+	
+	public static InputStream resolveStream( String path ) throws Exception {
+		return resolveStream( path, null );
+	}
+	
+	public static InputStream resolveStream( String path, String basePath ) throws Exception {
+		return resolveStream( path, basePath, StreamIO.class );
+	}
+	
+	/*
+	 * <p>Get a resource as stream from default class loader or from a <code>Class</code>
+	 * 
+	 * @param path		path of the resource to load as stream
+	 * @param c			class to use as alternate class loader
+	 * @param <T> 		The type of elements used by this method.
+	 * @return			the resource in stream format
+	 * @throws Exception	if something goes wrong during loading
+	 */
+	public static <T> InputStream getResourceStream( String path, Class<T> c ) throws Exception {
+		InputStream is = ClassHelper.getDefaultClassLoader().getResourceAsStream( path );
+		if ( is == null && c != null ) {
+			is = c.getResourceAsStream( path );
+		}
+		return is;
+	}
+	
+	public static InputStream resolveStream( String path, String basePath, Class<?> c ) throws Exception {	
+		InputStream is = null;
+		if ( path.indexOf( PATH_CLASSLOADER ) == 0 ) {
+			// class loader
+			path = path.substring( PATH_CLASSLOADER.length() );
+			is = getResourceStream( path, c );
+		} else {
+			// default : file
+			if ( path.indexOf( PATH_FILE ) == 0 ) {
+				path = path.substring( PATH_FILE.length() );
+			}
+			File f = new File( path );
+			if ( !f.exists() ) {
+				f = new File( basePath, path );
+			}
+			if ( !f.exists() ) {
+				throw ( new FileNotFoundException( f.getAbsolutePath() ) );
+			} else {
+				is = new FileInputStream( f );
+			}
+		}
+		return is;
+	}	
+	
 	/**
 	 * <p>Check if the source should be closed.</p>
 	 * 
