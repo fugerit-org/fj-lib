@@ -38,22 +38,59 @@ public class ConnectionFacade {
 
 	private static Map<String, ConnectionFactory> cfMap = new HashMap<String, ConnectionFactory>();
 	
+	/**
+	 * Static connection factory registration.
+	 * 
+	 * <p>NOTE: use only if you are aware of class loader status</p>
+	 * 	
+	 * @param name		the name of the factory
+	 * @param cf		the factory
+	 */
 	public static void registerFactory( String name, ConnectionFactory cf ) {
 		cfMap.put( name, cf );
 	}
 	
+	/**
+	 * Static connection factory access
+	 * 
+	 * <p>NOTE: use only if you are aware of class loader status</p>
+	 * 
+	 * @param name	the name of the factory
+	 * @return		the factory
+	 */
 	public static ConnectionFactory getFactory( String name ) {
 		return (ConnectionFactory)cfMap.get( name );
 	}
 
+	/**
+	 * Helper for closing resources suppressing Exception
+	 * 
+	 * @param conn	connection to close
+	 * @param stm	statement to close
+	 * @param rs	result set to close
+	 * @return		true if everything was closed with no errors
+	 */
 	public static boolean closeLoose( Connection conn, Statement stm, ResultSet rs ) {
 		return closeLoose( conn ) && closeLoose( stm ) && closeLoose( rs );
 	}	
-	
+
+	/**
+	 * Helper for closing resources suppressing Exception
+	 * 
+	 * @param conn	connection to close
+	 * @param stm	statement to close
+	 * @return		true if everything was closed with no errors
+	 */
 	public static boolean closeLoose( Connection conn, Statement stm ) {
 		return closeLoose( conn ) && closeLoose( stm );
 	}
 	
+	/**
+	 * Helper for closing resources suppressing Exception
+	 * 
+	 * @param rs	result set to close
+	 * @return		true if everything was closed with no errors
+	 */
 	public static boolean closeLoose( ResultSet rs ) {
 		boolean close = true;
 		if ( rs != null ) {
@@ -69,6 +106,12 @@ public class ConnectionFacade {
 		return close;
 	}		
 	
+	/**
+	 * Helper for closing resources suppressing Exception
+	 * 
+	 * @param stm	statement to close
+	 * @return		true if everything was closed with no errors
+	 */
 	public static boolean closeLoose( Statement stm ) {
 		boolean close = true;
 		if ( stm != null ) {
@@ -84,6 +127,12 @@ public class ConnectionFacade {
 		return close;
 	}	
 	
+	/**
+	 * Helper for closing resources suppressing Exception
+	 * 
+	 * @param conn	connection to close
+	 * @return		true if everything was closed with no errors
+	 */
 	public static boolean closeLoose( Connection conn ) {
 		boolean close = true;
 		if ( conn != null ) {

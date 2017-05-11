@@ -33,12 +33,23 @@ public class CfConfig {
 
 	public static final CfConfig EMPTY_CONFIG = new CfConfig();
 	
+	/**
+	 * <p>Default constructor.</p>
+	 * 
+	 * <p>Creates a new empty CfConfig.</p>
+	 * 
+	 */
 	public CfConfig() {
 		this.cfMap = new HashMap<String, ConnectionFactory>();
 	}
 	
 	private Map<String, ConnectionFactory> cfMap;
 
+	/**
+	 * Return the wrapped Map.
+	 * 
+	 * @return The Wrapped map
+	 */
 	public Map<String, ConnectionFactory> getCfMap() {
 		return cfMap;
 	}

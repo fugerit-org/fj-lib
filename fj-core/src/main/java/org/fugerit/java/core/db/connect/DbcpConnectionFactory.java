@@ -1,21 +1,55 @@
+/*
+ *
+		Fugerit Java Library is distributed under the terms of :
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+
+	Full license :
+		http://www.apache.org/licenses/LICENSE-2.0
+		
+	Project site: 
+		http://www.fugerit.org/java/
+	
+	SCM site :
+		https://github.com/fugerit79/fj-lib
+	
+ *
+ */
 package org.fugerit.java.core.db.connect;
 
 import java.sql.Connection;
-
-import java.sql.Driver;
 import java.sql.SQLException;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.fugerit.java.core.db.dao.DAOException;
-import org.fugerit.java.core.lang.helpers.ClassHelper;
 
+/**
+ * ConnectionFactory implementation based on a DBCP 1.4
+ * 
+ * @author Fugerit
+ *
+ */
 public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 
 	private BasicDataSource dataSource;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param drv		driver type
+	 * @param url		jdbc url
+	 * @param usr		user
+	 * @param pwd		password
+	 * @param init		initial connection
+	 * @param min		minimum connection
+	 * @param max		maximum connection	
+	 * @throws DAOException		in case of issues
+	 */
 	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max ) throws DAOException {
 		try {
-			Driver driver = (Driver)ClassHelper.newInstance( drv );
 			this.dataSource = new BasicDataSource();
 			this.dataSource.setDriverClassName( drv );
 			this.dataSource.setUrl( url );
@@ -40,7 +74,5 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 		return conn;
 	}
 
-	
-	
 	
 }

@@ -66,43 +66,95 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		return this.dataBaseInfo;
 	}
 
-	public static final String PROP_CF_MODE = "db-cf-mode";		// valori = ds ( data source ) o dc ( direct connection )
+	/**
+	 * Paramter to set connection mode
+	 * 
+	 */
+	public static final String PROP_CF_MODE = "db-cf-mode";
 	
-	/*
-	 * Direct connection mode
+	/**
+	 * Direct connection mode (DriverManager)
 	 */
 	public static final String PROP_CF_MODE_DC = "DC";
 	
-	/*
+	/**
 	 * Strict datasource mode
 	 */
 	public static final String PROP_CF_MODE_DS = "DS";
 	
-	/*
+	/**
 	 * Loose datasource mode
 	 */
 	public static final String PROP_CF_MODE_DS2 = "DS2";
 	
+	
+	/**
+	 * Name of the data source in connection mode DS and DS2
+	 * 
+	 */
 	public static final String PROP_CF_MODE_DS_NAME = "db-mode-ds-name";
 	
+	/**
+	 * Prefix to use when looking for other DC properties
+	 * 
+	 */
 	public static final String PROP_CF_MODE_DC_PREFIX = "db-mode-dc-prefix";
 	
+	/**
+	 * Property for URL in DC mode
+	 * 
+	 */
 	public static final String PROP_CF_MODE_DC_URL = "db-mode-dc-url";
-	
+
+	/**
+	 * Property for Driver in DC mode
+	 * 
+	 */
 	public static final String PROP_CF_MODE_DC_DRV = "db-mode-dc-drv";
 	
+	/**
+	 * Property for User in DC mode
+	 * 
+	 */
 	public static final String PROP_CF_MODE_DC_USR = "db-mode-dc-usr";
 	
+	/**
+	 * Property for Password in DC mode
+	 * 
+	 */
 	public static final String PROP_CF_MODE_DC_PWD = "db-mode-dc-pwd";
 	
+	/**
+	 * Property to create a pooled data source
+	 * 
+	 */
 	public static final String PROP_CF_EXT_POOLED = "db-ext-pooled";
-	
+
+	/**
+	 * Property to create a pooled data source (starting connections)
+	 * 
+	 */
 	public static final String PROP_CF_EXT_POOLED_SC = "db-ext-pooled-sc";
-	
+
+	/**
+	 * Property to create a pooled data source (idle connections)
+	 * 
+	 */
 	public static final String PROP_CF_EXT_POOLED_IC = "db-ext-pooled-ic";
 	
+	/**
+	 * Property to create a pooled data source (maximum connections)
+	 * 
+	 */
 	public static final String PROP_CF_EXT_POOLED_MC = "db-ext-pooled-mc";
 
+	/**
+	 * Parse a configuration Element looking for ConnectionFactory configuration
+	 * 
+	 * @param cfConfig		the Element
+	 * @return			the CfConfig
+	 * @throws Exception	in case of issues
+	 */
 	public static CfConfig parseCfConfig( Element cfConfig ) throws Exception {
 		CfConfig config = new CfConfig();
 		SearchDOM searchDOM = SearchDOM.newInstance( true , true );
@@ -123,6 +175,13 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		return config;
 	}
 	
+	/**
+	 * Return basic driver info for a ConnectionFactory
+	 * 
+	 * @param cf		the ConnectionFactory
+	 * @return			a string describing the driver
+	 * @throws Exception	in case of issues
+	 */
 	public static String getDriverInfo( ConnectionFactory cf ) throws Exception {
 		String result = "";
 		Connection conn = cf.getConnection();
@@ -132,6 +191,13 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		return result;
 	}
 	
+	/**
+	 * Helper method to create a property with prefix
+	 * 
+	 * @param prefix	the prefix
+	 * @param name		the property base name
+	 * @return			the property full name ( prefix-name, or name if prefix == null)
+	 */
 	private static String getParamName( String prefix, String name ) {
 		String res = name;
 		if ( prefix != null && !prefix.equals( "" ) ) {
@@ -140,10 +206,25 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		return res;
 	}
 	
+	/**
+	 * Creates a ConnectionFactory from a property object
+	 * 
+	 * @param props		the configuration properties
+	 * @return			the ConnectionFactory
+	 * @throws DAOException	in case of issues
+	 */
 	public static ConnectionFactory newInstance( Properties props ) throws DAOException {
 		return newInstance( props, null );
 	}
 	
+	/**
+	 * Creates a ConnectionFactory from a property object
+	 * 
+	 * @param props		the configuration properties
+	 * @param propsPrefix	prefix to use for properties
+	 * @return			the ConnectionFactory
+	 * @throws DAOException	in case of issues
+	 */	
 	public static ConnectionFactory newInstance( Properties props, String propsPrefix ) throws DAOException {
 		ConnectionFactory cf = null;
 		String prefix = props.getProperty( PROP_CF_MODE_DC_PREFIX, propsPrefix );
@@ -181,10 +262,30 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		return cf;
 	}	
 	
+	/**
+	 * Creates a new ConnectionFactory Direct instance
+	 * 
+	 * @param drv	driver
+	 * @param url	jdbc url
+	 * @param usr	user
+	 * @param pwd	password
+	 * @return		the ConnectionFactory
+	 * @throws DAOException	in case of issues
+	 */
 	public static ConnectionFactory newInstance(Driver drv, String url, String usr, String pwd) throws DAOException {
 		return new DirectConnectionFactory( drv, url , usr, pwd );
 	}	
-	
+
+	/**
+	 * Creates a new ConnectionFactory Direct instance
+	 * 
+	 * @param drv	driver
+	 * @param url	jdbc url
+	 * @param usr	user
+	 * @param pwd	password
+	 * @return		the ConnectionFactory
+	 * @throws DAOException	in case of issues
+	 */
 	public static ConnectionFactory newInstance(String drv, String url, String usr, String pwd) throws DAOException {
 		ConnectionFactory connectionFactory = null;
 		try {
@@ -200,24 +301,52 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		return connectionFactory;
 	}
 	
+	/**
+	 * Creates a new ConnectionFactory Data Source instance
+	 * 		
+	 * @param dsName	the DataSource name
+	 * @return			the ConnectionFactory
+	 * @throws DAOException		in case of issues
+	 */
 	public static ConnectionFactoryImpl newInstance(String dsName) throws DAOException {
 		LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() data source name : "+dsName );
 		return (new DSConnectionFactory(dsName));
 	}
-	
+
+	/**
+	 * Creates a new ConnectionFactory Data Source instance
+	 * 		
+	 * @param ds		the DataSource
+	 * @return			the ConnectionFactory
+	 * @throws DAOException		in case of issues
+	 */
 	public static ConnectionFactoryImpl newInstance(DataSource ds) throws DAOException {
 		LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() data source : "+ds );
 		return (new DS2ConnectionFactory(ds));
 	}	
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#getConnection()
+	 */
 	public abstract Connection getConnection() throws DAOException;
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#release()
+	 */
 	public void release() throws DAOException {
 		
 	}	
 	
 }
 
+/**
+ * ConnectionFactory implementation based on a single Connection
+ * 
+ * @author Fugerit
+ *
+ */
 class SingleConnectionFactory extends ConnectionFactoryImpl {
 
 	public SingleConnectionFactory( Connection conn ) {
@@ -232,8 +361,11 @@ class SingleConnectionFactory extends ConnectionFactoryImpl {
 	
 }
 
-/*
- * Implementazionedi ConnectionFactory basata su java.sql.DriverManager.
+/**
+ * ConnectionFactory implementations based on DriverManager
+ * 
+ * @author Fugerit
+ *
  */
 class DirectConnectionFactory extends ConnectionFactoryImpl {
 
@@ -263,8 +395,11 @@ class DirectConnectionFactory extends ConnectionFactoryImpl {
 	
 }
 
-/*
- * Implementazione di ConnectionFactory basata su una javax.sql.DataSource.
+/**
+ * ConnectionFactory implementation based on a Data  Source
+ * 
+ * @author Fugerit
+ *
  */
 class DSConnectionFactory extends ConnectionFactoryImpl {
 	
@@ -277,7 +412,7 @@ class DSConnectionFactory extends ConnectionFactoryImpl {
 		try {
 			conn = this.source.getConnection();
 		} catch (SQLException se) {
-			throw (new DAOException("Impossibile creare la connessione", se));
+			throw (new DAOException("Cannot create connection", se));
 		}
 		return conn;
 	}
@@ -293,17 +428,21 @@ class DSConnectionFactory extends ConnectionFactoryImpl {
 			Context ctx = new InitialContext();
 			source = (DataSource) ctx.lookup(dsName);
 		} catch (NamingException ne) {
-            ne.printStackTrace();
-			throw (new DAOException("Impossibile creare la DataSource", ne));
+			throw (new DAOException("Cannot create ConnectionFactory", ne));
 		} catch (Exception e) {
-		    e.printStackTrace();
-            throw (new DAOException("Errore fatale", e));
+            throw (new DAOException("Fatal Error", e));
         }
 		this.getLogger().info( "INIT END, source="+source );
 	}	
 	
 }
 
+/**
+ * ConnectionFactory implementation based on a Data Source (v2)
+ * 
+ * @author Fugerit
+ *
+ */
 class DS2ConnectionFactory extends ConnectionFactoryImpl {
 	
 	public String toString() {
@@ -315,7 +454,7 @@ class DS2ConnectionFactory extends ConnectionFactoryImpl {
 		try {
 			conn = this.source.getConnection();
 		} catch (SQLException se) {
-			throw (new DAOException("Impossibile creare la connessione", se));
+			throw (new DAOException("Cannot create Connection", se));
 		}
 		return conn;
 	}
