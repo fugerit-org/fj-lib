@@ -1,34 +1,55 @@
-package org.fugerit.java.core.db.dao;
 /*
- * <p>.</p>
+ *
+		Fugerit Java Library is distributed under the terms of :
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+
+	Full license :
+		http://www.apache.org/licenses/LICENSE-2.0
+		
+	Project site: 
+		http://www.fugerit.org/java/
+	
+	SCM site :
+		https://github.com/fugerit79/fj-lib
+	
+ *
+ */
+package org.fugerit.java.core.db.dao;
+
+/**
+ * <p>Class for handling SQL operations.</p>
  *
  * @author Fugerit
  */
-public class OpDAO {
+public class OpDAO<T> {
 
 
-	public static OpDAO newQueryOp( String sql, RSExtractor rse ) {
+	public static <T> OpDAO<T> newQueryOp( String sql, RSExtractor<T> rse ) {
 		return newQueryOp(sql, new FieldList( new FieldFactory() ), rse );
 	}
 
-	public static OpDAO newUpdateOp( String sql ) {
+	public static <T> OpDAO<T> newUpdateOp( String sql ) {
 		return newUpdateOp(sql, new FieldList( new FieldFactory() ) );
 	}
 	
-	public static OpDAO newExecuteOp( String sql ) {
+	public static <T> OpDAO<T> newExecuteOp( String sql ) {
 		return newExecuteOp(sql, new FieldList( new FieldFactory() ) );
 	}
 	
-	public static OpDAO newExecuteOp( String sql, FieldList fl ) {
-		OpDAO op = new OpDAO();
+	public static <T> OpDAO<T> newExecuteOp( String sql, FieldList fl ) {
+		OpDAO<T> op = new OpDAO<T>();
 		op.setType( TYPE_EXECUTE );
 		op.setFieldList( fl );
 		op.setSql( sql );
 		return op;
 	}
 	
-	public static OpDAO newQueryOp( String sql, FieldList fl, RSExtractor rse ) {
-		OpDAO op = new OpDAO();
+	public static <T> OpDAO<T> newQueryOp( String sql, FieldList fl, RSExtractor<T> rse ) {
+		OpDAO<T> op = new OpDAO<T>();
 		op.setType( TYPE_QUERY );
 		op.setFieldList( fl );
 		op.setSql( sql );
@@ -36,8 +57,8 @@ public class OpDAO {
 		return op;
 	}
 	
-	public static OpDAO newUpdateOp( String sql, FieldList fl ) {
-		OpDAO op = new OpDAO();
+	public static <T> OpDAO<T> newUpdateOp( String sql, FieldList fl ) {
+		OpDAO<T> op = new OpDAO<T>();
 		op.setType( TYPE_UPDATE );
 		op.setFieldList( fl );
 		op.setSql( sql );
@@ -52,7 +73,7 @@ public class OpDAO {
 	
 	private FieldList fieldList;
 	
-	private RSExtractor rsExtractor;
+	private RSExtractor<T> rsExtractor;
 	
 	private int type;
 
@@ -60,7 +81,7 @@ public class OpDAO {
 		return fieldList;
 	}
 
-	public RSExtractor getRsExtractor() {
+	public RSExtractor<T> getRsExtractor() {
 		return rsExtractor;
 	}
 	
@@ -76,7 +97,7 @@ public class OpDAO {
 		fieldList = list;
 	}
 
-	public void setRsExtractor(RSExtractor extractor) {
+	public void setRsExtractor(RSExtractor<T> extractor) {
 		rsExtractor = extractor;
 	}
 

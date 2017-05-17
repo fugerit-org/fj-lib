@@ -1,3 +1,23 @@
+/*
+ *
+		Fugerit Java Library is distributed under the terms of :
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+
+	Full license :
+		http://www.apache.org/licenses/LICENSE-2.0
+		
+	Project site: 
+		http://www.fugerit.org/java/
+	
+	SCM site :
+		https://github.com/fugerit79/fj-lib
+	
+ *
+ */
 package org.fugerit.java.core.db.dao;
 
 import java.sql.Connection;
@@ -7,9 +27,9 @@ import java.sql.SQLException;
 
 import org.fugerit.java.core.log.BasicLogObject;
 
-public class LoadResult extends BasicLogObject {
+public class LoadResult<T> extends BasicLogObject {
 
-	private LoadResult(RSExtractor re, FieldList fields, String query, BasicDAO dao) {
+	private LoadResult(RSExtractor<T> re, FieldList fields, String query, BasicDAO<T> dao) {
 		super();
 		this.re = re;
 		this.fields = fields;
@@ -17,18 +37,18 @@ public class LoadResult extends BasicLogObject {
 		this.basicDAO = dao;
 	}
 
-	public static LoadResult initResult( BasicDAO basicDAO, String query, FieldList fields, RSExtractor re ) {
-		LoadResult loadResult = new LoadResult( re, fields, query, basicDAO );
+	public static <T> LoadResult<T> initResult( BasicDAO<T> basicDAO, String query, FieldList fields, RSExtractor<T> re ) {
+		LoadResult<T> loadResult = new LoadResult<T>( re, fields, query, basicDAO );
 		return loadResult;
 	}
 	
-	private RSExtractor re;
+	private RSExtractor<T> re;
 	
 	private FieldList fields;
 	
 	private String query;
 	
-	private BasicDAO basicDAO;
+	private BasicDAO<T> basicDAO;
 	
 	private Connection conn;
 	
@@ -87,8 +107,8 @@ public class LoadResult extends BasicLogObject {
 		return result;
     }
     
-    public Object getNext() throws DAOException {
-    	Object result = null;
+    public T getNext() throws DAOException {
+    	T result = null;
     	try {
 			result = this.re.extractNext( rs );
 		} catch (SQLException e) {

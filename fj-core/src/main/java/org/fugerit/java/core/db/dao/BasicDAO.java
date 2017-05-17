@@ -1,35 +1,44 @@
+/*
+ *
+		Fugerit Java Library is distributed under the terms of :
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+
+	Full license :
+		http://www.apache.org/licenses/LICENSE-2.0
+		
+	Project site: 
+		http://www.fugerit.org/java/
+	
+	SCM site :
+		https://github.com/fugerit79/fj-lib
+	
+ *
+ */
 package org.fugerit.java.core.db.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
-import org.fugerit.java.core.db.helpers.DAOID;
 import org.fugerit.java.core.log.BasicLogObject;
 
 
-/*
- * <p>Classe base per la gestione di oggetti di accesso al DB.</p>
+/**
+ * <p>Base class for persistance object.</p>
  *
- * Fugerit
+ * @author Fugerit
  */
-public class BasicDAO extends BasicLogObject {
-
-	public BufferedDAO newBufferedDAO( int commitOn ) {
-		return new BufferedDAO( this, commitOn );
-	}
+public class BasicDAO<T> extends BasicLogObject {
 	
-	public BufferedDAO newBufferedDAO() {
-		return new BufferedDAO( this );
-	}
-	
-	protected void extractAll( ResultSet rs, List list, RSExtractor rse ) throws DAOException {
+	protected void extractAll( ResultSet rs, List<T> list, RSExtractor<T> rse ) throws DAOException {
 		try {
 			while ( rs.next() ) {
 				list.add( rse.extractNext( rs ) );
@@ -47,11 +56,11 @@ public class BasicDAO extends BasicLogObject {
 		return new FieldList( this.getFieldFactory() );
 	}
 	
-	public List<Object> newList() {
-		return new ArrayList<Object>();
+	public List<T> newList() {
+		return new ArrayList<T>();
 	}	
 	
-	private int update( OpDAO op, Connection conn ) throws SQLException {
+	private int update( OpDAO<T> op, Connection conn ) throws SQLException {
 		int result = 0;
 		String query = this.queryFormat( op.getSql(), "update(opdao)" );
 		PreparedStatement pstm = conn.prepareStatement( query );
@@ -60,7 +69,7 @@ public class BasicDAO extends BasicLogObject {
 		return result;
 	}		
 
-	public boolean updateBatch( List<OpDAO> opList ) throws DAOException {
+	public boolean updateBatch( List<OpDAO<T>> opList ) throws DAOException {
 		boolean result = true;
 		Connection conn = this.getConnection();
 		try {
@@ -68,7 +77,7 @@ public class BasicDAO extends BasicLogObject {
 			int tmp = 0;
 			PreparedStatement pstm = null;
 			for (int k=0; k<opList.size(); k++) {
-				OpDAO currentOp = (OpDAO)opList.get( k );
+				OpDAO<T> currentOp = (OpDAO<T>)opList.get( k );
 				this.getLogger().debug( "updateBatch : "+currentOp.getSql()+" , params : "+currentOp.getFieldList().size() );
 				if ( pstm == null ) {
 					String query = this.queryFormat( currentOp.getSql(), "update(opdao)" );
@@ -99,7 +108,7 @@ public class BasicDAO extends BasicLogObject {
 	}
 
 	
-	public boolean updateTransaction( List opList ) throws DAOException {
+	public boolean updateTransaction( List<OpDAO<T>> opList ) throws DAOException {
 		boolean result = true;
 		Connection conn = this.getConnection();
 		try {
@@ -108,7 +117,7 @@ public class BasicDAO extends BasicLogObject {
 //			String query = null;
 //			PreparedStatement pstm = null;
 			for (int k=0; k<opList.size(); k++) {
-				OpDAO currentOp = (OpDAO)opList.get( k );
+				OpDAO<T> currentOp = opList.get( k );
 				this.getLogger().debug( "updateTransaction : "+currentOp.getSql()+" , params : "+currentOp.getFieldList().size() );
 				if (currentOp.getType()==OpDAO.TYPE_UPDATE) {
 //					tmp+= this.update( currentOp, conn );
@@ -118,7 +127,7 @@ public class BasicDAO extends BasicLogObject {
 //					}
 //					this.setAll( pstm, currentOp.getFieldList() );
 //					tmp+= pstm.executeUpdate();
-					tmp+= this.update( currentOp, conn ); // vecchio codice non caching
+					tmp+= this.update( currentOp, conn ); // old, non caching mode
 				}
 			}
 			this.getLogger().debug( "updateTransaction result : "+tmp+" / "+opList.size() );
@@ -142,54 +151,13 @@ public class BasicDAO extends BasicLogObject {
 		return result;
 	}
 
-    public void init(BasicDAOFactory daoFactory ) {
+    public void init(DAOFactory daoFactory ) {
         
     }
     
-	public RSExtractor RSE_LONG = new RSExtractor() {
-		/* (non-Javadoc) 
-		 * @see it.finanze.secin.shared.dao.RSExtractor#extractNext(java.sql.ResultSet)
-		 */
-		public Object extractNext(ResultSet rs) throws SQLException {
-			return new Long( rs.getLong( 1 ) );
-		}
+    public static final FieldList NO_FIELDS = new FieldList( null );
     
-	};    
-	
-	public RSExtractor RSE_DAOID = new RSExtractor() {
-		/* (non-Javadoc) 
-		 * @see it.finanze.secin.shared.dao.RSExtractor#extractNext(java.sql.ResultSet)
-		 */
-		public Object extractNext(ResultSet rs) throws SQLException {
-			return new DAOID( rs.getLong( 1 ) );
-		}
-    
-	};   	
-    
-	public RSExtractor RSE_INT = new RSExtractor() {
-		/* (non-Javadoc) 
-		 * @see it.finanze.secin.shared.dao.RSExtractor#extractNext(java.sql.ResultSet)
-		 */
-		public Object extractNext(ResultSet rs) throws SQLException {
-			return new Integer( rs.getInt( 1 ) );
-		}
-    
-	};
-        
-    
-    public RSExtractor RSE_STRING = new RSExtractor() {
-        /* (non-Javadoc) 
-         * @see it.finanze.secin.shared.dao.RSExtractor#extractNext(java.sql.ResultSet)
-         */
-        public Object extractNext(ResultSet rs) throws SQLException {
-            return rs.getString(1);
-        }
-    
-    };
-    
-    private static final FieldList NO_FIELDS = new FieldList( null );
-    
-    private BasicDAOFactory daoFactory;
+    private DAOFactory daoFactory;
     
     private QueryWrapper queryWrapper;
     
@@ -197,7 +165,7 @@ public class BasicDAO extends BasicLogObject {
 		return queryWrapper;
 	}
 
-	protected BasicDAO(BasicDAOFactory daoFactory) {
+	protected BasicDAO(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
         try {
         	Connection conn = this.getConnection();
@@ -227,12 +195,7 @@ public class BasicDAO extends BasicLogObject {
         this( new BasicDAOFactory( connectionFactory ) );
     }    
     
-    /*
-     * <p>Restituisce il valore di daoFactory.</p>
-     *
-     * @return il valore di daoFactory.
-     */
-    protected BasicDAOFactory getDaoFactory() {
+    protected DAOFactory getDaoFactory() {
         return daoFactory;
     }
     
@@ -245,29 +208,13 @@ public class BasicDAO extends BasicLogObject {
     }
     
     protected void close(Connection conn) throws DAOException {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            throw (new DAOException(e));
-        }
+        DAOHelper.close(conn);
     }
     
-    protected void setAll(PreparedStatement ps, FieldList fields) throws SQLException {
-    	this.getLogger().debug( "Total Param Number : "+fields.size() );
-    	int np = 0;
-    	int k = 0;
-		while ( k<fields.size() ) {
-			np++;
-			int param = (k+1);
-			Field f = fields.getField(k);
-			this.getLogger().debug( "Setting param n. "+param+", value: "+f.toString()+"(fl.size:"+fields.size()+")" );
-			f.setField(ps, param);
-			k++;
-			this.getLogger().debug( "test : "+(k<fields.size())+" k:"+k+" fields.size:"+fields.size() );
-		}    		
-    	this.getLogger().debug( "Total param set : "+np );
+    protected void setAll( PreparedStatement ps, FieldList fields ) throws SQLException {
+    	DAOHelper.setAll( ps , fields, this );
     }
-
+    
     protected boolean execute(String query, FieldList fields) throws DAOException {
 		query = this.queryFormat( query, "execute" );	
         boolean result = false;
@@ -301,7 +248,7 @@ public class BasicDAO extends BasicLogObject {
 		   return result;
 	   }
     
-	protected int update(OpDAO op) throws DAOException {
+	protected int update(OpDAO<T> op) throws DAOException {
 		return this.update( op.getSql(), op.getFieldList() );
 	}
     
@@ -356,181 +303,62 @@ public class BasicDAO extends BasicLogObject {
 		return result;
 	}
 
-	protected Object loadOne( OpDAO op ) throws DAOException {
+	protected T loadOne( OpDAO<T> op ) throws DAOException {
 		return this.loadOne( op.getSql(), op.getFieldList(), op.getRsExtractor() );
 	}
 	
-	protected void loadAll( List list, OpDAO op ) throws DAOException {
+	protected void loadAll( List<T> list, OpDAO<T> op ) throws DAOException {
 		this.loadAll( list, op.getSql(), op.getFieldList(), op.getRsExtractor() );
 	}
 	
-	// TODO : review all paged result itnerface
-//	
-//	protected PagedResult alternatePagedResult( String query, FieldList fl, RSExtractor re, PageInfoDB info ) throws DAOException {
-//		List list = this.newList();
-//		OpDAO op = OpDAO.newQueryOp( query, fl , re );
-//		this.loadAll(list, op);
-//        PagedResult result = null;
-//        if ( list.size() > 0 ) {
-//        	result = PagedResult.newPagedResults( list, info.getSize() )[info.getNumber()-1];
-//        }
-//        return result;
-//	}
-//	
-//	protected PagedResult loadAllPaged( String query, FieldList fl, RSExtractor re, PageInfoDB info ) throws DAOException {
-//		PagedResult pr = null;
-//		if ( this.queryWrapper == null ) {
-//			pr = this.alternatePagedResult(query, fl, re, info);
-//		} else {
-//			OpDAO countOp = OpDAO.newQueryOp( "SELECT count(*) AS countsize FROM ( "+query+" ) countview" , fl, LongRSE.DEFAULT );
-//			int count = ((Long)this.loadOne( countOp )).intValue();
-//			StringBuffer sql = new StringBuffer();
-//			sql.append( query );
-//			if ( info.getOrder() != null ) {
-//				sql.append( " ORDER BY "+info.getOrder() );
-//			}
-//			OpDAO queryOp = OpDAO.newQueryOp( this.queryWrapper.createPagedQuery( sql.toString(), info) , fl, re );
-//			List page = this.newList();
-//			this.loadAll( page, queryOp );
-//			pr = PagedResult.newPagedResult( info.getSize() , count, info.getNumber(), page );
-//		}
-//		return pr;
-//	}
-
-    protected void loadAll(List l, String query, Field f, RSExtractor re) throws DAOException {
+    protected void loadAll(List<T> l, String query, Field f, RSExtractor<T> re) throws DAOException {
         this.loadAll(l, query, this.newFieldList(f), re);
     }    
     
-    protected List loadAll(String query, Field f, RSExtractor re) throws DAOException {
+    protected List<T> loadAll(String query, Field f, RSExtractor<T> re) throws DAOException {
         return this.loadAll(query, this.newFieldList(f), re);
     }    
     
-    protected Object loadOne(String query, Field f,  RSExtractor re) throws DAOException {
+    protected T loadOne(String query, Field f,  RSExtractor<T> re) throws DAOException {
         return this.loadOne(query, this.newFieldList(f), re);
     }
 
-    protected void loadAll(List l, String query, RSExtractor re) throws DAOException {
+    protected void loadAll(List<T> l, String query, RSExtractor<T> re) throws DAOException {
         this.loadAll(l, query, NO_FIELDS, re);
     }        
     
-    
-	protected void loadAll(List l, String query, RSExtractor re, boolean emptyFirst) throws DAOException {
-		   this.loadAll(l, query, NO_FIELDS, re, emptyFirst);
-	   }        
-    
-    
-    
-    protected List loadAll(String query, RSExtractor re) throws DAOException {
+    protected List<T> loadAll(String query, RSExtractor<T> re) throws DAOException {
         return this.loadAll(query, NO_FIELDS, re);
     }    
     
-    protected Object loadOne(String query, RSExtractor re) throws DAOException {
+    protected T loadOne(String query, RSExtractor<T> re) throws DAOException {
         return this.loadOne(query, NO_FIELDS, re);
     }
     
-    protected Object loadOne(String query, FieldList fields, RSExtractor re) throws DAOException {
-	    this.getLogger().debug("loadOne START ");
-		query = this.queryFormat( query, "loadOne" );
-        this.getLogger().debug("loadOne fields        : '"+fields.size()+"'");
-        this.getLogger().debug("loadOne RSExtractor   : '"+re+"'");    	
-        Object result = null;
-        Connection conn = this.getConnection();
-        try {
-            PreparedStatement ps = conn.prepareStatement( query );
-            this.setAll(ps, fields);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                result =  re.extractNext( rs );
-            } 
-            rs.close();
-            ps.close();
-        } catch (SQLException e) {
-        	throw (new DAOException( e.getMessage()+"[query:"+query+"]", e ));
-        } finally {
-            this.close( conn );
-        }
-        this.getLogger().debug("loadOne END : "+result );
-        return result;
+    protected T loadOne(String query, FieldList fields, RSExtractor<T> re) throws DAOException {
+	    return DAOHelper.loadOne(query, fields, re, this.getDaoFactory(), this );
     }
     
-    protected List loadAll(String query, FieldList fields, RSExtractor re) throws DAOException {
-        List l = new Vector();
+    
+    protected List<T> loadAll(String query, FieldList fields, RSExtractor<T> re) throws DAOException {
+        List<T> l = this.newList();
         this.loadAll(l, query, fields, re);
         return l;
     }
     
-    protected LoadResult loadAllResult( String query, FieldList fields, RSExtractor re) throws DAOException {
+    protected LoadResult loadAllResult( String query, FieldList fields, RSExtractor<T> re) throws DAOException {
 	   return LoadResult.initResult( this , query, fields, re );
 
     }    
-    
-    protected void loadAll(List l, String query, FieldList fields, RSExtractor re) throws DAOException {
-	    this.getLogger().debug("loadAll START list : '"+l.size()+"'");
-		query = this.queryFormat( query, "loadAll" );
-        this.getLogger().debug("loadAll fields        : '"+fields.size()+"'");
-        this.getLogger().debug("loadAll RSExtractor   : '"+re+"'");
-        Connection conn = this.getConnection();
-        try {
-            PreparedStatement ps = conn.prepareStatement( query );
-            this.setAll(ps, fields);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                l.add( re.extractNext( rs ) );
-            }
-            rs.close();
-            ps.close();
-        } catch (SQLException e) {
-        	throw (new DAOException( e.getMessage()+"[query:"+query+"]", e ));
-        } finally {
-            this.close( conn );
-        }
-        this.getLogger().debug("loadAll END list : '"+l.size()+"'");
+  
 
-    }
-
-
-	protected void loadAll(List l, String query, FieldList fields, RSExtractor re, boolean emptyFirst) throws DAOException {
-			this.getLogger().debug("loadAll START list : '"+l.size()+"'");
-			query = this.queryFormat( query, "loadAll" );
-			this.getLogger().debug("loadAll fields        : '"+fields.size()+"'");
-			this.getLogger().debug("loadAll RSExtractor   : '"+re+"'");
-			Connection conn = this.getConnection();
-			try {
-				PreparedStatement ps = conn.prepareStatement( query );
-				this.setAll(ps, fields);
-				ResultSet rs = ps.executeQuery();
-				int i=0;
-				while (rs.next()) {
-					l.add( re.extractNext( rs ) );
-					i++;
-				}
-				rs.close();
-				ps.close();
-			} catch (SQLException e) {
-				throw (new DAOException( e.getMessage()+"[query:"+query+"]", e ));
-			} finally {
-				this.close( conn );
-			}
-			this.getLogger().debug("loadAll END list : '"+l.size()+"'");
-		}
-
-
-	protected String queryFormat( String sql, String method ) {
-		this.getLogger().debug( "input  query : "+sql );
-		this.getLogger().debug( "params :       "+this.getDaoFactory().getSqlArgs() );
-		MessageFormat f = new MessageFormat( sql );
-		sql = f.format( this.getDaoFactory().getSqlArgs() );
-		this.getLogger().debug( "output query : "+sql );
-		return sql;
+	protected void loadAll(List<T> l, String query, FieldList fields, RSExtractor<T> re ) throws DAOException {
+		DAOHelper.loadAll( l , query, fields, re, this.getDaoFactory() , this );
 	}
 
-    protected String loadString(String query, Field field) throws DAOException {
-        return (String)this.loadOne( query, field, RSE_STRING );
-    }
-    
-    protected String loadString(String query, FieldList fields) throws DAOException {
-        return (String)this.loadOne( query, fields, RSE_STRING );
-    }
+	protected String queryFormat( String sql, String method ) {
+		return DAOHelper.queryFormat(sql, method, this, this.getDaoFactory() );
+	}
 
 }
 
