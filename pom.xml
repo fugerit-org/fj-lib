@@ -54,6 +54,7 @@
 
 	<modules>
 		<module>fj-core</module>
+		<module>fj-ext</module>
 		<module>fj-tool</module>
 	</modules>
 
