@@ -346,7 +346,7 @@ public class BasicDAO<T> extends BasicLogObject {
         return l;
     }
     
-    protected LoadResult loadAllResult( String query, FieldList fields, RSExtractor<T> re) throws DAOException {
+    protected LoadResult<T> loadAllResult( String query, FieldList fields, RSExtractor<T> re) throws DAOException {
 	   return LoadResult.initResult( this , query, fields, re );
 
     }    
