@@ -1,39 +1,56 @@
+/*
+ *
+		Fugerit Java Library is distributed under the terms of :
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+
+	Full license :
+		http://www.apache.org/licenses/LICENSE-2.0
+		
+	Project site: 
+		http://www.fugerit.org/java/
+	
+	SCM site :
+		https://github.com/fugerit79/fj-lib
+	
+ *
+ */
 package org.fugerit.java.core.db.dao;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 import org.fugerit.java.core.db.dao.rse.DoubleRSE;
 import org.fugerit.java.core.db.dao.rse.LongRSE;
 import org.fugerit.java.core.db.dao.rse.StringRSE;
+import org.fugerit.java.core.log.BasicLogObject;
 
-public class DAOUtils {
+public class DAOUtils extends BasicLogObject {
 
-	public DAOUtils( GenericDAO genericDAO ) {
-		this.genericDAO = genericDAO;
+	public DAOUtils( DAOFactory bdf ) {
+		this.basicDAOFactory = bdf;
 	}
 	
-	private GenericDAO genericDAO;
+	private DAOFactory basicDAOFactory;
 	
 	public Long extractLong( String sql ) throws DAOException {
-		return (Long)this.genericDAO.loadOne( sql , LongRSE.DEFAULT );
+		return DAOHelper.loadOne( sql, BasicDAO.NO_FIELDS, LongRSE.DEFAULT, this.basicDAOFactory, this );
 	}
 	
 	public String extractString( String sql ) throws DAOException {
-		return (String)this.genericDAO.loadOne( sql , StringRSE.DEFAULT );
+		return DAOHelper.loadOne( sql, BasicDAO.NO_FIELDS, StringRSE.DEFAULT, this.basicDAOFactory, this );
 	}
 	
 	public Double extractDouble( String sql ) throws DAOException {
-		return (Double)this.genericDAO.loadOne( sql , DoubleRSE.DEFAULT );
+		return DAOHelper.loadOne( sql, BasicDAO.NO_FIELDS, DoubleRSE.DEFAULT, this.basicDAOFactory, this );
 	}
 
-	public GenericDAO getGenericDAO() {
-		return genericDAO;
-	}
-
-	public List extractStringList( String sql ) throws DAOException {
-		List list = this.genericDAO.newList();
-		this.genericDAO.loadAll( list, sql , StringRSE.DEFAULT ); 
+	public List<String> extractStringList( String sql ) throws DAOException {
+		List<String> list = new ArrayList<String>();
+		DAOHelper.loadAll( list , sql, BasicDAO.NO_FIELDS, StringRSE.DEFAULT, this.basicDAOFactory, this );
 		return list;
 	}
 	

@@ -1,3 +1,23 @@
+/*
+ *
+		Fugerit Java Library is distributed under the terms of :
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+
+	Full license :
+		http://www.apache.org/licenses/LICENSE-2.0
+		
+	Project site: 
+		http://www.fugerit.org/java/
+	
+	SCM site :
+		https://github.com/fugerit79/fj-lib
+	
+ *
+ */
 package org.fugerit.java.core.db.dao;
 
 
@@ -5,18 +25,22 @@ import java.sql.Connection;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
 
-/*
- * <p>.</p>
+/**
+ * <p>Basic DAO Factory.</p>
  *
- * Fugerit
+ * @author Fugerit
  */
-public class BasicDAOFactory {
+public class BasicDAOFactory implements DAOFactory {
 
 	private DAOUtils daoUtils;
 	
 	public Object[] sqlArgs = new Object[0];
 	
-    public Connection getConnection() throws DAOException {
+    /* (non-Javadoc)
+	 * @see org.fugerit.java.core.db.dao.DAOFactory#getConnection()
+	 */
+    @Override
+	public Connection getConnection() throws DAOException {
         return this.connectionFactory.getConnection();
     }
     
@@ -24,60 +48,49 @@ public class BasicDAOFactory {
     
     private FieldFactory fieldFactory;
     
-    /*
-     * <p>Crea una nuova istanza di BasicDAOFactory.</p>
-     * 
-     * @param cFactory	the connection factory on which the DaoFactory is build
-     */
     public BasicDAOFactory(ConnectionFactory cFactory) {
     	this( cFactory, new FieldFactory() );
     }    
     
-    /*
-     * <p>Crea una nuova istanza di BasicDAOFactory.</p>
-     * 
-     * @param cFactory	the connection factory on which the DaoFactory is build
-     * @param fFactory	the field factory on which the DaoFactory is build
-     */
-    public BasicDAOFactory(ConnectionFactory cFactory, FieldFactory fFactory) {
+    public BasicDAOFactory( ConnectionFactory cFactory, FieldFactory fFactory ) {
         super();
         this.connectionFactory = cFactory;
         this.fieldFactory = fFactory;
-        this.daoUtils = new DAOUtils( new GenericDAO( this ) );
+        this.daoUtils = new DAOUtils( this );
     }
 
-    /*
-     * <p>Restituisce il valore di connectionFactory.</p>
-     *
-     * @return il valore di connectionFactory.
-     */
-    public ConnectionFactory getConnectionFactory() {
+    /* (non-Javadoc)
+	 * @see org.fugerit.java.core.db.dao.DAOFactory#getConnectionFactory()
+	 */
+    @Override
+	public ConnectionFactory getConnectionFactory() {
         return connectionFactory;
     }
     
-    /*
-     * <p>Restituisce il valore di fieldFactory.</p>
-     *
-     * @return il valore di fieldFactory.
-     */
-    public FieldFactory getFieldFactory() {
+    /* (non-Javadoc)
+	 * @see org.fugerit.java.core.db.dao.DAOFactory#getFieldFactory()
+	 */
+    @Override
+	public FieldFactory getFieldFactory() {
         return fieldFactory;
     }
 
-	/*
-	 * @return the sqlArgs
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.db.dao.DAOFactory#getSqlArgs()
 	 */
+	@Override
 	public Object[] getSqlArgs() {
 		return sqlArgs;
 	}
 
-	/*
-	 * @param sqlArgs the sqlArgs to set
-	 */
 	public void setSqlArgs(Object[] sqlArgs) {
 		this.sqlArgs = sqlArgs;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.db.dao.DAOFactory#getDaoUtils()
+	 */
+	@Override
 	public DAOUtils getDaoUtils() {
 		return daoUtils;
 	}

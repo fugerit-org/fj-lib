@@ -20,33 +20,20 @@
  */
 package org.fugerit.java.core.db.dao;
 
-/*
-*
-* @author Fugerit
-*
-*/
-public class DAOException extends Exception {
+import java.sql.Connection;
 
-	/*
-	 * 
-	 */
-	private static final long serialVersionUID = -8459978395011496700L;
+import org.fugerit.java.core.db.connect.ConnectionFactory;
 
+public interface DAOFactory {
 
-	public DAOException() {
-		super();
-	}
+	Connection getConnection() throws DAOException;
 
-	public DAOException(String message) {
-		super(message);
-	}
+	ConnectionFactory getConnectionFactory();
 
-	public DAOException(String message, Throwable t) {
-		super(message, t);
-	}
-	
-	public DAOException(Throwable t) {
-		super(t);
-	}
+	FieldFactory getFieldFactory();
+
+	Object[] getSqlArgs();
+
+	DAOUtils getDaoUtils();
 
 }

@@ -1,10 +1,32 @@
+/*
+ *
+		Fugerit Java Library is distributed under the terms of :
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+
+	Full license :
+		http://www.apache.org/licenses/LICENSE-2.0
+		
+	Project site: 
+		http://www.fugerit.org/java/
+	
+	SCM site :
+		https://github.com/fugerit79/fj-lib
+	
+ *
+ */
 package org.fugerit.java.core.db.dao;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.fugerit.java.core.db.helpers.DAOID;
 
-/*
+/**
+ * 
  *
  * @author Fugerit
  *
@@ -13,7 +35,7 @@ public class FieldList {
 	 
 	private FieldFactory fieldFactory;
 	
-    private Vector list;
+    private List<Field> list;
     
     public Field getField(int index) {
         return (Field)this.list.get(index);
@@ -30,7 +52,7 @@ public class FieldList {
 
     public FieldList( FieldFactory fieldFactory ) {
         super();
-        this.list = new Vector();
+        this.list = new ArrayList<Field>();
         this.fieldFactory = fieldFactory;
     }
     
