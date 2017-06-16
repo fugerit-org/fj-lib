@@ -21,16 +21,16 @@ public class ParamMap implements Serializable {
 	 */
 	private static final long serialVersionUID = -5053311423985375268L;
 	
-	private HashMap map;
+	private HashMap<String, String[]> map;
 	
 	private ParamMap() {
-		this.map = new HashMap();
+		this.map = new HashMap<String, String[]>();
 	}
 	
 	public String getQueryString( String[] excludeParams ) {
-		List listExclude = Arrays.asList( excludeParams );
+		List<String> listExclude = Arrays.asList( excludeParams );
 		StringBuffer qs = new StringBuffer();
-		Iterator ki = this.getParamNames();
+		Iterator<String> ki = this.getParamNames();
 		qs.append( "?"+PARAM_MAP_GENERATE+"=1" );
 		while ( ki.hasNext() ) {
 			String name = (String) ki.next();
@@ -48,7 +48,7 @@ public class ParamMap implements Serializable {
 	
 	public String getQueryString() {
 		StringBuffer qs = new StringBuffer();
-		Iterator ki = this.getParamNames();
+		Iterator<String> ki = this.getParamNames();
 		qs.append( "?"+PARAM_MAP_GENERATE+"=1" );
 		while ( ki.hasNext() ) {
 			String name = (String) ki.next();
@@ -68,7 +68,7 @@ public class ParamMap implements Serializable {
 	
 	public static ParamMap getParamMap( HttpServletRequest request ) {
 		ParamMap map = new ParamMap();
-		Enumeration ae = request.getParameterNames();
+		Enumeration<String> ae = request.getParameterNames();
 		while ( ae.hasMoreElements() ) {
 			String att = (String) ae.nextElement();
 			map.setParams( att, request.getParameterValues( att ) );
@@ -76,7 +76,7 @@ public class ParamMap implements Serializable {
 		return map;
 	}
 	
-	public Iterator getParamNames() {
+	public Iterator<String> getParamNames() {
 		return this.map.keySet().iterator();
 	}
 	
@@ -132,10 +132,10 @@ public class ParamMap implements Serializable {
 	
 	public String getSortedQueryString() {
 		StringBuffer qs = new StringBuffer();
-		ArrayList l = new ArrayList(  this.map.keySet() );
+		ArrayList<String> l = new ArrayList<String>(  this.map.keySet() );
 		Collections.sort( l );
 		qs.append( "?"+PARAM_MAP_GENERATE+"=2" );
-		Iterator ki = l.iterator();
+		Iterator<String> ki = l.iterator();
 		while ( ki.hasNext() ) {
 			String name = (String) ki.next();
 			if ( !PARAM_MAP_GENERATE.equals( name ) ) {
@@ -165,9 +165,9 @@ public class ParamMap implements Serializable {
 		StringBuffer qs = new StringBuffer();
 		qs.append( this.getClass().getName() );
 		qs.append( "[" );
-		ArrayList l = new ArrayList(  this.map.keySet() );
+		ArrayList<String> l = new ArrayList<String>(  this.map.keySet() );
 		Collections.sort( l );
-		Iterator ki = l.iterator();
+		Iterator<String> ki = l.iterator();
 		while ( ki.hasNext() ) {
 			String name = (String) ki.next();
 			if ( !PARAM_MAP_GENERATE.equals( name ) ) {

@@ -49,45 +49,38 @@ public class DataBaseModel {
 	}
 	
 	public DataBaseModel() {
-		this.tableList = new ArrayList();
-		this.tableMap = new HashMap();
-		this.tableNameMap = new HashMap();
+		this.tableList = new ArrayList<TableModel>();
+		this.tableMap = new HashMap<TableId, TableModel>();
+		this.tableNameMap = new HashMap<String, TableModel>();
 	}
 	
-	private List tableList;
+	private List<TableModel> tableList;
 
-	private Map tableMap;
+	private Map<TableId, TableModel> tableMap;
 	
-	private Map tableNameMap;
+	private Map<String, TableModel> tableNameMap;
 	
 	/*
 	 * @return Restituisce il valore di tableList.
 	 */
-	public List getTableList() {
+	public List<TableModel> getTableList() {
 		return tableList;
 	}
 
 	/*
 	 * @return Restituisce il valore di tableMap.
 	 */
-	public Map getTableMap() {
+	public Map<TableId, TableModel> getTableMap() {
 		return tableMap;
 	}
 
 	/*
 	 * @return the tableNameMap
 	 */
-	public Map getTableNameMap() {
+	public Map<String, TableModel> getTableNameMap() {
 		return tableNameMap;
 	}
-
-	/*
-	 * @param tableNameMap the tableNameMap to set
-	 */
-	public void setTableNameMap(Map tableNameMap) {
-		this.tableNameMap = tableNameMap;
-	}
-
+	
 	/*
 	 * @return the databaseProductName
 	 */
@@ -143,7 +136,6 @@ public class DataBaseModel {
 	public void setDriverVersion(String driverVersion) {
 		this.driverVersion = driverVersion;
 	}
-	
 	
 	
 }

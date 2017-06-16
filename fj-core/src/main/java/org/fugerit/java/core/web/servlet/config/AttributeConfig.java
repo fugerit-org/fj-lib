@@ -24,8 +24,8 @@ public class AttributeConfig extends BasicConfig {
 	public void configure(Element tag) throws ConfigException {
 		this.getLogger().info( "configure start" );
 		SearchDOM search = SearchDOM.newInstance( true , true );
-		List listContext = search.findAllTags( tag , "context-attribute" );
-		Iterator itContext = listContext.iterator();
+		List<Element> listContext = search.findAllTags( tag , "context-attribute" );
+		Iterator<Element> itContext = listContext.iterator();
 		while ( itContext.hasNext() ) {
 			Element currentContext = (Element)itContext.next();
 			Properties props = DOMUtils.attributesToProperties( currentContext );

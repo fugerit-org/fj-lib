@@ -27,7 +27,7 @@ public class CommandConfig extends BasicConfig {
 	public void configure(Properties props) throws ConfigException {
 		throw ( new ConfigException( "Unsupported" ) );
 	}
-	private HashMap cmdMap;
+	private HashMap<String, CommandBase> cmdMap;
 	
 	public boolean execute( String commandName, ServletContext context, HttpServletRequest request, HttpServletResponse response, String[] params ) throws Exception {
 		CommandBase command = (CommandBase)this.cmdMap.get( commandName );
@@ -38,9 +38,9 @@ public class CommandConfig extends BasicConfig {
 		this.getLogger().info( "configure start" );
 		try {
 			SearchDOM search = SearchDOM.newInstance( true , true );
-			List listContext = search.findAllTags( tag , "command" );
-			Iterator itContext = listContext.iterator();
-			this.cmdMap = new HashMap();
+			List<Element> listContext = search.findAllTags( tag , "command" );
+			Iterator<Element> itContext = listContext.iterator();
+			this.cmdMap = new HashMap<String, CommandBase>();
 			while ( itContext.hasNext() ) {
 				Element currentContext = (Element)itContext.next();
 				Properties props = DOMUtils.attributesToProperties( currentContext );

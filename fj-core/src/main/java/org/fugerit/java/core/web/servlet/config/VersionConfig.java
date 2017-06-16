@@ -24,7 +24,7 @@ public class VersionConfig extends BasicConfig {
 	 */
 	private static final long serialVersionUID = 8415080002663193371L;
 
-	private static List appList = Collections.synchronizedList( new ArrayList() );
+	private static List<VersionBean> appList = Collections.synchronizedList( new ArrayList<VersionBean>() );
 	
 	public static final String ATT_NAME = "VERSION_BEAN";
 	
@@ -62,7 +62,7 @@ public class VersionConfig extends BasicConfig {
 		pw.println( "<p>Date : "+this.versionBean.getAppDate()+"</p>" );
 		pw.println( "<p>Last startup : "+this.versionBean.getLastStartup()+"</p>" );
 		Properties moduleList = VersionUtils.getModuleList();
-		Iterator moduleIt = moduleList.keySet().iterator();
+		Iterator<Object> moduleIt = moduleList.keySet().iterator();
 		pw.println( "<ul>module list:" );
 		while ( moduleIt.hasNext() ) {
 			String key = (String) moduleIt.next();
@@ -80,7 +80,7 @@ public class VersionConfig extends BasicConfig {
 		pw.println( "</ul>" );
 		if ( "1".equalsIgnoreCase( request.getParameter( "applist" ) ) ) {
 			pw.println( "<ul>application list:" );
-			Iterator itApp = appList.iterator();
+			Iterator<VersionBean> itApp = appList.iterator();
 			while ( itApp.hasNext() ) {
 				VersionBean currentApp = (VersionBean)itApp.next();
 				pw.println( "<li>"+currentApp.getAppName()+" - "+currentApp.getAppDate()+" - "+currentApp.getAppVersion()+"</li>" );
@@ -104,7 +104,7 @@ public class VersionConfig extends BasicConfig {
 		}
 		if ( "1".equalsIgnoreCase( request.getParameter( "sysprops" ) ) ) {
 			pw.println( "<ul>system properties:" );
-			Iterator itKeys = System.getProperties().keySet().iterator();
+			Iterator<Object> itKeys = System.getProperties().keySet().iterator();
 			while ( itKeys.hasNext() ) {
 				String key = (String)itKeys.next();
 				String value = System.getProperty( key );

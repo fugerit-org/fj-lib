@@ -147,7 +147,7 @@ public class ConfigFacade extends BasicLogObject {
 		Element moduleConfigListTag = searchDOM.findTag( root , "module-config-list" );
 		List<Element> moduleConfigList = searchDOM.findAllTags( moduleConfigListTag , "module-config" );
 		Iterator<Element> moduleConfigIt = moduleConfigList.iterator();
-		List initLog = new ArrayList();
+		List<String> initLog = new ArrayList<String>();
 		while ( moduleConfigIt.hasNext() ) {
 			String name = null;
 			String type = null;
