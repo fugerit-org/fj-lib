@@ -36,7 +36,7 @@ public class StatusConfig extends BasicConfig {
     	pw.println( "<th "+style+">type</th>" );
     	pw.println( "<th "+style+">size</th>" );
     	pw.println( "</tr>" );
-    	Iterator itNames = session.attributeNames();
+    	Iterator<String> itNames = session.attributeNames();
     	while ( itNames.hasNext() ) {
     		pw.println( "<tr>" );
     		String name = (String)itNames.next();
@@ -91,13 +91,13 @@ public class StatusConfig extends BasicConfig {
 		pw.println( "</html>" );
 	}
 	
-	private List initLog;
+	private List<String> initLog;
 
-	public List getInitLog() {
+	public List<String> getInitLog() {
 		return initLog;
 	}
 
-	public void setInitLog(List initLog) {
+	public void setInitLog(List<String> initLog) {
 		this.initLog = initLog;
 	}
 	

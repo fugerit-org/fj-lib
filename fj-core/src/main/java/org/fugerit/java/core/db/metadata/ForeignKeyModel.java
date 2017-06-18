@@ -78,9 +78,9 @@ public class ForeignKeyModel implements KeyObject<String>  {
 		return columnMap;
 	}
 
-	public List foreignColumnList( TableModel tableModel ) {
-		List columnList = new ArrayList();
-		Enumeration e = columnMap.keys();
+	public List<ColumnModel> foreignColumnList( TableModel tableModel ) {
+		List<ColumnModel>  columnList = new ArrayList<ColumnModel>();
+		Enumeration<Object> e = columnMap.keys();
 		while ( e.hasMoreElements() ) {
 			String columnName = (String)(e.nextElement());
 			columnList.add( tableModel.getColumn( columnName ) );
@@ -88,9 +88,9 @@ public class ForeignKeyModel implements KeyObject<String>  {
 		return columnList;
 	}
 	
-	public List internalColumnList( TableModel tableModel ) {
-		List columnList = new ArrayList();
-		Enumeration e = columnMap.elements();
+	public List<ColumnModel> internalColumnList( TableModel tableModel ) {
+		List<ColumnModel> columnList = new ArrayList<ColumnModel>();
+		Enumeration<Object> e = columnMap.elements();
 		while ( e.hasMoreElements() ) {
 			String columnName = (String)(e.nextElement());
 			columnList.add( tableModel.getColumn( columnName ) );

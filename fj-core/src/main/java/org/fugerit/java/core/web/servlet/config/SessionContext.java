@@ -18,7 +18,7 @@ public abstract class SessionContext implements Serializable {
 		StringBuffer b = new StringBuffer();
 		b.append( this.getClass().getName() );
 		b.append( "[ID:"+this.getId()+"," );
-		Iterator attNames = this.attributeNames();
+		Iterator<String> attNames = this.attributeNames();
 		while ( attNames.hasNext() ) {
 			String name = (String)attNames.next();
 			Object value = this.getAttribute( name );
@@ -36,7 +36,7 @@ public abstract class SessionContext implements Serializable {
 		StringBuffer b = new StringBuffer();
 		b.append( this.getClass().getName() );
 		b.append( "[" );
-		Iterator attNames = this.attributeNames();
+		Iterator<String> attNames = this.attributeNames();
 		while ( attNames.hasNext() ) {
 			String name = (String)attNames.next();
 			Object value = this.getAttribute( name );
@@ -80,7 +80,7 @@ public abstract class SessionContext implements Serializable {
 	
 	public abstract void setAttribute( String name, Object value );
 	
-	public abstract Iterator attributeNames();
+	public abstract Iterator<String> attributeNames();
 	
 }
 
@@ -94,7 +94,7 @@ class HttpSessionContext extends SessionContext {
 
 	private HttpSession session;
 	
-	public Iterator attributeNames() {
+	public Iterator<String> attributeNames() {
 		return Collections.list( this.session.getAttributeNames() ).iterator();
 	}
 

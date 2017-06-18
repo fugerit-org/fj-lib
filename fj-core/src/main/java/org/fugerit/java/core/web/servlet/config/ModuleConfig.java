@@ -22,13 +22,13 @@ public class ModuleConfig extends BasicConfig {
 	public static final String OPERATION_RELOAD = "module";
 	
 	public ModuleConfig() {
-		this.moduleMap = new HashMap();
-		this.moduleList = new ArrayList();
+		this.moduleMap = new HashMap<String, ConfigWrapper>();
+		this.moduleList = new ArrayList<ConfigWrapper>();
 	}
 	
-	private Map moduleMap;
+	private Map<String, ConfigWrapper> moduleMap;
 	
-	private List moduleList;
+	private List<ConfigWrapper> moduleList;
 	
 	/*
 	 * 
@@ -76,7 +76,7 @@ public class ModuleConfig extends BasicConfig {
 				pw.println( "</pre>" );
 			}
 			pw.println( "<ul>" );
-			Iterator itKey = this.moduleList.iterator();
+			Iterator<ConfigWrapper> itKey = this.moduleList.iterator();
 			while ( itKey.hasNext() ) {
 				ConfigWrapper module = (ConfigWrapper)itKey.next();
 				String key = module.getName();

@@ -50,10 +50,10 @@ public class ActionContext implements Serializable {
 		this.context = context;
 		this.sessionContext = SessionContext.getHttpSessionContext( request );
 		this.paramMap = ParamMap.getParamMap( request );
-		this.attributeMap = new HashMap();
+		this.attributeMap = new HashMap<String, Object>();
 	}
 	
-	private Map attributeMap;
+	private Map<String, Object> attributeMap;
 	
 	private ParamMap paramMap;
 
@@ -77,7 +77,7 @@ public class ActionContext implements Serializable {
 		this.attributeMap.put( name, attribute );
 	}
 	
-	public Iterator getAttributeNames() {
+	public Iterator<String> getAttributeNames() {
 		return this.attributeMap.keySet().iterator();
 	}
 	

@@ -49,7 +49,7 @@ public class MetaDataUtils {
 	}
 	
 	public static String insertQueryBuilder( TableModel tableModel ) {
-		List columnList = tableModel.getColumnList();
+		List<ColumnModel> columnList = tableModel.getColumnList();
 		StringBuffer insertSQL = new StringBuffer();
 		StringBuffer tmpBuffer = new StringBuffer();
 		insertSQL.append( "INSERT INTO "+tableModel.getName()+" ( "+((ColumnModel)columnList.get( 0 )).getName() );

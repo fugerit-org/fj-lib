@@ -53,7 +53,7 @@ public class TagUtilsHelper {
 		}
 		if ( property != null ) {
 			try {
-				Class[] c = new Class[0];
+				Class<?>[] c = new Class[0];
 				Object[] o = new Object[0];
 				Method method = result.getClass().getMethod( "get"+property.substring( 0, 1 ).toUpperCase()+property.substring( 1 ), c );
 				result = method.invoke( result, o );
