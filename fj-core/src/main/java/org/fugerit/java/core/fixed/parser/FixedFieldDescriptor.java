@@ -2,12 +2,16 @@ package org.fugerit.java.core.fixed.parser;
 
 public class FixedFieldDescriptor {
 	
-	public FixedFieldDescriptor(String name, int start, int length) {
+	public FixedFieldDescriptor(String id, String name, int start, int length) {
 		super();
+		this.normalizedName = id;
 		this.name = name;
-		this.normalizedName = normalizeName( name );
 		this.start = start;
 		this.length = length;
+	}
+	
+	public FixedFieldDescriptor(String name, int start, int length) {
+		this( normalizeName( name ), name, start, length );
 	}
 	
 	private String name;

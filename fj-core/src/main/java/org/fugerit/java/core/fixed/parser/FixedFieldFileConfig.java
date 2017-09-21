@@ -37,9 +37,10 @@ public class FixedFieldFileConfig {
 				for ( int j=0; j<fieldTagList.getLength(); j++ ) {
 					Element currentFieldTag = (Element) fieldTagList.item( j );
 					String id = currentFieldTag.getAttribute( "id" );
+					String description = currentFieldTag.getAttribute( "description" );
 					String start = currentFieldTag.getAttribute( "start" );
 					String length = currentFieldTag.getAttribute( "length" );
-					FixedFieldDescriptor currentField = new FixedFieldDescriptor( id, Integer.parseInt( start ), Integer.parseInt( length ) );
+					FixedFieldDescriptor currentField = new FixedFieldDescriptor( id, description, Integer.parseInt( start ), Integer.parseInt( length ) );
 					fileDescriptor.getListFields().add( currentField );
 				}
 			}
