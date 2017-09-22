@@ -1,0 +1,9 @@
+fixed-config-extract is a tool to extract configuration for
+fixed field file format from a xlsx spreadsheet
+- first column in spreadsheet should be the name of the field
+- second column in the spreadsheed should be the length
+order is assumed and other parameter are calculated
+-----------------------------------------------------------
+Arguments :
+--input-file		xls file to parse
+--output-xml		xml output file where the configuration is stored

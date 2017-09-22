@@ -5,7 +5,7 @@
 	<groupId>org.fugerit.java</groupId>
 	<artifactId>fj-lib</artifactId>
 
-	<version>0.1.7-SNAPSHOT</version>
+	<version>0.1.9-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -123,6 +123,18 @@
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.10</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi-ooxml</artifactId>
+			    <version>3.17</version>
+			</dependency>
+	
+			<dependency>
+			    <groupId>org.apache.odftoolkit</groupId>
+			    <artifactId>simple-odf</artifactId>
+			    <version>0.8.2-incubating</version>
 			</dependency>
 
 		</dependencies>

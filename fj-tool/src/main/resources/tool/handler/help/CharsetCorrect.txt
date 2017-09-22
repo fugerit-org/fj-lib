@@ -1,4 +1,4 @@
-CharsetHandler is a tool to correct file charset encoding
+charset-correct is a tool to correct file charset encoding
 ---------------------------------------------------------
 Arguments :
 --folder-recurse	recurse all file in a folder and subfolders (warning! files are overwritten)
