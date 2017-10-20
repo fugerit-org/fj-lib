@@ -86,6 +86,7 @@ public class Launcher {
 			Properties params = ArgUtils.getArgs( args );
 			int exit = handle( params );
 			logger.info( "EXIT -> "+exit );
+			System.exit( exit );
 		} catch ( Exception e ) {
 			logger.error( "Errore during fj-tool launcher", e );
 			printHelp();
