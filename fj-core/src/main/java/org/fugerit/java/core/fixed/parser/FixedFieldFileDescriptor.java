@@ -1,7 +1,9 @@
 package org.fugerit.java.core.fixed.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FixedFieldFileDescriptor {
 
@@ -10,6 +12,7 @@ public class FixedFieldFileDescriptor {
 		this.id = id;
 		this.mode = mode;
 		this.listFields = new ArrayList<FixedFieldDescriptor>();
+		this.validators = new HashMap<String, FixedFileFieldValidator>();
 	}
 
 	private String id;
@@ -17,6 +20,8 @@ public class FixedFieldFileDescriptor {
 	private String mode;
 	
 	private List<FixedFieldDescriptor> listFields;
+	
+	private Map<String, FixedFileFieldValidator> validators;
 
 	public String getId() {
 		return id;
@@ -28,6 +33,10 @@ public class FixedFieldFileDescriptor {
 
 	public List<FixedFieldDescriptor> getListFields() {
 		return listFields;
+	}
+
+	public Map<String, FixedFileFieldValidator> getValidators() {
+		return validators;
 	}
 
 }

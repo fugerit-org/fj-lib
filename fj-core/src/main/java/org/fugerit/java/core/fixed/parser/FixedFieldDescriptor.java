@@ -16,6 +16,8 @@ public class FixedFieldDescriptor {
 	
 	private String name;
 	
+	private FixedFileFieldValidator validator;
+	
 	private String normalizedName;
 	
 	private int start;
@@ -59,5 +61,13 @@ public class FixedFieldDescriptor {
 	public String toString() {
 		return this.getClass().getSimpleName()+"[name:"+this.getName()+",start:"+this.getStart()+",length:"+this.getLength()+",normalized-name:"+this.getNormalizedName()+"]";
 	}
-	
+
+	public FixedFileFieldValidator getValidator() {
+		return validator;
+	}
+
+	public void setValidator(FixedFileFieldValidator validator) {
+		this.validator = validator;
+	}
+
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -30,6 +32,23 @@ public class FixedFieldFileConfig {
 			Element currentFileTag = (Element) fileTagList.item( i );
 			String idFile = currentFileTag.getAttribute( "id" );
 			FixedFieldFileDescriptor fileDescriptor = new FixedFieldFileDescriptor( idFile, "map" );
+			
+			// validator list
+			NodeList validatorListTagList = currentFileTag.getElementsByTagName( "validator-list" );
+			for ( int k=0; k<validatorListTagList.getLength(); k++ ) {
+				Element currentValidatorListTag = (Element) validatorListTagList.item( k );
+				NodeList validatorTagList = currentValidatorListTag.getElementsByTagName( "validator" );
+				for ( int j=0; j<validatorTagList.getLength(); j++ ) {
+					Element currentValidatorTag = (Element) validatorTagList.item( j );
+					String id = currentValidatorTag.getAttribute( "id" );
+					String type = currentValidatorTag.getAttribute( "type" );
+					FixedFileFieldValidator validator = (FixedFileFieldValidator)ClassHelper.newInstance( type );
+					validator.configure( currentValidatorTag );
+					fileDescriptor.getValidators().put( id , validator );
+				}
+			}
+			
+			// field list
 			NodeList fieldListTagList = currentFileTag.getElementsByTagName( "field-list" );
 			for ( int k=0; k<fieldListTagList.getLength(); k++ ) {
 				Element currentFieldListTag = (Element) fieldListTagList.item( k );
@@ -40,7 +59,12 @@ public class FixedFieldFileConfig {
 					String description = currentFieldTag.getAttribute( "description" );
 					String start = currentFieldTag.getAttribute( "start" );
 					String length = currentFieldTag.getAttribute( "length" );
+					String validator = currentFieldTag.getAttribute( "validator" );
 					FixedFieldDescriptor currentField = new FixedFieldDescriptor( id, description, Integer.parseInt( start ), Integer.parseInt( length ) );
+					if ( StringUtils.isNotEmpty( validator ) ) {
+						FixedFileFieldValidator fieldValidator = fileDescriptor.getValidators().get( validator );
+						currentField.setValidator( fieldValidator );
+					}
 					fileDescriptor.getListFields().add( currentField );
 				}
 			}
