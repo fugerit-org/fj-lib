@@ -8,13 +8,13 @@ import org.fugerit.java.core.web.navmap.model.NavMap;
 import org.fugerit.java.core.web.navmap.servlet.NavData;
 import org.fugerit.java.core.web.tld.helpers.TagSupportHelper;
 
-/*
+/**
  * Custom tag to get NavData into request.
  * 
  * 'id' is mandatory (request attribute name where the NavData are stored)
  * 'url' is optional (if not defined current url in RequestUrl is looked for)
  * 
- * Version 1.0 (2016-12-02)
+ * Version 1.1 (2018-01-15)
  * 
  * @author Fugerit
  * 
@@ -60,7 +60,7 @@ public class GetNavData extends TagSupportHelper {
 			entry = map.getEntryByUrl( currentUrl );
 		}
 		if ( entry == null ) {
-			throw new JspException( "Cannot find NavEntry" );
+			throw new JspException( "Cannot find NavEntry id:"+this.getId()+", url:"+this.getUrl() );
 		} else {
 			NavData navData = new NavData( entry, map );
 			this.pageContext.setAttribute( this.getId() , navData , PageContext.REQUEST_SCOPE );
