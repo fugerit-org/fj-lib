@@ -37,23 +37,28 @@ public class FixedFieldFileReader {
 	}
 	
 	public FixedFileFieldMap nextRawMap() {
-		FixedFileFieldMap rawMap = new FixedFileFieldMap();
-		Iterator<FixedFieldDescriptor> itFields = this.getDescriptor().getListFields().iterator();
-		while ( itFields.hasNext() ) {
-			FixedFieldDescriptor currentFieldDescriptor = itFields.next();
-			String fieldId = currentFieldDescriptor.getNormalizedName();
-			int start = currentFieldDescriptor.getStart();
-			int end = currentFieldDescriptor.getEnd();
-			String currentValue = this.currentLine.substring( start-1 , end-1 );
-			rawMap.put( fieldId , currentValue );
-			FixedFileFieldValidator validator = currentFieldDescriptor.getValidator();
-			if ( validator != null ) {
-				FixedFileFieldValidationResult result = validator.checkField( currentFieldDescriptor.getName() , currentValue, this.rowNumber, start );
-				if ( !result.isValid() ) {
-					rawMap.getValidationErrors().add( result );
-					errorCount++;
+		FixedFileFieldMap rawMap = null;
+		if ( this.currentLine == null ) {
+			throw new RuntimeException( "No line set" );
+		} else {
+			rawMap = new FixedFileFieldMap( this.currentLine.length() );
+			Iterator<FixedFieldDescriptor> itFields = this.getDescriptor().getListFields().iterator();
+			while ( itFields.hasNext() ) {
+				FixedFieldDescriptor currentFieldDescriptor = itFields.next();
+				String fieldId = currentFieldDescriptor.getNormalizedName();
+				int start = currentFieldDescriptor.getStart();
+				int end = currentFieldDescriptor.getEnd();
+				String currentValue = this.currentLine.substring( start-1 , end-1 );
+				rawMap.put( fieldId , currentValue );
+				FixedFileFieldValidator validator = currentFieldDescriptor.getValidator();
+				if ( validator != null ) {
+					FixedFileFieldValidationResult result = validator.checkField( currentFieldDescriptor.getName() , currentValue, this.rowNumber, start );
+					if ( !result.isValid() ) {
+						rawMap.getValidationErrors().add( result );
+						errorCount++;
+					}
 				}
-			}
+			}	
 		}
 		return rawMap;
 	}
