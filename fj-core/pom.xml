@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.2.0-SNAPSHOT</version>
+		<version>0.2.2-SNAPSHOT</version>
 	</parent>
 
 	<name>fj-core</name>
