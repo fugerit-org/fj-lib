@@ -4,6 +4,6 @@ import org.fugerit.java.core.cfg.ConfigurableObject;
 
 public interface FixedFileFieldValidator extends ConfigurableObject {
 
-	public FixedFileFieldValidationResult checkField( String fieldLabel, String fieldValue, int rowNumber );
+	public FixedFileFieldValidationResult checkField( String fieldLabel, String fieldValue, int rowNumber, int colNumber );
 	
 }

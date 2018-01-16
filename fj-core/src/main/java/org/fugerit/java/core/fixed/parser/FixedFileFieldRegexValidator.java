@@ -24,7 +24,7 @@ public class FixedFileFieldRegexValidator extends XMLConfigurableObject implemen
 	private String regex;
 	
 	@Override
-	public FixedFileFieldValidationResult checkField(String fieldLabel, String fieldValue, int rowNumber) {
+	public FixedFileFieldValidationResult checkField(String fieldLabel, String fieldValue, int rowNumber, int colNumber ) {
 		boolean valid = true;
 		String message = null;
 		Exception exception = null;
@@ -46,7 +46,7 @@ public class FixedFileFieldRegexValidator extends XMLConfigurableObject implemen
 			message = "Validation exception "+e.getMessage();
 			exception = e;
 		}
-		return new FixedFileFieldValidationResult( valid, fieldLabel, message, exception );
+		return new FixedFileFieldValidationResult( valid, fieldLabel, message, exception, rowNumber, colNumber );
 	}
 
 	@Override

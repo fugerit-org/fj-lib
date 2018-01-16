@@ -48,7 +48,7 @@ public class FixedFieldFileReader {
 			rawMap.put( fieldId , currentValue );
 			FixedFileFieldValidator validator = currentFieldDescriptor.getValidator();
 			if ( validator != null ) {
-				FixedFileFieldValidationResult result = validator.checkField( currentFieldDescriptor.getName() , currentValue, this.rowNumber );
+				FixedFileFieldValidationResult result = validator.checkField( currentFieldDescriptor.getName() , currentValue, this.rowNumber, start );
 				if ( !result.isValid() ) {
 					rawMap.getValidationErrors().add( result );
 					errorCount++;
