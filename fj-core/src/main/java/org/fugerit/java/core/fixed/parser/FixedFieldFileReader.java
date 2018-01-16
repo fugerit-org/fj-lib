@@ -41,7 +41,7 @@ public class FixedFieldFileReader {
 		if ( this.currentLine == null ) {
 			throw new RuntimeException( "No line set" );
 		} else {
-			rawMap = new FixedFileFieldMap( this.currentLine.length() );
+			rawMap = new FixedFileFieldMap( this.currentLine.length(), this.rowNumber );
 			Iterator<FixedFieldDescriptor> itFields = this.getDescriptor().getListFields().iterator();
 			while ( itFields.hasNext() ) {
 				FixedFieldDescriptor currentFieldDescriptor = itFields.next();

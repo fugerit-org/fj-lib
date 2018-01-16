@@ -17,12 +17,22 @@ public class FixedFileFieldMap extends HashMap<String, String> {
 		return validationErrors;
 	}
 	
-	public FixedFileFieldMap( int recordLength ) {
+	public FixedFileFieldMap( int recordLength, int currentRow ) {
 		super();
 		this.validationErrors = new ArrayList<FixedFileFieldValidationResult>();
 		this.recordLength = recordLength;
 	}
 	
+	private int currentRow;
+	
 	private int recordLength;
+
+	public int getRecordLength() {
+		return recordLength;
+	}
+
+	public int getCurrentRow() {
+		return currentRow;
+	}
 	
 }
