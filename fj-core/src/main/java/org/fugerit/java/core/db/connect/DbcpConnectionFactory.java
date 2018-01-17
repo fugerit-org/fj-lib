@@ -49,6 +49,23 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 	 * @throws DAOException		in case of issues
 	 */
 	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max ) throws DAOException {
+		this(drv, url, usr, pwd, init, min, max, null);
+	}
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param drv		driver type
+	 * @param url		jdbc url
+	 * @param usr		user
+	 * @param pwd		password
+	 * @param init		initial connection
+	 * @param min		minimum connection
+	 * @param max		maximum connection	
+	 * @param cl		the class loader
+	 * @throws DAOException		in case of issues
+	 */
+	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max, ClassLoader cl ) throws DAOException {
 		try {
 			this.dataSource = new BasicDataSource();
 			this.dataSource.setDriverClassName( drv );
@@ -58,6 +75,9 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 			this.dataSource.setMaxActive( max );
 			this.dataSource.setMaxIdle( min );
 			this.dataSource.setInitialSize( init );
+			if ( cl != null ) {
+				this.dataSource.setDriverClassLoader( cl );
+			}
 		} catch (Exception e) {
 			throw new DAOException( e );
 		}

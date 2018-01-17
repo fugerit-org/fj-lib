@@ -214,7 +214,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * @throws DAOException	in case of issues
 	 */
 	public static ConnectionFactory newInstance( Properties props ) throws DAOException {
-		return newInstance( props, null );
+		return newInstance( props, null, null );
 	}
 	
 	/**
@@ -222,10 +222,14 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * 
 	 * @param props		the configuration properties
 	 * @param propsPrefix	prefix to use for properties
+	 * @param cl		class loader to use
 	 * @return			the ConnectionFactory
 	 * @throws DAOException	in case of issues
 	 */	
-	public static ConnectionFactory newInstance( Properties props, String propsPrefix ) throws DAOException {
+	public static ConnectionFactory newInstance( Properties props, String propsPrefix, ClassLoader cl ) throws DAOException {
+		if ( cl == null ) {
+			cl = Thread.currentThread().getContextClassLoader();
+		}
 		ConnectionFactory cf = null;
 		String prefix = props.getProperty( PROP_CF_MODE_DC_PREFIX, propsPrefix );
 		String mode = props.getProperty( getParamName( prefix, PROP_CF_MODE ) );
@@ -238,12 +242,12 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 				cf = new DbcpConnectionFactory( props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_DRV ) ), 
 						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_URL ) ),
 						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_USR ) ),
-						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_PWD ) ), sc, ic, mc );
+						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_PWD ) ), sc, ic, mc, cl );
 			} else {
 				cf = newInstance( props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_DRV ) ), 
 						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_URL ) ),
 						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_USR ) ),
-						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_PWD ) ) );
+						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_PWD ) ), cl );
 			}
 		} else if ( PROP_CF_MODE_DS.equalsIgnoreCase( mode ) ) {
 			cf = newInstance( props.getProperty( PROP_CF_MODE_DS_NAME ) );	
@@ -287,13 +291,33 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * @throws DAOException	in case of issues
 	 */
 	public static ConnectionFactory newInstance(String drv, String url, String usr, String pwd) throws DAOException {
+		return newInstance( drv, url, usr, pwd, null );
+	}
+	
+	/**
+	 * Creates a new ConnectionFactory Direct instance
+	 * 
+	 * @param drv	driver
+	 * @param url	jdbc url
+	 * @param usr	user
+	 * @param pwd	password
+	 * @param cl 	class loader to use
+	 * @return		the ConnectionFactory
+	 * @throws DAOException	in case of issues
+	 */
+	public static ConnectionFactory newInstance(String drv, String url, String usr, String pwd, ClassLoader cl) throws DAOException {
 		ConnectionFactory connectionFactory = null;
 		try {
 			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection driver   : "+drv );
 			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection url      : "+url );
 			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection username : "+usr );
 			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection password : ******" );
-			Driver driver= (Driver)Class.forName( drv ).newInstance();
+			Driver driver = null;
+			if ( cl != null ) {
+				driver = (Driver)cl.loadClass( drv ).newInstance();
+			} else {
+				driver= (Driver)Class.forName( drv ).newInstance();
+			}
 			connectionFactory = ( new DirectConnectionFactory( driver, url, usr, pwd ) );
 		} catch (Exception e) {
 			throw ( new DAOException( e ) );

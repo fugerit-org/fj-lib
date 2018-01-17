@@ -188,7 +188,6 @@ public class StreamHelper {
   	 * @param src				the source
 	 * @param dst				the destination
 	 * @return					the number of byte read/written
-	 * @return					the number of byte read/written
 	 * @throws IOException		in case of troubles during the operation
 	 * @see org.fugerit.java.core.io.StreamIO
      */
@@ -204,7 +203,6 @@ public class StreamHelper {
   	 * @param src				the source
 	 * @param dst				the destination
 	 * @return					the number of byte read/written
-	 * @return					the number of char read/written
 	 * @throws IOException		in case of troubles during the operation
 	 * @see org.fugerit.java.core.io.StreamIO
      */

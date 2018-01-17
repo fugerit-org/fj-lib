@@ -1,5 +1,6 @@
 package org.fugerit.java.tool;
 
+import java.io.StringBufferInputStream;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -86,6 +87,9 @@ public class Launcher {
 			Properties params = ArgUtils.getArgs( args );
 			int exit = handle( params );
 			logger.info( "EXIT -> "+exit );
+			if ( exit != ToolHandlerHelper.EXIT_OK ) {
+				System.exit( exit );	
+			}
 		} catch ( Exception e ) {
 			logger.error( "Errore during fj-tool launcher", e );
 			printHelp();

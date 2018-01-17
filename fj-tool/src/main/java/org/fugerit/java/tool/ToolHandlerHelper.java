@@ -1,9 +1,13 @@
 package org.fugerit.java.tool;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Properties;
 
+import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.slf4j.Logger;
@@ -18,6 +22,8 @@ import org.slf4j.LoggerFactory;
 public abstract class ToolHandlerHelper implements ToolHandler {
 
 	protected static final Logger logger = LoggerFactory.getLogger(ToolHandlerHelper.class);
+	
+	public static final String ARG_EXTRA_JAR = "extra-jar";
 	
 	public static final int EXIT_KO_DEFAULT = 1;
 	
@@ -42,9 +48,22 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 		return exit;
 	}
 	
+	protected ClassLoader getClassLoader( Properties params ) throws Exception {
+		ClassLoader cl = ClassHelper.getDefaultClassLoader();
+		String extraJar = params.getProperty( ARG_EXTRA_JAR );
+		if ( extraJar != null ) {
+			File jarFile = new File( extraJar );
+			URL[] u = { jarFile.toURI().toURL() };
+			cl = new URLClassLoader( u , cl );
+		}
+		return cl;
+	}
+	
 	/**
 	 * 
-	 * @return
+	 * Generate the heklp for current Tool
+	 * 
+	 * @return	Help text
 	 */
 	public String getHelp() {
 		String help = "";

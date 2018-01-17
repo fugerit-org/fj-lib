@@ -5,7 +5,7 @@
 	<groupId>org.fugerit.java</groupId>
 	<artifactId>fj-lib</artifactId>
 
-	<version>0.1.9-SNAPSHOT</version>
+	<version>0.2.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -13,7 +13,10 @@
 	<url>http://www.fugerit.org/java/</url>
 
 	<properties>
+		<java-version-compliance>1.6</java-version-compliance>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
+	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>		    		
 	</properties>
 
 	<licenses>
@@ -130,18 +133,27 @@
 			    <artifactId>poi-ooxml</artifactId>
 			    <version>3.17</version>
 			</dependency>
-	
-			<dependency>
-			    <groupId>org.apache.odftoolkit</groupId>
-			    <artifactId>simple-odf</artifactId>
-			    <version>0.8.2-incubating</version>
-			</dependency>
 
 		</dependencies>
 
 	</dependencyManagement>
 
 	<build>
+
+		<pluginManagement>
+		
+			<plugins>
+
+				<!-- 
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+				</plugin>
+				 -->
+			
+			</plugins>
+		
+		</pluginManagement>
 
 	</build>
 
@@ -152,11 +164,29 @@
 	<profiles>
 
 		<profile>
+			<id>full</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-source-plugin</artifactId>
+							<version>3.0.1</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.10.4</version>
+						</plugin>
+					</plugins>					
+				</pluginManagement>
+			</build>
+		</profile>
+
+		<profile>
 			<id>doRelease</id>
 			<build>
 				<plugins>
-
-
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -193,20 +223,22 @@
 			<build>
 				<plugins>
 					<plugin>
-								<groupId>org.apache.maven.plugins</groupId>
-								<artifactId>maven-jar-plugin</artifactId>
-								<configuration>
-									<archive>
-										<manifest>
-											<addClasspath>true</addClasspath>
-											<mainClass>org.fugerit.java.tool.Launcher</mainClass>
-										</manifest>
-									</archive>
-								</configuration>
-							</plugin>				
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>3.0.2</version>
+						<configuration>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<mainClass>org.fugerit.java.tool.Launcher</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</plugin>				
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-shade-plugin</artifactId>
+						<version>3.1.0</version>
 						<executions>
 							<execution>
 								<phase>package</phase>
@@ -216,24 +248,25 @@
 							</execution>
 						</executions>
 						<configuration>
-							<finalName>dist-${artifactId}-${version}</finalName>
+							<finalName>dist-${project.artifactId}-${project.version}</finalName>
 						</configuration>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
-
 	</profiles>
 
+	<!-- 
 	<reporting>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-changelog-plugin</artifactId>
-	        <version>2.3</version>
-	      </plugin>
-	    </plugins>
-	  </reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+		</plugins>
+	</reporting>
+	 -->
 
 	<organization>
 		<url>http://www.fugerit.org</url>
