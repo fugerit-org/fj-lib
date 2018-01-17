@@ -13,7 +13,10 @@
 	<url>http://www.fugerit.org/java/</url>
 
 	<properties>
+		<java-version-compliance>1.6</java-version-compliance>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
+	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>		    		
 	</properties>
 
 	<licenses>
@@ -137,6 +140,21 @@
 
 	<build>
 
+		<pluginManagement>
+		
+			<plugins>
+
+				<!-- 
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+				</plugin>
+				 -->
+			
+			</plugins>
+		
+		</pluginManagement>
+
 	</build>
 
 	<dependencies>
@@ -146,11 +164,29 @@
 	<profiles>
 
 		<profile>
+			<id>full</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-source-plugin</artifactId>
+							<version>3.0.1</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.10.4</version>
+						</plugin>
+					</plugins>					
+				</pluginManagement>
+			</build>
+		</profile>
+
+		<profile>
 			<id>doRelease</id>
 			<build>
 				<plugins>
-
-
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -187,18 +223,18 @@
 			<build>
 				<plugins>
 					<plugin>
-								<groupId>org.apache.maven.plugins</groupId>
-								<artifactId>maven-jar-plugin</artifactId>
-								<version>3.0.2</version>
-								<configuration>
-									<archive>
-										<manifest>
-											<addClasspath>true</addClasspath>
-											<mainClass>org.fugerit.java.tool.Launcher</mainClass>
-										</manifest>
-									</archive>
-								</configuration>
-							</plugin>				
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>3.0.2</version>
+						<configuration>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<mainClass>org.fugerit.java.tool.Launcher</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</plugin>				
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-shade-plugin</artifactId>
@@ -218,18 +254,19 @@
 				</plugins>
 			</build>
 		</profile>
-
 	</profiles>
 
+	<!-- 
 	<reporting>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-changelog-plugin</artifactId>
-	        <version>2.3</version>
-	      </plugin>
-	    </plugins>
-	  </reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>2.3</version>
+			</plugin>
+		</plugins>
+	</reporting>
+	 -->
 
 	<organization>
 		<url>http://www.fugerit.org</url>
