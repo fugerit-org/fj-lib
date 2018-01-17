@@ -1,23 +1,15 @@
 package org.fugerit.java.core.fixed.parser;
 
 import java.text.MessageFormat;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.fugerit.java.core.cfg.ConfigException;
-import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
-import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.w3c.dom.Element;
 
-public class FixedFileFieldRegexValidator extends XMLConfigurableObject implements FixedFileFieldValidator {
+public class FixedFileFieldRegexValidator extends FixedFileFieldBasicValidator implements FixedFileFieldValidator {
 
 	public static final String ATT_NAME_REGEX = "regex";
-	public static final String ATT_NAME_LOCALE = "locale";
-	public static final String ATT_NAME_REQUIRED = "required";
 
-	private ResourceBundle bundle;
-	
 	/**
 	 * 
 	 */
@@ -25,7 +17,10 @@ public class FixedFileFieldRegexValidator extends XMLConfigurableObject implemen
 
 	private String regex;
 	
-	private boolean required;
+	public String getRegex() {
+		return regex;
+	}
+
 	
 	@Override
 	public FixedFileFieldValidationResult checkField(String fieldLabel, String fieldValue, int rowNumber, int colNumber ) {
@@ -36,7 +31,7 @@ public class FixedFileFieldRegexValidator extends XMLConfigurableObject implemen
 			fieldValue = "";
 		}
 		try {
-			if ( ( StringUtils.isNotEmpty( fieldValue ) || this.required ) 
+			if ( ( StringUtils.isNotEmpty( fieldValue ) || this.isRequired() ) 
 					&& !fieldValue.matches( this.regex ) ) {
 				String[] args = {
 					String.valueOf( rowNumber ),
@@ -44,7 +39,7 @@ public class FixedFileFieldRegexValidator extends XMLConfigurableObject implemen
 					fieldValue,
 					this.regex
 				};
-				String baseError = this.bundle.getString( "error.regex" );
+				String baseError = this.getBundle().getString( "error.regex" );
 				MessageFormat mf = new MessageFormat( baseError );
 				message = mf.format( args );
 				valid = false;
@@ -60,19 +55,13 @@ public class FixedFileFieldRegexValidator extends XMLConfigurableObject implemen
 	@Override
 	public void configure( Element tag ) throws ConfigException {
 		String config = tag.getAttribute( ATT_NAME_REGEX );
-		String locale = tag.getAttribute( ATT_NAME_LOCALE );
-		String req = tag.getAttribute( ATT_NAME_REQUIRED );
+		logger.info( "config "+ATT_NAME_REGEX+" -> '"+config+"'" );
 		if ( StringUtils.isEmpty( config ) ) {
 			throw new ConfigException( ATT_NAME_REGEX+" is mandatory attribute" );
 		} else {
 			this.regex = config;
 		}
-		Locale loc = Locale.getDefault();
-		if ( StringUtils.isNotEmpty( locale ) ) {
-			loc = Locale.forLanguageTag( locale );
-		}
-		this.bundle = ResourceBundle.getBundle( "core.fixed.parser.validator", loc );
-		this.required = BooleanUtils.isTrue( req );
+		super.configure( tag, "core.fixed.parser.validator" );
 	}
 	
 	
