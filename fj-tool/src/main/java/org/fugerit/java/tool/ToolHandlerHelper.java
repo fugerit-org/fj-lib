@@ -61,7 +61,9 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 	
 	/**
 	 * 
-	 * @return
+	 * Generate the heklp for current Tool
+	 * 
+	 * @return	Help text
 	 */
 	public String getHelp() {
 		String help = "";
