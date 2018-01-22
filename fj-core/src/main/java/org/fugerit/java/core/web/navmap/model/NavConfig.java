@@ -6,6 +6,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
 import org.slf4j.Logger;
@@ -108,7 +109,12 @@ public class NavConfig {
 					Element currentItem = (Element) menuItemTags.item( i );
 					String url = currentItem.getAttribute( "url" );
 					NavEntry item = entryList.get( url );
-					menu.getEntries().add( item );
+					String useLabel = currentItem.getAttribute( "use-label" );
+					if ( StringUtils.isNotEmpty( useLabel ) ) {
+						menu.getEntries().add( item.copyWithLabel( useLabel ) );
+					} else {
+						menu.getEntries().add( item );	
+					}
 					logger.debug( "parseConfig() - adding menu item : "+item+" to menu "+id );
 				}
 				logger.debug( "parseConfig() - adding menu : "+menu );

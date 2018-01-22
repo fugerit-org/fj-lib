@@ -38,6 +38,11 @@ public class NavEntry implements Serializable, KeyObject<String> {
 	private String auth;
 
 
+	public NavEntry copyWithLabel( String label ) {
+		return new NavEntry( this.getUrl() , label, this.getMenu1(), this.getMenu2(), this.getMenu3(), this.getAuth() );
+	}
+	
+	
 	public NavEntry(String url, String label, String menu1, String menu2,
 			String menu3, String auth) {
 		super();
