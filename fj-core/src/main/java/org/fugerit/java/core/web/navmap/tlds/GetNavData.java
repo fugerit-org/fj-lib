@@ -4,6 +4,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import org.fugerit.java.core.web.navmap.model.NavEntry;
+import org.fugerit.java.core.web.navmap.model.NavEntryI;
 import org.fugerit.java.core.web.navmap.model.NavMap;
 import org.fugerit.java.core.web.navmap.servlet.NavData;
 import org.fugerit.java.core.web.tld.helpers.TagSupportHelper;
@@ -52,10 +53,10 @@ public class GetNavData extends TagSupportHelper {
 	@Override
 	public int doStartTag() throws JspException {
 		String currentUrl = this.getUrl();
-		NavEntry entry = null;
+		NavEntryI entry = null;
 		NavMap map = (NavMap) this.pageContext.getServletContext().getAttribute( NavMap.CONTEXT_ATT_NAME );
 		if ( currentUrl == null ) {
-			 entry = (NavEntry)(this.pageContext.getSession().getAttribute( NavEntry.SESSION_ATT_NAME ));
+			 entry = (NavEntryI)(this.pageContext.getSession().getAttribute( NavEntry.SESSION_ATT_NAME ));
 		} else {
 			entry = map.getEntryByUrl( currentUrl );
 		}

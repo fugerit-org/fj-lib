@@ -37,7 +37,7 @@ public class NavMap implements Serializable {
 		this.authHandler = new AllowAuthHandler();
 	}
 	
-	public NavEntry getEntryByUrl( String url ) {
+	public NavEntryI getEntryByUrl( String url ) {
 		return this.entryList.get( url );
 	}
 	

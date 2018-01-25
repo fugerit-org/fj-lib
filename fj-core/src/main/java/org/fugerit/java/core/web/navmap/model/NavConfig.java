@@ -5,6 +5,7 @@ import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
@@ -30,7 +31,7 @@ public class NavConfig {
 
 	private static final Logger logger= LoggerFactory.getLogger(NavConfig.class);
 	
-	private static void recurseEntries( Element element, ListMapStringKey<NavEntry> entryList, NavEntry parent  ) {
+	private static void recurseEntries( Element element, ListMapStringKey<NavEntry> entryList, NavEntryI parent  ) {
 		NodeList navEntryTags = element.getChildNodes();
 		
 		for ( int k=0; k<navEntryTags.getLength(); k++ ) {
@@ -109,11 +110,14 @@ public class NavConfig {
 					Element currentItem = (Element) menuItemTags.item( i );
 					String url = currentItem.getAttribute( "url" );
 					NavEntry item = entryList.get( url );
+					if ( item == null ) {
+						throw new ConfigException( "Menu Configuration error, no nav-entry for url : '"+url+"'" );
+					}
 					String useLabel = currentItem.getAttribute( "use-label" );
 					if ( StringUtils.isNotEmpty( useLabel ) ) {
-						menu.getEntries().add( item.copyWithLabel( useLabel ) );
+						menu.getEntries().add( new NavMenuItem( item, useLabel ) );
 					} else {
-						menu.getEntries().add( item );	
+						menu.getEntries().add( new NavMenuItem( item ) );	
 					}
 					logger.debug( "parseConfig() - adding menu item : "+item+" to menu "+id );
 				}
