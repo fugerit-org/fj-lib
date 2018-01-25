@@ -1,7 +1,9 @@
 package org.fugerit.java.core.web.navmap.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.fugerit.java.core.util.collection.KeyObject;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
@@ -16,7 +18,7 @@ import org.fugerit.java.core.util.collection.ListMapStringKey;
  * @see org.fugerit.java.core.web.navmap.model.NavMap
  *
  */
-public class NavEntry implements Serializable, KeyObject<String> {
+public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 
 	public static final String SESSION_ATT_NAME = "org.fugerit.java.mod.web.navmap.model.NavEntry#AttName";
 	
@@ -56,31 +58,58 @@ public class NavEntry implements Serializable, KeyObject<String> {
 		this.alias = new ListMapStringKey<NavEntry>();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getUrl()
+	 */
+	@Override
 	public String getUrl() {
 		return url;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getMenu1()
+	 */
+	@Override
 	public String getMenu1() {
 		return menu1;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getMenu2()
+	 */
+	@Override
 	public String getMenu2() {
 		return menu2;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getMenu3()
+	 */
+	@Override
 	public String getMenu3() {
 		return menu3;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getAuth()
+	 */
+	@Override
 	public String getAuth() {
 		return auth;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getKey()
+	 */
 	@Override
 	public String getKey() {
 		return this.getUrl();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getLabel()
+	 */
+	@Override
 	public String getLabel() {
 		return label;
 	}
@@ -90,15 +119,19 @@ public class NavEntry implements Serializable, KeyObject<String> {
 		return this.getClass().getName()+"[url:"+this.getUrl()+"]";
 	}
 	
-	private NavEntry parent;
+	private NavEntryI parent;
 	
-	private NavEntry aliasFor;
+	private NavEntryI aliasFor;
 	
-	public NavEntry getAliasFor() {
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getAliasFor()
+	 */
+	@Override
+	public NavEntryI getAliasFor() {
 		return aliasFor;
 	}
 
-	public void setAliasFor(NavEntry aliasFor) {
+	public void setAliasFor(NavEntryI aliasFor) {
 		this.aliasFor = aliasFor;
 	}
 
@@ -106,35 +139,63 @@ public class NavEntry implements Serializable, KeyObject<String> {
 	
 	private ListMapStringKey<NavEntry> alias;
 
-	public NavEntry getParent() {
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getParent()
+	 */
+	@Override
+	public NavEntryI getParent() {
 		return parent;
 	}
 
-	public void setParent(NavEntry parent) {
+	public void setParent(NavEntryI parent) {
 		this.parent = parent;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getKids()
+	 */
+	@Override
 	public ListMapStringKey<NavEntry> getKids() {
 		return kids;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getAlias()
+	 */
+	@Override
 	public ListMapStringKey<NavEntry> getAlias() {
 		return alias;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#isLeaf()
+	 */
+	@Override
 	public boolean isLeaf() {
 		return this.getKids() == null || this.getKids().isEmpty();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#isRoot()
+	 */
+	@Override
 	public boolean isRoot() {
 		return this.getParent() == null;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#isAlias()
+	 */
+	@Override
 	public boolean isAlias() {
 		return this.getAliasFor() != null;
 	}
 	
-	public boolean isCurrentBranch( NavEntry entry ) {
+	/* (non-Javadoc)
+	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#isCurrentBranch(org.fugerit.java.core.web.navmap.model.NavEntryI)
+	 */
+	@Override
+	public boolean isCurrentBranch( NavEntryI entry ) {
 		boolean check = entry.getUrl().equals( this.getUrl() );
 		if ( !check ) {
 			if ( this.isAlias() ) {
@@ -142,16 +203,33 @@ public class NavEntry implements Serializable, KeyObject<String> {
 			}
 			Iterator<NavEntry> it = this.getKids().iterator();
 			while ( it.hasNext() && !check ) {
-				NavEntry current = it.next();
+				NavEntryI current = it.next();
 				check = current.isCurrentBranch( entry );
 			}
 			it = this.getAlias().iterator();
 			while ( it.hasNext() && !check ) {
-				NavEntry current = it.next();
+				NavEntryI current = it.next();
 				check = current.isCurrentBranch( entry );
 			}
 		}
 		return check;
+	}
+	
+	/**
+	 * Ancestors list :
+	 * - element in position 0 is the argument entry
+	 * - next element is parent (recursively)
+	 * 
+	 * @param entry		the entry to look for ancestors
+	 * @return			Ancestor list
+	 */
+	public static List<NavEntryI> getAncestors( NavEntryI entry ) {
+		List<NavEntryI> ancestors = new ArrayList<NavEntryI>();
+		while ( entry != null ) {
+			ancestors.add( entry );
+			entry = entry.getParent();
+		}
+		return ancestors;
 	}
 	
 }

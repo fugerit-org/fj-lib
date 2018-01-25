@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
 import org.fugerit.java.core.web.navmap.model.NavConfig;
 import org.fugerit.java.core.web.navmap.model.NavEntry;
+import org.fugerit.java.core.web.navmap.model.NavEntryI;
 import org.fugerit.java.core.web.navmap.model.NavMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +49,7 @@ public class NavFilter implements Filter {
 		String reqId = String.valueOf(  request.getSession( true ).getId()+"/"+System.currentTimeMillis() );
 		try {
 			String currentUrl = request.getRequestURI().substring( request.getContextPath().length() );
-			NavEntry entry = navMap.getEntryByUrl( currentUrl );
+			NavEntryI entry = navMap.getEntryByUrl( currentUrl );
 			logger.info( "NavFilter nav() "+reqId+" url - "+currentUrl+", entry - "+entry );
 			if ( entry != null ) {
 				request.getSession().setAttribute( NavEntry.SESSION_ATT_NAME , entry );

@@ -1,6 +1,12 @@
 package org.fugerit.java.core.web.navmap.servlet;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.fugerit.java.core.web.navmap.model.NavEntry;
+import org.fugerit.java.core.web.navmap.model.NavEntryBC;
+import org.fugerit.java.core.web.navmap.model.NavEntryI;
 import org.fugerit.java.core.web.navmap.model.NavMap;
 import org.fugerit.java.core.web.navmap.model.NavMenu;
 
@@ -19,15 +25,15 @@ public class NavData {
 	 */
 	public static final String ATT_NAME = "CurrentNavData";
 	
-	private NavEntry entry;
+	private NavEntryI entry;
 
 	private NavMap map;
 	
-	public NavEntry getEntry() {
+	public NavEntryI getEntry() {
 		return entry;
 	}
 
-	public NavData(NavEntry entry, NavMap map) {
+	public NavData(NavEntryI entry, NavMap map) {
 		super();
 		this.entry = entry;
 		this.map = map;
@@ -57,6 +63,17 @@ public class NavData {
 			}
 		}
 		return module;
+	}
+	
+	public List<NavEntryBC> getBasicBreadCrumb() {
+		List<NavEntryBC> breadcrumb = new ArrayList<NavEntryBC>();
+		List<NavEntryI> ancestors = NavEntry.getAncestors( this.getEntry() );
+		for ( int k=ancestors.size()-1; k>=0; k--) {
+			boolean isFirst = (k==ancestors.size()-1);
+			boolean isLast = (k==0);
+			breadcrumb.add( new NavEntryBC( ancestors.get( k ), isFirst, isLast) );
+		}
+		return breadcrumb;
 	}
 
 }
