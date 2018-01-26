@@ -54,8 +54,8 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 		this.menu2 = menu2;
 		this.menu3 = menu3;
 		this.auth = auth;
-		this.kids = new ListMapStringKey<NavEntry>();
-		this.alias = new ListMapStringKey<NavEntry>();
+		this.kids = new ListMapStringKey<NavEntryI>();
+		this.alias = new ListMapStringKey<NavEntryI>();
 	}
 
 	/* (non-Javadoc)
@@ -135,9 +135,9 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 		this.aliasFor = aliasFor;
 	}
 
-	private ListMapStringKey<NavEntry> kids;
+	private ListMapStringKey<NavEntryI> kids;
 	
-	private ListMapStringKey<NavEntry> alias;
+	private ListMapStringKey<NavEntryI> alias;
 
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getParent()
@@ -155,7 +155,7 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getKids()
 	 */
 	@Override
-	public ListMapStringKey<NavEntry> getKids() {
+	public ListMapStringKey<NavEntryI> getKids() {
 		return kids;
 	}
 
@@ -163,7 +163,7 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 	 * @see org.fugerit.java.core.web.navmap.model.NavEntryI#getAlias()
 	 */
 	@Override
-	public ListMapStringKey<NavEntry> getAlias() {
+	public ListMapStringKey<NavEntryI> getAlias() {
 		return alias;
 	}
 	
@@ -198,15 +198,7 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 	public boolean isCurrentBranch( NavEntryI entry ) {
 		boolean check = entry.getUrl().equals( this.getUrl() );
 		if ( !check ) {
-			if ( this.isAlias() ) {
-				check = entry.getAliasFor().isCurrentBranch( entry );
-			}
-			Iterator<NavEntry> it = this.getKids().iterator();
-			while ( it.hasNext() && !check ) {
-				NavEntryI current = it.next();
-				check = current.isCurrentBranch( entry );
-			}
-			it = this.getAlias().iterator();
+			Iterator<NavEntryI> it = this.getKids().iterator();
 			while ( it.hasNext() && !check ) {
 				NavEntryI current = it.next();
 				check = current.isCurrentBranch( entry );

@@ -31,7 +31,7 @@ public class NavConfig {
 
 	private static final Logger logger= LoggerFactory.getLogger(NavConfig.class);
 	
-	private static void recurseEntries( Element element, ListMapStringKey<NavEntry> entryList, NavEntryI parent  ) {
+	private static void recurseEntries( Element element, ListMapStringKey<NavEntryI> entryList, NavEntryI parent  ) {
 		NodeList navEntryTags = element.getChildNodes();
 		
 		for ( int k=0; k<navEntryTags.getLength(); k++ ) {
@@ -59,7 +59,7 @@ public class NavConfig {
 						String[] aliases = alias.split( ";" );
 						for ( int i=0; i<aliases.length; i++ ) {
 							String currentAlias = aliases[i];
-							NavEntry navAlias = new NavEntry(currentAlias, label, menu1, menu2, menu3, auth);
+							NavEntryAlias navAlias = new NavEntryAlias( entry, currentAlias );
 							entryList.add( navAlias );
 							entry.getAlias().add( navAlias );
 						}
@@ -73,7 +73,7 @@ public class NavConfig {
 	
 	public static NavMap parseConfig( InputStream is ) throws NavException {
 		logger.info( "parseConfig() - start" );
-		ListMapStringKey<NavEntry> entryList = new ListMapStringKey<NavEntry>();
+		ListMapStringKey<NavEntryI> entryList = new ListMapStringKey<NavEntryI>();
 		ListMapStringKey<NavMenu> menuList = new ListMapStringKey<NavMenu>();
 		AuthHandler authHandler = null;
 		try {
@@ -109,7 +109,7 @@ public class NavConfig {
 				for ( int i=0; i<menuItemTags.getLength(); i++ ) {
 					Element currentItem = (Element) menuItemTags.item( i );
 					String url = currentItem.getAttribute( "url" );
-					NavEntry item = entryList.get( url );
+					NavEntryI item = entryList.get( url );
 					if ( item == null ) {
 						throw new ConfigException( "Menu Configuration error, no nav-entry for url : '"+url+"'" );
 					}

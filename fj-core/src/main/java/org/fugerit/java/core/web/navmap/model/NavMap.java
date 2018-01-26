@@ -25,11 +25,11 @@ public class NavMap implements Serializable {
 	 */
 	private static final long serialVersionUID = -3883392083434225523L;
 
-	private ListMapStringKey<NavEntry> entryList;
+	private ListMapStringKey<NavEntryI> entryList;
 	private ListMapStringKey<NavMenu> menuList;
 	private AuthHandler authHandler;
 	
-	public NavMap(ListMapStringKey<NavEntry> entryList,
+	public NavMap(ListMapStringKey<NavEntryI> entryList,
 			ListMapStringKey<NavMenu> menuList) {
 		super();
 		this.entryList = entryList;

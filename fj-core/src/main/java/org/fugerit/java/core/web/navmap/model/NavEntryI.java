@@ -23,9 +23,9 @@ public interface NavEntryI extends KeyObject<String> {
 
 	NavEntryI getParent();
 
-	ListMapStringKey<NavEntry> getKids();
+	ListMapStringKey<NavEntryI> getKids();
 
-	ListMapStringKey<NavEntry> getAlias();
+	ListMapStringKey<NavEntryI> getAlias();
 
 	boolean isLeaf();
 
