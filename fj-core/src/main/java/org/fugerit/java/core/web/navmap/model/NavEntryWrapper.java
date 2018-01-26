@@ -53,11 +53,11 @@ public class NavEntryWrapper implements NavEntryI {
 		return entry.getParent();
 	}
 
-	public ListMapStringKey<NavEntry> getKids() {
+	public ListMapStringKey<NavEntryI> getKids() {
 		return entry.getKids();
 	}
 
-	public ListMapStringKey<NavEntry> getAlias() {
+	public ListMapStringKey<NavEntryI> getAlias() {
 		return entry.getAlias();
 	}
 
