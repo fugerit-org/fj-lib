@@ -9,8 +9,9 @@
 		<xsd:documentation>
 			@(#)navmap-1-0.xsd 1.0.0 28/01/2018
 			
-			source lcation :
+			source location :
 			http://www.fugerit.org/res/fj-core/navmap/navmap-1-0.xsd
+			https://github.com/fugerit79/fj-lib/blob/develop/fj-core/src/main/resources/core/web/navmap/xsd/navmap-1-0.xsd
 		</xsd:documentation>
 	</xsd:annotation>
 
