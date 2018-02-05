@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
 import org.fugerit.java.core.web.navmap.model.NavConfig;
-import org.fugerit.java.core.web.navmap.model.NavEntry;
-import org.fugerit.java.core.web.navmap.model.NavEntryI;
 import org.fugerit.java.core.web.navmap.model.NavMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,16 +43,10 @@ public class NavFilter implements Filter {
 		this.navMap = null;
 	}
 
-	public void nav( HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void nav( HttpServletRequest request, HttpServletResponse response, FilterChain chain ) throws IOException, ServletException {
 		String reqId = String.valueOf(  request.getSession( true ).getId()+"/"+System.currentTimeMillis() );
 		try {
-			String currentUrl = request.getRequestURI().substring( request.getContextPath().length() );
-			NavEntryI entry = navMap.getEntryByUrl( currentUrl );
-			logger.info( "NavFilter nav() "+reqId+" url - "+currentUrl+", entry - "+entry );
-			if ( entry != null ) {
-				request.getSession().setAttribute( NavEntry.SESSION_ATT_NAME , entry );
-			}
-			int authCode = this.navMap.getAuthHandler().checkAuth( request , entry.getAuth() );
+			int authCode = NavFacade.nav( request, response, this.navMap, reqId);
 			if ( authCode == AuthHandler.AUTH_AUTHORIZED ) {
 				chain.doFilter(request, response);	
 			} else {
