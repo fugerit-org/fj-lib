@@ -15,6 +15,8 @@ public class NavFacade {
 	private static final Logger logger= LoggerFactory.getLogger(NavFacade.class);
 	
 	/**
+	 * This method decide the outcome of the access to a give resource.
+	 * The NavEntry to check is found through the url in the request.
 	 * 
 	 * @param request		the http request
 	 * @param response		the http response
@@ -23,7 +25,7 @@ public class NavFacade {
 	 * @return				a <code>int</code> representing the authorization for the resource.
 	 * 						(use the same convention as for AuthHandler).
 	 * @throws Exception	in case of issues during
-	 * @see {@link AuthHandler}
+	 * @see AuthHandler
 	 */
 	public static int nav( HttpServletRequest request, HttpServletResponse response, NavMap navMap, String reqId ) throws Exception {
 		String currentUrl = request.getRequestURI().substring( request.getContextPath().length() );
