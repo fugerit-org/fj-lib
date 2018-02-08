@@ -51,7 +51,11 @@ public class NavFilter implements Filter {
 				chain.doFilter(request, response);	
 			} else {
 				logger.error( "NavFilter nav() "+reqId+" auth error : "+authCode );
-				response.sendError( HttpServletResponse.SC_FORBIDDEN );	
+				if ( authCode == AuthHandler.AUTH_HIDDEN ) {
+					response.sendError( HttpServletResponse.SC_NOT_FOUND );
+				} else {
+					response.sendError( HttpServletResponse.SC_FORBIDDEN );	
+				}
 			}
 		} catch (Exception e) {
 			logger.error( "NavFilter nav() "+reqId+" error : "+e, e );
