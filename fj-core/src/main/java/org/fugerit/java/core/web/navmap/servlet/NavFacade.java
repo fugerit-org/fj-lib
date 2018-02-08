@@ -14,20 +14,27 @@ public class NavFacade {
 
 	private static final Logger logger= LoggerFactory.getLogger(NavFacade.class);
 	
+	/**
+	 * 
+	 * @param request		the http request
+	 * @param response		the http response
+	 * @param navMap		the nav map configuration
+	 * @param reqId			request id
+	 * @return				a <code>int</code> representing the authorization for the resource.
+	 * 						(use the same convention as for AuthHandler).
+	 * @throws Exception	in case of issues during
+	 * @see {@link AuthHandler}
+	 */
 	public static int nav( HttpServletRequest request, HttpServletResponse response, NavMap navMap, String reqId ) throws Exception {
-		int res = AuthHandler.AUTH_FORBIDDEN;
 		String currentUrl = request.getRequestURI().substring( request.getContextPath().length() );
 		NavEntryI entry = navMap.getEntryByUrl( currentUrl );
 		logger.info( "NavFilter nav() "+reqId+" url - "+currentUrl+", entry - "+entry );
 		if ( entry != null ) {
 			request.getSession().setAttribute( NavEntry.SESSION_ATT_NAME , entry );
 		}
-		int authCode = navMap.getAuthHandler().checkAuth( request , entry.getAuth() );
-		if ( authCode == AuthHandler.AUTH_AUTHORIZED ) {
-			res = AuthHandler.AUTH_AUTHORIZED;
-		} else {
-			logger.error( "NavFilter nav() "+reqId+" auth error : "+authCode );
-			res = AuthHandler.AUTH_AUTHORIZED;	
+		int res = navMap.getAuthHandler().checkAuth( request , entry.getAuth() );
+		if ( res != AuthHandler.AUTH_AUTHORIZED ) {
+			logger.error( "NavFilter nav() "+reqId+" auth error : "+res );
 		}
 		return res;
 	}
