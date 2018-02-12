@@ -1,10 +1,13 @@
 package org.fugerit.java.core.web.navmap.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.web.auth.handler.AllowAuthHandler;
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
+import org.fugerit.java.core.web.servlet.request.RequestFilter;
 
 /*
  * Main modeling object for NavMap library.
@@ -28,12 +31,14 @@ public class NavMap implements Serializable {
 	private ListMapStringKey<NavEntryI> entryList;
 	private ListMapStringKey<NavMenu> menuList;
 	private AuthHandler authHandler;
+	private List<RequestFilter> requestFilters;
 	
-	public NavMap(ListMapStringKey<NavEntryI> entryList,
-			ListMapStringKey<NavMenu> menuList) {
+	public NavMap(ListMapStringKey<RequestFilter> requestFilters,
+			ListMapStringKey<NavEntryI> entryList, ListMapStringKey<NavMenu> menuList) {
 		super();
 		this.entryList = entryList;
 		this.menuList = menuList;
+		this.requestFilters = requestFilters;
 		this.authHandler = new AllowAuthHandler();
 	}
 	
@@ -52,7 +57,9 @@ public class NavMap implements Serializable {
 	public void setAuthHandler(AuthHandler authHandler) {
 		this.authHandler = authHandler;
 	}
-	
-	
+
+	public List<RequestFilter> getRequestFilters() {
+		return requestFilters;
+	}
 	
 }

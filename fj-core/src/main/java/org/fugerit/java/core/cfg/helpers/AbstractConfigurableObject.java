@@ -29,6 +29,8 @@ import org.fugerit.java.core.cfg.ConfigurableObject;
 import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.xml.dom.DOMIO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
 /**
@@ -40,6 +42,8 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractConfigurableObject extends BasicLogObject implements ConfigurableObject, Serializable {
 
+	protected static final Logger logger = LoggerFactory.getLogger(ConfigurableObject.class);
+	
 	/*
 	 * 
 	 */

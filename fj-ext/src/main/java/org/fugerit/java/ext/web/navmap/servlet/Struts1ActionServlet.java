@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionServlet;
 import org.fugerit.java.core.web.navmap.model.NavMap;
 import org.fugerit.java.core.web.navmap.servlet.NavFacade;
+import org.fugerit.java.core.web.servlet.context.RequestContext;
 
 public class Struts1ActionServlet extends ActionServlet {
 
@@ -23,7 +24,8 @@ public class Struts1ActionServlet extends ActionServlet {
 		NavMap navMap = (NavMap) this.getServletContext().getAttribute( NavMap.CONTEXT_ATT_NAME );
 		if ( navMap != null ) {
 			try {
-				NavFacade.nav(request, response, navMap, reqId);
+				RequestContext requestContext = RequestContext.getRequestContext( this.getServletContext() , request, response);
+				NavFacade.nav( requestContext, navMap, reqId);
 			} catch (Exception e) {
 				throw new ServletException( e );
 			}	
