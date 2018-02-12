@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
 import org.fugerit.java.core.web.navmap.model.NavConfig;
 import org.fugerit.java.core.web.navmap.model.NavMap;
+import org.fugerit.java.core.web.servlet.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,35 +39,42 @@ public class NavFilter implements Filter {
 	
 	private NavMap navMap;
 	
+	private ServletContext context;
+	
 	@Override
 	public void destroy() {
 		this.navMap = null;
+		this.context = null;
 	}
 
-	public void nav( HttpServletRequest request, HttpServletResponse response, FilterChain chain ) throws IOException, ServletException {
-		String reqId = String.valueOf(  request.getSession( true ).getId()+"/"+System.currentTimeMillis() );
+	public void nav( RequestContext requestContext, FilterChain chain ) throws IOException, ServletException {
+		String reqId = String.valueOf(  requestContext.getRequest().getSession( true ).getId()+"/"+System.currentTimeMillis() );
 		try {
-			int authCode = NavFacade.nav( request, response, this.navMap, reqId);
+			// generic request pre processing
+			NavFacade.requestFilter( requestContext , this.navMap , reqId );
+			// actual page processing
+			int authCode = NavFacade.nav( requestContext, this.navMap, reqId);
 			if ( authCode == AuthHandler.AUTH_AUTHORIZED ) {
-				chain.doFilter(request, response);	
+				chain.doFilter( requestContext.getRequest(), requestContext.getResponse() );	
 			} else {
 				logger.error( "NavFilter nav() "+reqId+" auth error : "+authCode );
 				if ( authCode == AuthHandler.AUTH_HIDDEN ) {
-					response.sendError( HttpServletResponse.SC_NOT_FOUND );
+					requestContext.getResponse().sendError( HttpServletResponse.SC_NOT_FOUND );
 				} else {
-					response.sendError( HttpServletResponse.SC_FORBIDDEN );	
+					requestContext.getResponse().sendError( HttpServletResponse.SC_FORBIDDEN );	
 				}
 			}
 		} catch (Exception e) {
 			logger.error( "NavFilter nav() "+reqId+" error : "+e, e );
-			response.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			requestContext.getResponse().sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 		}
 	}
 	
 	@Override
 	public void doFilter( ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		if ( request instanceof HttpServletRequest && response instanceof HttpServletResponse ) {
-			nav((HttpServletRequest)request, (HttpServletResponse)response, chain);
+			RequestContext requestContext = RequestContext.getRequestContext( this.context , (HttpServletRequest)request, (HttpServletResponse)response );
+			nav( requestContext , chain);
 		} else {
 			chain.doFilter(request, response);
 		}
@@ -76,6 +84,7 @@ public class NavFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		try {
 			logger.info( "NavFilter init() - start" );
+			this.context = filterConfig.getServletContext();
 			String config = filterConfig.getInitParameter( "config" );
 			logger.info( "NavFilter init() config "+config );
 			ServletContext context = filterConfig.getServletContext();

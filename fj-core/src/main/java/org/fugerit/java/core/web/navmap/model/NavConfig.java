@@ -10,6 +10,7 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
+import org.fugerit.java.core.web.servlet.request.RequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -75,6 +76,7 @@ public class NavConfig {
 		logger.info( "parseConfig() - start" );
 		ListMapStringKey<NavEntryI> entryList = new ListMapStringKey<NavEntryI>();
 		ListMapStringKey<NavMenu> menuList = new ListMapStringKey<NavMenu>();
+		ListMapStringKey<RequestFilter> requestFilterList = new ListMapStringKey<RequestFilter>();
 		AuthHandler authHandler = null;
 		try {
 			logger.info( "parseConfig() - parsing input stream start" );
@@ -89,6 +91,23 @@ public class NavConfig {
 			if ( authHandlerType != null && authHandlerType.trim().length() > 0 ) {
 				authHandler = (AuthHandler)ClassHelper.newInstance( authHandlerType );
 			}
+			
+			// parsing reqeust filter
+			NodeList rfl = root.getElementsByTagName( "request-filter-list" );
+			if ( rfl.getLength() > 0 ) {
+				Element rflTag = (Element)rfl.item( 0 );
+				NodeList rf = rflTag.getElementsByTagName( "request-filter" );	
+				for ( int k=0; k<rf.getLength(); k++ ) {
+					Element currentRF = (Element)rf.item( k );
+					String id = currentRF.getAttribute( "id" );
+					String type = currentRF.getAttribute( "type" );
+					RequestFilter requestFilter = (RequestFilter) ClassHelper.newInstance( type );
+					requestFilter.setId( id );
+					requestFilter.configure( currentRF );
+					requestFilterList.add( requestFilter );
+				}
+			}
+			
 			// parsing entry
 			NodeList nle = root.getElementsByTagName( "nav-entry-list" );
 			if ( nle.getLength() == 1 ) {
@@ -130,7 +149,7 @@ public class NavConfig {
 		} finally {
 			logger.info( "parseConfig() - end" );
 		}
-		NavMap navMap = new NavMap( entryList, menuList );
+		NavMap navMap = new NavMap( requestFilterList, entryList, menuList );
 		if ( authHandler != null ) {
 			logger.info( "parseConfig() - override auth handler -> "+authHandler );
 			navMap.setAuthHandler( authHandler );
