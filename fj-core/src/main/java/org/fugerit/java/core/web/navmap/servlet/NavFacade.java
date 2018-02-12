@@ -21,8 +21,7 @@ public class NavFacade {
 	 * This method decide the outcome of the access to a give resource.
 	 * The NavEntry to check is found through the url in the request.
 	 * 
-	 * @param request		the http request
-	 * @param response		the http response
+	 * @param requestContext		request context
 	 * @param navMap		the nav map configuration
 	 * @param reqId			request id
 	 * @return				a <code>int</code> representing the authorization for the resource.
