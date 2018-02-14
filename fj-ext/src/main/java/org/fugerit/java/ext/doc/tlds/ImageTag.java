@@ -2,6 +2,7 @@ package org.fugerit.java.ext.doc.tlds;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -102,8 +103,9 @@ public class ImageTag extends TagSupportHelper {
 			LogFacade.getLog().info( "ImageTag > base dir : "+base.getAbsolutePath() );
 			File file = new File( base, this.file );
 			try {
-				LogFacade.getLog().info( "ImageTag > file url : "+file.toURL() );
-				render.append( file.toURL().toString() );
+				URL url = file.toURI().toURL();
+				LogFacade.getLog().info( "ImageTag > file url : "+url );
+				render.append( url.toString() );
 			} catch (MalformedURLException e) {
 				throw ( new JspException( e.toString(), e ) );
 			}

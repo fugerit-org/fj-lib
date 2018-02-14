@@ -20,7 +20,6 @@ public class XMLClean {
 	public static void cleanStream( Reader r, Writer w ) throws Exception {
 		BufferedReader reader = new BufferedReader( r );
 		String line = reader.readLine();
-		StringBuffer buffer = new StringBuffer();
 		StringWriter sw = new StringWriter();
 		PrintWriter writer = new PrintWriter( sw, false );
 		int count = 0;

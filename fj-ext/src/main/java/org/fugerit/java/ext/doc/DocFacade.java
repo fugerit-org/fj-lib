@@ -46,7 +46,7 @@ public class DocFacade {
 	private static final Properties DEFAULT_PARAMS = new Properties();
 	
 	private static void print( PrintStream s, DocContainer docContainer, String indent ) {
-		Iterator it = docContainer.docElements();
+		Iterator<DocElement> it = docContainer.docElements();
 		while ( it.hasNext() ) {
 			DocElement docElement = (DocElement) it.next();
 			s.println( indent+docElement );

@@ -19,7 +19,7 @@ public class DocBase extends DocElement {
 		for ( int k=0; k<pad; k++ ) {
 			p+= "  ";
 		}
-		Iterator it = docContainer.docElements();
+		Iterator<DocElement> it = docContainer.docElements();
 		while ( it.hasNext() ) {
 			DocElement docElement = (DocElement)it.next();
 			s.println( p+docElement );
@@ -39,13 +39,13 @@ public class DocBase extends DocElement {
 		this.docMeta = new DocContainer();
 		this.docHeader = new DocHeader();
 		this.docFooter = new DocFooter();
-		this.idMap = new HashMap();
-		this.additionalData = new HashMap();
+		this.idMap = new HashMap<String, DocElement> ();
+		this.additionalData = new HashMap<Object, Object>();
 	}
 	
-	private Map additionalData;
+	private Map<Object, Object> additionalData;
 	
-	public Map getAdditionalData() {
+	public Map<Object, Object> getAdditionalData() {
 		return additionalData;
 	}
 
@@ -57,7 +57,7 @@ public class DocBase extends DocElement {
 
 	private DocContainer docMeta;
 	
-	private HashMap idMap;
+	private Map<String, DocElement> idMap;
 	
 	public void setId( String id, DocElement element ) {
 		this.idMap.put( id , element );
@@ -125,7 +125,7 @@ public class DocBase extends DocElement {
 	
 	public Properties getInfo() {
 		Properties info = new Properties();
-		Iterator itInfo = this.getDocMeta().docElements();
+		Iterator<DocElement> itInfo = this.getDocMeta().docElements();
 		while ( itInfo.hasNext() ) {
 			DocElement docElement = (DocElement)itInfo.next();
 			if ( docElement instanceof DocInfo ) {

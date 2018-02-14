@@ -27,8 +27,6 @@ import org.w3c.dom.Element;
 
 public class DocRequestFacade extends BasicLogObject {
 
-	private static final DocHandler DEF = new DefaultDocHandler();
-	
 	public void handleDoc( HttpServletRequest request, HttpServletResponse response ) throws ServletException {
 		this.getLogger().info( "start processing "+DocServletConfig.VERSION );
 		
@@ -99,15 +97,9 @@ public class DocRequestFacade extends BasicLogObject {
 			
 			try {
 				//se il doc handler à null usiamo il default doc handler
-				if ( docHandler == null ) {
-					this.getLogger().info( "no doc handler found for document : "+name+", using default doc handler" );
-					docHandler = DEF;
-				}
 				if ( docTypeHandler != null ) {
 					docTypeHandler.handleDocTypeInit(request, response, docContext);
 				}
-				
-				
 				if ( docHandler.getForward() != null ) {
 					docHandler.handleDoc( request, response, this.getDocRequestConfig().getContext().getContext() );
 					RequestDispatcher rd = request.getRequestDispatcher( docHandler.getForward() );

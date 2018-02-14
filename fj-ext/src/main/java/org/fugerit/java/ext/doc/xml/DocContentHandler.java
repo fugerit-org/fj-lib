@@ -46,7 +46,7 @@ public class DocContentHandler implements ContentHandler {
 														"header-ext", 
 														"footer-ext" };
 	
-	private static final List CONTAINER_LIST = Arrays.asList( ELEMENT_CONTAINER );
+	private static final List<String> CONTAINER_LIST = Arrays.asList( ELEMENT_CONTAINER );
 	
 	private DocBase docBase;
 	
@@ -54,7 +54,7 @@ public class DocContentHandler implements ContentHandler {
 	
 	private DocContainer currentContainer;
 	
-	private LinkedList parents;
+	private LinkedList<DocContainer> parents;
 	
 	private DocHelper docHelper;
 	
@@ -134,7 +134,7 @@ public class DocContentHandler implements ContentHandler {
 	 * @see org.xml.sax.ContentHandler#startDocument()
 	 */
 	public void startDocument() throws SAXException {
-		this.parents = new LinkedList();
+		this.parents = new LinkedList<DocContainer>();
 		this.currentContainer = null;
 		this.currentElement = null;
 	}
@@ -248,7 +248,6 @@ public class DocContentHandler implements ContentHandler {
 		} else if ( "body".equalsIgnoreCase( qName ) ) {
 			DocContainer docBody = this.docBase.getDocBody();
 			this.currentElement = docBody;
-			Properties info = this.docBase.getInfo();
 		} else if ( "image".equalsIgnoreCase( qName ) ) {
 			DocImage docImage = new DocImage();
 			// setting paragraph style

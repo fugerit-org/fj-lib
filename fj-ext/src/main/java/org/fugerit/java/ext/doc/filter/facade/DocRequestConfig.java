@@ -3,6 +3,7 @@ package org.fugerit.java.ext.doc.filter.facade;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.fugerit.java.core.lang.helpers.ClassHelper;
@@ -24,7 +25,7 @@ public class DocRequestConfig extends BasicLogObject {
 
 	private ConfigContext context;
 
-	public HashMap getTypeHandlerMap() {
+	public Map<String, DocTypeHandler> getTypeHandlerMap() {
 		return typeHandlerMap;
 	}
 
@@ -41,10 +42,10 @@ public class DocRequestConfig extends BasicLogObject {
 	}
 
 	private void addTypeHandlers( SearchDOM searchDOM, Element rootTag ) {
-		List typeHandlerTagList = searchDOM.findAllTags( rootTag , "type-handler" );
-		Iterator typeHandlerTagIt = typeHandlerTagList.iterator();
+		List<Element> typeHandlerTagList = searchDOM.findAllTags( rootTag , "type-handler" );
+		Iterator<Element> typeHandlerTagIt = typeHandlerTagList.iterator();
 		while ( typeHandlerTagIt.hasNext() ) {
-			Element docHandlerTag = (Element) typeHandlerTagIt.next();
+			Element docHandlerTag = typeHandlerTagIt.next();
 			Properties atts = DOMUtils.attributesToProperties( docHandlerTag );
 			String name = atts.getProperty( "name" );
 			String type = atts.getProperty( "type" );
@@ -60,11 +61,11 @@ public class DocRequestConfig extends BasicLogObject {
 	}
 
 	public void configure( Element root, ConfigContext context ) {
-		this.docHandlerMap = new HashMap();
+		this.docHandlerMap = new HashMap<String, DocHandler>();
 		Properties defMime = new Properties();
 		try {
 			this.context = context;
-			this.typeHandlerMap = new HashMap();
+			this.typeHandlerMap = new HashMap<String, DocTypeHandler>();
 			SearchDOM searchDOM = SearchDOM.newInstance( true , true );
 			Element generalConfigTag = searchDOM.findTag( root , "general-config" );
 			Properties generalConfigAtts = DOMUtils.attributesToProperties( generalConfigTag );
@@ -93,10 +94,10 @@ public class DocRequestConfig extends BasicLogObject {
 			this.getLogger().info( "docHelper    : "+this.docHelper );
 						
 			// itext font
-			List itextFontTagList = searchDOM.findAllTags( root , "itext-font" );
-			Iterator itextFontTagIt = itextFontTagList.iterator();
+			List<Element> itextFontTagList = searchDOM.findAllTags( root , "itext-font" );
+			Iterator<Element> itextFontTagIt = itextFontTagList.iterator();
 			while ( itextFontTagIt.hasNext() ) {
-				Element itextFontTag = (Element) itextFontTagIt.next();
+				Element itextFontTag = itextFontTagIt.next();
 				Properties itextFontAtts = DOMUtils.attributesToProperties( itextFontTag );
 				String name = itextFontAtts.getProperty( "name" );
 				String path = itextFontAtts.getProperty( "path" );
@@ -111,10 +112,10 @@ public class DocRequestConfig extends BasicLogObject {
 			}
 			this.addTypeHandlers(searchDOM, root);
 			// doc handlers
-			List docHandlerTagList = searchDOM.findAllTags( root , "doc-handler" );
-			Iterator docHandlerTagIt = docHandlerTagList.iterator();
+			List<Element> docHandlerTagList = searchDOM.findAllTags( root , "doc-handler" );
+			Iterator<Element> docHandlerTagIt = docHandlerTagList.iterator();
 			while ( docHandlerTagIt.hasNext() ) {
-				Element docHandlerTag = (Element) docHandlerTagIt.next();
+				Element docHandlerTag = docHandlerTagIt.next();
 				Properties atts = DOMUtils.attributesToProperties( docHandlerTag );
 				String name = atts.getProperty( "name" );
 				String type = atts.getProperty( "type" );
@@ -164,14 +165,10 @@ public class DocRequestConfig extends BasicLogObject {
 		this.context = context;
 	}
 
-	private HashMap docHandlerMap;
+	private Map<String, DocHandler> docHandlerMap;
 	
-	public HashMap getDocHandlerMap() {
+	public Map<String, DocHandler> getDocHandlerMap() {
 		return docHandlerMap;
-	}
-
-	public void setDocHandlerMap(HashMap docHandlerMap) {
-		this.docHandlerMap = docHandlerMap;
 	}
 	
 	private String jspPath;
@@ -188,7 +185,7 @@ public class DocRequestConfig extends BasicLogObject {
 	
 	private String processingPage;
 
-	private HashMap typeHandlerMap;
+	private Map<String, DocTypeHandler> typeHandlerMap;
 	
 	private String errorManager;
 	

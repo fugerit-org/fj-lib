@@ -100,10 +100,10 @@ public class XlsTypeHandler extends BasicTypeHandler {
 	
 	private static TableMatrix handleMatrix( DocTable table, boolean ignoreFormat, WritableSheet dati ) throws Exception {
 		TableMatrix matrix = new TableMatrix( table.containerSize() , table.getColumns() );
-		Iterator rows = table.docElements();
+		Iterator<DocElement> rows = table.docElements();
 		while ( rows.hasNext() ) {
 			DocRow row = (DocRow)rows.next();
-			Iterator cells = row.docElements();
+			Iterator<DocElement> cells = row.docElements();
 			while ( cells.hasNext() ) {
 				DocCell cell = (DocCell)cells.next();
 				matrix.setNext( cell, cell.getRSpan() , cell.getCSpan() );
@@ -119,7 +119,7 @@ public class XlsTypeHandler extends BasicTypeHandler {
 				String text = "";
 				DocPara currentePara = null;
 				if ( cell != null ) {
-					Iterator it1 = cell.docElements();
+					Iterator<DocElement> it1 = cell.docElements();
 					DocElement current = (DocElement)it1.next();
 					if ( current instanceof DocPara ) {
 						currentePara = ((DocPara)current);
@@ -308,7 +308,7 @@ public class XlsTypeHandler extends BasicTypeHandler {
 			String excelTemplate = docBase.getInfo().getProperty( PROP_XLS_TEMPLATE );
 			Workbook templateXls = null;
 			if ( excelTemplate != null ) {
-				templateXls = Workbook.getWorkbook( new File( request.getRealPath( "/" ), excelTemplate ) );
+				templateXls = Workbook.getWorkbook( new File( docContext.getConfigContext().getContext().getRealPath( "/" ), excelTemplate ) );
 			}			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			handleDoc(docBase, baos, templateXls);

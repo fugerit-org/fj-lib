@@ -12,23 +12,6 @@ import java.util.regex.Pattern;
 import org.fugerit.java.core.log.BasicLogObject;
 
 public class ParamFinder extends BasicLogObject {
-
-	public static void main( String[] args ) {
-		try {
-			
-			String test = "Prova {idRisorsa} aa";
-			
-			ParamFinder pf = ParamFinder.newFinderAlt1();
-			
-			Properties params = new Properties();
-			params.setProperty( "idRisorsa" , "1" );
-			
-			System.out.println( "TEST >>> "+pf.substitute( test , params ) );
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public static final String DEFAULT_PRE = "\\$\\{";
 	public static final String DEFAULT_POST = "\\}";
@@ -73,14 +56,14 @@ public class ParamFinder extends BasicLogObject {
 		this.postL = postL;
 	}
 	
-	public Set getParamSet( CharSequence text ) {
-		List paramList = this.getParamList( text );
-		Set paramSet = new HashSet( paramList );
+	public Set<String> getParamSet( CharSequence text ) {
+		List<String> paramList = this.getParamList( text );
+		Set<String> paramSet = new HashSet<String>( paramList );
 		return paramSet;
 	}
 	
-	public List getParamList( CharSequence text ) {
-		List paramList = new ArrayList();
+	public List<String> getParamList( CharSequence text ) {
+		List<String> paramList = new ArrayList<String>();
 		Matcher m = p.matcher( text );
 		while ( m.find() ) {
 			String found = m.group();
@@ -94,7 +77,7 @@ public class ParamFinder extends BasicLogObject {
 
 	public int count( CharSequence text, String param ) {
 		int count = 0;
-		List list = this.getParamList( text );
+		List<String> list = this.getParamList( text );
 		while ( list.remove( param ) ) {
 			count++;
 		}
@@ -108,8 +91,8 @@ public class ParamFinder extends BasicLogObject {
 	
 	public String substitute( CharSequence text, Properties params ) {
 		String result = text.toString();
-		List list = this.getParamList( result );
-		Iterator it = list.iterator();
+		List<String> list = this.getParamList( result );
+		Iterator<String> it = list.iterator();
 		while ( it.hasNext() ) {
 			String current = it.next().toString();
 			String sub = params.getProperty( current );

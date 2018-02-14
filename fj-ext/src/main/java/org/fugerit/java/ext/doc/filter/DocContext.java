@@ -2,11 +2,11 @@ package org.fugerit.java.ext.doc.filter;
 
 import java.io.OutputStream;
 import java.io.StringReader;
-import java.text.NumberFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.fugerit.java.core.log.BasicLogObject;
+import org.fugerit.java.core.web.servlet.config.ConfigContext;
 import org.fugerit.java.ext.doc.DocBase;
 import org.fugerit.java.ext.doc.DocFacade;
 import org.fugerit.java.ext.doc.filter.facade.DocRequestConfig;
@@ -21,6 +21,10 @@ public class DocContext extends BasicLogObject {
 		this.docRequestConfig = docRequestConfig;
 	}
 
+	public ConfigContext getConfigContext() {
+		return this.docRequestConfig.getContext();
+	}
+	
 	private String fileName;
 	
 	public String getFileName() {
@@ -90,14 +94,6 @@ public class DocContext extends BasicLogObject {
 	public void setBufferStream(OutputStream bufferStream) {
 		this.bufferStream = bufferStream;
 	}
-
-	private static String formatMemory( long mem ) {
-		return NumberFormat.getInstance().format( mem );
-	}
-	
-	private static String formatRuntime() {
-		return formatMemory( Runtime.getRuntime().freeMemory() ) + " / "+formatMemory( Runtime.getRuntime().totalMemory() );
-	} 
 	
 	public DocBase getDocBase( HttpServletRequest request ) throws Exception {
 		DocBase docBase = null;

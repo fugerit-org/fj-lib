@@ -1,9 +1,7 @@
 package org.fugerit.java.ext.doc.itext;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.fugerit.java.core.log.LogFacade;
 import org.fugerit.java.ext.doc.DocElement;
@@ -48,7 +46,15 @@ public class PdfHelper  extends PdfPageEventHelper {
 	
 	private DocFooter docFooter;
     
-    public void onStartPage(PdfWriter writer, Document document) {
+    public int getCurrentPageNumber() {
+		return currentPageNumber;
+	}
+
+	public int getPageNumberAlignment() {
+		return pageNumberAlignment;
+	}
+
+	public void onStartPage(PdfWriter writer, Document document) {
     	this.currentPageNumber = writer.getPageNumber();
     	this.docHelper.getParams().setProperty( ITextDocHandler.PARAM_PAGE_CURRENT , String.valueOf( writer.getPageNumber() ) );
 		if ( this.getDocHeader() != null ) {
@@ -80,9 +86,8 @@ public class PdfHelper  extends PdfPageEventHelper {
     		// allocate direct writer
             PdfContentByte cb = writer.getDirectContent();
             // save writer state
-            List lines = new ArrayList();
             cb.saveState();
-    		Iterator itElements = this.getDocFooter().docElements();
+    		Iterator<DocElement> itElements = this.getDocFooter().docElements();
     		int totalOffset = 20;
 	        cb.beginText();
 	        cb.setFontAndSize(baseFont, footerTextSize);

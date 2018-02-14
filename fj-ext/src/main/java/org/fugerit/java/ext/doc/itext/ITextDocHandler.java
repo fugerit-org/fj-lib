@@ -70,9 +70,9 @@ public class ITextDocHandler implements DocHandler {
 	
 	public static final String PARAM_PAGE_TOTAL = "totalPage";
 	
-	public static final String PARAM_PAGE_TOTAL_FINDER = PARAM_FINDER.DEFAULT_PRE+"totalPage"+PARAM_FINDER.DEFAULT_POST;
+	public static final String PARAM_PAGE_TOTAL_FINDER = ParamFinder.DEFAULT_PRE+"totalPage"+ParamFinder.DEFAULT_POST;
 	
-	private static HashMap fonts = new HashMap();
+	private static HashMap<String, BaseFont> fonts = new HashMap<String, BaseFont>();
 
 	public static void registerFont( String name, String path ) throws Exception {
 		BaseFont font = BaseFont.createFont( path, BaseFont.CP1252, true );
@@ -96,7 +96,6 @@ public class ITextDocHandler implements DocHandler {
 			current.setForeColor( parent.getForeColor() );
 		}
 	}
-	
 	
 	public static Color parseHtmlColor( String c ) {
 		int r = (int)BinaryCalc.hexToLong( c.substring( 1, 3 ) );
@@ -125,6 +124,14 @@ public class ITextDocHandler implements DocHandler {
 
 	private int totalPageCount; 
 	
+	public PdfWriter getPdfWriter() {
+		return pdfWriter;
+	}
+
+	public RtfWriter2 getRtfWriter2() {
+		return rtfWriter2;
+	}
+
 	public ITextDocHandler( Document document, RtfWriter2 rtfWriter2 ) {
 		this( document, DOC_OUTPUT_RTF );
 		this.rtfWriter2 = rtfWriter2;
@@ -198,7 +205,7 @@ public class ITextDocHandler implements DocHandler {
 		return p;
 	}	
 	
-	protected static Phrase createPhrase( DocPhrase docPhrase, ITextHelper docHelper, List fontMap ) throws Exception {
+	protected static Phrase createPhrase( DocPhrase docPhrase, ITextHelper docHelper, List<Font> fontMap ) throws Exception {
 		String text = createText( docHelper.getParams(), docPhrase.getText() );
 		int style = docPhrase.getStyle();
 		String fontName = docPhrase.getFontName();
@@ -218,18 +225,9 @@ public class ITextDocHandler implements DocHandler {
 		return createPara(docPara, docHelper, null);
 	}
 	
-	protected static Paragraph createPara( DocPara docPara, ITextHelper docHelper, List fontMap ) throws Exception {
+	protected static Paragraph createPara( DocPara docPara, ITextHelper docHelper, List<Font> fontMap ) throws Exception {
 		int style = docPara.getStyle();
 		String text = createText( docHelper.getParams(), docPara.getText() );
-//		if ( DOC_OUTPUT_HTML.equals( this.docType ) ) {
-//			int count = 0;
-//			StringBuffer buffer = new StringBuffer();
-//			while ( count < text.length() && text.indexOf( " " )==count ) {
-//				count++;
-//			}
-//			buffer.append( text.substring( count ) );
-//			text = buffer.toString();
-//		}
 		String fontName = docPara.getFontName();
 		Font f = createFont(fontName, docPara.getSize(), style, docHelper, docPara.getForeColor() );
 		Phrase phrase = new Phrase( text, f );
@@ -264,8 +262,6 @@ public class ITextDocHandler implements DocHandler {
 		
 		LogFacade.getLog().debug( "Handle table DONE ! -> "+docTable.getClass().getName()+" - "+Runtime.getRuntime().freeMemory()/1000/1000+" / "+Runtime.getRuntime().totalMemory()/1000/1000+" / "+Runtime.getRuntime().maxMemory()/1000/1000 );
 		
-		int maxMem = 0;
-		
 		boolean startHeader = false;
 		Table table = new Table( docTable.getColumns() );
 		table.setBorderWidth(0);	
@@ -291,12 +287,12 @@ public class ITextDocHandler implements DocHandler {
 			}
 			table.setWidths( w );
 		}
-		Iterator itRow = docTable.docElements();
+		Iterator<DocElement> itRow = docTable.docElements();
 		while ( itRow.hasNext() ) {
 			DocRow docRow = (DocRow)itRow.next();
 			//maxMam = Math.max( Runtime.getRuntime().totalMemory()/1000/1000 , )
 			//System.out.println(  "Handle row DONE ! -> "+Runtime.getRuntime().freeMemory()/1000/1000+" / "+Runtime.getRuntime().totalMemory()/1000/1000 );
-			Iterator itCell = docRow.docElements();
+			Iterator<DocElement> itCell = docRow.docElements();
 			while ( itCell.hasNext() ) {
 				DocCell docCell = (DocCell)itCell.next();
 				setStyle( docTable, docCell );
@@ -349,8 +345,8 @@ public class ITextDocHandler implements DocHandler {
 					cell.setVerticalAlignment( getValign( docCell.getValign() ) );
 				}				
 				CellParent cellParent = new CellParent( cell );
-				Iterator itCurrent = docCell.docElements();
-				List fontList = new ArrayList();
+				Iterator<DocElement> itCurrent = docCell.docElements();
+				List<Font> fontList = new ArrayList<Font>();
 				while ( itCurrent.hasNext() ) {
 					DocElement docElement = (DocElement) itCurrent.next();
 					if ( docElement instanceof DocPara ) {
@@ -374,6 +370,7 @@ public class ITextDocHandler implements DocHandler {
 					}
 				}
 				table.addCell( cell );
+				@SuppressWarnings("rawtypes")
 				List listChunk = cell.getChunks();
 				if ( listChunk.size() == fontList.size() ) {
 					for ( int k=0; k<listChunk.size(); k++ ) {
@@ -410,8 +407,8 @@ public class ITextDocHandler implements DocHandler {
 	}
 	
 	private static RtfHeaderFooter createRtfHeaderFooter( DocHeaderFooter docHeaderFooter, Document document, boolean header, ITextHelper docHelper ) throws Exception {
-		List list = new ArrayList();
-		Iterator itDoc = docHeaderFooter.docElements();
+		List<DocElement> list = new ArrayList<DocElement>();
+		Iterator<DocElement> itDoc = docHeaderFooter.docElements();
 		while ( itDoc.hasNext() ) {
 			list.add( itDoc.next() );
 		}
@@ -581,13 +578,13 @@ public class ITextDocHandler implements DocHandler {
 		
 		this.document.open();
 		
-		Iterator itDoc = docBase.getDocBody().docElements();
+		Iterator<DocElement> itDoc = docBase.getDocBody().docElements();
 		handleElements(document, itDoc, docHelper);
 		
 		this.document.close();
 	}
 	
-	public static void handleElements( Document document, Iterator itDoc, ITextHelper docHelper ) throws Exception {
+	public static void handleElements( Document document, Iterator<DocElement> itDoc, ITextHelper docHelper ) throws Exception {
 		while ( itDoc.hasNext() ) {
 			DocElement docElement = (DocElement)itDoc.next();
 			getElement(document, docElement, true, docHelper );
@@ -624,7 +621,7 @@ public class ITextDocHandler implements DocHandler {
 	}
 	
 	private HeaderFooter createHeaderFoter( DocHeaderFooter container, int align, ITextHelper docHelper ) throws Exception {
-		Iterator it = container.docElements(); 
+		Iterator<DocElement> it = container.docElements(); 
 		Phrase phrase = new Phrase();
 		float leading = (float)-1.0;
 		while ( it.hasNext() ) {
