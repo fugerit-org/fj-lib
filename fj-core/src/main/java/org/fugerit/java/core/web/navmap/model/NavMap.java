@@ -1,7 +1,6 @@
 package org.fugerit.java.core.web.navmap.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.fugerit.java.core.util.collection.ListMapStringKey;

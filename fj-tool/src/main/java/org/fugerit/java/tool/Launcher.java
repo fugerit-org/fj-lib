@@ -1,6 +1,5 @@
 package org.fugerit.java.tool;
 
-import java.io.StringBufferInputStream;
 import java.util.Iterator;
 import java.util.Properties;
 
