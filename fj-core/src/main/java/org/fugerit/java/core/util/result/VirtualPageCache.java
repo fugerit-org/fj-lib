@@ -47,9 +47,8 @@ public class VirtualPageCache<T> extends BasicLogObject implements Serializable 
 		if ( wrapper != null ) {
 			if ( this.checkTtl( wrapper ) ) {
 				page = wrapper.getPage();
-				System.out.println( "PAGE > "+page );
 			} else {
-				this.cache.remove( wrapper );
+				this.cache.remove( key );
 			}
 		}
 		return page;

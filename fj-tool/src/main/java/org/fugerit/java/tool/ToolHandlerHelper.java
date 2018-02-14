@@ -7,7 +7,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
 
-import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.slf4j.Logger;
