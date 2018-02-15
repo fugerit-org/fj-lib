@@ -5,7 +5,7 @@
 	<groupId>org.fugerit.java</groupId>
 	<artifactId>fj-lib</artifactId>
 
-	<version>0.2.3-SNAPSHOT</version>
+	<version>0.2.2.8-b3</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
