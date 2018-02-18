@@ -20,8 +20,6 @@ import org.fugerit.java.core.util.collection.ListMapStringKey;
  */
 public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 
-	public static final String SESSION_ATT_NAME = "org.fugerit.java.mod.web.navmap.model.NavEntry#AttName";
-	
 	/*
 	 * 
 	 */

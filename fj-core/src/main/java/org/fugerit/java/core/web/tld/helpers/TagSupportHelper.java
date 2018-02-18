@@ -1,13 +1,34 @@
 package org.fugerit.java.core.web.tld.helpers;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
 
 public class TagSupportHelper extends TagSupport {
 
+	public static final String SCOPE_CONTEXT = "context";
+	
+	public static final String SCOPE_SESSION = "session";
+	
+	public static final String SCOPE_REQUEST = "request";
+
+	public static final String SCOPE_PAGE = "page";
+	
+	public static final String SCOPE_DEFAULT = SCOPE_REQUEST;
+	
+	public static final Map<String, Integer> SCOPE_MAP = new HashMap<String, Integer>();
+	static {
+		SCOPE_MAP.put( SCOPE_PAGE , PageContext.PAGE_SCOPE );
+		SCOPE_MAP.put( SCOPE_REQUEST , PageContext.REQUEST_SCOPE );
+		SCOPE_MAP.put( SCOPE_SESSION , PageContext.SESSION_SCOPE );
+		SCOPE_MAP.put( SCOPE_CONTEXT , PageContext.APPLICATION_SCOPE );
+	}
+	
 	protected void renderValue( String v ) throws JspException {
 		if ( this.getId() == null ) {
 			this.print( v );	
@@ -68,6 +89,14 @@ public class TagSupportHelper extends TagSupport {
 		return obj;
 	}	
 	
+	protected void setAttribute( String key, Object value, String scope ) {
+		if ( scope == null ) {
+			scope = SCOPE_DEFAULT;
+		} else {
+			scope = scope.toLowerCase();
+		}
+		this.pageContext.setAttribute( key, value, SCOPE_MAP.get( scope ) );
+	}
 
 	private static final long serialVersionUID = 565826836474874032L;
 

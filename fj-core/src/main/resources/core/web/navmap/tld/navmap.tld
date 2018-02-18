@@ -25,14 +25,25 @@
 		<name>info</name>
 		<required>false</required>	
 		<rtexprvalue>true</rtexprvalue>
-	</attribute>	
+	</attribute>
+	<attribute>
+		<name>scope</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
 </tag>
 
 <!--
-	get the nav data for an entry
+	get the nav data
 	************************************************** 
-	id - the request scope attribute where the result is stored
-	url - the entry url for the NavData to create (optional)
+	id - the attribute key where to store the result
+	toScope - the scope where to set the result ('page', 'request'(default), 'session', 'context' )
+	url - the entry url to set (first in search order)
+	name - the attribute key to search for NavEntry (second in search order)
+	property - the attribute property key to search for the NavEntry (only if name is set)
+	scope - the scope to look for (only if name is set)
+	NOTE: if none is found, the entry currently in session is used.
+	setCurrentEntry - if '1' or 'true' set not only in the id att, but in NavEntryI.SESSION_ATT_NAME
  -->
 <tag>
 	<name>data</name>
@@ -44,9 +55,77 @@
         <rtexprvalue>true</rtexprvalue>
 	</attribute>
 	<attribute>
+		<name>toScope</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
 		<name>url</name>
 		<required>false</required>	
 		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>name</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>scope</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>setCurrentEntry</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag> 
+
+<!--
+	get the nav entry
+	************************************************** 
+	id - the attribute key where to store the result
+	toScope - the scope where to set the result ('page', 'request'(default), 'session', 'context' )
+	url - the entry url to set (first in search order)
+	name - the attribute key to search for NavEntry (second in search order)
+	property - the attribute property key to search for the NavEntry (only if name is set)
+	scope - the scope to look for (only if name is set)
+	NOTE: if none is found, the entry currently in session is used.
+	setCurrentEntry - if '1' or 'true' set not only in the id att, but in NavEntryI.SESSION_ATT_NAME
+ -->
+<tag>
+	<name>entry</name>
+	<tagclass>org.fugerit.java.core.web.navmap.tlds.GetNavEntry</tagclass>
+	<bodycontent>JSP</bodycontent>
+	<attribute>
+		<name>id</name>
+		<required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>toScope</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>url</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>name</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>scope</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>setCurrentEntry</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
 	</attribute>
 </tag> 
 
@@ -143,7 +222,7 @@
 		<name>paramValue</name>
 		<required>false</required>	
 		<rtexprvalue>true</rtexprvalue>
-	</attribute>		
+	</attribute>	
 </tag> 
 
 </taglib>
