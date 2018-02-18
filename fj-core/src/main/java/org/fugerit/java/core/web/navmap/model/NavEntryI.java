@@ -5,6 +5,8 @@ import org.fugerit.java.core.util.collection.ListMapStringKey;
 
 public interface NavEntryI extends KeyObject<String> {
 
+	public static final String SESSION_ATT_NAME = "org.fugerit.java.mod.web.navmap.model.NavEntry#AttName";
+	
 	String getUrl();
 
 	String getMenu1();
