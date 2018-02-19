@@ -1,5 +1,7 @@
 package org.fugerit.java.core.web.navmap.model;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -10,6 +12,7 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
+import org.fugerit.java.core.web.auth.handler.AuthMapCatalogConfig;
 import org.fugerit.java.core.web.servlet.request.RequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,12 +75,13 @@ public class NavConfig {
 		}
 	}
 	
-	public static NavMap parseConfig( InputStream is ) throws NavException {
+	public static NavMap parseConfig( InputStream is, String servletPath ) throws NavException {
 		logger.info( "parseConfig() - start" );
 		ListMapStringKey<NavEntryI> entryList = new ListMapStringKey<NavEntryI>();
 		ListMapStringKey<NavMenu> menuList = new ListMapStringKey<NavMenu>();
 		ListMapStringKey<RequestFilter> requestFilterList = new ListMapStringKey<RequestFilter>();
 		AuthHandler authHandler = null;
+		String authMapConfig = null;
 		try {
 			logger.info( "parseConfig() - parsing input stream start" );
 			
@@ -91,6 +95,8 @@ public class NavConfig {
 			if ( authHandlerType != null && authHandlerType.trim().length() > 0 ) {
 				authHandler = (AuthHandler)ClassHelper.newInstance( authHandlerType );
 			}
+			
+			authMapConfig = root.getAttribute( "auth-map" );
 			
 			// parsing reqeust filter
 			NodeList rfl = root.getElementsByTagName( "request-filter-list" );
@@ -153,6 +159,20 @@ public class NavConfig {
 		if ( authHandler != null ) {
 			logger.info( "parseConfig() - override auth handler -> "+authHandler );
 			navMap.setAuthHandler( authHandler );
+		}
+		if ( StringUtils.isNotEmpty( authMapConfig ) ) {
+			File file = new File( servletPath, authMapConfig );
+			if ( file.exists() ) {
+				try {
+					FileInputStream fis = new FileInputStream( file );
+					AuthMapCatalogConfig.loadAuthList( fis , navMap.getAuthMap() );
+					fis.close();	
+				} catch (Exception e) {
+					throw new NavException( "Error configuring AuthMap", e );
+				}
+			} else {
+				logger.warn( "AuthMapConfig file not found : "+file.getAbsolutePath() );
+			}
 		}
 		return navMap;
 	}
