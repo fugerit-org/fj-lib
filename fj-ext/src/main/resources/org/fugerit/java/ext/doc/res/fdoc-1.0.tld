@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+<tlibversion>1.2</tlibversion>
+<jspversion>1.1</jspversion>
+<shortname>doc</shortname>
+<uri>http://www.fugerit.org/data/java/mod/doc/tld/doc-1-0.tld</uri>
+
+<!-- TAG : url  -->
+<tag>
+<name>jsp</name>
+<tagclass>org.fugerit.java.ext.doc.tlds.JspTag</tagclass>
+<bodycontent>JSP</bodycontent>
+<attribute>
+<name>flush</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<!-- TAG : type  -->
+<tag>
+<name>type</name>
+<tagclass>org.fugerit.java.ext.doc.tlds.TypeTag</tagclass>
+<bodycontent>EMTPY</bodycontent>
+<attribute>
+<name>id</name>
+<required>true</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+<!-- TAG : image  -->
+<tag>
+<name>image</name>
+<tagclass>org.fugerit.java.ext.doc.tlds.ImageTag</tagclass>
+<bodycontent>JSP</bodycontent>
+<attribute>
+<name>url</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+<name>file</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+<name>scaling</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+<attribute>
+<name>webapp</name>
+<required>false</required>
+<rtexprvalue>true</rtexprvalue>
+</attribute>
+</tag>
+
+</taglib>

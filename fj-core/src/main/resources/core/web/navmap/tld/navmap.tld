@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+<taglib>
+<tlibversion>1.2</tlibversion>
+<jspversion>1.1</jspversion>
+<shortname>nav</shortname>
+<uri>http://fugerit.org/tld/navmap-1-0.tld</uri>
+
+<!--
+	get a user info (AuthUser object as an associated attribute map)
+	************************************************** 
+	id - the request scope attribute where the result is stored
+	info - the attribute name to get
+ -->
+<tag>
+	<name>user</name>
+	<tagclass>org.fugerit.java.core.web.navmap.tlds.GetAuthUser</tagclass>
+	<bodycontent>JSP</bodycontent>
+	<attribute>
+		<name>id</name>
+		<required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>info</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>scope</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
+
+<!--
+	get the nav data
+	************************************************** 
+	id - the attribute key where to store the result
+	toScope - the scope where to set the result ('page', 'request'(default), 'session', 'context' )
+	url - the entry url to set (first in search order)
+	name - the attribute key to search for NavEntry (second in search order)
+	property - the attribute property key to search for the NavEntry (only if name is set)
+	scope - the scope to look for (only if name is set)
+	NOTE: if none is found, the entry currently in session is used.
+	setCurrentEntry - if '1' or 'true' set not only in the id att, but in NavEntryI.SESSION_ATT_NAME
+ -->
+<tag>
+	<name>data</name>
+	<tagclass>org.fugerit.java.core.web.navmap.tlds.GetNavData</tagclass>
+	<bodycontent>JSP</bodycontent>
+	<attribute>
+		<name>id</name>
+		<required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>toScope</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>url</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>name</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>scope</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>setCurrentEntry</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag> 
+
+<!--
+	get the nav entry
+	************************************************** 
+	id - the attribute key where to store the result
+	toScope - the scope where to set the result ('page', 'request'(default), 'session', 'context' )
+	url - the entry url to set (first in search order)
+	name - the attribute key to search for NavEntry (second in search order)
+	property - the attribute property key to search for the NavEntry (only if name is set)
+	scope - the scope to look for (only if name is set)
+	NOTE: if none is found, the entry currently in session is used.
+	setCurrentEntry - if '1' or 'true' set not only in the id att, but in NavEntryI.SESSION_ATT_NAME
+ -->
+<tag>
+	<name>entry</name>
+	<tagclass>org.fugerit.java.core.web.navmap.tlds.GetNavEntry</tagclass>
+	<bodycontent>JSP</bodycontent>
+	<attribute>
+		<name>id</name>
+		<required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>toScope</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>url</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>name</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>scope</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>setCurrentEntry</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag> 
+
+<!--
+	isBranch check if an entry is part of a tag branch
+	************************************************** 
+	id - the request scope attribute where the result check is stored
+	branchUrl - the base entry url (ancestor)
+	checkUrl - the entry yrl to check (kid)
+ -->
+<tag>
+	<name>isBranch</name>
+	<tagclass>org.fugerit.java.core.web.navmap.tlds.IsNavBranch</tagclass>
+	<bodycontent>JSP</bodycontent>
+	<attribute>
+		<name>id</name>
+		<required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>checkUrl</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>branchUrl</name>
+		<required>true</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>	
+</tag> 
+
+<!--
+	auth : check authorization to a resource
+	************************************************** 
+	id - the request scope attribute where the result check is stored
+	resource - the resource to check
+	url  - if resource is not provided
+ -->
+<tag>
+	<name>auth</name>
+	<tagclass>org.fugerit.java.core.web.navmap.tlds.AuthCheck</tagclass>
+	<bodycontent>JSP</bodycontent>
+	<attribute>
+		<name>id</name>
+		<required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>url</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>resource</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>	
+</tag> 
+
+<!--
+	renderUrl : Render the url of a navEntry
+	************************************************** 
+	id - if set the url is set in attribute with given name, otherwise is printed to page
+	url  - nav entry url, if not set the current page entry is looked for
+	paramMap - a map of parameters to add to the url
+	paramId - a single parameter value to add to the url
+	paramValue a single paramter value to add to the url with given paramId
+ -->
+<tag>
+	<name>renderUrl</name>
+	<tagclass>org.fugerit.java.core.web.navmap.tlds.RenderUrl</tagclass>
+	<bodycontent>JSP</bodycontent>
+	<attribute>
+		<name>id</name>
+		<required>false</required>
+        <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>url</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>paramMap</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>paramId</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>paramValue</name>
+		<required>false</required>	
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>	
+</tag> 
+
+</taglib>

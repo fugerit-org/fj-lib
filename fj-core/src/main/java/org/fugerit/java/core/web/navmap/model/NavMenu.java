@@ -25,9 +25,9 @@ public class NavMenu implements Serializable, KeyObject<String> {
 
 	private String id;
 	
-	private List<NavEntry> entries;
+	private List<NavMenuItem> entries;
 
-	public List<NavEntry> getEntries() {
+	public List<NavMenuItem> getEntries() {
 		return entries;
 	}
 
@@ -43,7 +43,7 @@ public class NavMenu implements Serializable, KeyObject<String> {
 	public NavMenu(String id) {
 		super();
 		this.id = id;
-		this.entries = new ListMapStringKey<NavEntry>();
+		this.entries = new ListMapStringKey<NavMenuItem>();
 	}
 	
 	@Override

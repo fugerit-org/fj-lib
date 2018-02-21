@@ -1,13 +1,19 @@
 package org.fugerit.java.core.web.navmap.model;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
+import org.fugerit.java.core.web.auth.handler.AuthMapCatalogConfig;
+import org.fugerit.java.core.web.servlet.request.RequestFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -29,7 +35,7 @@ public class NavConfig {
 
 	private static final Logger logger= LoggerFactory.getLogger(NavConfig.class);
 	
-	private static void recurseEntries( Element element, ListMapStringKey<NavEntry> entryList, NavEntry parent  ) {
+	private static void recurseEntries( Element element, ListMapStringKey<NavEntryI> entryList, NavEntryI parent  ) {
 		NodeList navEntryTags = element.getChildNodes();
 		
 		for ( int k=0; k<navEntryTags.getLength(); k++ ) {
@@ -57,7 +63,7 @@ public class NavConfig {
 						String[] aliases = alias.split( ";" );
 						for ( int i=0; i<aliases.length; i++ ) {
 							String currentAlias = aliases[i];
-							NavEntry navAlias = new NavEntry(currentAlias, label, menu1, menu2, menu3, auth);
+							NavEntryAlias navAlias = new NavEntryAlias( entry, currentAlias );
 							entryList.add( navAlias );
 							entry.getAlias().add( navAlias );
 						}
@@ -69,11 +75,13 @@ public class NavConfig {
 		}
 	}
 	
-	public static NavMap parseConfig( InputStream is ) throws NavException {
+	public static NavMap parseConfig( InputStream is, String servletPath ) throws NavException {
 		logger.info( "parseConfig() - start" );
-		ListMapStringKey<NavEntry> entryList = new ListMapStringKey<NavEntry>();
+		ListMapStringKey<NavEntryI> entryList = new ListMapStringKey<NavEntryI>();
 		ListMapStringKey<NavMenu> menuList = new ListMapStringKey<NavMenu>();
+		ListMapStringKey<RequestFilter> requestFilterList = new ListMapStringKey<RequestFilter>();
 		AuthHandler authHandler = null;
+		String authMapConfig = null;
 		try {
 			logger.info( "parseConfig() - parsing input stream start" );
 			
@@ -87,6 +95,25 @@ public class NavConfig {
 			if ( authHandlerType != null && authHandlerType.trim().length() > 0 ) {
 				authHandler = (AuthHandler)ClassHelper.newInstance( authHandlerType );
 			}
+			
+			authMapConfig = root.getAttribute( "auth-map" );
+			
+			// parsing reqeust filter
+			NodeList rfl = root.getElementsByTagName( "request-filter-list" );
+			if ( rfl.getLength() > 0 ) {
+				Element rflTag = (Element)rfl.item( 0 );
+				NodeList rf = rflTag.getElementsByTagName( "request-filter" );	
+				for ( int k=0; k<rf.getLength(); k++ ) {
+					Element currentRF = (Element)rf.item( k );
+					String id = currentRF.getAttribute( "id" );
+					String type = currentRF.getAttribute( "type" );
+					RequestFilter requestFilter = (RequestFilter) ClassHelper.newInstance( type );
+					requestFilter.setId( id );
+					requestFilter.configure( currentRF );
+					requestFilterList.add( requestFilter );
+				}
+			}
+			
 			// parsing entry
 			NodeList nle = root.getElementsByTagName( "nav-entry-list" );
 			if ( nle.getLength() == 1 ) {
@@ -107,8 +134,16 @@ public class NavConfig {
 				for ( int i=0; i<menuItemTags.getLength(); i++ ) {
 					Element currentItem = (Element) menuItemTags.item( i );
 					String url = currentItem.getAttribute( "url" );
-					NavEntry item = entryList.get( url );
-					menu.getEntries().add( item );
+					NavEntryI item = entryList.get( url );
+					if ( item == null ) {
+						throw new ConfigException( "Menu Configuration error, no nav-entry for url : '"+url+"'" );
+					}
+					String useLabel = currentItem.getAttribute( "use-label" );
+					if ( StringUtils.isNotEmpty( useLabel ) ) {
+						menu.getEntries().add( new NavMenuItem( item, useLabel ) );
+					} else {
+						menu.getEntries().add( new NavMenuItem( item ) );	
+					}
 					logger.debug( "parseConfig() - adding menu item : "+item+" to menu "+id );
 				}
 				logger.debug( "parseConfig() - adding menu : "+menu );
@@ -120,10 +155,24 @@ public class NavConfig {
 		} finally {
 			logger.info( "parseConfig() - end" );
 		}
-		NavMap navMap = new NavMap( entryList, menuList );
+		NavMap navMap = new NavMap( requestFilterList, entryList, menuList );
 		if ( authHandler != null ) {
 			logger.info( "parseConfig() - override auth handler -> "+authHandler );
 			navMap.setAuthHandler( authHandler );
+		}
+		if ( StringUtils.isNotEmpty( authMapConfig ) ) {
+			File file = new File( servletPath, authMapConfig );
+			if ( file.exists() ) {
+				try {
+					FileInputStream fis = new FileInputStream( file );
+					AuthMapCatalogConfig.loadAuthList( fis , navMap.getAuthMap() );
+					fis.close();	
+				} catch (Exception e) {
+					throw new NavException( "Error configuring AuthMap", e );
+				}
+			} else {
+				logger.warn( "AuthMapConfig file not found : "+file.getAbsolutePath() );
+			}
 		}
 		return navMap;
 	}
