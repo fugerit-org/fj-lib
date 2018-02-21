@@ -20,6 +20,11 @@
  */
 package org.fugerit.java.core.lang.helpers;
 
+import java.io.InputStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * <p>This class provides API for instantiating new classes.</p>
  * 
@@ -28,6 +33,8 @@ package org.fugerit.java.core.lang.helpers;
  */
 public class ClassHelper {
 
+	private static final Logger logger= LoggerFactory.getLogger(ClassHelper.class);
+	
 	/**
 	 * <p>Return default class loader to instantiate a new class.</p>
 	 * 
@@ -61,5 +68,15 @@ public class ClassHelper {
 		return result;
 	}
 
+	public static InputStream loadFromClassLoader( Object caller, String path ) throws Exception {
+		InputStream is = null;
+		try {
+			is = getDefaultClassLoader().getResourceAsStream( path );
+		} catch (Exception e) {
+			logger.warn( "Failed to load from default class loader, trying caller loader ("+e+")" );
+			is = caller.getClass().getResourceAsStream( path );
+		}
+		return is;
+	}
 	
 }

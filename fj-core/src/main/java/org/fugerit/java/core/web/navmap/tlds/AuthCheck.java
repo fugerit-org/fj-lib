@@ -5,10 +5,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
-import org.fugerit.java.core.web.navmap.model.NavEntry;
 import org.fugerit.java.core.web.navmap.model.NavEntryI;
-import org.fugerit.java.core.web.navmap.model.NavMap;
-import org.fugerit.java.core.web.tld.helpers.TagSupportHelper;
 
 /*
  * Use auth handler to check a authorization for a resource
@@ -25,24 +22,14 @@ import org.fugerit.java.core.web.tld.helpers.TagSupportHelper;
  * @see org.fugerit.java.core.web.navmap.servlet.NavData
  *
  */
-public class AuthCheck extends TagSupportHelper {
+public class AuthCheck extends NavTagHelper {
 
 	/*
 	 * 
 	 */
 	private static final long serialVersionUID = 2433943997865119114L;
  
-	private String url;
-	
 	private String resource;
-	
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
 
 	public String getResource() {
 		return resource;
@@ -56,14 +43,7 @@ public class AuthCheck extends TagSupportHelper {
 	public int doStartTag() throws JspException {
 		String resource = this.getResource();
 		if ( resource == null ) {
-			String currentUrl = this.getUrl();
-			NavEntryI entry = null;
-			NavMap map = (NavMap) this.pageContext.getServletContext().getAttribute( NavMap.CONTEXT_ATT_NAME );
-			if ( currentUrl == null ) {
-				 entry = (NavEntryI)(this.pageContext.getSession().getAttribute( NavEntry.SESSION_ATT_NAME ));
-			} else {
-				entry = map.getEntryByUrl( currentUrl );
-			}
+			NavEntryI entry = this.resolveEntry();
 			if ( entry == null ) {
 				throw new JspException( "Cannot determine resource to check" );	
 			} else {

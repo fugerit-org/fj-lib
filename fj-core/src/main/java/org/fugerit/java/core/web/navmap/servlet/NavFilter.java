@@ -88,9 +88,10 @@ public class NavFilter implements Filter {
 			String config = filterConfig.getInitParameter( "config" );
 			logger.info( "NavFilter init() config "+config );
 			ServletContext context = filterConfig.getServletContext();
-			File configFile = new File( context.getRealPath( "/" ), config );
+			String basePath = context.getRealPath( "/" );
+			File configFile = new File( basePath, config );
 			FileInputStream fis = new FileInputStream( configFile );
-			NavMap map = NavConfig.parseConfig( fis );
+			NavMap map = NavConfig.parseConfig( fis, basePath );
 			AuthHandler authHandler = map.getAuthHandler();
 			context.setAttribute( AuthHandler.ATT_NAME, authHandler );
 			fis.close();

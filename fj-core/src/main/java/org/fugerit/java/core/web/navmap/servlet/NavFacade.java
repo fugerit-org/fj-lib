@@ -2,6 +2,8 @@ package org.fugerit.java.core.web.navmap.servlet;
 
 import java.util.Iterator;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
@@ -50,6 +52,14 @@ public class NavFacade {
 			RequestFilter filter = itFilters.next();
 			filter.filter( requestContext );
 		}
+	}
+	
+	public static NavMap getNavMapFromContext( Servlet s ) {
+		return (NavMap) s.getServletConfig().getServletContext().getAttribute( NavMap.CONTEXT_ATT_NAME ); 
+	}
+	
+	public static NavMap getNavMapFromContext( ServletContext context ) {
+		return (NavMap) context.getAttribute( NavMap.CONTEXT_ATT_NAME ); 
 	}
 	
 }

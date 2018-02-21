@@ -85,11 +85,15 @@ public class DataListCatalogConfig extends XMLConfigurableObject {
 			String idList = currentListTag.getAttribute( "id" );
 			String extendsAtt = currentListTag.getAttribute( "extends" );
 			if ( StringUtils.isNotEmpty( extendsAtt ) ) {
-				Collection<String> parent = this.getDataList( extendsAtt );
-				if ( parent == null ) {
-					throw new ConfigException( "Parent schema list not found "+extendsAtt );
-				} else {
-					listCurrent.addAll( parent );
+				String[] extendsAttList = extendsAtt.split( "," );
+				for ( int j=0; j<extendsAttList.length; j++ ) {
+					String currentExtend = extendsAttList[j].trim();
+					Collection<String> parent = this.getDataList( currentExtend );
+					if ( parent == null ) {
+						throw new ConfigException( "Parent schema list not found "+currentExtend );
+					} else {
+						listCurrent.addAll( parent );
+					}	
 				}
 			}
 			for ( int i=0; i<schemaIt.getLength(); i++ ) {
