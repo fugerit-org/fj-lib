@@ -12,9 +12,9 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.Properties;
 
-import org.apache.commons.lang3.StringUtils;
 import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.tool.ToolHandlerHelper;
 
 /**

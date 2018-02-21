@@ -16,7 +16,9 @@
 		<java-version-compliance>1.6</java-version-compliance>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
-	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>		    		
+	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>		    
+	    <slf4j-version>1.7.25</slf4j-version>		
+	    <poi-version>3.17</poi-version>	
 	</properties>
 
 	<licenses>
@@ -93,45 +95,40 @@
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>1.6.4</version>
+				<version>${slf4j-version}</version>
 				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
-				<version>1.6.4</version>
+				<version>${slf4j-version}</version>
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-log4j12</artifactId>
-				<version>1.6.4</version>
+				<version>${slf4j-version}</version>
 				<scope>runtime</scope>
-			</dependency>
+			</dependency>		
 
-			<dependency>
-			    <groupId>org.apache.commons</groupId>
-			    <artifactId>commons-lang3</artifactId>
-			    <version>3.5</version>
-			</dependency>
-			
 			<dependency>
 			    <groupId>commons-dbcp</groupId>
 			    <artifactId>commons-dbcp</artifactId>
 			    <version>1.4</version>
-			</dependency>			
+			</dependency>	
+
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi-ooxml</artifactId>
+			    <version>${poi-version}</version>
+			</dependency>
 
 			<!-- for testing -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>4.10</version>
-			</dependency>
-			
-			<dependency>
-			    <groupId>org.apache.poi</groupId>
-			    <artifactId>poi-ooxml</artifactId>
-			    <version>3.17</version>
+				<scope>test</scope>
 			</dependency>
 
 		</dependencies>
