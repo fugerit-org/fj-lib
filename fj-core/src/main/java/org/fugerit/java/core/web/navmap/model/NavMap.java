@@ -6,6 +6,7 @@ import java.util.List;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.web.auth.handler.AllowAuthHandler;
 import org.fugerit.java.core.web.auth.handler.AuthHandler;
+import org.fugerit.java.core.web.auth.handler.AuthMapCatalogConfig;
 import org.fugerit.java.core.web.servlet.request.RequestFilter;
 
 /*
@@ -31,6 +32,7 @@ public class NavMap implements Serializable {
 	private ListMapStringKey<NavMenu> menuList;
 	private AuthHandler authHandler;
 	private List<RequestFilter> requestFilters;
+	private AuthMapCatalogConfig authMap;
 	
 	public NavMap(ListMapStringKey<RequestFilter> requestFilters,
 			ListMapStringKey<NavEntryI> entryList, ListMapStringKey<NavMenu> menuList) {
@@ -39,6 +41,7 @@ public class NavMap implements Serializable {
 		this.menuList = menuList;
 		this.requestFilters = requestFilters;
 		this.authHandler = new AllowAuthHandler();
+		this.authMap = new AuthMapCatalogConfig();
 	}
 	
 	public NavEntryI getEntryByUrl( String url ) {
@@ -59,6 +62,10 @@ public class NavMap implements Serializable {
 
 	public List<RequestFilter> getRequestFilters() {
 		return requestFilters;
+	}
+
+	public AuthMapCatalogConfig getAuthMap() {
+		return authMap;
 	}
 	
 }

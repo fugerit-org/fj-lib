@@ -35,6 +35,7 @@
     	</xsd:sequence>
     	<xsd:attribute name="version" type="xsd:string" />
     	<xsd:attribute name="auth-handler" type="xsd:string" />
+    	<xsd:attribute name="auth-map" type="xsd:string" />
     </xsd:complexType>
 
     <xsd:complexType name="requestFilterList">
