@@ -140,17 +140,18 @@ public class NavConfig {
 				for ( int i=0; i<menuItemTags.getLength(); i++ ) {
 					Element currentItem = (Element) menuItemTags.item( i );
 					String url = currentItem.getAttribute( "url" );
-					NavEntryI item = entryList.get( url );
-					if ( item == null ) {
+					NavEntryI entryItem = entryList.get( url );
+					if ( entryItem == null ) {
 						throw new ConfigException( "Menu Configuration error, no nav-entry for url : '"+url+"'" );
 					}
 					String useLabel = currentItem.getAttribute( "use-label" );
-					if ( StringUtils.isNotEmpty( useLabel ) ) {
-						menu.getEntries().add( new NavMenuItem( item, useLabel ) );
-					} else {
-						menu.getEntries().add( new NavMenuItem( item ) );	
-					}
-					logger.debug( "parseConfig() - adding menu item : "+item+" to menu "+id );
+					String altLabel = StringUtils.valueWithDefault( currentItem.getAttribute( "use-label" ) , null );
+					String itemInfo1 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info1" ) , null );
+					String itemInfo2 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info2" ) , null );
+					String itemInfo3 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info3" ) , null );
+					NavMenuItem menuItem = new NavMenuItem( entryItem, useLabel, altLabel, itemInfo1, itemInfo2, itemInfo3);
+					menu.getEntries().add( menuItem );
+					logger.debug( "parseConfig() - adding menu item : "+menuItem+" to menu "+id );
 				}
 				logger.debug( "parseConfig() - adding menu : "+menu );
 			}
