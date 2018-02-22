@@ -47,10 +47,15 @@ public class NavConfig {
 					String url = currentEntryTag.getAttribute( "url" );
 					String auth = currentEntryTag.getAttribute( "auth" );
 					String label = currentEntryTag.getAttribute( "label" );
+					String display = StringUtils.valueWithDefault( currentEntryTag.getAttribute( "display" ), label );
+					String title = StringUtils.valueWithDefault( currentEntryTag.getAttribute( "title" ), display );
 					String menu1 = currentEntryTag.getAttribute( "menu1" );
 					String menu2 = currentEntryTag.getAttribute( "menu2" );
 					String menu3 = currentEntryTag.getAttribute( "menu3" );
-					NavEntry entry = new NavEntry(url, label, menu1, menu2, menu3, auth);
+					String info1 = currentEntryTag.getAttribute( "info1" );
+					String info2 = currentEntryTag.getAttribute( "info2" );
+					String info3 = currentEntryTag.getAttribute( "info3" );
+					NavEntry entry = new NavEntry(url, auth, label, display, title, menu1, menu2, menu3, info1, info2, info3);
 					if ( parent != null ) {
 						entry.setParent( parent );
 						parent.getKids().add( entry );
@@ -128,7 +133,8 @@ public class NavConfig {
 			for ( int k=0; k<navMenuTags.getLength(); k++ ) {
 				Element currentTag = (Element) navMenuTags.item( k );
 				String id = currentTag.getAttribute( "id" );
-				NavMenu menu = new NavMenu( id );
+				String menuTitle = currentTag.getAttribute( "menu-title" );
+				NavMenu menu = new NavMenu( id, menuTitle );
 				menuList.add( menu );
 				NodeList menuItemTags = currentTag.getElementsByTagName( "menu-item" );
 				for ( int i=0; i<menuItemTags.getLength(); i++ ) {

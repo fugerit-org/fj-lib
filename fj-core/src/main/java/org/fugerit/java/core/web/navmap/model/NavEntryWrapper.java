@@ -76,5 +76,32 @@ public class NavEntryWrapper implements NavEntryI {
 	public boolean isCurrentBranch(NavEntryI entry) {
 		return entry.isCurrentBranch(entry);
 	}
+
+	@Override
+	public String getDisplay() {
+		return entry.getDisplay();
+	}
+
+	@Override
+	public String getTitle() {
+		return entry.getTitle();
+	}
+
+	@Override
+	public String getInfo1() {
+		return entry.getInfo1();
+	}
+
+	@Override
+	public String getInfo2() {
+		return entry.getInfo2();
+	}
+
+	@Override
+	public String getInfo3() {
+		return entry.getInfo3();
+	}
+	
+	
 	
 }
