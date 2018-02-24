@@ -27,24 +27,25 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 
 	private String url;
 	
-	private String label;
+	private String label, display, title;
 	
-	private String menu1;
-	
-	private String menu2;
-	
-	private String menu3;
+	private String menu1, menu2, menu3;
 	
 	private String auth;
 
+	private String info1, info2, info3;
+	
 
 	public NavEntry copyWithLabel( String label ) {
-		return new NavEntry( this.getUrl() , label, this.getMenu1(), this.getMenu2(), this.getMenu3(), this.getAuth() );
+		return new NavEntry( this.url, this.auth, label, this.display, this.title, 
+				this.menu1, this.menu2, this.menu3, this.info1, this.info2, this.info3 );
 	}
 	
 	
-	public NavEntry(String url, String label, String menu1, String menu2,
-			String menu3, String auth) {
+	public NavEntry(String url, String auth,
+			String label, String display, String title, 
+			String menu1, String menu2, String menu3,
+			String info1, String info2, String info3 ) {
 		super();
 		this.url = url;
 		this.label = label;
@@ -111,6 +112,33 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 	public String getLabel() {
 		return label;
 	}
+
+	
+	
+	public String getDisplay() {
+		return display;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public String getInfo1() {
+		return info1;
+	}
+
+
+	public String getInfo2() {
+		return info2;
+	}
+
+
+	public String getInfo3() {
+		return info3;
+	}
+
 
 	@Override
 	public String toString() {

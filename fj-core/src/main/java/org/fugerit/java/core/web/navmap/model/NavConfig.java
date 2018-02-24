@@ -47,10 +47,15 @@ public class NavConfig {
 					String url = currentEntryTag.getAttribute( "url" );
 					String auth = currentEntryTag.getAttribute( "auth" );
 					String label = currentEntryTag.getAttribute( "label" );
+					String display = StringUtils.valueWithDefault( currentEntryTag.getAttribute( "display" ), label );
+					String title = StringUtils.valueWithDefault( currentEntryTag.getAttribute( "title" ), display );
 					String menu1 = currentEntryTag.getAttribute( "menu1" );
 					String menu2 = currentEntryTag.getAttribute( "menu2" );
 					String menu3 = currentEntryTag.getAttribute( "menu3" );
-					NavEntry entry = new NavEntry(url, label, menu1, menu2, menu3, auth);
+					String info1 = currentEntryTag.getAttribute( "info1" );
+					String info2 = currentEntryTag.getAttribute( "info2" );
+					String info3 = currentEntryTag.getAttribute( "info3" );
+					NavEntry entry = new NavEntry(url, auth, label, display, title, menu1, menu2, menu3, info1, info2, info3);
 					if ( parent != null ) {
 						entry.setParent( parent );
 						parent.getKids().add( entry );
@@ -128,23 +133,25 @@ public class NavConfig {
 			for ( int k=0; k<navMenuTags.getLength(); k++ ) {
 				Element currentTag = (Element) navMenuTags.item( k );
 				String id = currentTag.getAttribute( "id" );
-				NavMenu menu = new NavMenu( id );
+				String menuTitle = currentTag.getAttribute( "menu-title" );
+				NavMenu menu = new NavMenu( id, menuTitle );
 				menuList.add( menu );
 				NodeList menuItemTags = currentTag.getElementsByTagName( "menu-item" );
 				for ( int i=0; i<menuItemTags.getLength(); i++ ) {
 					Element currentItem = (Element) menuItemTags.item( i );
 					String url = currentItem.getAttribute( "url" );
-					NavEntryI item = entryList.get( url );
-					if ( item == null ) {
+					NavEntryI entryItem = entryList.get( url );
+					if ( entryItem == null ) {
 						throw new ConfigException( "Menu Configuration error, no nav-entry for url : '"+url+"'" );
 					}
 					String useLabel = currentItem.getAttribute( "use-label" );
-					if ( StringUtils.isNotEmpty( useLabel ) ) {
-						menu.getEntries().add( new NavMenuItem( item, useLabel ) );
-					} else {
-						menu.getEntries().add( new NavMenuItem( item ) );	
-					}
-					logger.debug( "parseConfig() - adding menu item : "+item+" to menu "+id );
+					String altLabel = StringUtils.valueWithDefault( currentItem.getAttribute( "use-label" ) , null );
+					String itemInfo1 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info1" ) , null );
+					String itemInfo2 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info2" ) , null );
+					String itemInfo3 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info3" ) , null );
+					NavMenuItem menuItem = new NavMenuItem( entryItem, useLabel, altLabel, itemInfo1, itemInfo2, itemInfo3);
+					menu.getEntries().add( menuItem );
+					logger.debug( "parseConfig() - adding menu item : "+menuItem+" to menu "+id );
 				}
 				logger.debug( "parseConfig() - adding menu : "+menu );
 			}
