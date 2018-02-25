@@ -3,11 +3,28 @@ package org.fugerit.java.core.web.servlet.request.filter;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.fugerit.java.core.lang.helpers.BooleanUtils;
+import org.fugerit.java.core.lang.helpers.StringUtils;
+
 public class StatusCodeFilter extends HttpFilterHelper {
+
+	public static final String PARAM_DOLOG_TRACE = "log-trace";
+
+	public static final String PARAM_DOLOG_TRACE_DEFAULT = "false";
+	
+	private boolean doLogException;
+	
+	@Override
+	public void init(FilterConfig config) throws ServletException {
+		super.init(config);
+		this.doLogException = BooleanUtils.isTrue( StringUtils.valueWithDefault( config.getInitParameter( PARAM_DOLOG_TRACE ) , PARAM_DOLOG_TRACE_DEFAULT ) );
+		this.getLogger().info( "init() "+PARAM_DOLOG_TRACE+"="+this.doLogException+"( if true, stack trace is logged in case of exception)" );
+	}
 
 	/**
 	 * 
@@ -34,7 +51,11 @@ public class StatusCodeFilter extends HttpFilterHelper {
 				if ( exLog != null ) {
 					log.append( " exception : " );
 					log.append( exLog.toString() );
-					this.getLogger().error( log.toString(), exLog );
+					if ( this.doLogException ) {
+						this.getLogger().error( log.toString(), exLog );
+					} else {
+						this.getLogger().error( log.toString() );
+					}
 				} else {
 					this.getLogger().warn( log.toString() );
 				}
