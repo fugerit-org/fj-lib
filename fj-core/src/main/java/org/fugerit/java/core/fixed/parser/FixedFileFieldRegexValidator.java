@@ -1,7 +1,5 @@
 package org.fugerit.java.core.fixed.parser;
 
-import java.text.MessageFormat;
-
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.w3c.dom.Element;
@@ -24,6 +22,7 @@ public class FixedFileFieldRegexValidator extends FixedFileFieldBasicValidator i
 	
 	@Override
 	public FixedFileFieldValidationResult checkField(String fieldLabel, String fieldValue, int rowNumber, int colNumber ) {
+		FixedFileFieldValidationResult result = null;
 		boolean valid = true;
 		String message = null;
 		Exception exception = null;
@@ -31,25 +30,24 @@ public class FixedFileFieldRegexValidator extends FixedFileFieldBasicValidator i
 			fieldValue = "";
 		}
 		try {
-			if ( ( StringUtils.isNotEmpty( fieldValue ) || this.isRequired() ) 
-					&& !fieldValue.matches( this.regex ) ) {
-				String[] args = {
-					String.valueOf( rowNumber ),
-					fieldLabel,
-					fieldValue,
-					this.regex
-				};
-				String baseError = this.getBundle().getString( "error.regex" );
-				MessageFormat mf = new MessageFormat( baseError );
-				message = mf.format( args );
-				valid = false;
-			}	
+			FixedFileFieldValidationResult checkRequired = super.checkRequired(fieldLabel, fieldValue, rowNumber, colNumber);
+			if ( checkRequired.isValid() && StringUtils.isNotEmpty( fieldValue ) ) {
+				if ( !fieldValue.matches( this.getRegex() ) ) {
+					message = super.defaultFormatMessage( "error.regex", fieldLabel, fieldValue, rowNumber, colNumber, this.getRegex() );
+					valid = false;	
+				}
+			} else {
+				result = checkRequired;
+			}
 		} catch (Exception e) {
 			valid = false;
 			message = "Validation exception "+e.getMessage();
 			exception = e;
 		}
-		return new FixedFileFieldValidationResult( valid, fieldLabel, message, exception, rowNumber, colNumber );
+		if ( result == null ) {
+			result = new FixedFileFieldValidationResult( valid, fieldLabel, message, exception, rowNumber, colNumber );
+		}
+		return result;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package org.fugerit.java.core.fixed.parser;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -44,6 +45,38 @@ public abstract class FixedFileFieldBasicValidator extends XMLConfigurableObject
 		return bundle;
 	}
 
+	protected String defaultFormatMessage( String errorKey, String fieldLabel, String fieldValue, int rowNumber, int colNumber, String addInfo ) {
+			String[] args = {
+				String.valueOf( rowNumber ),
+				fieldLabel,
+				fieldValue,
+				addInfo
+			};
+			String baseError = this.getBundle().getString( errorKey );
+			MessageFormat mf = new MessageFormat( baseError );
+			return mf.format( args );
+	}
+	
+	protected FixedFileFieldValidationResult checkRequired(String fieldLabel, String fieldValue, int rowNumber, int colNumber ) {
+		boolean valid = true;
+		String message = null;
+		Exception exception = null;
+		if ( fieldValue == null ) {
+			fieldValue = "";
+		}
+		try {
+			if ( StringUtils.isEmpty( fieldValue ) && this.isRequired() ) {
+				message = defaultFormatMessage( "error.required", fieldLabel, fieldValue, rowNumber, colNumber, "" );
+				valid = false;
+			}
+		} catch (Exception e) {
+			valid = false;
+			message = "Validation exception "+e.getMessage();
+			exception = e;
+		}
+		return new FixedFileFieldValidationResult( valid, fieldLabel, message, exception, rowNumber, colNumber );
+	}
+	
 	@Override
 	public abstract FixedFileFieldValidationResult checkField(String fieldLabel, String fieldValue, int rowNumber, int colNumber );
 
