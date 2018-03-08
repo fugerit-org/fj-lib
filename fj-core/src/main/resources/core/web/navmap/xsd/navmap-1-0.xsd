@@ -75,6 +75,7 @@
     	<xsd:attribute name="url" type="xsd:string" />
     	<xsd:attribute name="use-label" type="xsd:string" />
     	<xsd:attribute name="alt-label" type="xsd:string" />
+    	<xsd:attribute name="alt-auth" type="xsd:string" />
     	<xsd:attribute name="item-info1" type="xsd:string" />
     	<xsd:attribute name="item-info2" type="xsd:string" />
     	<xsd:attribute name="item-info3" type="xsd:string" />

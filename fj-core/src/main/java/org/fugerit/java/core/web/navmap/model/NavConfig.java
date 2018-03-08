@@ -145,11 +145,12 @@ public class NavConfig {
 						throw new ConfigException( "Menu Configuration error, no nav-entry for url : '"+url+"'" );
 					}
 					String useLabel = currentItem.getAttribute( "use-label" );
+					String useAuth = currentItem.getAttribute( "use-auth" );
 					String altLabel = StringUtils.valueWithDefault( currentItem.getAttribute( "use-label" ) , null );
 					String itemInfo1 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info1" ) , null );
 					String itemInfo2 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info2" ) , null );
 					String itemInfo3 = StringUtils.valueWithDefault( currentItem.getAttribute( "item-info3" ) , null );
-					NavMenuItem menuItem = new NavMenuItem( entryItem, useLabel, altLabel, itemInfo1, itemInfo2, itemInfo3);
+					NavMenuItem menuItem = new NavMenuItem( entryItem, useLabel, altLabel, itemInfo1, itemInfo2, itemInfo3, useAuth );
 					menu.getEntries().add( menuItem );
 					logger.debug( "parseConfig() - adding menu item : "+menuItem+" to menu "+id );
 				}

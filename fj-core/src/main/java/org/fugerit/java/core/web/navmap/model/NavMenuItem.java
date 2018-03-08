@@ -15,15 +15,18 @@ public class NavMenuItem extends NavEntryWrapper {
 	
 	private String altLabel;
 	
+	private String useAuth;
+	
 	private String itemInfo1;
 	
 	private String itemInfo2;
 	
 	private String itemInfo3;
 	
-	public NavMenuItem(NavEntryI entry, String useLabel, String altLabel, String itemInfo1, String itemInfo2, String itemInfo3 ) {
+	public NavMenuItem(NavEntryI entry, String useLabel, String altLabel, String itemInfo1, String itemInfo2, String itemInfo3, String useAuth ) {
 		super( entry);
 		this.useLabel = StringUtils.valueWithDefault( useLabel , entry.getLabel() );
+		this.useAuth = StringUtils.valueWithDefault( useAuth , entry.getAuth() );
 		this.altLabel = altLabel;
 		this.itemInfo1 = itemInfo1;
 		this.itemInfo2 = itemInfo2;
@@ -61,6 +64,15 @@ public class NavMenuItem extends NavEntryWrapper {
 
 	public String getItemInfo3() {
 		return itemInfo3;
+	}
+
+	@Override
+	public String getAuth() {
+		return this.useAuth;
+	}
+	
+	public String getOriginalAuth() {
+		return this.getEntry().getAuth();
 	}
 	
 }
