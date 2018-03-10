@@ -1,6 +1,5 @@
 package org.fugerit.java.core.web.navmap.servlet;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import javax.servlet.Servlet;
@@ -11,7 +10,6 @@ import org.fugerit.java.core.web.auth.handler.AuthHandler;
 import org.fugerit.java.core.web.navmap.model.NavEntry;
 import org.fugerit.java.core.web.navmap.model.NavEntryI;
 import org.fugerit.java.core.web.navmap.model.NavMap;
-import org.fugerit.java.core.web.navmap.model.NavMenuItem;
 import org.fugerit.java.core.web.servlet.context.RequestContext;
 import org.fugerit.java.core.web.servlet.request.RequestFilter;
 import org.slf4j.Logger;
@@ -36,6 +34,7 @@ public class NavFacade {
 	public static int nav( RequestContext requestContext, NavMap navMap, String reqId ) throws Exception {
 		HttpServletRequest request = requestContext.getRequest();
 		String currentUrl = request.getRequestURI().substring( request.getContextPath().length() );
+		request.setAttribute( NavMap.REQUEST_ATT_NAME , navMap );
 		NavEntryI entry = navMap.getEntryByUrl( currentUrl );
 		logger.info( "NavFilter nav() "+reqId+" url - "+currentUrl+", entry - "+entry );
 		if ( entry != null ) {
@@ -56,6 +55,10 @@ public class NavFacade {
 		}
 	}
 	
+	public static NavMap getFromRequest( HttpServletRequest request ) {
+		return (NavMap) request.getAttribute( NavMap.REQUEST_ATT_NAME );
+	}
+	
 	public static NavMap getNavMapFromContext( Servlet s ) {
 		return (NavMap) s.getServletConfig().getServletContext().getAttribute( NavMap.CONTEXT_ATT_NAME ); 
 	}
@@ -69,28 +72,14 @@ public class NavFacade {
 		return entry;
 	}
 	
-	public static NavData getNavData( HttpServletRequest request, ServletContext context ) {
-		NavMap map = getNavMapFromContext( context );
+	public static NavData getNavData( HttpServletRequest request, NavMap map ) {
 		NavEntryI entry = (NavEntryI) request.getSession().getAttribute( NavEntryI.SESSION_ATT_NAME );
 		return new NavData( entry, map );
 	}
 	
-	public static NavEntryI getFirstAuthOnMenu2( ServletContext context, HttpServletRequest request ) {
-		NavData data = NavFacade.getNavData( request, context);
-		return getFirstAuth(context, request, data.getNavMenu2().getEntries() );
-	}
-	
-	public static NavEntryI getFirstAuth( ServletContext context, HttpServletRequest request, Collection<NavMenuItem> entryList ) {
-		NavEntryI res = null;
-		Iterator<NavMenuItem> it = entryList.iterator();
-		AuthHandler handler = (AuthHandler) context.getAttribute( AuthHandler.ATT_NAME );
-		while ( res == null && it.hasNext() ) {
-			NavEntryI current = it.next();
-			if ( handler.checkAuth( request , current.getAuth() ) == AuthHandler.AUTH_AUTHORIZED ) {
-				res = current;
-			}
-		}
-		return res;
+	public static NavData getNavData( HttpServletRequest request, ServletContext context ) {
+		NavMap map = getNavMapFromContext( context );
+		return getNavData(request, map);
 	}
 	
 }

@@ -11,11 +11,11 @@ import org.apache.struts.action.ActionMapping;
 import org.fugerit.java.core.web.navmap.helper.MenuResolverHelper;
 import org.fugerit.java.core.web.navmap.model.NavEntryI;
 
-public class ForwardFirstOnMenu2Action extends Action {
+public class ForwardFirstOnMenu3Action extends Action {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		NavEntryI entry = MenuResolverHelper.getFirstAuthOnMenu2( request );
+		NavEntryI entry = MenuResolverHelper.getFirstAuthOnMenu3( request );
 		if ( entry != null && entry.getUrl() != null ) {
 			RequestDispatcher rd = request.getRequestDispatcher( entry.getUrl() );
 			rd.forward( request, response );

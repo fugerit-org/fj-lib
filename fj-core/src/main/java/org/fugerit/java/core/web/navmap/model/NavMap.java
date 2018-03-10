@@ -23,6 +23,8 @@ public class NavMap implements Serializable {
 
 	public static final String CONTEXT_ATT_NAME = "org.fugerit.java.mod.web.navmap.model.NavMap#AttName";
 	
+	public static final String REQUEST_ATT_NAME = "NavMapAttKey";
+	
 	/*
 	 * 
 	 */
