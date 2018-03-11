@@ -11,15 +11,8 @@ import java.util.Map;
  *
  * @param &lt;E&gt;
  */
-public interface PagedResult<T> {
+public interface PagedResult<T> extends Result {
 
-	/*
-	 * Result code
-	 */
-	
-	public static final int RESULT_CODE_OK = 0;
-	
-	public static final int RESULT_CODE_KO = -1;
 	
 	public static final int FIRST_PAGE_INDEX = 1;
 	

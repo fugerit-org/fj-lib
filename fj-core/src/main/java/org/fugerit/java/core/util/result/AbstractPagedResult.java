@@ -6,9 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.fugerit.java.core.log.BasicLogObject;
-
-public abstract class AbstractPagedResult<T> extends BasicLogObject implements PagedResult<T> {
+public abstract class AbstractPagedResult<T> extends BasicResult implements PagedResult<T> {
 
 	public static final boolean DEFAULT_SUPPORT_VIRTUAL_PAGING = false;
 	
@@ -22,25 +20,18 @@ public abstract class AbstractPagedResult<T> extends BasicLogObject implements P
 	
 	private int currentPage;
 	
-	private int resultCode;
-	
 	private List<T> pageElements;
 	
 	private Map<String, Object> info;
 
-	protected void setResultCode(int resultCode) {
-		this.resultCode = resultCode;
-	}
-
 	protected AbstractPagedResult(int perPage, long elementCount, int currentPage, int pageCount, List<T> pageElements) {
-		super();
+		super( RESULT_CODE_OK );
 		this.offset = perPage*(currentPage-1);
 		this.perPage = perPage;
 		this.elementCount = elementCount;
 		this.currentPage = currentPage;
 		this.pageElements = pageElements;
 		this.pageCount = pageCount;
-		this.resultCode = RESULT_CODE_OK;
 		this.info = new HashMap<String, Object>();
 	}
 	
@@ -130,10 +121,6 @@ public abstract class AbstractPagedResult<T> extends BasicLogObject implements P
 			list.add( new Integer( k ) );
 		}
 		return list.iterator();
-	}
-
-	public int getResultCode() {
-		return resultCode;
 	}
 
 	public Map<String, Object> getInfo() {
