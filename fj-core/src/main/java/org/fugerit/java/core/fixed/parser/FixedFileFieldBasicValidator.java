@@ -15,6 +15,33 @@ import org.w3c.dom.Element;
 
 public abstract class FixedFileFieldBasicValidator extends XMLConfigurableObject implements FixedFileFieldValidator {
 
+	public static final String DEFAULT_BUNDLE_PATH = "core.fixed.parser.validator";
+	
+	public static ResourceBundle newBundle( String locale ) {
+		return newBundle( DEFAULT_BUNDLE_PATH, locale );		
+	}
+	
+	public static String messageFormatWorker( ResourceBundle bundle, String errorKey, String fieldLabel, String fieldValue, int rowNumber, int colNumber, String addInfo ) {
+		String[] args = {
+			String.valueOf( rowNumber ),
+			fieldLabel,
+			fieldValue,
+			addInfo
+		};
+		String baseError = bundle.getString( errorKey );
+		MessageFormat mf = new MessageFormat( baseError );
+		return mf.format( args );
+}
+	
+	public static ResourceBundle newBundle( String bundlePath, String locale ) {
+		// locale setting
+		Locale loc = Locale.getDefault();
+		if ( StringUtils.isNotEmpty( locale ) ) {
+			loc = LocaleHelper.convertLocale( locale , LocaleHelper.USE_DEFAULT_ON_ERROR );
+		}
+		return ResourceBundle.getBundle( bundlePath, loc );		
+	}
+	
 	protected static final Logger logger = LoggerFactory.getLogger( FixedFileFieldBasicValidator.class );
 	
 	public static final String ATT_NAME_ID = "id";
@@ -46,15 +73,7 @@ public abstract class FixedFileFieldBasicValidator extends XMLConfigurableObject
 	}
 
 	protected String defaultFormatMessage( String errorKey, String fieldLabel, String fieldValue, int rowNumber, int colNumber, String addInfo ) {
-			String[] args = {
-				String.valueOf( rowNumber ),
-				fieldLabel,
-				fieldValue,
-				addInfo
-			};
-			String baseError = this.getBundle().getString( errorKey );
-			MessageFormat mf = new MessageFormat( baseError );
-			return mf.format( args );
+			return messageFormatWorker( this.getBundle() , errorKey, fieldLabel, fieldValue, rowNumber, colNumber, addInfo);
 	}
 	
 	protected FixedFileFieldValidationResult checkRequired(String fieldLabel, String fieldValue, int rowNumber, int colNumber ) {
@@ -87,12 +106,7 @@ public abstract class FixedFileFieldBasicValidator extends XMLConfigurableObject
 		logger.info( "locale "+ATT_NAME_LOCALE+" -> '"+locale+"'" );
 		String req = tag.getAttribute( ATT_NAME_REQUIRED );
 		this.required = BooleanUtils.isTrue( req );
-		// locale setting
-		Locale loc = Locale.getDefault();
-		if ( StringUtils.isNotEmpty( locale ) ) {
-			loc = LocaleHelper.convertLocale( locale , LocaleHelper.USE_DEFAULT_ON_ERROR );
-		}
-		this.bundle = ResourceBundle.getBundle( bundlePath, loc );
+		this.bundle = newBundle(bundlePath, locale);
 	}
 	
 	@Override

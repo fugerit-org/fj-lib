@@ -31,7 +31,19 @@ public class FixedFieldFileConfig {
 		for ( int i=0; i<fileTagList.getLength(); i++ ) {
 			Element currentFileTag = (Element) fileTagList.item( i );
 			String idFile = currentFileTag.getAttribute( "id" );
+			String checkLength = currentFileTag.getAttribute( "check-length" );
+			String endline = currentFileTag.getAttribute( "endline" );
+			String baseLocale = currentFileTag.getAttribute( "base-locale" );
 			FixedFieldFileDescriptor fileDescriptor = new FixedFieldFileDescriptor( idFile, "map" );
+			if ( StringUtils.isNotEmpty( checkLength ) ) {
+				fileDescriptor.setCheckLengh( Integer.parseInt( checkLength.trim() ) );
+			}
+			if ( StringUtils.isNotEmpty( endline ) ) {
+				fileDescriptor.setEndline( endline );
+			}
+			if ( StringUtils.isNotEmpty( baseLocale ) ) {
+				fileDescriptor.setBaseLocale( baseLocale );
+			}
 			
 			// validator list
 			NodeList validatorListTagList = currentFileTag.getElementsByTagName( "validator-list" );
@@ -48,6 +60,8 @@ public class FixedFieldFileConfig {
 				}
 			}
 			
+			int totalLength = 0;
+			
 			// field list
 			NodeList fieldListTagList = currentFileTag.getElementsByTagName( "field-list" );
 			for ( int k=0; k<fieldListTagList.getLength(); k++ ) {
@@ -61,6 +75,7 @@ public class FixedFieldFileConfig {
 					String length = currentFieldTag.getAttribute( "length" );
 					String validator = currentFieldTag.getAttribute( "validator" );
 					FixedFieldDescriptor currentField = new FixedFieldDescriptor( id, description, Integer.parseInt( start ), Integer.parseInt( length ) );
+					totalLength+= currentField.getLength();
 					if ( StringUtils.isNotEmpty( validator ) ) {
 						FixedFileFieldValidator fieldValidator = fileDescriptor.getValidators().get( validator );
 						currentField.setValidator( fieldValidator );
@@ -68,6 +83,10 @@ public class FixedFieldFileConfig {
 					fileDescriptor.getListFields().add( currentField );
 				}
 			}
+			
+			// TODO: review
+			//fileDescriptor.setCheckLengh( totalLength );
+			
 			config.addFileDescriptor( idFile , fileDescriptor );
 		}
 		is.close();
@@ -93,3 +112,4 @@ public class FixedFieldFileConfig {
 	}
 	
 }
+

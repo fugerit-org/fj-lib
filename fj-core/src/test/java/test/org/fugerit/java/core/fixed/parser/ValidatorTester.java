@@ -19,6 +19,12 @@ public class ValidatorTester {
 
 	private static final Logger logger = LoggerFactory.getLogger(ValidatorTester.class);
 	
+	public static void printErrorsToLog( Iterator<FixedFileFieldValidationResult> errors ) {
+		while ( errors.hasNext() ) {
+			logger.info( errors.next().getMessage() );
+		}
+	}
+	
 	public static void main( String[] args ) {
 		try {
 			Properties params = ArgUtils.getArgs( args );
@@ -28,16 +34,15 @@ public class ValidatorTester {
 			FixedFieldFileConfig config = FixedFieldFileConfig.parseConfig( configIS );
 			configIS.close();
 			FixedFieldFileDescriptor descriptor = config.getFileDescriptor( "tracciato_aire" );
-			FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, new FileReader( input ) );
+			FileReader fr = new FileReader( input );
+			FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, fr );
 			while ( reader.hasNext() ) {
 				FixedFileFieldMap map = reader.nextRawMap();
 				if ( !map.getValidationErrors().isEmpty() ) {
-					Iterator<FixedFileFieldValidationResult> errors = map.getValidationErrors().iterator();
-					while ( errors.hasNext() ) {
-						logger.info( errors.next().getMessage() );
-					}
+					printErrorsToLog( map.getValidationErrors().iterator() );
 				}
 			}
+			printErrorsToLog( reader.getGenericValidationErrors().iterator() );
 			logger.info( "ERROR COUNT : "+reader.getErrorCount() );
 			reader.close();
 		} catch (Exception e) {
