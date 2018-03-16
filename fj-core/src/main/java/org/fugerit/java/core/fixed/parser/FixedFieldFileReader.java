@@ -75,14 +75,20 @@ public class FixedFieldFileReader {
 				this.currentEndline = new String( buffer, buffer.length-this.endline.length(), this.endline.length() );
 				
 				if ( this.getDescriptor().isCustomEndlineActive() ) {
+					if ( this.currentLine.length() != this.getDescriptor().getCheckLengh() ) {
+						String message = FixedFileFieldBasicValidator.messageFormatWorker( bundle, "error.check.line.length", String.valueOf( this.getDescriptor().getCheckLengh() ), String.valueOf( this.currentLine.length() ), rowNumber, this.rowNumber, "");
+						FixedFileFieldValidationResult result = new FixedFileFieldValidationResult( false, bundle.getString( "error.check.line.label" ), message, null, this.rowNumber, 0 );
+						this.getGenericValidationErrors().add( result );
+					}
 					if ( !this.endline.equals( this.currentEndline ) ) {
 						String message = FixedFileFieldBasicValidator.messageFormatWorker( bundle, "error.check.endline.value", formatEndline( this.currentEndline ), this.getDescriptor().getEndline(), rowNumber, this.rowNumber, "");
 						FixedFileFieldValidationResult result = new FixedFileFieldValidationResult( false, bundle.getString( "error.check.endline.label" ), message, null, this.rowNumber, 0 );
 						this.getGenericValidationErrors().add( result );
 						this.errorCount++;
+					} 
+					if ( this.getGenericValidationErrors().size() > 0 ) {
+						this.currentLine = null;
 					}
-					// exit
-					this.currentLine = null;
 				}
 				
 			} else {
@@ -108,15 +114,6 @@ public class FixedFieldFileReader {
 			throw new RuntimeException( "No line set" );
 		} else {
 			rawMap = new FixedFileFieldMap( this.currentLine.length(), this.rowNumber );
-			
-			// check length
-			if ( this.getDescriptor().isCheckLengthActive() ) {
-				if ( this.currentLine.length() != this.getDescriptor().getCheckLengh() ) {
-					String message = FixedFileFieldBasicValidator.messageFormatWorker( bundle, "error.check.line.length", String.valueOf( this.getDescriptor().getCheckLengh() ), String.valueOf( this.currentLine.length() ), rowNumber, this.rowNumber, "");
-					FixedFileFieldValidationResult result = new FixedFileFieldValidationResult( false, bundle.getString( "error.check.line.label" ), message, null, this.rowNumber, 0 );
-					rawMap.getValidationErrors().add( result );
-				}
- 			}
 			
 			Iterator<FixedFieldDescriptor> itFields = this.getDescriptor().getListFields().iterator();
 			while ( itFields.hasNext() ) {
