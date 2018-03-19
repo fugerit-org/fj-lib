@@ -60,7 +60,7 @@ public class FixedFieldFileConfig {
 				}
 			}
 			
-			int totalLength = 0;
+			//int totalLength = 0;
 			
 			// field list
 			NodeList fieldListTagList = currentFileTag.getElementsByTagName( "field-list" );
@@ -75,7 +75,7 @@ public class FixedFieldFileConfig {
 					String length = currentFieldTag.getAttribute( "length" );
 					String validator = currentFieldTag.getAttribute( "validator" );
 					FixedFieldDescriptor currentField = new FixedFieldDescriptor( id, description, Integer.parseInt( start ), Integer.parseInt( length ) );
-					totalLength+= currentField.getLength();
+					//totalLength+= currentField.getLength();
 					if ( StringUtils.isNotEmpty( validator ) ) {
 						FixedFileFieldValidator fieldValidator = fileDescriptor.getValidators().get( validator );
 						currentField.setValidator( fieldValidator );
