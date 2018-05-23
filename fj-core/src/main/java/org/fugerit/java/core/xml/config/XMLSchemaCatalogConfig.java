@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
@@ -34,6 +37,8 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 	public static final String ATT_TAG_SCHEMA_LIST = "schema-list";
 	
 	public static final String ATT_TAG_SCHEMA = "schema";
+	
+	private Map<String, Schema> schemaMapCache = Collections.synchronizedMap( new HashMap<String, Schema>() );
 	
 	/**
 	 * 
@@ -87,13 +92,29 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 		return xsds;
 	}
 	
+	public void validateCacheSchema( ErrorHandler er, SAXSource source, String schemaListId ) throws Exception {
+		Schema schema = this.schemaMapCache.get( schemaListId );
+		if ( schema == null ) {
+			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			Source[] xsds = getXsds( schemaListId );
+	        schema = sf.newSchema( xsds );
+	        schemaMapCache.put( schemaListId , schema );
+		}
+		validateWorker( er, source, schema );
+	}
+
 	public void validate( ErrorHandler er, SAXSource source, String schemaListId ) throws Exception {
-		validateWorker( er, source, getXsds( schemaListId ));
+		Source[] xsds = getXsds( schemaListId );
+		validateWorker( er, source, xsds );
 	}
 	
 	public static void validateWorker( ErrorHandler er, SAXSource source, Source[] xsds ) throws Exception {
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = sf.newSchema( xsds );
+        validateWorker(er, source, schema);
+	}
+	
+	private static void validateWorker( ErrorHandler er, SAXSource source, Schema schema ) throws Exception {
         Validator validator = schema.newValidator();
         validator.setErrorHandler( er );
         validator.validate(source);
