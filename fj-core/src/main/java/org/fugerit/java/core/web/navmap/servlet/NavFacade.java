@@ -34,6 +34,7 @@ public class NavFacade {
 	public static int nav( RequestContext requestContext, NavMap navMap, String reqId ) throws Exception {
 		HttpServletRequest request = requestContext.getRequest();
 		String currentUrl = request.getRequestURI().substring( request.getContextPath().length() );
+		request.setAttribute( NavMap.REQUEST_ATT_NAME , navMap );
 		NavEntryI entry = navMap.getEntryByUrl( currentUrl );
 		logger.info( "NavFilter nav() "+reqId+" url - "+currentUrl+", entry - "+entry );
 		if ( entry != null ) {
@@ -54,12 +55,31 @@ public class NavFacade {
 		}
 	}
 	
+	public static NavMap getFromRequest( HttpServletRequest request ) {
+		return (NavMap) request.getAttribute( NavMap.REQUEST_ATT_NAME );
+	}
+	
 	public static NavMap getNavMapFromContext( Servlet s ) {
 		return (NavMap) s.getServletConfig().getServletContext().getAttribute( NavMap.CONTEXT_ATT_NAME ); 
 	}
 	
 	public static NavMap getNavMapFromContext( ServletContext context ) {
 		return (NavMap) context.getAttribute( NavMap.CONTEXT_ATT_NAME ); 
+	}
+	
+	public static NavEntryI lookUpEntry( HttpServletRequest request ) {
+		NavEntryI entry = (NavEntryI) request.getSession().getAttribute( NavEntryI.SESSION_ATT_NAME );
+		return entry;
+	}
+	
+	public static NavData getNavData( HttpServletRequest request, NavMap map ) {
+		NavEntryI entry = (NavEntryI) request.getSession().getAttribute( NavEntryI.SESSION_ATT_NAME );
+		return new NavData( entry, map );
+	}
+	
+	public static NavData getNavData( HttpServletRequest request, ServletContext context ) {
+		NavMap map = getNavMapFromContext( context );
+		return getNavData(request, map);
 	}
 	
 }

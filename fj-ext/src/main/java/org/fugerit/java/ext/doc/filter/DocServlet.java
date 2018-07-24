@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.fugerit.java.core.log.LogFacade;
 import org.fugerit.java.core.web.log.helpers.LogObjectServlet;
 import org.fugerit.java.core.web.servlet.config.ConfigContext;
+import org.fugerit.java.core.web.servlet.context.RequestContext;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.fugerit.java.ext.doc.config.DocServletConfig;
 import org.w3c.dom.Document;
@@ -41,11 +42,11 @@ public class DocServlet extends LogObjectServlet {
 	 * @see org.opinf.jlib.ent.servlet.filter.HttpFilter#doFilter(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getLogger().info( "TESTDOC" );
 		if ( this.configFacade == null ) {
 			this.configFacade = (DocRequestFacade)this.getServletContext().getAttribute( DocServletConfig.ATT_NAME_DOCFACADE );
 		}
-		this.configFacade.handleDoc(request, response);
+		RequestContext rq = RequestContext.getRequestContext( this.getServletContext() , request, response );
+		this.configFacade.handleDoc( rq );
 	}
 
 	/* (non-Javadoc)

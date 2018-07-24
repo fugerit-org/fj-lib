@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.lang3.StringUtils;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 
 
 /*
@@ -25,7 +25,7 @@ public class TagUtilsHelper {
 
 	
 	public static void setAttibute( PageContext pageContext, String scope, String name, Object value ) throws JspException {
-		scope = StringUtils.defaultString( scope, SCOPE_PAGE );
+		scope = StringUtils.valueWithDefault( scope, SCOPE_PAGE );
 		if ( scope.equalsIgnoreCase( SCOPE_PAGE ) ) {
 			pageContext.setAttribute( name, value );
 		} else if ( scope.equalsIgnoreCase( SCOPE_REQUEST ) ) {

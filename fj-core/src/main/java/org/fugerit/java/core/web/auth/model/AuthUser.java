@@ -1,5 +1,6 @@
 package org.fugerit.java.core.web.auth.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,12 @@ import java.util.Map;
  * @author Fugerit
  *
  */
-public class AuthUser {
+public class AuthUser implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 277189238148666403L;
 
 	public static final String ATT_NAME = "AuthUser";
 	

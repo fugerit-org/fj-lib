@@ -55,7 +55,7 @@ public class DocRequestConfig extends BasicLogObject {
 				typeHandler.init( docHandlerTag );
 				this.typeHandlerMap.put( name , typeHandler );
 			} catch (Throwable t1) {
-				this.getLogger().warn( "Error on type handler init : "+name+" : "+type, t1 );
+				this.getLogger().warn( "Error on type handler init (will not be available) : "+name+" : "+type+" ("+t1+")" );
 			}
 		}
 	}

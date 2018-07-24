@@ -21,7 +21,6 @@
 package org.fugerit.java.core.db.metadata;
 
 import org.fugerit.java.core.lang.helpers.ConcatHelper;
-import org.fugerit.java.core.lang.helpers.ObjectHelper;
 import org.fugerit.java.core.util.collection.KeyObject;
 
 /**
@@ -43,7 +42,7 @@ public class TableId implements KeyObject<String> {
 	}
 
 	public String toString() {
-		return ObjectHelper.objectToStringDefault( this );
+		return this.getClass().getSimpleName()+"[tableName:"+this.getTableName()+",tableSchema:"+this.getTableSchema()+"]";
 	}
 	
 	private String tableName;

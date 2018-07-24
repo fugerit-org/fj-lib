@@ -1,3 +1,4 @@
+package org.fugerit.java.ext.lang.helpers;
 /*
  *
 		Fugerit Java Library is distributed under the terms of :
@@ -18,7 +19,7 @@
 	
  *
  */
-package org.fugerit.java.core.lang.helpers;
+
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

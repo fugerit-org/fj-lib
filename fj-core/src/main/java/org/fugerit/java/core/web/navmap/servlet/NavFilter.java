@@ -49,6 +49,9 @@ public class NavFilter implements Filter {
 
 	public void nav( RequestContext requestContext, FilterChain chain ) throws IOException, ServletException {
 		String reqId = String.valueOf(  requestContext.getRequest().getSession( true ).getId()+"/"+System.currentTimeMillis() );
+		StringBuffer navLog = new StringBuffer();
+		boolean doLog = true;
+		Exception exLog = null;
 		try {
 			// generic request pre processing
 			NavFacade.requestFilter( requestContext , this.navMap , reqId );
@@ -56,8 +59,10 @@ public class NavFilter implements Filter {
 			int authCode = NavFacade.nav( requestContext, this.navMap, reqId);
 			if ( authCode == AuthHandler.AUTH_AUTHORIZED ) {
 				chain.doFilter( requestContext.getRequest(), requestContext.getResponse() );	
+				doLog = false;
 			} else {
-				logger.error( "NavFilter nav() "+reqId+" auth error : "+authCode );
+				navLog.append( "auth handler : " );
+				navLog.append( authCode );
 				if ( authCode == AuthHandler.AUTH_HIDDEN ) {
 					requestContext.getResponse().sendError( HttpServletResponse.SC_NOT_FOUND );
 				} else {
@@ -65,8 +70,22 @@ public class NavFilter implements Filter {
 				}
 			}
 		} catch (Exception e) {
-			logger.error( "NavFilter nav() "+reqId+" error : "+e, e );
 			requestContext.getResponse().sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+		} finally {
+			if ( doLog ) {
+				StringBuffer log = new StringBuffer();
+				log.append( this.getClass().getSimpleName() );
+				log.append( " nav() " );
+				log.append( navLog.toString() );
+				log.append( " response status : " );
+				log.append( requestContext.getResponse().getStatus() );
+				if ( exLog != null ) {
+					log.append( " exception: "+exLog.toString() );
+					logger.error( log.toString(), exLog );
+				} else {
+					logger.warn( log.toString() );
+				}
+			}
 		}
 	}
 	

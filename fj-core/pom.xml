@@ -62,17 +62,12 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		</dependency>
-
+		
 		<dependency>
 		    <groupId>commons-dbcp</groupId>
 		    <artifactId>commons-dbcp</artifactId>
-		</dependency>
-
+		</dependency>		
+		
 		<!-- for testing -->
 		<dependency>
 			<groupId>junit</groupId>
