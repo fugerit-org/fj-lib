@@ -179,6 +179,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 							String value = att.getValue();
 							MethodHelper.invokeSetter( t , key, String.class, value );
 						}
+						listCurrent.add( t );
 					} catch (Exception e) {
 						throw new ConfigException( "Error configuring type : "+e, e );
 					}
