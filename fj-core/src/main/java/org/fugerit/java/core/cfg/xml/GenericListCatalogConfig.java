@@ -173,7 +173,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 						@SuppressWarnings("unchecked")
 						T t = (T) ClassHelper.newInstance( type );
 						NamedNodeMap atts = currentSchemaTag.getAttributes();
-						for ( int ak=0; ak<nnm.getLength(); ak++ ) {
+						for ( int ak=0; ak<atts.getLength(); ak++ ) {
 							Attr att = (Attr)atts.item( ak );
 							String key = att.getName();
 							String value = att.getValue();
