@@ -179,11 +179,13 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 							String value = att.getValue();
 							MethodHelper.invokeSetter( t , key, String.class, value );
 						}
+						if ( t instanceof TextValueType ) {
+							((TextValueType) t ).setTextValue( currentSchemaTag.getTextContent() );
+						}
 						listCurrent.add( t );
 					} catch (Exception e) {
 						throw new ConfigException( "Error configuring type : "+e, e );
 					}
-					
 				}
 			}
 			logger.info( "add "+idList+" -> "+listCurrent );
