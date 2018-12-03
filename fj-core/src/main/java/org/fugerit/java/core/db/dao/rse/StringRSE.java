@@ -34,7 +34,7 @@ public class StringRSE extends SingleColumnRSE<String> {
 	protected String convert(Object o) {
 		String c = null;
 		if ( o instanceof String ) {
-			c = (String)c;
+			c = (String)o;
 		}
 		return c;
 	}
