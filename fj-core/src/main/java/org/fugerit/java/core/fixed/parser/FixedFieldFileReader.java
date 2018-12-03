@@ -2,6 +2,7 @@ package org.fugerit.java.core.fixed.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
@@ -12,6 +13,22 @@ import org.fugerit.java.core.fixed.parser.helper.StreamFixedFieldFileReader;
 public class FixedFieldFileReader {
 	
 	private FixedFieldFileReaderAbstract readerImpl;
+	
+	public static final FixedFieldFileReader newInstance( FixedFieldFileDescriptor descriptor, Reader r ) throws IOException {
+		FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, r );
+		return reader;
+	}
+	
+	public static final FixedFieldFileReader newInstance( FixedFieldFileDescriptor descriptor, InputStream is ) throws IOException {
+		String encoding = descriptor.getEncoding();
+		FixedFieldFileReader reader = null;
+		if ( encoding == null ) {
+			reader = newInstance( descriptor, new InputStreamReader( is ) );
+		} else {
+			reader = newInstance( descriptor, new InputStreamReader( is, encoding ) );
+		}
+		return reader;
+	}
 	
 	public FixedFieldFileReader( FixedFieldFileDescriptor descriptor, InputStream is ) throws IOException {
 		this.readerImpl = new StreamFixedFieldFileReader( descriptor, is );
