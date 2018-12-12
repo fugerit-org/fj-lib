@@ -9,6 +9,7 @@ import java.util.List;
 import org.fugerit.java.core.fixed.parser.helper.FixedFieldFileReaderAbstract;
 import org.fugerit.java.core.fixed.parser.helper.ReaderFixedFieldFileReader;
 import org.fugerit.java.core.fixed.parser.helper.StreamFixedFieldFileReader;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public class FixedFieldFileReader {
 	
@@ -22,7 +23,7 @@ public class FixedFieldFileReader {
 	public static final FixedFieldFileReader newInstance( FixedFieldFileDescriptor descriptor, InputStream is ) throws IOException {
 		String encoding = descriptor.getEncoding();
 		FixedFieldFileReader reader = null;
-		if ( encoding == null ) {
+		if ( StringUtils.isEmpty( encoding ) ) {
 			reader = newInstance( descriptor, new InputStreamReader( is ) );
 		} else {
 			reader = newInstance( descriptor, new InputStreamReader( is, encoding ) );
