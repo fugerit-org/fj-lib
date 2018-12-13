@@ -59,4 +59,11 @@ public class FileFunWrapper implements FileFun {
 		this.wrappedFileFun = wrappedFileFun;
 	}
 
+	@Override
+	public void close() throws IOException {
+		this.wrappedFileFun.close();
+	}
+	
+	
+
 }

@@ -43,4 +43,9 @@ public abstract class AbstractFileFun implements FileFun {
         this.handleFile(new File(path));
     }
     
+	@Override
+	public void close() throws IOException {
+		// usually is a good idea to implement this method.
+	}
+    
 }
