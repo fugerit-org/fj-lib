@@ -22,6 +22,7 @@ package org.fugerit.java.core.cli;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Enumeration;
 import java.util.Properties;
 
 /**
@@ -68,6 +69,18 @@ public class ArgUtils {
 	 * @return			the arguments parsed
 	 */
 	public static Properties getArgs( String[] args, boolean checkParamFile ) {
+		return getArgs( args, checkParamFile, true );
+	}
+	
+	/**
+	 * <p>Parse an argument list as a property object.</p>
+	 * 
+	 * @param args		command line arguments
+	 * @param checkParamFile	true if param-file should be checked if the argument is set.
+	 * @param priorityToParamFile	true if param-file arguments should override command line arguments
+	 * @return			the arguments parsed
+	 */
+	public static Properties getArgs( String[] args, boolean checkParamFile, boolean priorityToParamFile ) {
 		Properties props = new Properties();
 		if ( args != null ) {
 			String currentkey = null;
@@ -94,7 +107,19 @@ public class ArgUtils {
 				File f = new File( paramFile );
 				try {
 					FileInputStream fis = new FileInputStream( f );
-					props.load( fis );
+					if ( priorityToParamFile ) {
+						props.load( fis );	
+					} else {
+						Properties toLoad = new Properties();
+						toLoad.load( fis );
+						Enumeration<Object> keys = toLoad.keys();
+						while ( keys.hasMoreElements() ) {
+							String currentKey = keys.nextElement().toString();
+							if ( !props.contains( currentKey ) ) {
+								props.setProperty( currentKey , toLoad.getProperty( currentKey ) );
+							}
+						}
+					}
 					fis.close();	
 				} catch (Exception e) {
 					throw new RuntimeException( e );
