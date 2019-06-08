@@ -44,5 +44,7 @@ public interface FileFun {
 	 * @throws IOException	If something goes wrong during elaboration
 	 */     
     public void handleFile(String path) throws IOException;
+ 
+    public void close() throws IOException;
     
 }

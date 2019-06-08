@@ -9,13 +9,14 @@ public class FixedFieldFileDescriptor {
 
 	public static final int NO_CHECK_LENGH = -1;
 	
-	public FixedFieldFileDescriptor( String id , String mode ) {
+	public FixedFieldFileDescriptor( String id , String mode, String encoding ) {
 		super();
 		this.id = id;
 		this.mode = mode;
 		this.listFields = new ArrayList<FixedFieldDescriptor>();
 		this.validators = new HashMap<String, FixedFileFieldValidator>();
 		this.checkLengh = NO_CHECK_LENGH;
+		this.encoding = encoding;
 	}
 
 	private String id;
@@ -25,6 +26,8 @@ public class FixedFieldFileDescriptor {
 	private String endline;
 	
 	private String baseLocale;
+	
+	private String encoding;
 	
 	private List<FixedFieldDescriptor> listFields;
 	
@@ -74,6 +77,10 @@ public class FixedFieldFileDescriptor {
 		return mode;
 	}
 
+	public synchronized String getEncoding() {
+		return encoding;
+	}
+	
 	public List<FixedFieldDescriptor> getListFields() {
 		return listFields;
 	}

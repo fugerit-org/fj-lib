@@ -1,5 +1,6 @@
 package org.fugerit.java.core.util.result;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.fugerit.java.core.log.BasicLogObject;
@@ -16,6 +17,7 @@ public class BasicResult extends BasicLogObject implements Result {
 	
 	public BasicResult( int resultCode ) {
 		this.resultCode = resultCode;
+		this.infoMap = new HashMap<String, Object>();
 	}
 		
 	@Override

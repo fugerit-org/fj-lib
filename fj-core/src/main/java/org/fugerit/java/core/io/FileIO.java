@@ -170,6 +170,27 @@ public class FileIO {
         }
     }
     
+    public static void recurseDir(File dir, FileFun fun, boolean includeBaseDir) throws IOException {
+        recurseDir(dir, fun);
+        if ( includeBaseDir ) {
+        	fun.handleFile( dir );
+        }
+    }
+
+    /*
+     * <p> 
+     *	Apply a <code>FileFun</code> to every file in a given directory.
+     * </p> 
+     * 
+     * @param dir				The directory to recurse.
+     * @param fun				The function to apply.
+     * @throws IOException		If something goes wrong during elaboration.
+     */     
+    public static void recurseDirClose(File dir, FileFun fun) throws IOException {
+       recurseDir(dir, fun);
+       fun.close();
+    }
+    
     /*
      * <p> 
      *	Read the content of a file.

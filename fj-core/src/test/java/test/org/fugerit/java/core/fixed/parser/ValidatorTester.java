@@ -33,9 +33,9 @@ public class ValidatorTester {
 			FileInputStream configIS = new FileInputStream( definition );
 			FixedFieldFileConfig config = FixedFieldFileConfig.parseConfig( configIS );
 			configIS.close();
-			FixedFieldFileDescriptor descriptor = config.getFileDescriptor( "tracciato_aire" );
-			FileReader fr = new FileReader( input );
-			FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, fr );
+			FixedFieldFileDescriptor descriptor = config.getFileDescriptor( "tracciato_test" );
+			FileInputStream fis = new FileInputStream( input );
+			FixedFieldFileReader reader = FixedFieldFileReader.newInstance( descriptor, fis );
 			while ( reader.hasNext() ) {
 				FixedFileFieldMap map = reader.nextRawMap();
 				if ( !map.getValidationErrors().isEmpty() ) {
@@ -44,7 +44,6 @@ public class ValidatorTester {
 			}
 			printErrorsToLog( reader.getGenericValidationErrors().iterator() );
 			logger.info( "ERROR COUNT : "+reader.getErrorCount() );
-			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

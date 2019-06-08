@@ -33,8 +33,9 @@ public class FixedFieldFileConfig {
 			String idFile = currentFileTag.getAttribute( "id" );
 			String checkLength = currentFileTag.getAttribute( "check-length" );
 			String endline = currentFileTag.getAttribute( "endline" );
+			String encoding = currentFileTag.getAttribute( "encoding" );
 			String baseLocale = currentFileTag.getAttribute( "base-locale" );
-			FixedFieldFileDescriptor fileDescriptor = new FixedFieldFileDescriptor( idFile, "map" );
+			FixedFieldFileDescriptor fileDescriptor = new FixedFieldFileDescriptor( idFile, "map", encoding );
 			if ( StringUtils.isNotEmpty( checkLength ) ) {
 				fileDescriptor.setCheckLengh( Integer.parseInt( checkLength.trim() ) );
 			}
