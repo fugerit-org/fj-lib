@@ -7,11 +7,11 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.3-SNAPSHOT</version>
+		<version>0.4-SNAPSHOT</version>
 	</parent>
 	
 	<name>fj-ext</name>
-	<description>Fugerit Java Extension Library for JDK 1.6 and up</description>
+	<description>Fugerit Java Extension Library for JDK 1.7 and up</description>
 	
 	<organization>
 		<url>http://www.fugerit.org</url>
@@ -26,10 +26,6 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<build>
 		<plugins>
@@ -39,10 +35,6 @@
 	<dependencies>
 
 		<!-- java core dependancies -->
-		<dependency>
-			<groupId>maven</groupId>
-			<artifactId>maven-java-plugin</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
