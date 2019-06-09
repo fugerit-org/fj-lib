@@ -5,20 +5,33 @@
 	<groupId>org.fugerit.java</groupId>
 	<artifactId>fj-lib</artifactId>
 
-	<version>0.3-SNAPSHOT</version>
+	<version>0.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
-	<description>Fugerit Java Library for JDK 1.6 and up</description>
+	<description>Fugerit Java Library for JDK 1.7 and up</description>
 	<url>http://www.fugerit.org/java/</url>
 
 	<properties>
-		<java-version-compliance>1.6</java-version-compliance>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java-version-compliance>1.7</java-version-compliance>
+		<j2ee-version-compliance>6.0</j2ee-version-compliance>
 	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
-	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>		    
-	    <slf4j-version>1.7.25</slf4j-version>		
-	    <poi-version>3.17</poi-version>	
+	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>
+	    <!-- maven plugin versions -->
+	    <mvn-source-version>3.1.0</mvn-source-version>
+	    <mvn-javadoc-version>3.1.0</mvn-javadoc-version>
+	    <mvn-jar-version>3.1.2</mvn-jar-version>
+	    <mvn-shade-version>3.2.1</mvn-shade-version>	    
+	    <!-- dependancy library versions -->    
+	    <slf4j-version>1.7.26</slf4j-version>		
+	    <poi-version>4.1.0</poi-version>
+	    <junit-version>4.12</junit-version>
+	    <dbcp-version>1.4</dbcp-version>
+	    <log4j-version>1.2.17</log4j-version>
+	    <!-- release dependancies -->
+	    <nexus-version>1.6.8</nexus-version>
+	    <mvn-gpg-version>1.6</mvn-gpg-version>	
 	</properties>
 
 	<licenses>
@@ -45,9 +58,9 @@
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/fugerit79/fj-lib.git</connection>
-		<developerConnection>scm:git:ssh://github.com/fugerit79/fj-lib.git</developerConnection>
-		<url>http://github.com/fugerit79/fj-lib/tree/master</url>
+		<connection>scm:git:git://github.com/fugerit-org/fj-lib.git</connection>
+		<developerConnection>scm:git:ssh://github.com/fugerit-org/fj-lib.git</developerConnection>
+		<url>http://github.com/fugerit-org/fj-lib</url>
 	</scm>
 
 	<distributionManagement>
@@ -73,16 +86,10 @@
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- java core dependancies -->
-			<dependency>
-				<groupId>maven</groupId>
-				<artifactId>maven-java-plugin</artifactId>
-				<version>1.6</version>
-			</dependency>
 			<dependency>
 				<groupId>javax</groupId>
 				<artifactId>javaee-api</artifactId>
-				<version>6.0</version>
+				<version>${j2ee-version-compliance}</version>
 				<scope>provided</scope>
 			</dependency>
 
@@ -90,7 +97,7 @@
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
-				<version>1.2.17</version>
+				<version>${log4j-version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -114,7 +121,7 @@
 			<dependency>
 			    <groupId>commons-dbcp</groupId>
 			    <artifactId>commons-dbcp</artifactId>
-			    <version>1.4</version>
+			    <version>${dbcp-version}</version>
 			</dependency>	
 
 			<dependency>
@@ -127,7 +134,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.10</version>
+				<version>${junit-version}</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -168,12 +175,12 @@
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-source-plugin</artifactId>
-							<version>3.0.1</version>
+							<version>${mvn-source-version}</version>
 						</plugin>
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-javadoc-plugin</artifactId>
-							<version>2.10.4</version>
+							<version>${mvn-javadoc-version}</version>
 						</plugin>
 					</plugins>					
 				</pluginManagement>
@@ -187,7 +194,7 @@
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.8</version>
+						<version>${nexus-version}</version>
 						<extensions>true</extensions>
 						<configuration>
 							<serverId>ossrh</serverId>
@@ -199,7 +206,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.5</version>
+						<version>${mvn-gpg-version}</version>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -222,7 +229,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jar-plugin</artifactId>
-						<version>3.0.2</version>
+						<version>${mvn-jar-version}</version>
 						<configuration>
 							<archive>
 								<manifest>
@@ -235,7 +242,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-shade-plugin</artifactId>
-						<version>3.1.0</version>
+						<version>${mvn-shade-version}</version>
 						<executions>
 							<execution>
 								<phase>package</phase>
