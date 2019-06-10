@@ -1,5 +1,6 @@
 package org.fugerit.java.core.cfg.xml;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,7 +13,11 @@ import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.lang.helpers.reflect.MethodHelper;
+import org.fugerit.java.core.util.collection.KeyObject;
+import org.fugerit.java.core.util.collection.ListMapStringKey;
+import org.fugerit.java.core.xml.dom.DOMIO;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
@@ -114,6 +119,23 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	protected String attTagDataList;
 	protected String attTagData;
 
+	public static <T> GenericListCatalogConfig<T> load( InputStream is, GenericListCatalogConfig<T> config ) throws Exception {
+		Document doc = DOMIO.loadDOMDoc( is );
+		Element root = doc.getDocumentElement();
+		config.configure( root );
+		return config;
+	}
+	
+	protected Collection<T> newCollection( Object typeSample ) {
+		Collection<T> c = null;
+		if ( typeSample instanceof KeyObject<?> ) {
+			c = new ListMapStringKey<T>();
+		} else {
+			c = new ArrayList<T>();
+		}
+		return c;
+	}
+	
 	@Override
 	public void configure(Element tag) throws ConfigException {
 		
@@ -129,6 +151,13 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 			throw new ConfigException( "No type defined" );
 		}
 		
+		Object typeSample = null;
+		try {
+			typeSample = ClassHelper.newInstance( type );
+		} catch (Exception ce ) {
+			throw new ConfigException( ce );
+		}
+		
 		String dataListElementName = this.attTagDataList;
 		String dataElementName = this.attTagData;
 		NodeList dataCatalogConfig = tag.getElementsByTagName( ATT_DATA_CATALOG_CONFIG );
@@ -141,7 +170,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		NodeList schemaListTag = tag.getElementsByTagName( dataListElementName );
 		for ( int k=0; k<schemaListTag.getLength(); k++ ) {
 			Element currentListTag = (Element) schemaListTag.item( k );
-			Collection<T> listCurrent = new ArrayList<T>();
+			Collection<T> listCurrent = this.newCollection( typeSample );
 			NodeList schemaIt = currentListTag.getElementsByTagName( dataElementName );
 			String idList = currentListTag.getAttribute( "id" );
 			String extendsAtt = currentListTag.getAttribute( "extends" );
