@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
@@ -75,6 +76,8 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	
 	private Map<String, Collection<T>> dataMap;
 	
+	private Set<String> orderedId;
+	
 	private Properties generalProps;
 	
 	/**
@@ -95,6 +98,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		this.attTagDataList = attTagDataList;
 		this.attTagData = attTagData;
 		this.generalProps = new Properties();
+		this.orderedId = new ConcurrentSkipListSet<String>();
 	}
 	
 	/**
@@ -219,6 +223,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 			}
 			logger.info( "add "+idList+" -> "+listCurrent );
 			this.dataMap.put( idList , listCurrent );
+			this.orderedId.add( idList );
 		}
 	}
 
@@ -228,7 +233,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	 * @return a set of id
 	 */
 	public Set<String> getIdSet() {
-		return this.dataMap.keySet();
+		return this.orderedId;
 	}
 	
 	/**
