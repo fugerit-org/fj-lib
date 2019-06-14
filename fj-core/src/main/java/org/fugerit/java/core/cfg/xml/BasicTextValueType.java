@@ -1,18 +1,13 @@
 package org.fugerit.java.core.cfg.xml;
 
-public class BasicTextValueType implements IdConfigType, TextValueType {
-
-	private String id;
+public class BasicTextValueType extends BasicIdConfigType implements TextValueType {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5768454871360291378L;
 	
 	private String textValue;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getTextValue() {
 		return textValue;

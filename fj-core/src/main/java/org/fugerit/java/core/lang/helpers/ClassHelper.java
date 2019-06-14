@@ -79,4 +79,8 @@ public class ClassHelper {
 		return is;
 	}
 	
+	public static InputStream loadFromDefaultClassLoader( String path ) throws Exception {
+		return getDefaultClassLoader().getResourceAsStream( path ); 
+	}
+	
 }
