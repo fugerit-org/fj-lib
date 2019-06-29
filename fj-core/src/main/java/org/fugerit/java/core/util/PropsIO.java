@@ -29,6 +29,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.fugerit.java.core.log.LogFacade;
 
 /**
  * <p>Utility for handling java.util.Property objects.</p>
@@ -57,6 +58,23 @@ public class PropsIO {
 			}
 		}
 	}
+	
+	/**
+	 * <p>Load a java.util.Properties from the DefaultClassLoader.</p>
+	 * 
+	 * @param path				the path
+	 * @return					the java.util.Properties object
+	 */
+	public static Properties loadFromClassLoaderSafe( String path ) {
+		Properties props = null;
+		try {
+			props = loadFromStream( ClassHelper.getDefaultClassLoader().getResourceAsStream( path ) );
+		} catch (Exception e) {
+			LogFacade.getLog().warn( "PropsIO.loadFromClassLoaderSafe() [default to new Properties]"+e.getMessage(), e );
+			props = new Properties();
+		}
+		return props;
+	}		
 	
 	/**
 	 * <p>Load a java.util.Properties from the DefaultClassLoader.</p>
@@ -107,6 +125,23 @@ public class PropsIO {
 	public static Properties loadFromFile( String f ) throws IOException {
 		return loadFromStream( new FileInputStream( f ) );
 	}	
+	
+	/**
+	 * <p>Load a java.util.Properties from a File.</p>
+	 * 
+	 * @param f					the file
+	 * @return					the java.util.Properties object
+	 */
+	public static Properties loadFromFileSafe( String f ) {
+		Properties props = null;
+		try {
+			props = loadFromFile( f );
+		} catch (Exception e) {
+			LogFacade.getLog().warn( "PropsIO.loadFromFileSafe() [default to new Properties]"+e.getMessage(), e );
+			props = new Properties();
+		}		
+		return props;
+	}		
 	
 	/**
 	 * <p>Load a java.util.Properties from a File.</p>

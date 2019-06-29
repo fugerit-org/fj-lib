@@ -30,11 +30,19 @@ public class MiniFilterChain extends MiniFilterBase {
 		int res = this.getDefaultBehaviour();
 		Iterator<MiniFilter> it = this.getFilterChain().iterator();
 		boolean goOn = true;
-		while ( it.hasNext() && goOn ) {
+		// now all the steps are always looked
+		while ( it.hasNext() ) {
 			MiniFilter filter = it.next();
-			int stepResult = filter.apply(context, data);
-			goOn = ( CONTINUE == stepResult );
-			logger.debug( this.toString() +", step : "+filter.toString()+", continue? "+goOn );
+			int stepResult = SKIP;
+			// if previous status was continue apply this step
+			if ( goOn ) {
+				stepResult = filter.apply(context, data);
+				goOn = ( SKIP != stepResult );
+			// apply anyways if prevopus status was always but next step will not be affected
+			} else if ( filter.getDefaultBehaviour() == ALWAYS ) {
+				stepResult = filter.apply(context, data);
+			}
+			logger.debug( this.toString() +", step : "+filter.toString()+", continue? "+goOn+" stepResult : "+stepResult );
 		}
 		return res;
 	}

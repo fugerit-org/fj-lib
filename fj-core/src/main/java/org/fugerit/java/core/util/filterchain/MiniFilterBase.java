@@ -37,6 +37,8 @@ public abstract class MiniFilterBase implements MiniFilter {
 	
 	private int defaultBehaviour;
 	
+	private String param01;
+	
 	@Override
 	public int getDefaultBehaviour() {
 		return this.defaultBehaviour;
@@ -50,6 +52,14 @@ public abstract class MiniFilterBase implements MiniFilter {
 	@Override
 	public String getDescription() {
 		return description;
+	}
+
+	public String getParam01() {
+		return param01;
+	}
+
+	public void setParam01(String param01) {
+		this.param01 = param01;
 	}
 
 	public String toString() {

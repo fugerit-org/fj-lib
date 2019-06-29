@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.fugerit.java.core.cfg.xml.GenericListCatalogConfig;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -41,6 +42,9 @@ public class MiniFilterConfig extends GenericListCatalogConfig<MiniFilterConfigE
 			MiniFilterConfigEntry entry = it.next();
 			String type = entry.getType();
 			MiniFilter filter = (MiniFilter) ClassHelper.newInstance( type );
+			if ( StringUtils.isNotEmpty( entry.getParam01() ) && filter instanceof MiniFilterBase ) {
+				((MiniFilterBase)filter).setParam01( entry.getParam01() );
+			}
 			filter.config( entry.getKey() , entry.getDescription(), entry.getDefaultBehaviourInt() );
 			chain.getFilterChain().add( filter );
 			logger.info( "adding filter to chain : "+filter );
