@@ -1,0 +1,32 @@
+<data-catalog-config type="org.fugerit.java.core.util.filterchain.MiniFilterConfigEntry">
+
+	<!-- sample configuration file for filter chain -->
+
+	<data-list id="chain-base-continue">
+		<data id="step-01" defaultBehaviour="CONTINUE"
+			description="Step 01 Continue (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.ContinueStep"/>
+		<data id="step-02" defaultBehaviour="CONTINUE"
+			description="Step 02 Skip (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
+	</data-list>
+	
+	<data-list id="chain-base-skip">
+		<data id="step-03" defaultBehaviour="CONTINUE"
+			description="Step 03 Skip (this one will not be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
+		<data id="step-04" defaultBehaviour="ALWAYS"
+			description="Step 04 Skip (this one will be printed as it's set as ALWAYS)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
+		<data id="step-05" defaultBehaviour="CONTINUE"
+			description="Step 05 Continue (this one will be not be printed as step 03 was a skip)" 
+			type="test.org.fugerit.java.core.util.filterchain.ContinueStep"/>
+	</data-list>	
+	
+	<data-list id="chain-base-all" extends="chain-base-continue, chain-base-skip">
+		<data id="step-06" defaultBehaviour="ALWAYS"
+			description="Step 06 Skip (this one will be printed as it's set as ALWAYS)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
+	</data-list>		
+
+</data-catalog-config>
