@@ -34,6 +34,8 @@ public class MiniFilterConfigEntry {
 	private String type;
 	
 	private String defaultBehaviour;
+	
+	private String param01;
 
 	public String getKey() {
 		return this.getId();
@@ -71,5 +73,12 @@ public class MiniFilterConfigEntry {
 		this.defaultBehaviour = defaultBehaviour;
 	}
 
-	
+	public String getParam01() {
+		return param01;
+	}
+
+	public void setParam01(String param01) {
+		this.param01 = param01;
+	}
+
 }

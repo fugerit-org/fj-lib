@@ -26,6 +26,12 @@ public class TestMiniFilter {
 	private static MiniFilterConfig CONFIG = init();
 	
 	public void testWorker( String chainId ) {
+		this.testWorker(chainId, false);
+	}
+	
+	public void testWorker( String chainId, boolean okOnException ) {
+		boolean success = false;
+		String message = "OK";
 		try {
 			System.out.println( "TEST START >>> "+chainId );
 			MiniFilterChain chain = CONFIG.getChainCache( chainId );
@@ -33,9 +39,16 @@ public class TestMiniFilter {
 			MiniFilterData data = new MiniFilterData() {};
 			int res = chain.apply( context , data );
 			System.out.println( "TEST END >>> "+chainId+" >> res:"+res );
+			success = !okOnException;
 		} catch (Exception e) {
-			e.printStackTrace();
-			fail( "Error : "+e.getMessage() );	
+			System.out.println( e.toString() );
+			message = e.getMessage();
+			success = okOnException;
+		}
+		if ( !success ) {
+			fail( "Error : "+message );
+		} else {
+			System.out.println( "Test was success "+chainId );
 		}
 	}
 	
@@ -52,6 +65,21 @@ public class TestMiniFilter {
 	@Test
 	public void testChainBaseAll() {
 		this.testWorker( "chain-base-all" );
+	}
+	
+	@Test
+	public void testChainBaseNotFound() {
+		this.testWorker( "chain-base-notfound", true );
+	}
+
+	@Test
+	public void testChainBaseLoadSafe00() {
+		this.testWorker( "chain-base-loadsafe-00" );
+	}
+	
+	@Test
+	public void testChainBaseLoadSafe01() {
+		this.testWorker( "chain-base-loadsafe-01" );
 	}
 
 }

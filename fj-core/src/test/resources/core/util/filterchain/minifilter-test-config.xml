@@ -28,5 +28,31 @@
 			description="Step 06 Skip (this one will be printed as it's set as ALWAYS)" 
 			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
 	</data-list>		
+	
+	<data-list id="chain-base-notfound">
+		<data id="step-07" defaultBehaviour="CONTINUE"
+			description="Step 07 Will not be printed as the class does not exist" 
+			type="test.org.fugerit.java.core.util.filterchain.ClassNotFoundStep"/>
+	</data-list>	
+	
+	<data-list id="chain-base-notfound">
+		<data id="step-07" defaultBehaviour="CONTINUE"
+			description="Step 07 Will not be printed as the class does not exist" 
+			type="test.org.fugerit.java.core.util.filterchain.ClassNotFoundStep"/>
+	</data-list>
+	
+	<data-list id="chain-base-loadsafe-00">
+		<data id="step-08" defaultBehaviour="CONTINUE"
+			description="Step 08 will be printed" 
+			type="org.fugerit.java.core.util.filterchain.MiniFilterLoadSafe"
+			param01="test.org.fugerit.java.core.util.filterchain.ClassNotFoundStep"/>
+	</data-list>					
+
+	<data-list id="chain-base-loadsafe-01">
+		<data id="step-09" defaultBehaviour="CONTINUE"
+			description="Step 09 will be printed" 
+			type="org.fugerit.java.core.util.filterchain.MiniFilterLoadSafe"
+			param01="test.org.fugerit.java.core.util.filterchain.ContinueStep"/>
+	</data-list>	
 
 </data-catalog-config>
