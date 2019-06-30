@@ -1,0 +1,12 @@
+<data-catalog-config type="org.fugerit.java.core.util.filterchain.MiniFilterConfigEntry">
+
+	<data-list id="chain-module01-test-01">
+		<data id="step-01-module-01" defaultBehaviour="CONTINUE"
+			description="Step 01 Continue (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.ContinueStep"/>
+		<data id="step-02-module-01" defaultBehaviour="CONTINUE"
+			description="Step 02 Skip (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
+	</data-list>
+
+</data-catalog-config>

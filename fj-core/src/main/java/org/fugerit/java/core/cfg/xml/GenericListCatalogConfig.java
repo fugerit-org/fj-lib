@@ -35,6 +35,13 @@ import org.w3c.dom.NodeList;
  		-->
 		<data-catalog-config key1="value1" key2="value">
 			
+			<!--
+				Some additional configurations could be loaded through configuration files.
+				All modules will be loaded before the main configuration file.
+			-->
+			<module-list>
+				<module id="module-01" mode="cl" src="class/load/path/to/module"/>
+			</module-list>
 
 	 		<!-- 
 	 			data list ids are accessed
@@ -119,6 +126,38 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	public static final String ATT_TYPE = "type";
 
 	public static final String ATT_TAG_TYPE_STRING = "java.lang.String";
+	
+	public static final String ATT_TAG_MODULE_LIST = "module-list";
+	
+	public static final String ATT_TAG_MODULE = "module";
+	
+	/**
+	 * Configuration attribute for module 'id' 
+	 */
+	public static final String ATT_TAG_MODULE_CONF_ID = "id";
+	
+	/**
+	 * Configuration attribute for module load 'mode'
+	 */
+	public static final String ATT_TAG_MODULE_CONF_MODE = "mode";
+	
+	
+	/**
+	 * Value for module load mode by class loader
+	 */
+	public static final String ATT_TAG_MODULE_CONF_MODE_CL = "cl";
+	
+	
+	/**
+	 * Configuration attribute for module src path 
+	 */
+	public static final String ATT_TAG_MODULE_CONF_PATH = "path";
+	
+	/**
+	 * Configuration attribute for module unsafe module 
+	 * (if unsafe='true' load exception would be ignored and main configuration will proceed ) 
+	 */
+	public static final String ATT_TAG_MODULE_CONF_UNSAFE = "unsafe";
 	
 	protected String attTagDataList;
 	protected String attTagData;
@@ -225,6 +264,37 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 			this.dataMap.put( idList , listCurrent );
 			this.orderedId.add( idList );
 		}
+		
+		NodeList moduleListTag = tag.getElementsByTagName( ATT_TAG_MODULE_LIST );
+		for ( int l=0; l<moduleListTag.getLength(); l++ ) {
+			Element currentModuleList = (Element)moduleListTag.item( l );
+			NodeList moduleTag = currentModuleList.getElementsByTagName( ATT_TAG_MODULE );
+			for ( int m=0; m<moduleTag.getLength(); m++ ) {
+				Element currentModule = (Element)moduleTag.item( m );
+				String id = currentModule.getAttribute( ATT_TAG_MODULE_CONF_ID );
+				String mode = currentModule.getAttribute( ATT_TAG_MODULE_CONF_MODE );
+				String path = currentModule.getAttribute( ATT_TAG_MODULE_CONF_PATH );
+				String unsafe = currentModule.getAttribute( ATT_TAG_MODULE_CONF_UNSAFE );
+				if ( ATT_TAG_MODULE_CONF_MODE_CL.equalsIgnoreCase( mode ) ) {
+					logger.info( "Loading module id="+id+" mode="+mode+" path="+path );
+					try {
+						InputStream is = ClassHelper.loadFromDefaultClassLoader( path );
+						Document currentModuleDoc = DOMIO.loadDOMDoc( is );
+						Element rootTag = currentModuleDoc.getDocumentElement();
+						this.configure( rootTag );
+					} catch (Exception e) {
+						if ( "true".equalsIgnoreCase( unsafe ) ) {
+							logger.warn( "Module "+id+" load failed, exception suppressed as it's marked 'unsafe'", e );
+						} else {
+							throw new ConfigException( "Error loadind module : "+id );
+						}
+					}
+				} else {
+					throw new ConfigException( "Usupported module load mode : "+mode );
+				}
+			}
+		}
+		
 	}
 
 	/**
