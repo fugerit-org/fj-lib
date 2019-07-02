@@ -4,7 +4,6 @@ import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 
-import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.util.filterchain.MiniFilterChain;
 import org.fugerit.java.core.util.filterchain.MiniFilterConfig;
 import org.fugerit.java.core.util.filterchain.MiniFilterContext;
@@ -19,17 +18,9 @@ public class TestMiniFilter {
 	
 	private static final String CONF_PATH = "core/util/filterchain/minifilter-test-config.xml";
 	
-	public static MiniFilterConfig init() {
-		MiniFilterConfig config = new MiniFilterConfig();
-		try {
-			MiniFilterConfig.loadConfig( ClassHelper.loadFromDefaultClassLoader( CONF_PATH ) , config );
-		} catch (Exception e) {
-			throw new RuntimeException( e );
-		}
-		return config;
-	}
+	private static final String CONF_PATH_DUPLICATE = "core/util/filterchain/minifilter-test-duplicate-fail.xml";
 	
-	private static MiniFilterConfig CONFIG = init();
+	private static MiniFilterConfig CONFIG = MiniFilterConfig.initFromClassLoaderWithRuntimeException( CONF_PATH );
 	
 	public void testWorker( String chainId ) {
 		this.testWorker(chainId, false);
@@ -109,5 +100,27 @@ public class TestMiniFilter {
 		logger.info(  "**********************************************" );
 		logger.info(  "**********************************************" );
 	}		
+	
+	@Test
+	public void testDuplicate() {
+		logger.info(  "**********************************************" );
+		logger.info(  "**********************************************" );
+		logger.info(  "*          TEST DUPLICATE                    *" );
+		boolean ok = false;
+		try {
+			MiniFilterConfig config = MiniFilterConfig.initFromClassLoaderWithRuntimeException( CONF_PATH_DUPLICATE );
+			logger.info( config.toString() );
+		} catch (Exception e) {
+			logger.info( e.getMessage() );
+			if ( e.getMessage().toLowerCase().contains( "duplicate" ) ) {
+				ok = true;
+			}
+		}
+		if ( !ok ) {
+			fail( "Test failed, duplicate exception non triggered" );
+		}
+		logger.info(  "**********************************************" );
+		logger.info(  "**********************************************" );
+	}	
 	
 }

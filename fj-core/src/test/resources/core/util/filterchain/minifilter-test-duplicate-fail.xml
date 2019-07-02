@@ -1,0 +1,17 @@
+<data-catalog-config
+	check-duplicate-id="fail" 
+	type="org.fugerit.java.core.util.filterchain.MiniFilterConfigEntry">
+
+	<data-list id="chain-base-duplicate" >
+		<data id="step-01" defaultBehaviour="CONTINUE"
+			description="Step 01 Continue (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.ContinueStep"/>
+	</data-list>
+	
+	<data-list id="chain-base-duplicate">
+		<data id="step-02" defaultBehaviour="CONTINUE"
+			description="Step 02 Skip (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
+	</data-list>	
+
+</data-catalog-config>

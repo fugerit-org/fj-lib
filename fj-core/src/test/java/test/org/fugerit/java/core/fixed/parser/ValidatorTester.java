@@ -2,7 +2,6 @@ package test.org.fugerit.java.core.fixed.parser;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.util.Iterator;
 import java.util.Properties;
 

@@ -80,5 +80,10 @@ public class MiniFilterConfigEntry {
 	public void setParam01(String param01) {
 		this.param01 = param01;
 	}
+	
+	public String toString() {
+		return this.getClass().getSimpleName()+"[id:"+this.getId()+"]";
+	}
+	
 
 }

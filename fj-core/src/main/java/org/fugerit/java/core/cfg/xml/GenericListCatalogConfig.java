@@ -107,6 +107,27 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		this.generalProps = new Properties();
 		this.orderedId = new ConcurrentSkipListSet<String>();
 	}
+
+	/**
+	 * General configurazion property for checking duplicate id 
+	 */
+	public static final String CONFIG_CHECK_DUPLICATE_ID = "check-duplicate-id";
+	
+	/**
+	 * If 'check-duplicate-id' is se to fail, the duplicate will cause the configuration to fail
+	 */
+	public static final String CONFIG_CHECK_DUPLICATE_ID_FAIL = "fail";
+	
+	/**
+	 * If 'check-duplicate-id' is se to warn, the duplicate will only be logged
+	 */
+	public static final String CONFIG_CHECK_DUPLICATE_ID_WARN = "warn";
+
+	/**
+	 * Default vaule for 'check-duplicate-id' property.
+	 * ('warn' for compatibility reason, strongly recommended setting to 'fail' ) 
+	 */
+	public static final String CONFIG_CHECK_DUPLICATE_ID_DEFAULT = CONFIG_CHECK_DUPLICATE_ID_WARN;
 	
 	/**
 	 * Default configuration element for a a data catalog config element
@@ -130,7 +151,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	public static final String ATT_TAG_MODULE_LIST = "module-list";
 	
 	public static final String ATT_TAG_MODULE = "module";
-	
+
 	/**
 	 * Configuration attribute for module 'id' 
 	 */
@@ -189,6 +210,8 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		}
 		logger.info( "general props : "+this.getGeneralProps() );
 		
+		String checkDuplicateId = this.getGeneralProps().getProperty( CONFIG_CHECK_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
+		
 		String type = this.getGeneralProps().getProperty( ATT_TYPE );
 		if ( StringUtils.isEmpty( type ) ) {
 			throw new ConfigException( "No type defined" );
@@ -216,6 +239,14 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 			Collection<T> listCurrent = this.newCollection( typeSample );
 			NodeList schemaIt = currentListTag.getElementsByTagName( dataElementName );
 			String idList = currentListTag.getAttribute( "id" );
+			if ( this.getIdSet().contains( idList ) ) {
+				String message = "Duplicate id found : "+idList;
+				if ( CONFIG_CHECK_DUPLICATE_ID_FAIL.equalsIgnoreCase( checkDuplicateId ) ) {
+					throw new ConfigException( message );
+				} else {
+					logger.warn( "["+this.getClass().getSimpleName()+"]"+message );
+				}
+			}
 			String extendsAtt = currentListTag.getAttribute( "extends" );
 			if ( StringUtils.isNotEmpty( extendsAtt ) ) {
 				String[] extendsAttList = extendsAtt.split( "," );
