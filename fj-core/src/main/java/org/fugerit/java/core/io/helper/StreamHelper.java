@@ -30,6 +30,8 @@ import java.io.Writer;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.lang.compare.ComparePrimitiveFacade;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -40,6 +42,7 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
  */
 public class StreamHelper {
 
+	private static Logger logger = LoggerFactory.getLogger( StreamHelper.class );
 
 	public static final String PATH_CLASSLOADER = "cl://";
 	
@@ -209,5 +212,109 @@ public class StreamHelper {
     public static long pipe( Reader src, Writer dst ) throws IOException {
     	return pipe( src, dst , StreamIO.BUFFERSIZE_DEFAULT, StreamIO.MODE_CLOSE_BOTH );
     }
+    
+    /**
+     * <p>Close an OutputStream, flushing it</p>
+     * 
+     * @param out		the java.io.OutputStream to close
+     * @return			<code>true</code> if the stream has been closed without exception, <code>false</code> otherwise
+     */
+    public static boolean closeSafe( OutputStream out ) {
+    	return closeSafe( out, true );
+    }
+    
+    /**
+     * <p>Close an OutputStream, eventually flushing it</p>
+     * 
+     * @param out		the java.io.OutputStream to close
+     * @param flush		<code>true</code> if the stream should be flushed before closing
+     * @return			<code>true</code> if the stream has been closed without exception, <code>false</code> otherwise
+     */
+    public static boolean closeSafe( OutputStream out, boolean flush ) {
+    	boolean closed = false;
+    	try {
+    		if ( out != null ) {
+    			if ( flush ) {
+    				out.flush();
+    			}
+    			out.close();
+    			closed = true;
+    		}
+    	} catch (IOException e) {
+    		logger.warn( "Exception closing the stream "+e, e );
+    	}
+    	return closed;
+    }
+    
+    /**
+     * <p>Close an InputStream, eventually flushing it</p>
+     * 
+     * @param in		the java.io.InputStream to close
+     * @return			<code>true</code> if the stream has been closed without exception, <code>false</code> otherwise
+     */
+    public static boolean closeSafe( InputStream in ) {
+    	boolean closed = false;
+    	try {
+    		if ( in != null ) {
+    			in.close();
+    			closed = true;
+    		}
+    	} catch (IOException e) {
+    		logger.warn( "Exception closing the stream "+e, e );
+    	}
+    	return closed;
+    }    
+    
+    /**
+     * <p>Close an Writer, flushing it</p>
+     * 
+     * @param out		the java.io.Writer to close
+     * @return			<code>true</code> if the writer has been closed without exception, <code>false</code> otherwise
+     */
+    public static boolean closeSafe( Writer out ) {
+    	return closeSafe( out, true );
+    }
+    
+    /**
+     * <p>Close an Writer, eventually flushing it</p>
+     * 
+     * @param out		the java.io.Writer to close
+     * @param flush		<code>true</code> if the writer should be flushed before closing
+     * @return			<code>true</code> if the writer has been closed without exception, <code>false</code> otherwise
+     */
+    public static boolean closeSafe( Writer out, boolean flush ) {
+    	boolean closed = false;
+    	try {
+    		if ( out != null ) {
+    			if ( flush ) {
+    				out.flush();
+    			}
+    			out.close();
+    			closed = true;
+    		}
+    	} catch (IOException e) {
+    		logger.warn( "Exception closing the writer "+e, e );
+    	}
+    	return closed;
+    }
+    
+    /**
+     * <p>Close an Reader, eventually flushing it</p>
+     * 
+     * @param in		the java.io.Reader to close
+     * @return			<code>true</code> if the reader has been closed without exception, <code>false</code> otherwise
+     */
+    public static boolean closeSafe( Reader in ) {
+    	boolean closed = false;
+    	try {
+    		if ( in != null ) {
+    			in.close();
+    			closed = true;
+    		}
+    	} catch (IOException e) {
+    		logger.warn( "Exception closing the reader "+e, e );
+    	}
+    	return closed;
+    }      
     
 }
