@@ -2,6 +2,12 @@
 
 	<!-- sample configuration file for filter chain -->
 
+	<module-list>
+		<module id="module-01" mode="cl" path="core/util/filterchain/minifilter-test-module01.xml"/>
+		<module id="module-02" mode="cl" path="core/util/filterchain/minifilter-test-module02.xml"/>
+		<module id="module-03" mode="cl" path="core/util/filterchain/minifilter-test-module03.xml" unsafe="true"/>
+	</module-list>
+
 	<data-list id="chain-base-continue">
 		<data id="step-01" defaultBehaviour="CONTINUE"
 			description="Step 01 Continue (this one will be printed)" 
@@ -34,12 +40,6 @@
 			description="Step 07 Will not be printed as the class does not exist" 
 			type="test.org.fugerit.java.core.util.filterchain.ClassNotFoundStep"/>
 	</data-list>	
-	
-	<data-list id="chain-base-notfound">
-		<data id="step-07" defaultBehaviour="CONTINUE"
-			description="Step 07 Will not be printed as the class does not exist" 
-			type="test.org.fugerit.java.core.util.filterchain.ClassNotFoundStep"/>
-	</data-list>
 	
 	<data-list id="chain-base-loadsafe-00">
 		<data id="step-08" defaultBehaviour="CONTINUE"

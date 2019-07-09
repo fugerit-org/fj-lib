@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.util.collection;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -28,7 +29,12 @@ import java.util.Comparator;
  * @author Fugerit
  *
  */
-public class OptionItem implements KeyObject<String> {
+public class OptionItem implements KeyObject<String>, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8792384610955797338L;
 
 	/**
 	 * Comparator to sort OptionItem by label String value

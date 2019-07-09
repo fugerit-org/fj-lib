@@ -61,4 +61,14 @@ public class MiniFilterConfig extends GenericListCatalogConfig<MiniFilterConfigE
 		return chain;
 	}	
 	
+	public static MiniFilterConfig initFromClassLoaderWithRuntimeException( String path ) {
+		MiniFilterConfig config = new MiniFilterConfig();
+		try {
+			MiniFilterConfig.loadConfig( ClassHelper.loadFromDefaultClassLoader( path ) , config );
+		} catch (Exception e) {
+			throw new RuntimeException( e );
+		}
+		return config;
+	}
+	
 }
