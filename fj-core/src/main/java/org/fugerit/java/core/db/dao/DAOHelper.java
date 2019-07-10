@@ -39,7 +39,7 @@ public class DAOHelper {
 			np++;
 			int param = (k+1);
 			Field f = fields.getField(k);
-			log.getLogger().debug( "Setting param n. "+param+", value: "+f.toString()+"(fl.size:"+fields.size()+")" );
+			log.getLogger().debug( "Setting param n. "+param+", value: "+String.valueOf( f )+"(fl.size:"+fields.size()+")" );
 			f.setField(ps, param);
 			k++;
 			log.getLogger().debug( "test : "+(k<fields.size())+" k:"+k+" fields.size:"+fields.size() );
