@@ -64,4 +64,12 @@ public class ListMapCatalogConfig<T extends KeyObject<String>> extends GenericLi
 		return ( ListMapStringKey<T>)super.getDataList(id);
 	}
 
+	public ListMapCatalogConfig() {
+		super();
+	}
+
+	public ListMapCatalogConfig(String attTagDataList, String attTagData) {
+		super(attTagDataList, attTagData);
+	}
+
 }
