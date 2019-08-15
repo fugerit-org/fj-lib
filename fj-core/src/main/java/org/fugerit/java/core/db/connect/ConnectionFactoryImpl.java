@@ -366,26 +366,6 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 }
 
 /**
- * ConnectionFactory implementation based on a single Connection
- * 
- * @author Fugerit
- *
- */
-class SingleConnectionFactory extends ConnectionFactoryImpl {
-
-	public SingleConnectionFactory( Connection conn ) {
-		this.conn = conn;
-	}
-	
-	public Connection conn;
-	
-	public Connection getConnection() throws DAOException {
-		return this.conn;
-	}
-	
-}
-
-/**
  * ConnectionFactory implementations based on DriverManager
  * 
  * @author Fugerit

@@ -60,6 +60,11 @@
 		    <artifactId>commons-dbcp</artifactId>
 		</dependency>		
 		
+		<dependency>
+	    	<groupId>org.hsqldb</groupId>
+	        <artifactId>hsqldb</artifactId>
+		</dependency>			
+		
 		<!-- for testing -->
 		<dependency>
 			<groupId>junit</groupId>

@@ -27,7 +27,6 @@ import java.sql.ResultSet;
 import java.util.List;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
-import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
 import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.log.LogFacade;
 
@@ -39,15 +38,6 @@ import org.fugerit.java.core.log.LogFacade;
  */
 public class MetaDataUtils {
 
-	public static void main( String[] args ) {
-		try {
-			ConnectionFactory cf = ConnectionFactoryImpl.newInstance( "org.postgresql.Driver", "jdbc:postgresql://localhost/jlibweb", "opinf", "opinf" );
-			createModel( cf );
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public static String insertQueryBuilder( TableModel tableModel ) {
 		List<ColumnModel> columnList = tableModel.getColumnList();
 		StringBuffer insertSQL = new StringBuffer();

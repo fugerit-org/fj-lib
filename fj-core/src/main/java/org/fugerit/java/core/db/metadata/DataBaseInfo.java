@@ -35,8 +35,8 @@ import org.fugerit.java.core.db.dao.DAOException;
  */
 public class DataBaseInfo {
 
-	public void init( ConnectionFactory cf ) throws DAOException {
-		Connection conn = cf.getConnection();
+	
+	public void init( Connection conn ) throws DAOException {
 		try {
 			DatabaseMetaData dbmd = conn.getMetaData();
 			this.setDatabaseProductName( dbmd.getDatabaseProductName() );
@@ -45,13 +45,15 @@ public class DataBaseInfo {
 			this.setDriverVersion( dbmd.getDriverVersion() );				
 		} catch (SQLException e) {
 			throw ( new DAOException( e ) );
-		} finally {
-			try {
-				conn.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}
+	}
+	
+	public void init( ConnectionFactory cf ) throws DAOException {
+		try ( Connection conn = cf.getConnection() ){
+			this.init( conn );			
+		} catch (SQLException e) {
+			throw ( new DAOException( e ) );
+		} 
 	}
 	
 	private String databaseProductName;

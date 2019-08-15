@@ -103,6 +103,9 @@ public class ForeignKeyModel implements KeyObject<String>  {
 		return this.getName().toLowerCase();
 	}	
 	
-	
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName()+"[name:"+this.getName()+"]";
+	}
 	
 }

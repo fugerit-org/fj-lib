@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.db.metadata;
 
+import org.fugerit.java.core.util.collection.KeyObject;
 
 /**
  * 
@@ -27,7 +28,7 @@ package org.fugerit.java.core.db.metadata;
  * @author Fugerit
  *
  */
-public class IndexModel extends ColumnContainer {
+public class IndexModel extends ColumnContainer implements KeyObject<String> {
 	
 	private String name;
 	
@@ -44,5 +45,15 @@ public class IndexModel extends ColumnContainer {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	@Override
+	public String getKey() {
+		return this.getName();
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName()+"[name:"+this.getName()+"]";
+	}
+		
 }

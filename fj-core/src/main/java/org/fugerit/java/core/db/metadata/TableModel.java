@@ -108,5 +108,12 @@ public class TableModel extends ColumnContainer {
 	public List<ForeignKeyModel> getForeignKeyList() {
 		return this.foreignKeyList;
 	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName()+"["+this.getTableId()+"]";
+	}
+	
+	
 	
 }
