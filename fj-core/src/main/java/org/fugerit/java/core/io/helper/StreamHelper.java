@@ -44,11 +44,19 @@ public class StreamHelper {
 
 	private static Logger logger = LoggerFactory.getLogger( StreamHelper.class );
 
-	public static final String PATH_CLASSLOADER = "cl://";
+	private static final String URL_HELPER = "://";
 	
-	public static final String PATH_JNDI = "jndi://";
+	public static final String MODE_CLASSLOADER = "cl";
 	
-	public static final String PATH_FILE = "file://";
+	public static final String MODE_FILE = "file";
+	
+	public static final String MODE_JNDI = "jndi";
+	
+	public static final String PATH_CLASSLOADER = MODE_CLASSLOADER+URL_HELPER;
+	
+	public static final String PATH_FILE = MODE_FILE+URL_HELPER;
+	
+	public static final String PATH_JNDI = MODE_JNDI+URL_HELPER;
 	
 	public static InputStream resolveStream( String path ) throws Exception {
 		return resolveStream( path, null );
@@ -73,6 +81,14 @@ public class StreamHelper {
 			is = c.getResourceAsStream( path );
 		}
 		return is;
+	}
+
+	public static InputStream resolveStreamByMode( String mode, String path ) throws Exception {	
+		return resolveStreamByMode( mode, path, StreamHelper.class );
+	}
+	
+	public static InputStream resolveStreamByMode( String mode, String path, Class<?> c ) throws Exception {	
+		return resolveStream( mode+URL_HELPER+path, null, c );
 	}
 	
 	public static InputStream resolveStream( String path, String basePath, Class<?> c ) throws Exception {	

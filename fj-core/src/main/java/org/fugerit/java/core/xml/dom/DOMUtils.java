@@ -37,19 +37,29 @@ public class DOMUtils {
 	    /**
 	     * Build a property object containing attributes of a xml Element.
 	     * 
-	     * @param tag	the lement
+	     * @param tag	the element
 	     * @return		the attribute mapping as a propery object
 	     */
 	   public static Properties attributesToProperties(Element tag) {
 	        Properties props = new Properties();
+	        attributesToProperties(tag, props);
+	        return props;
+	    }
+
+	   /**
+	    * Build a property object containing attributes of a xml Element.
+	    * 
+	    * @param tag	the element
+	    * @param props	the properties to fill with element attibutes
+	    */
+	   public static void attributesToProperties(Element tag, Properties props) {
 	        NamedNodeMap atts = tag.getAttributes();
 	        for (int k=0; k<atts.getLength(); k++) {
 	            Attr a = (Attr)atts.item(k);
 	            props.setProperty(a.getName(), a.getValue());
 	        }
-	        return props;
 	    }
-
+	   
 	    private DOMUtils() {
 	        super();
 	    }	

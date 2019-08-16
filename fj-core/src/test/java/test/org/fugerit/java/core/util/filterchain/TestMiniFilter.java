@@ -35,7 +35,7 @@ public class TestMiniFilter {
 			MiniFilterContext context = new MiniFilterContext();
 			MiniFilterData data = new MiniFilterData() {};
 			int res = chain.apply( context , data );
-			logger.info(  "TEST END >>> "+chainId+" >> res:"+res );
+			logger.info(  "TEST END >>> "+chainId+" >> res:"+res+" [custom-config:"+context.getCustomConfig()+"]" );
 			success = !okOnException;
 		} catch (Exception e) {
 			logger.info(  e.toString() );

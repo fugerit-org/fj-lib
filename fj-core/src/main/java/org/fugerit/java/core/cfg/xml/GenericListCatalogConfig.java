@@ -11,16 +11,15 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
+import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
-import org.fugerit.java.core.lang.helpers.reflect.MethodHelper;
 import org.fugerit.java.core.util.collection.KeyObject;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.xml.dom.DOMIO;
-import org.w3c.dom.Attr;
+import org.fugerit.java.core.xml.dom.DOMUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
 /**
@@ -144,7 +143,15 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	 */
 	public static final String ATT_TAG_DATA = "data";
 	
+	/**
+	 * Type to use for the for the elements (data)
+	 */
 	public static final String ATT_TYPE = "type";
+	
+	/**
+	 * Type to use for the config containers (data-list)
+	 */
+	public static final String ATT_LIST_TYPE = "list-type";
 
 	public static final String ATT_TAG_TYPE_STRING = "java.lang.String";
 	
@@ -166,8 +173,13 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	/**
 	 * Value for module load mode by class loader
 	 */
-	public static final String ATT_TAG_MODULE_CONF_MODE_CL = "cl";
+	public static final String ATT_TAG_MODULE_CONF_MODE_CL = StreamHelper.MODE_CLASSLOADER;
+
 	
+	/**
+	 * Value for module load mode by file
+	 */
+	public static final String ATT_TAG_MODULE_CONF_MODE_FILE = StreamHelper.MODE_FILE;
 	
 	/**
 	 * Configuration attribute for module src path 
@@ -190,12 +202,26 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		return config;
 	}
 	
-	protected Collection<T> newCollection( Object typeSample ) {
+	@SuppressWarnings("unchecked")
+	protected Collection<T> newCollection( Object typeSample, String listType, Element tag, Element current ) throws ConfigException {
 		Collection<T> c = null;
-		if ( typeSample instanceof KeyObject<?> ) {
-			c = new ListMapStringKey<T>();
+		if ( listType != null ) {
+			try {
+				c = (Collection<T>)ClassHelper.newInstance( listType );
+				if ( c instanceof IdConfigType ) {
+					XmlBeanHelper.setFromElement( c , current );	
+				}
+			} catch (Throwable e) {
+				e.printStackTrace();
+				throw new ConfigException( e );
+			}
+		} else  if ( typeSample instanceof KeyObject<?> ) {
+			c = new ListMapConfig<T>();
 		} else {
 			c = new ArrayList<T>();
+		}
+		if ( c instanceof ListMapConfig ) {
+			((ListMapConfig<T>)c).initFromElementAttributes( current );
 		}
 		return c;
 	}
@@ -203,14 +229,12 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	@Override
 	public void configure(Element tag) throws ConfigException {
 		
-		NamedNodeMap nnm = tag.getAttributes();
-		for ( int k=0; k<nnm.getLength(); k++ ) {
-			Attr att = (Attr)nnm.item( k );
-			this.getGeneralProps().setProperty( att.getName() , att.getValue() );
-		}
+		DOMUtils.attributesToProperties( tag, this.getGeneralProps() );
 		logger.info( "general props : "+this.getGeneralProps() );
 		
 		String checkDuplicateId = this.getGeneralProps().getProperty( CONFIG_CHECK_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
+		
+		String listType = this.getGeneralProps().getProperty( ATT_LIST_TYPE );
 		
 		String type = this.getGeneralProps().getProperty( ATT_TYPE );
 		if ( StringUtils.isEmpty( type ) ) {
@@ -232,11 +256,10 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 			dataListElementName = StringUtils.valueWithDefault( dataCatalogConfigTag.getAttribute( "list-tag" ) , this.attTagDataList );
 			dataElementName = StringUtils.valueWithDefault( dataCatalogConfigTag.getAttribute( "data-tag" ) , this.attTagData );
 		}
-		
 		NodeList schemaListTag = tag.getElementsByTagName( dataListElementName );
 		for ( int k=0; k<schemaListTag.getLength(); k++ ) {
 			Element currentListTag = (Element) schemaListTag.item( k );
-			Collection<T> listCurrent = this.newCollection( typeSample );
+			Collection<T> listCurrent = this.newCollection( typeSample, listType, tag, currentListTag );
 			NodeList schemaIt = currentListTag.getElementsByTagName( dataElementName );
 			String idList = currentListTag.getAttribute( "id" );
 			if ( this.getIdSet().contains( idList ) ) {
@@ -273,18 +296,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 					}	
 				} else {
 					try {
-						@SuppressWarnings("unchecked")
-						T t = (T) ClassHelper.newInstance( type );
-						NamedNodeMap atts = currentSchemaTag.getAttributes();
-						for ( int ak=0; ak<atts.getLength(); ak++ ) {
-							Attr att = (Attr)atts.item( ak );
-							String key = att.getName();
-							String value = att.getValue();
-							MethodHelper.invokeSetter( t , key, String.class, value );
-						}
-						if ( t instanceof TextValueType ) {
-							((TextValueType) t ).setTextValue( currentSchemaTag.getTextContent() );
-						}
+						T t = XmlBeanHelper.setFromElement(type, currentSchemaTag );
 						listCurrent.add( t );
 					} catch (Exception e) {
 						throw new ConfigException( "Error configuring type : "+e, e );
@@ -306,22 +318,18 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 				String mode = currentModule.getAttribute( ATT_TAG_MODULE_CONF_MODE );
 				String path = currentModule.getAttribute( ATT_TAG_MODULE_CONF_PATH );
 				String unsafe = currentModule.getAttribute( ATT_TAG_MODULE_CONF_UNSAFE );
-				if ( ATT_TAG_MODULE_CONF_MODE_CL.equalsIgnoreCase( mode ) ) {
-					logger.info( "Loading module id="+id+" mode="+mode+" path="+path );
-					try {
-						InputStream is = ClassHelper.loadFromDefaultClassLoader( path );
-						Document currentModuleDoc = DOMIO.loadDOMDoc( is );
-						Element rootTag = currentModuleDoc.getDocumentElement();
-						this.configure( rootTag );
-					} catch (Exception e) {
-						if ( "true".equalsIgnoreCase( unsafe ) ) {
-							logger.warn( "Module "+id+" load failed, exception suppressed as it's marked 'unsafe'", e );
-						} else {
-							throw new ConfigException( "Error loadind module : "+id );
-						}
+				logger.info( "Loading module id="+id+" mode="+mode+" path="+path );
+				try  {
+					InputStream is = StreamHelper.resolveStreamByMode( mode , path );
+					Document currentModuleDoc = DOMIO.loadDOMDoc( is );
+					Element rootTag = currentModuleDoc.getDocumentElement();
+					this.configure( rootTag );
+				} catch (Exception e) {
+					if ( "true".equalsIgnoreCase( unsafe ) ) {
+						logger.warn( "Module "+id+" load failed, exception suppressed as it's marked 'unsafe'" );
+					} else {
+						throw new ConfigException( "Error loading module : "+id, e );
 					}
-				} else {
-					throw new ConfigException( "Usupported module load mode : "+mode );
 				}
 			}
 		}

@@ -3,6 +3,7 @@ package org.fugerit.java.core.util.filterchain;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 public class MiniFilterChain extends MiniFilterBase {
 
@@ -17,6 +18,7 @@ public class MiniFilterChain extends MiniFilterBase {
 	public MiniFilterChain(String key, int defaultBehaviour) {
 		super(key, defaultBehaviour);
 		this.filterChain = new ArrayList<MiniFilter>();
+		this.defaultConfig = new Properties();
 	}
 
 	private List<MiniFilter> filterChain;
@@ -25,11 +27,18 @@ public class MiniFilterChain extends MiniFilterBase {
 		return filterChain;
 	}
 
+	private Properties defaultConfig;
+	
+	public Properties getDefaultConfig() {
+		return defaultConfig;
+	}
+
 	@Override
 	public int apply(MiniFilterContext context, MiniFilterData data) throws Exception {
 		int res = this.getDefaultBehaviour();
 		Iterator<MiniFilter> it = this.getFilterChain().iterator();
 		boolean goOn = true;
+		context.getCustomConfig().putAll( this.getDefaultConfig() );
 		// now all the steps are always looked
 		while ( it.hasNext() ) {
 			MiniFilter filter = it.next();

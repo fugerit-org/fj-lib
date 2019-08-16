@@ -3,6 +3,7 @@ package org.fugerit.java.core.util.filterchain;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 public class MiniFilterContext implements Serializable {
@@ -14,8 +15,12 @@ public class MiniFilterContext implements Serializable {
 
 	private Map<String, Object> map;
 	
+	private Properties customConfig;
+
+	
 	public MiniFilterContext() {
 		this.map = new HashMap<String, Object>();
+		this.customConfig = new Properties();
 	}
 
 	public boolean containsAttribute(String key) {
@@ -37,5 +42,10 @@ public class MiniFilterContext implements Serializable {
 	public Set<String> keySet() {
 		return map.keySet();
 	}	
-		
+	
+	public Properties getCustomConfig() {
+		return customConfig;
+	}
+
+
 }

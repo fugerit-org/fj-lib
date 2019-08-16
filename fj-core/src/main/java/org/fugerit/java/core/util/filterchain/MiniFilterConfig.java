@@ -1,19 +1,19 @@
 package org.fugerit.java.core.util.filterchain;
 
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.fugerit.java.core.cfg.xml.GenericListCatalogConfig;
+import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
+import org.fugerit.java.core.cfg.xml.ListMapConfig;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class MiniFilterConfig extends GenericListCatalogConfig<MiniFilterConfigEntry> {
+public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEntry, ListMapConfig<MiniFilterConfigEntry>> {
 
 	/**
 	 * 
@@ -23,8 +23,13 @@ public class MiniFilterConfig extends GenericListCatalogConfig<MiniFilterConfigE
 	private Map<String, MiniFilterChain> mapChain;
 	
 	public MiniFilterConfig() {
-		super();
+		this( ATT_TAG_DATA_LIST, ATT_TAG_DATA );
+	}
+
+	public MiniFilterConfig(String attTagDataList, String attTagData) {
+		super(attTagDataList, attTagData);
 		this.mapChain = new HashMap<String, MiniFilterChain>();
+		this.getGeneralProps().setProperty( ATT_TYPE , MiniFilterConfigEntry.class.getName() );
 	}
 
 	public static MiniFilterConfig loadConfig( InputStream is, MiniFilterConfig config ) throws Exception {
@@ -35,8 +40,9 @@ public class MiniFilterConfig extends GenericListCatalogConfig<MiniFilterConfigE
 	}
 	
 	public MiniFilterChain getChain( String id ) throws Exception {
-		Collection<MiniFilterConfigEntry> c = this.getDataList( id );
+		ListMapConfig<MiniFilterConfigEntry> c = this.getListMap( id );
 		MiniFilterChain chain = new MiniFilterChain();
+		chain.getDefaultConfig().putAll( c.getConfig() );
 		Iterator<MiniFilterConfigEntry> it = c.iterator();
 		while ( it.hasNext() ) {
 			MiniFilterConfigEntry entry = it.next();

@@ -1,6 +1,13 @@
 package org.fugerit.java.core.util.filterchain;
 
-public class MiniFilterConfigEntry {
+import org.fugerit.java.core.cfg.xml.BasicIdConfigType;
+
+public class MiniFilterConfigEntry extends BasicIdConfigType {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8847347997351482756L;
 
 	/**
 	 * Next step will be processed
@@ -27,8 +34,6 @@ public class MiniFilterConfigEntry {
 		return res;
 	}
 	
-	private String id;
-	
 	private String description;
 	
 	private String type;
@@ -41,14 +46,6 @@ public class MiniFilterConfigEntry {
 		return this.getId();
 	}
 	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getDescription() {
 		return description;
 	}

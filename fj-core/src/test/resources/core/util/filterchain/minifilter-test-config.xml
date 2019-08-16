@@ -1,4 +1,5 @@
-<data-catalog-config type="org.fugerit.java.core.util.filterchain.MiniFilterConfigEntry">
+<data-catalog-config 
+	type="org.fugerit.java.core.util.filterchain.MiniFilterConfigEntry">
 
 	<!-- sample configuration file for filter chain -->
 
@@ -8,7 +9,7 @@
 		<module id="module-03" mode="cl" path="core/util/filterchain/minifilter-test-module03.xml" unsafe="true"/>
 	</module-list>
 
-	<data-list id="chain-base-continue">
+	<data-list id="chain-base-continue" test-prop="Try loading cusom props">
 		<data id="step-01" defaultBehaviour="CONTINUE"
 			description="Step 01 Continue (this one will be printed)" 
 			type="test.org.fugerit.java.core.util.filterchain.ContinueStep"/>
