@@ -20,7 +20,12 @@
  */
 package org.fugerit.java.core.db.metadata;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.fugerit.java.core.lang.helpers.CollectionUtils;
 import org.fugerit.java.core.lang.helpers.ConcatHelper;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.KeyObject;
 
 /**
@@ -108,6 +113,14 @@ public class TableId implements KeyObject<String> {
 			h+= this.getTableSchema().hashCode();
 		}
 		return h;
+	}
+	
+	public String toIdString() {
+		List<String> list = new ArrayList<String>();
+		CollectionUtils.addIfNotNull( list , this.getTableCatalog() );
+		CollectionUtils.addIfNotNull( list , this.getTableSchema() );
+		CollectionUtils.addIfNotNull( list , this.getTableName() );
+		return StringUtils.concat(  ".", list );
 	}
 	
 }

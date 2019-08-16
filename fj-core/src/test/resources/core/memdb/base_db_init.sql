@@ -30,6 +30,12 @@ COMMENT ON COLUMN fugerit.addresses.id IS 'Address system id';
 COMMENT ON COLUMN fugerit.addresses.id_user IS 'User linked to to address';
 COMMENT ON COLUMN fugerit.addresses.info IS 'Address info';
 
+CREATE TABLE fugerit.log_data (
+	id bigint NOT NULL,
+	log_time TIMESTAMP,
+	info VARCHAR(128) NOT NULL
+);
+
 INSERT INTO fugerit.users ( id, username, password, last_login, state ) VALUES ( 1, 'user1', 'a3f8h5h4h3n3n1n9', sysdate, 1 );
 INSERT INTO fugerit.users ( id, username, password, last_login, state ) VALUES ( 2, 'user2', '5h4h3n3n1n9a3f8h', sysdate, 0 );
 
