@@ -15,10 +15,6 @@ import org.junit.Test;
 import test.org.fugerit.java.MemDBTestBase;
 
 public class TestMetadataUtils extends MemDBTestBase {
-
-	public TestMetadataUtils() throws Exception {
-		super();
-	}
 	
 	@Test
 	public void testDatabaseMetadata() {
