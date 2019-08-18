@@ -55,6 +55,9 @@ public class ColumnModel implements KeyObject<String> {
 	private String comment;
 	
 	private String extra;
+	
+	private String javaType;
+	
 
 	public String getExtra() {
 		return extra;
@@ -110,6 +113,14 @@ public class ColumnModel implements KeyObject<String> {
 
 	public void setSize(int size) {
 		this.size = size;
+	}
+
+	public String getJavaType() {
+		return javaType;
+	}
+
+	public void setJavaType(String javaType) {
+		this.javaType = javaType;
 	}
 
 	@Override

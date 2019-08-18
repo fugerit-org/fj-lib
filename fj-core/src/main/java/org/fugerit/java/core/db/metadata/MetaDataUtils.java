@@ -24,6 +24,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,6 +167,20 @@ public class MetaDataUtils {
 					tableModel.addColumn( columnModel );
 				}
 				columnsRS.close();
+				
+				String sql = "SELECT * FROM "+tableId.toIdString()+" WHERE 1=0";
+				try ( Statement stm = conn.createStatement(); 
+						ResultSet rsJavaType = stm.executeQuery( sql )  ) {
+					ResultSetMetaData rsmd = rsJavaType.getMetaData();
+					for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
+						String colName = rsmd.getColumnName( k+1 );
+						String javaName = rsmd.getColumnClassName( k+1 );
+						ColumnModel columnModel = tableModel.getColumn( colName );
+						columnModel.setJavaType( javaName );
+					}
+				} catch ( Exception e ) {
+					LogFacade.getLog().info( "Error getting java type : "+e, e );
+				}
 				
 				if ( mode == MODE_STRICT ) {
 					ResultSet pkRS = dbmd.getPrimaryKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
