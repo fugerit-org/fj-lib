@@ -10,6 +10,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.io.FileIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 	
 	private Collection<String> importList;
 	
-	public BasicJavaGenerator( File sourceFolder, String fullObjectBName ) {
+	public void init( File sourceFolder, String fullObjectBName ) throws ConfigException {
 		this.buffer = new StringWriter();
 		this.writer = new PrintWriter( this.buffer );
 		int index = fullObjectBName.lastIndexOf( '.' );
@@ -39,7 +40,7 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 		this.packageName = fullObjectBName.substring( 0, index );
 		File packageFolder = new File( sourceFolder, packageName.replace( '.' , '/' ) );
 		this.javaFile = new File( packageFolder, javaName+".java" );
-		this.importList = new ArrayList<>();
+		this.importList = new ArrayList<>();		
 	}
 	
 	public PrintWriter getWriter() {

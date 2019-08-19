@@ -48,7 +48,7 @@ public class MemDBTestBaseTester extends MemDBTestBase {
 			execute(stm, "INSERT INTO TEST.TEST_01 (id) VALUES ( 1 )");
 			execute(stm, "INSERT INTO TEST.TEST_01 (id) VALUES ( 2 )");
 			execute(stm, "SELECT * FROM TEST.TEST_01");
-			execute(stm, "SELECT * FROM fugerit.users");
+			execute(stm, "SELECT * FROM fugerit.user");
 		} catch (Exception e) {
 			String message = "Error "+e;
 			logger.error( message, e );

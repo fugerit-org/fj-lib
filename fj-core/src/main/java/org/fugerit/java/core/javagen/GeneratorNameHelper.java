@@ -17,4 +17,13 @@ public class GeneratorNameHelper {
 		return res;
 	}
 	
+	public static String classFromPackage( String name ) {
+		int index = name.lastIndexOf( '.' );
+		String res = name;
+		if ( index >= 0 ) {
+			res = name.substring( index+1 );
+		}
+		return res;
+	}
+	
 }

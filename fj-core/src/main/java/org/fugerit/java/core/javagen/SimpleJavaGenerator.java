@@ -1,12 +1,15 @@
 package org.fugerit.java.core.javagen;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.Properties;
 
+import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
@@ -18,8 +21,8 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	public static final String STYLE_CLASS = "class";
 	public static final String STYLE_INTERFACE = "interface";
 	
-	public SimpleJavaGenerator(File sourceFolder, String fullObjectBName, String javaStyle, Properties config) {
-		super(sourceFolder, fullObjectBName);
+	public void init( File sourceFolder, String fullObjectBName, String javaStyle, Properties config ) throws ConfigException {
+		super.init(sourceFolder, fullObjectBName);
 		this.setJavaStyle( javaStyle );
 		this.config = config;
 	}
@@ -70,6 +73,10 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 		this.implementsInterface = implementsInterface;
 	}
 
+	protected void beforeClass() {
+		
+	}
+	
 	@Override
 	public void generate() throws Exception {
 		this.getWriter().println( "package "+this.getPackageName()+";" );
@@ -112,6 +119,7 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 		if ( StringUtils.isNotEmpty( this.implementsInterface ) ) {
 			impl+= " implements "+this.implementsInterface;
 		}
+		this.beforeClass();
 		this.getWriter().println( "public "+this.getJavaStyle()+" "+this.getJavaName()+impl+" {" );
 		this.getWriter().println();
 		this.customPartWorker( CUSTOM_CODE_START , CUSTOM_CODE_END, "	" );
@@ -123,6 +131,27 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	
 	protected void customPartWorker( String startTag, String endTag, String indent ) throws FileNotFoundException, IOException {
 		customPartWorker( this.getJavaFile(), this.getWriter(), startTag, endTag, indent );
+	}
+	
+	protected void addSerialVerUID() throws IOException {
+		String baseData = "	private static final long serialVersionUID = ";
+		String fullData = null;
+		if ( this.getJavaFile().exists() ) {
+			try ( BufferedReader reader = new BufferedReader( new FileReader( this.getJavaFile() ) ) ) {
+				String line = reader.readLine();
+				while ( line != null ) {
+					if ( line.contains( baseData ) ) {
+						fullData = line;
+					}
+					line = reader.readLine();
+				}
+			}
+		}
+		if ( fullData == null ) {
+			fullData = baseData + (long)(Math.random()*1000000000000L)+"L;";
+		}
+		this.getWriter().println( fullData );
+		this.getWriter().println();
 	}
 	
 	

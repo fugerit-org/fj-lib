@@ -14,12 +14,12 @@ public class TestScriptFacade extends MemDBTestBase {
 	
 	@Test
 	public void testSelect01() {
-		this.simpleTestSelectWorker( "SELECT * FROM fugerit.users" );
+		this.simpleTestSelectWorker( "SELECT * FROM fugerit.user" );
 	}
 	
 	@Test
 	public void testSelect02() {
-		this.simpleTestSelectWorker( "SELECT * FROM fugerit.addresses" );
+		this.simpleTestSelectWorker( "SELECT * FROM fugerit.address" );
 	}
 	
 }

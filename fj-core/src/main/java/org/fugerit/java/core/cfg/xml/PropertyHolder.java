@@ -15,6 +15,7 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 public class PropertyHolder extends BasicIdConfigType {
 
 	public final static String MODE_CLASS_LOADER = "classloader";
+	public final static String MODE_CL = "cl";
 	
 	public final static String MODE_FILE = "file";
 	
@@ -77,7 +78,7 @@ public class PropertyHolder extends BasicIdConfigType {
 	
 	public static Properties load( String mode, String path, String xml ) throws IOException {
 		Properties props = new Properties();
-		if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) ) {
+		if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
 			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( path ) ) {
 				loadWorker( is , props, BooleanUtils.isTrue( xml ) );
 			} catch (Exception e) {
