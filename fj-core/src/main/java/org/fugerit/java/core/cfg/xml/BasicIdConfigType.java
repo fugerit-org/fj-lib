@@ -25,5 +25,12 @@ public class BasicIdConfigType implements IdConfigType, KeyObject<String>, Seria
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName()+"[id:"+this.getId()+"]";
+	}
+	
+	
 	
 }

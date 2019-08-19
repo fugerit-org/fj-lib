@@ -21,17 +21,18 @@
 package org.fugerit.java.core.xml.dom;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.Writer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
@@ -52,6 +53,8 @@ import org.xml.sax.InputSource;
  */
 public class DOMIO {
 
+	public static final int DEFAULT_INDENT = 2;
+	
     /**
      * Load a DOM structure from a string
      * 
@@ -163,19 +166,67 @@ public class DOMIO {
      * Write a DOM structure to a stream, with indentation
      * 
      * @param tag		the DOM structure
-     * @param stream	the destination stream
+     * @param result	the destination stream
      * @throws XMLException		in case of issues
      */
-    public static void writeDOMIndent(Node tag, OutputStream stream) throws XMLException {
+    public static void writeDOMIndent(Node tag, OutputStream result) throws XMLException {
+        writeDOMIndent( tag, new StreamResult( result ));
+    }
+    
+    /**
+     * Write a DOM structure to a stream, with indentation
+     * 
+     * @param tag		the DOM structure
+     * @param result	the destination stream
+     * @throws XMLException		in case of issues
+     */
+    public static void writeDOMIndent(Node tag, Writer result) throws XMLException {
+        writeDOMIndent( tag, new StreamResult( result ) );
+    }
+    
+    
+    /**
+     * Write a DOM structure to a stream, with indentation
+     * 
+     * @param tag		the DOM structure
+     * @param result	the destination stream
+     * @throws XMLException		in case of issues
+     */
+    public static void writeDOMIndent(Node tag, Result result) throws XMLException {
+        writeDOMIndent( tag, result, DEFAULT_INDENT);
+    }
+    
+    /**
+     * Write a DOM structure to a stream, with indentation
+     * 
+     * @param tag		the DOM structure
+     * @param result	the destination result
+     * @param indent	indent amount
+     * @throws XMLException		in case of issues
+     */
+    public static void writeDOMIndent(Node tag, Result result, int indent) throws XMLException {
         Transformer transformer = TransformerXML.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", String.valueOf( indent ) );
         try {
-            transformer.transform(new DOMSource(tag), new StreamResult(stream));
+            transformer.transform(new DOMSource(tag), result );
         } catch (TransformerException te) {
             throw (new XMLException(te));
         }
+    }
+    
+    /**
+     * Write a DOM structure to a stream, with indentation
+     * 
+     * @param tag		the DOM structure
+     * @param result	the destination result
+     * @param indent	indent amount
+     * @throws XMLException		in case of issues
+     */
+    public static void writeDOMIndent(Node tag, Writer result, int indent) throws XMLException {
+        writeDOMIndent( tag, new StreamResult( result ), indent);
     }
     
     private DOMIO() {

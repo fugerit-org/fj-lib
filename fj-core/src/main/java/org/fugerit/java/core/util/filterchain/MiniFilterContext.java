@@ -6,7 +6,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-public class MiniFilterContext implements Serializable {
+import org.fugerit.java.core.lang.helpers.AttributesHolder;
+
+public class MiniFilterContext implements Serializable , AttributesHolder {
 
 	/**
 	 * 
@@ -27,12 +29,14 @@ public class MiniFilterContext implements Serializable {
 		return map.containsKey(key);
 	}
 
-	public Object getAttribute(Object key) {
+	@Override
+	public Object getAttribute( String key ) {
 		return map.get(key);
 	}
 
-	public Object setAttribuite(String key, Object value) {
-		return map.put(key, value);
+	@Override
+	public void setAttribute(String key, Object value) {
+		 map.put(key, value);
 	}
 
 	public Object removeAttribute(Object key) {
@@ -47,5 +51,9 @@ public class MiniFilterContext implements Serializable {
 		return customConfig;
 	}
 
+	@Deprecated
+	public void setAttribuite(String key, Object value) {
+		this.setAttribute(key, value);
+	}
 
 }

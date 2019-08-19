@@ -24,6 +24,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
@@ -59,14 +62,20 @@ public class MetaDataUtils {
 	}
 	
 	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema ) throws Exception {
-		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ) );	 
+		List<String> tableNameList = new ArrayList<String>();
+		tableNameList.add( "*" );
+		return createModel(cf, catalog, schema, tableNameList);
+	}
+	
+	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList ) throws Exception {
+		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList );	 
 	}
 	
 	private static final int MODE_LOOSE = 1;
 	
 	private static final int MODE_STRICT = 2;
 	
-	private static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, JdbcAdaptor jdbcAdaptor ) throws Exception { 
+	private static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, JdbcAdaptor jdbcAdaptor, List<String> tableNameList ) throws Exception { 
 		
 		DataBaseModel dataBaseModel = new DataBaseModel();
 
@@ -108,99 +117,131 @@ public class MetaDataUtils {
 			tableId.setTableCatalog( tableRS.getString( "TABLE_CAT" ) );
 			tableId.setTableName( tableRS.getString( "TABLE_NAME" ) );
 			tableId.setTableSchema( tableRS.getString( "TABLE_SCHEM" ) );
-			LogFacade.getLog().debug( "DataBaseModel.DataBaseModel() tableId  : "+tableId );
-			tableModel.setTableId( tableId );
-			LogFacade.getLog().debug( "TABLE EX : "+tableId);
-			String tableComment = tableRS.getString( "REMARKS" );
-			if ( tableComment == null || tableComment.length() == 0 ) {
-				tableComment = jdbcAdaptor.getTableComment( tableId );
-			}
-			tableModel.setComment( tableComment );
 			
-			ResultSet columnsRS = dbmd.getColumns( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), null );
-			while ( columnsRS.next() ) {
-				ColumnModel columnModel = new ColumnModel();
-				columnModel.setName( columnsRS.getString( "COLUMN_NAME" ) );
-				columnModel.setTypeSql( columnsRS.getInt( "DATA_TYPE" ) );
-				columnModel.setTypeName( columnsRS.getString( "TYPE_NAME" ) );
-				//System.out.println( "columnModel : "+columnModel );
-				String isNullable = columnsRS.getString( "IS_NULLABLE" );
-				if ( "NO".equalsIgnoreCase( isNullable ) ) {
-					columnModel.setNullable( ColumnModel.NULLABLE_FALSE );	
-				} else if ( "YES".equalsIgnoreCase( isNullable ) ) {
-					columnModel.setNullable( ColumnModel.NULLABLE_TRUE );
-				} else {
-					columnModel.setNullable( ColumnModel.NULLABLE_UNKNOWN );
-				}
-				columnModel.setSize( columnsRS.getInt( "CHAR_OCTET_LENGTH" ) );
-				String columnComment = columnsRS.getString( "REMARKS" );
-				if ( columnComment == null || columnComment.length() == 0 ) {
-					columnComment = jdbcAdaptor.getColumnComment( tableId, columnModel.getName() );
-				}
-				columnModel.setComment( columnComment );
-				columnModel.setExtra( jdbcAdaptor.getColumnExtraInfo(  tableId, columnModel.getName() ) );
-				tableModel.addColumn( columnModel );
-			}
-			columnsRS.close();
-			
-			if ( mode == MODE_STRICT ) {
-				ResultSet pkRS = dbmd.getPrimaryKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
-				IndexModel primaryKey = new IndexModel();
-				while ( pkRS.next() ) {
-					primaryKey.setName( pkRS.getString( "PK_NAME" ) );
-					primaryKey.addColumn( (ColumnModel)tableModel.getColumnMap().get( pkRS.getString( "COLUMN_NAME" ) ) );
-				}
-				tableModel.setPrimaryKey( primaryKey );
-				pkRS.close();
-			} else {
-				LogFacade.getLog().debug( "DataBaseModel createModel() : SKIPPING PRIMARY KEY" );
-			}
-
-			
-			// estrazione indici
-			ResultSet indexRS = dbmd.getIndexInfo( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), true, true );
-			while ( indexRS.next() ) {
-				String indexName = indexRS.getString( "INDEX_NAME" );
-				IndexModel indexModel = (IndexModel)tableModel.getIndexMap().get( indexName );
-				if ( indexModel==null ) {
-					indexModel = new IndexModel();
-					indexModel.setName( indexName );
-					tableModel.addIndex( indexModel );
-				}
-				String columnName = indexRS.getString( "COLUMN_NAME" );
-				if ( columnName != null ) {
-					indexModel.addColumn( (ColumnModel)tableModel.getColumnMap().get( columnName ) );	
-				}
-			}
-			indexRS.close();
-			
-			if ( mode == MODE_STRICT ) {
-				// estrazione chiavi esterne
-				ResultSet foreignRS = dbmd.getImportedKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
-				while ( foreignRS.next() ) {
-					String foreignName = foreignRS.getString( "FK_NAME" );
-					ForeignKeyModel foreignKeyModel = (ForeignKeyModel)tableModel.getForeignKeyMap().get( foreignName );
-					if ( foreignKeyModel == null ) {
-						foreignKeyModel = new ForeignKeyModel();
-						foreignKeyModel.setName( foreignName );
-						TableId foreignTableId = new TableId();
-						foreignTableId.setTableName( foreignRS.getString( "PKTABLE_NAME" ) );
-						foreignTableId.setTableCatalog( foreignRS.getString( "PKTABLE_CAT" ) );
-						foreignTableId.setTableSchema( foreignRS.getString( "PKTABLE_SCHEM" ) );
-						foreignKeyModel.setForeignTableId( foreignTableId );
-						tableModel.addForeignKey( foreignKeyModel );
+			boolean doTable = false;
+			for ( String checkTableName : tableNameList ) {
+				if ( checkTableName.endsWith( "*" ) ) {
+					String check1 = checkTableName.substring( 0 , checkTableName.length()-1 ).toLowerCase();
+					String check2 = tableId.getTableName().toLowerCase();
+					if ( check2.toLowerCase().startsWith( check1 ) ) {
+						doTable = true;	
 					}
-					String columnNamePk = foreignRS.getString( "PKCOLUMN_NAME" );
-					String columnNameFk = foreignRS.getString( "FKCOLUMN_NAME" );
-					foreignKeyModel.getColumnMap().setProperty( columnNamePk , columnNameFk );
+				} else if ( checkTableName.equalsIgnoreCase( tableId.getTableName() ) ) {
+					doTable = true;
 				}
-				foreignRS.close();
-			} else {
-				LogFacade.getLog().debug( "DataBaseModel createModel() : SKIPPING FOREIGN KEYS" );
 			}
-
-			dataBaseModel.addTable( tableModel );
 			
+			LogFacade.getLog().info( "DataBaseModel.DataBaseModel() tableId  : "+tableId+" doTable : "+doTable );
+			
+			if ( doTable ) {
+				tableModel.setTableId( tableId );
+				LogFacade.getLog().debug( "TABLE EX : "+tableId);
+				String tableComment = tableRS.getString( "REMARKS" );
+				if ( tableComment == null || tableComment.length() == 0 ) {
+					tableComment = jdbcAdaptor.getTableComment( tableId );
+				}
+				tableModel.setComment( tableComment );
+				
+				ResultSet columnsRS = dbmd.getColumns( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), null );
+				while ( columnsRS.next() ) {
+					ColumnModel columnModel = new ColumnModel();
+					columnModel.setName( columnsRS.getString( "COLUMN_NAME" ) );
+					columnModel.setTypeSql( columnsRS.getInt( "DATA_TYPE" ) );
+					columnModel.setTypeName( columnsRS.getString( "TYPE_NAME" ) );
+					//System.out.println( "columnModel : "+columnModel );
+					String isNullable = columnsRS.getString( "IS_NULLABLE" );
+					if ( "NO".equalsIgnoreCase( isNullable ) ) {
+						columnModel.setNullable( ColumnModel.NULLABLE_FALSE );	
+					} else if ( "YES".equalsIgnoreCase( isNullable ) ) {
+						columnModel.setNullable( ColumnModel.NULLABLE_TRUE );
+					} else {
+						columnModel.setNullable( ColumnModel.NULLABLE_UNKNOWN );
+					}
+					columnModel.setSize( columnsRS.getInt( "CHAR_OCTET_LENGTH" ) );
+					String columnComment = columnsRS.getString( "REMARKS" );
+					if ( columnComment == null || columnComment.length() == 0 ) {
+						columnComment = jdbcAdaptor.getColumnComment( tableId, columnModel.getName() );
+					}
+					columnModel.setComment( columnComment );
+					columnModel.setExtra( jdbcAdaptor.getColumnExtraInfo(  tableId, columnModel.getName() ) );
+					tableModel.addColumn( columnModel );
+				}
+				columnsRS.close();
+				
+				String sql = "SELECT * FROM "+tableId.toIdString()+" WHERE 1=0";
+				try ( Statement stm = conn.createStatement(); 
+						ResultSet rsJavaType = stm.executeQuery( sql )  ) {
+					ResultSetMetaData rsmd = rsJavaType.getMetaData();
+					for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
+						String colName = rsmd.getColumnName( k+1 );
+						String javaName = rsmd.getColumnClassName( k+1 );
+						ColumnModel columnModel = tableModel.getColumn( colName );
+						columnModel.setJavaType( javaName );
+					}
+				} catch ( Exception e ) {
+					LogFacade.getLog().info( "Error getting java type : "+e, e );
+				}
+				
+				if ( mode == MODE_STRICT ) {
+					ResultSet pkRS = dbmd.getPrimaryKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
+					if ( pkRS.next() ) {
+						IndexModel primaryKey = new IndexModel();
+						primaryKey.setName( pkRS.getString( "PK_NAME" ) );
+						ColumnModel column = tableModel.getColumn( pkRS.getString( "COLUMN_NAME" ) );
+						primaryKey.addColumn( column );
+						tableModel.setPrimaryKey( primaryKey );
+					}
+					pkRS.close();
+				} else {
+					LogFacade.getLog().debug( "DataBaseModel createModel() : SKIPPING PRIMARY KEY" );
+				}
+
+				
+				// estrazione indici
+				ResultSet indexRS = dbmd.getIndexInfo( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), true, true );
+				while ( indexRS.next() ) {
+					String indexName = indexRS.getString( "INDEX_NAME" );
+					IndexModel indexModel = (IndexModel)tableModel.getIndexMap().get( indexName );
+					if ( indexModel==null ) {
+						indexModel = new IndexModel();
+						indexModel.setName( indexName );
+						tableModel.addIndex( indexModel );
+					}
+					String columnName = indexRS.getString( "COLUMN_NAME" );
+					if ( columnName != null ) {
+						indexModel.addColumn( (ColumnModel)tableModel.getColumnMap().get( columnName ) );	
+					}
+				}
+				indexRS.close();
+				
+				if ( mode == MODE_STRICT ) {
+					// estrazione chiavi esterne
+					ResultSet foreignRS = dbmd.getImportedKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
+					while ( foreignRS.next() ) {
+						String foreignName = foreignRS.getString( "FK_NAME" );
+						ForeignKeyModel foreignKeyModel = (ForeignKeyModel)tableModel.getForeignKeyMap().get( foreignName );
+						if ( foreignKeyModel == null ) {
+							foreignKeyModel = new ForeignKeyModel();
+							foreignKeyModel.setName( foreignName );
+							TableId foreignTableId = new TableId();
+							foreignTableId.setTableName( foreignRS.getString( "PKTABLE_NAME" ) );
+							foreignTableId.setTableCatalog( foreignRS.getString( "PKTABLE_CAT" ) );
+							foreignTableId.setTableSchema( foreignRS.getString( "PKTABLE_SCHEM" ) );
+							foreignKeyModel.setForeignTableId( foreignTableId );
+							tableModel.addForeignKey( foreignKeyModel );
+						}
+						String columnNamePk = foreignRS.getString( "PKCOLUMN_NAME" );
+						String columnNameFk = foreignRS.getString( "FKCOLUMN_NAME" );
+						foreignKeyModel.getColumnMap().setProperty( columnNamePk , columnNameFk );
+					}
+					foreignRS.close();
+				} else {
+					LogFacade.getLog().debug( "DataBaseModel createModel() : SKIPPING FOREIGN KEYS" );
+				}
+
+				dataBaseModel.addTable( tableModel );
+	
+			}			
 		}
 		tableRS.close();
 		

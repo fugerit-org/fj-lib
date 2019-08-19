@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.Properties;
 
 import org.fugerit.java.core.util.collection.KeyMapper;
+import org.fugerit.java.core.util.collection.KeyObject;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.xml.dom.DOMUtils;
 import org.w3c.dom.Element;
 
-public class ListMapConfig<T> extends ListMapStringKey<T> {
+public class ListMapConfig<T> extends ListMapStringKey<T> implements IdConfigType, KeyObject<String> {
 
 	/**
 	 * 
@@ -43,6 +44,23 @@ public class ListMapConfig<T> extends ListMapStringKey<T> {
 
 	public void initFromElementAttributes( Element tag ) {
 		DOMUtils.attributesToProperties( tag , this.getConfig() );
+	}
+
+	private String id;
+	
+	@Override
+	public String getKey() {
+		return this.getId();
+	}
+
+	@Override
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public String getId() {
+		return this.id;
 	}
 	
 }

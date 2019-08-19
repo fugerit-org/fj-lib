@@ -9,6 +9,11 @@ import org.w3c.dom.Element;
 
 public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 
+	public PropertyCatalog() {
+		super();
+		this.getGeneralProps().setProperty( ATT_TYPE , PropertyHolder.class.getName() );
+	}
+
 	public static final String PROP_DEFAULT_CATALOG = "default-catalog";
 	
 	/**

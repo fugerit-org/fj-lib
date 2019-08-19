@@ -1,16 +1,21 @@
 package org.fugerit.java.core.cfg.xml;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
-import org.fugerit.java.core.util.PropsIO;
+import org.fugerit.java.core.lang.helpers.BooleanUtils;
+import org.fugerit.java.core.lang.helpers.ClassHelper;
 
 public class PropertyHolder extends BasicIdConfigType {
 
 	public final static String MODE_CLASS_LOADER = "classloader";
+	public final static String MODE_CL = "cl";
 	
 	public final static String MODE_FILE = "file";
 	
@@ -26,6 +31,8 @@ public class PropertyHolder extends BasicIdConfigType {
 	private String path;
 	
 	private String mode;
+	
+	private String xml;
 	
 	private Properties props;
 
@@ -52,19 +59,41 @@ public class PropertyHolder extends BasicIdConfigType {
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
+
+	public String getXml() {
+		return xml;
+	}
+
+	public void setXml(String xml) {
+		this.xml = xml;
+	}
+
+	private static void loadWorker( InputStream is, Properties props, boolean xml ) throws IOException {
+		if ( xml ) {
+			props.loadFromXML( is );
+		} else {
+			props.load( is );
+		}
+	}
 	
-	public static Properties load( String mode, String path ) throws IOException {
-		Properties props = null;
-		if ( MODE_FILE.equalsIgnoreCase( mode ) ) {
-			props = PropsIO.loadFromFile( path );
-		} else if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) ) {
-			props = PropsIO.loadFromClassLoader( path );
+	public static Properties load( String mode, String path, String xml ) throws IOException {
+		Properties props = new Properties();
+		if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
+			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( path ) ) {
+				loadWorker( is , props, BooleanUtils.isTrue( xml ) );
+			} catch (Exception e) {
+				throw new IOException( e );
+			}
+		} else {
+			try ( InputStream is = new FileInputStream( new File( path ) ) ) {
+				loadWorker( is , props, BooleanUtils.isTrue( xml ) );
+			}
 		}
 		return props;
 	}
 	
 	public void init() throws IOException {
-		this.props = load( this.getMode() , this.getPath() ); 
+		this.props = load( this.getMode() , this.getPath(), this.getXml() ); 
 	}
 
 	public boolean isEmpty() {
