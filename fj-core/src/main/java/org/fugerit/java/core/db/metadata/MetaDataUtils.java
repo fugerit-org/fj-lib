@@ -32,6 +32,8 @@ import java.util.List;
 import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.log.LogFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -41,6 +43,8 @@ import org.fugerit.java.core.log.LogFacade;
  */
 public class MetaDataUtils {
 
+	private static Logger logger = LoggerFactory.getLogger( MetaDataUtils.class );
+	
 	public static String insertQueryBuilder( TableModel tableModel ) {
 		List<ColumnModel> columnList = tableModel.getColumnList();
 		StringBuffer insertSQL = new StringBuffer();
@@ -182,21 +186,24 @@ public class MetaDataUtils {
 					LogFacade.getLog().info( "Error getting java type : "+e, e );
 				}
 				
+				logger.info( "Current table : "+tableId );
+				
 				if ( mode == MODE_STRICT ) {
-					ResultSet pkRS = dbmd.getPrimaryKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
-					if ( pkRS.next() ) {
+					try ( ResultSet pkRS = dbmd.getPrimaryKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() ) ) {
 						IndexModel primaryKey = new IndexModel();
-						primaryKey.setName( pkRS.getString( "PK_NAME" ) );
-						ColumnModel column = tableModel.getColumn( pkRS.getString( "COLUMN_NAME" ) );
-						primaryKey.addColumn( column );
-						tableModel.setPrimaryKey( primaryKey );
+						while ( pkRS.next() ) {
+							primaryKey.setName( pkRS.getString( "PK_NAME" ) );
+							ColumnModel column = tableModel.getColumn( pkRS.getString( "COLUMN_NAME" ) );
+							primaryKey.addColumn( column );
+						}
+						if ( !primaryKey.getColumnList().isEmpty() ) {
+							tableModel.setPrimaryKey( primaryKey );		
+						}
 					}
-					pkRS.close();
 				} else {
 					LogFacade.getLog().debug( "DataBaseModel createModel() : SKIPPING PRIMARY KEY" );
 				}
 
-				
 				// estrazione indici
 				ResultSet indexRS = dbmd.getIndexInfo( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), true, true );
 				while ( indexRS.next() ) {

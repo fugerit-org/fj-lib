@@ -7,24 +7,38 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.DAOHelper;
 import org.fugerit.java.core.db.dao.FieldFactory;
 import org.fugerit.java.core.db.dao.FieldList;
 import org.fugerit.java.core.db.dao.RSExtractor;
-import org.fugerit.java.core.log.BasicLogObject;
+import org.fugerit.java.core.log.LogObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class BasicDAOHelper<T> extends BasicLogObject implements Serializable {
+/**
+ * 
+ * 
+ * @author	fugerit
+ *
+ * @param <T>	the type returned by this DAOHelper
+ */
+public class BasicDAOHelper<T> implements Serializable, LogObject {
+
+	protected static Logger logger = LoggerFactory.getLogger( BasicDAOHelper.class );
+	
+	@Override
+	public Logger getLogger() {
+		return logger;
+	}
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2430439741412903230L;
-
-	private final static long LOG_TIME_THRESHOLD = TimeUnit.SECONDS.toMillis( 10 );
 
 	public static String fieldListToString( FieldList fl ) {
 		StringBuffer buffer = new StringBuffer();
@@ -50,6 +64,16 @@ public class BasicDAOHelper<T> extends BasicLogObject implements Serializable {
 		return new FieldList( new FieldFactory() );
 	}
 
+	public T loadOneHelper(  SelectHelper query, RSExtractor<T> re ) throws DAOException {
+		T res = null;
+		List<T> l = new ArrayList<>();
+		this.loadAllHelper(l, query, re);
+		if ( !l.isEmpty() ) {
+			res = l.get( 0 );
+		}
+		return res;
+	}
+	
 	public void loadAllHelper( List<T> l, SelectHelper query, RSExtractor<T> re ) throws DAOException {
 		this.loadAllHelper( l, query.getQuery().toString(), query.getFields(), re );
 	}
@@ -57,35 +81,23 @@ public class BasicDAOHelper<T> extends BasicLogObject implements Serializable {
 
 	public void loadAllHelper( List<T> l, String query, FieldList fields, RSExtractor<T> re ) throws DAOException {
 		try {
-			BasicDAOHelper<T> log = this;
-			log.getLogger().debug( "loadAll START list : '{}' ", l.size() );
-			log.getLogger().debug( "loadAll fields        : '{}'", fields.size() );
-			log.getLogger().debug( "loadAll RSExtractor   : '{}'", re);
-			long startTime = System.currentTimeMillis();
+			logger.debug( "loadAll START list : '{}' ", l.size() );
+			logger.debug( "loadAll fields        : '{}'", fields.size() );
+			logger.debug( "loadAll RSExtractor   : '{}'", re);
 			Connection conn = this.daoContext.getConnection();
-			long step1 = System.currentTimeMillis()-startTime;
 			int i=0;
 			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
-				long step2 = System.currentTimeMillis()-startTime;
-				DAOHelper.setAll( ps, fields , log );
-				long step3 = System.currentTimeMillis()-startTime;
+				DAOHelper.setAll( ps, fields , this );
 				try ( ResultSet rs = ps.executeQuery() ) {
-					long step4 = System.currentTimeMillis()-startTime;
 					while (rs.next()) {
 						l.add( re.extractNext( rs ) );
 						i++;
 					}
-					long elapsed = System.currentTimeMillis()-startTime;
-					if ( elapsed > LOG_TIME_THRESHOLD ) {
-						String message = "BasicDAOHelper LOG_TIME_THRESHOLD="+LOG_TIME_THRESHOLD+", elapsed:"+elapsed+", rsCount:"+i;
-						message+= " step1:"+step1+" step2:"+step2+" step3:"+step3+" step4:"+step4;
-						log.getLogger().info( message );
-					} 
 				}
 			} catch (SQLException e) {
 				throw (new DAOException( e.getMessage()+"[query:"+query+",record:"+i+"]", e ));
 			}
-			log.getLogger().debug("loadAll END list : '{}'", l.size());
+			logger.debug("loadAll END list : '{}'", l.size());
 		} catch (DAOException e) {
 			throw new DAOException( e );
 		}
@@ -95,20 +107,19 @@ public class BasicDAOHelper<T> extends BasicLogObject implements Serializable {
 	public int update( QueryHelper queryHelper ) throws DAOException {
 		int res = 0;
 		try {
-			BasicDAOHelper<T> log = this;
 			String query = queryHelper.getQueryContent();
 			FieldList fields = queryHelper.getFields();
-			log.getLogger().debug( "update START list : '{}' ", query );
-			log.getLogger().debug( "update fields        : '{}'", fields.size() );
+			logger.debug( "update START list : '{}' ", query );
+			logger.debug( "update fields        : '{}'", fields.size() );
 			Connection conn = this.daoContext.getConnection();
 			int i=0;
 			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
-				DAOHelper.setAll( ps, fields , log );
+				DAOHelper.setAll( ps, fields , this );
 				res = ps.executeUpdate();
 			} catch (SQLException e) {
 				throw (new DAOException( e.getMessage()+"[query:"+query+",record:"+i+"]", e ));
 			}
-			log.getLogger().debug("update END res : '{}'", res );
+			logger.debug("update END res : '{}'", res );
 		} catch (DAOException e) {
 			throw new DAOException( e );
 		}
@@ -118,7 +129,7 @@ public class BasicDAOHelper<T> extends BasicLogObject implements Serializable {
 	public BigDecimal newSequenceValue( String sequence ) throws DAOException {
 		BigDecimal id = null;
 		String sql = " SELECT "+sequence+".NEXTVAL FROM DUAL";
-		this.getLogger().info( "newSequenceValue() sql > "+sql );
+		logger.info( "newSequenceValue() sql > "+sql );
 		try ( Statement stm = this.daoContext.getConnection().createStatement();
 				ResultSet rs = stm.executeQuery( sql ) ) {
 			if ( rs.next() ) {

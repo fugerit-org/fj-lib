@@ -28,23 +28,28 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import org.fugerit.java.core.log.LogObject;
+import org.slf4j.Logger;
 
 public class DAOHelper {
 
-    public static void setAll( PreparedStatement ps, FieldList fields, LogObject log ) throws SQLException {
-    	log.getLogger().debug( "Total Param Number : "+fields.size() );
+    public static void setAll( PreparedStatement ps, FieldList fields, Logger logger ) throws SQLException {
+    	logger.debug( "Total Param Number : "+fields.size() );
     	int np = 0;
     	int k = 0;
 		while ( k<fields.size() ) {
 			np++;
 			int param = (k+1);
 			Field f = fields.getField(k);
-			log.getLogger().debug( "Setting param n. "+param+", value: "+String.valueOf( f )+"(fl.size:"+fields.size()+")" );
+			logger.debug( "Setting param n. "+param+", value: "+String.valueOf( f )+"(fl.size:"+fields.size()+")" );
 			f.setField(ps, param);
 			k++;
-			log.getLogger().debug( "test : "+(k<fields.size())+" k:"+k+" fields.size:"+fields.size() );
+			logger.debug( "test : "+(k<fields.size())+" k:"+k+" fields.size:"+fields.size() );
 		}    		
-    	log.getLogger().debug( "Total param set : "+np );
+		logger.debug( "Total param set : "+np );
+    }
+	
+    public static void setAll( PreparedStatement ps, FieldList fields, LogObject log ) throws SQLException {
+    	setAll(ps, fields, log.getLogger() );
     }
 
 	public static String queryFormat( String sql, String method, LogObject log, DAOFactory bdf ) {

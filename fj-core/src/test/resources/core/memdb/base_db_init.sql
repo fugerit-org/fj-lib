@@ -1,3 +1,5 @@
+SET DATABASE SQL SYNTAX PGS TRUE;
+
 CREATE SCHEMA fugerit;
 
 CREATE TABLE fugerit.user (
@@ -51,9 +53,20 @@ CREATE TABLE fugerit.log_data (
 	info VARCHAR(128) NOT NULL
 );
 
-INSERT INTO fugerit.user ( id, username, password, last_login, state ) VALUES ( 1, 'user1', 'a3f8h5h4h3n3n1n9', sysdate, 1 );
-INSERT INTO fugerit.user ( id, username, password, last_login, state ) VALUES ( 2, 'user2', '5h4h3n3n1n9a3f8h', sysdate, 0 );
+CREATE TABLE fugerit.test_two_field_key (
+	id_one bigint NOT NULL,
+	id_two bigint NOT NULL,
+	info VARCHAR(128) NOT NULL
+);
+ALTER TABLE fugerit.test_two_field_key ADD CONSTRAINT test_two_field_key_pk PRIMARY KEY ( id_one, id_two );
 
-INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( 1, 1, 'test address 01' );
-INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( 2, 2, 'test address 02' );
-INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( 3, 1, 'test address 03' );
+CREATE SEQUENCE seq_test START WITH 1;
+
+INSERT INTO fugerit.user ( id, username, password, last_login, state ) VALUES ( nextval('seq_test'), 'user1', 'a3f8h5h4h3n3n1n9', sysdate, 1 );
+INSERT INTO fugerit.user ( id, username, password, last_login, state ) VALUES ( nextval('seq_test'), 'user2', '5h4h3n3n1n9a3f8h', sysdate, 0 );
+
+INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('seq_test'), 1, 'test address 01' );
+INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('seq_test'), 2, 'test address 02' );
+INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('seq_test'), 1, 'test address 03' );
+
+INSERT INTO fugerit.test_two_field_key ( id_one, id_two, info ) VALUES ( nextval('seq_test'), nextval('seq_test'), 'test info 01' );

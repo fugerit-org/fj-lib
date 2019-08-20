@@ -39,7 +39,5 @@ public class BasicLogObject implements LogObject {
 	public Logger getLogger() {
 		return logger;
 	}
-	
-	
-	
+
 }
