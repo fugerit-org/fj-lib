@@ -51,21 +51,6 @@ public class BasicDataFacade<T> extends BasicHelper {
 		this.rse = rse;
 	}
 
-	
-	
-//	public T loadById( DAOContext context, BigDecimal id ) throws DAOException {
-//		T model = null;
-//		BasicDAOHelper<T> daoHelper = new BasicDAOHelper<T>( context );
-//		SelectHelper query = daoHelper.newSelectHelper( this.getTableName() );
-//		query.andEqualParam( "id" , id );
-//		List<T> list = new ArrayList<>();
-//		daoHelper.loadAllHelper( list , query, this.getRse() );
-//		if ( list.size() == 1 ) {
-//			model = list.get( 0 );
-//		}
-//		return model;
-//	}
-	
 	public BasicDaoResult<T> loadAll( DAOContext context ) throws DAOException {
 		BasicDaoResult<T> result = new BasicDaoResult<T>();
 		BasicDAOHelper<T> daoHelper = new BasicDAOHelper<T>( context );
