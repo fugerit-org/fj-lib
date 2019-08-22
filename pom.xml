@@ -76,6 +76,7 @@
 		<module>fj-core</module>
 		<module>fj-ext</module>
 		<module>fj-tool</module>
+		<module>fj-test</module>
 	</modules>
 
 	<dependencyManagement>
@@ -86,6 +87,13 @@
 				<groupId>org.fugerit.java</groupId>
 				<artifactId>fj-core</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.fugerit.java</groupId>
+				<artifactId>fj-test</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
 			</dependency>
 
 			<dependency>
