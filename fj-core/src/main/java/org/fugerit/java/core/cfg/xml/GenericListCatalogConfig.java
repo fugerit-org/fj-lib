@@ -208,7 +208,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 			try {
 				c = (Collection<T>)ClassHelper.newInstance( listType );
 				if ( c instanceof IdConfigType ) {
-					XmlBeanHelper.setFromElement( c , current );	
+					XmlBeanHelper.setFromElementSafe( c , current );	
 				}
 			} catch (Throwable e) {
 				e.printStackTrace();

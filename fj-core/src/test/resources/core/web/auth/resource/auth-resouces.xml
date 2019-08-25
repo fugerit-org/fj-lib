@@ -1,0 +1,9 @@
+<auth-resources 
+	auth-handler-type="org.fugerit.java.core.web.auth.handler.AllowAuthHandler"
+	default-chain="main">
+
+	<resources id="main">
+		<resource id="test-res-01" pattern="/test/test01/*" auth="TEST1,TEST2"/>
+	</resources>
+
+</auth-resources>

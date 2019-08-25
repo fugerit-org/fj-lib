@@ -2,12 +2,16 @@ package org.fugerit.java.core.cfg.xml;
 
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.reflect.MethodHelper;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
 public class XmlBeanHelper {
 
+	private static final Logger logger = LoggerFactory.getLogger( XmlBeanHelper.class );
+	
 	public static <T> T setFromElement( String type, Element config ) throws Exception {
 		@SuppressWarnings("unchecked")
 		T bean = (T) ClassHelper.newInstance( type );
@@ -25,6 +29,14 @@ public class XmlBeanHelper {
 		}
 		if ( bean instanceof TextValueType ) {
 			((TextValueType) bean ).setTextValue( config.getTextContent() );
+		}
+	}
+	
+	public static <T> void setFromElementSafe( T bean, Element config ) {
+		try {
+			setFromElement( bean , config);
+		} catch (Exception e) {
+			logger.warn( "Cannot set all parameters from bean, usually safe to ignore : "+e );
 		}
 	}
 	
