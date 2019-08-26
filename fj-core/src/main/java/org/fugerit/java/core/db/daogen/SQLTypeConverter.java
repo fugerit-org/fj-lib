@@ -43,5 +43,16 @@ public class SQLTypeConverter {
 		return r;
 	}
 	
+	public static CharArrayDataHandler clobToCharHandler( java.sql.Clob s ) throws SQLException {
+		CharArrayDataHandler r = null;
+		if ( s != null ) {
+			try {
+				r = CharArrayDataHandler.newHandlerDefault( s );
+			} catch (Exception e) {
+				throw new SQLException( e );
+			}
+		}
+		return r;
+	}
 	
 }

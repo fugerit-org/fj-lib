@@ -8,7 +8,7 @@ import org.fugerit.java.core.io.StreamIO;
 
 public abstract class ByteArrayDataHandler {
 
-	public abstract InputStream getInputStream();
+	public abstract InputStream toInputStream();
 	
 	public abstract byte[] getData();
 
@@ -47,7 +47,7 @@ class PreloadByteArrayDataHandler extends ByteArrayDataHandler {
 	}
 
 	@Override
-	public InputStream getInputStream() {
+	public InputStream toInputStream() {
 		return new ByteArrayInputStream( this.data );
 	}
 
