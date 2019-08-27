@@ -15,10 +15,17 @@ import org.fugerit.java.core.io.FileIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Basic implementation of JavaGenerator
+ * 
+ * fix of importList (now keep order of elements)
+ * 
+ * @author Daneel
+ *
+ */
 public abstract class BasicJavaGenerator implements JavaGenerator {
 
 	protected static Logger logger = LoggerFactory.getLogger( BasicJavaGenerator.class );
-
 
 	private StringWriter buffer;
 	
