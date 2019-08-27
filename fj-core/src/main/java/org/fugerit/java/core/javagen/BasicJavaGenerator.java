@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.TreeSet;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.io.FileIO;
@@ -40,7 +40,7 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 		this.packageName = fullObjectBName.substring( 0, index );
 		File packageFolder = new File( sourceFolder, packageName.replace( '.' , '/' ) );
 		this.javaFile = new File( packageFolder, javaName+".java" );
-		this.importList = new HashSet<>();		
+		this.importList = new TreeSet<>();		
 	}
 	
 	public PrintWriter getWriter() {
