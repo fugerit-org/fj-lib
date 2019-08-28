@@ -1,9 +1,12 @@
 package org.fugerit.java.core.db.daogen;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.slf4j.Logger;
@@ -12,6 +15,9 @@ import org.slf4j.LoggerFactory;
 public abstract class SimpleServiceProvider<T> extends BasicHelper {
 
 	protected static Logger logger = LoggerFactory.getLogger( SimpleServiceProvider.class );
+	
+
+	public static final String SDF_ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ssX";
 	
 	/**
 	 * 
@@ -42,4 +48,20 @@ public abstract class SimpleServiceProvider<T> extends BasicHelper {
 		return res;
 	}
 	
+	/**
+	 * Use same format of XMLGregorianCalendar
+	 * 
+	 * @param s		input string
+	 * @return		the date
+	 * @throws Exception	in case of any error
+	 */
+	public Date defaultConvertToUtilDate( String s ) throws Exception {
+		Date r = null;
+		if ( s != null ) {
+			XMLGregorianCalendar result = DatatypeFactory.newInstance().newXMLGregorianCalendar( s );
+			r = result.toGregorianCalendar().getTime();
+		}
+		return r;
+	}
+	 
 }
