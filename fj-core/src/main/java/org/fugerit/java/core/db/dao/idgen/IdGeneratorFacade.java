@@ -43,6 +43,7 @@ public class IdGeneratorFacade {
 			if ( type != null ) {
 				gen = (BasicSeqIdGenerator)ClassHelper.newInstance( type );
 				gen.setSequenceName( sequenceName );
+				gen.setConnectionFactory( cf );
 			}
 		} catch (Exception e) {
 			throw new DAOException( e );

@@ -54,10 +54,12 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 		} catch (SQLException e) {
 			throw ( new DAOException( e ) );
 		} finally {
-			try {
-				conn.close();	
-			} catch ( SQLException sqle ) {
-				sqle.printStackTrace();
+			if ( this.isAutoCloseConnection() ) {
+				try {
+					conn.close();	
+				} catch ( SQLException sqle ) {
+					sqle.printStackTrace();
+				}	
 			}
 		}
 		this.getLogger().debug( "generateId end : "+id );

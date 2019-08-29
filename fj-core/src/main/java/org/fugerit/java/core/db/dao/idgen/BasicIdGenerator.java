@@ -13,6 +13,10 @@ import org.w3c.dom.Element;
 
 public abstract class BasicIdGenerator extends BasicLogObject implements IdGenerator {
 	
+	public BasicIdGenerator() {
+		this.autoCloseConnection = false;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.std.cfg.ConfigurableObject#configureProperties(java.io.InputStream)
 	 */
@@ -60,6 +64,16 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 	 */
 	public void setConnectionFactory(ConnectionFactory connectionFactory) {
 		this.connectionFactory = connectionFactory;
+	}
+	
+	private boolean autoCloseConnection;
+
+	public boolean isAutoCloseConnection() {
+		return autoCloseConnection;
+	}
+
+	public void setAutoCloseConnection(boolean autoCloseConnection) {
+		this.autoCloseConnection = autoCloseConnection;
 	}
 
 }
