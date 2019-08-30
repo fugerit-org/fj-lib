@@ -7,9 +7,13 @@ import org.fugerit.java.core.db.dao.RSExtractor;
 import org.fugerit.java.core.db.dao.idgen.BasicSeqIdGenerator;
 import org.fugerit.java.core.db.dao.idgen.IdGeneratorFacade;
 import org.fugerit.java.core.db.helpers.DAOID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BasicDataFacade<T> extends BasicHelper {
 
+	protected static Logger logger = LoggerFactory.getLogger( BasicDataFacade.class );
+	
 	public String getSequenceName() {
 		return null;
 	}

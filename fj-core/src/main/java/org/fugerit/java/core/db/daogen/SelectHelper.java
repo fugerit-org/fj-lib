@@ -18,6 +18,10 @@ public class SelectHelper extends QueryHelper {
 	
 	public static final String COMPARE_LIKE = " LIKE ";
 	
+	public static final String COMPARE_LT_EQUAL = " <= ";
+	
+	public static final String COMPARE_GT_EQUAL = " >= ";
+	
 	/**
 	 * 
 	 */
