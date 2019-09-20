@@ -48,4 +48,25 @@ public class BasicDaoResult<T> extends BasicResult {
 		this.setResultDescription( resultDescription );
 	}
 	
+	public void setSingleResult( T value ) {
+		this.getList().set( 0 , value );
+	}
+	
+	/**
+	 * Return the first element in the result list.
+	 * 
+	 * Note : if the result contains more than one element raises a RuntimeException.
+	 * 
+	 * @return	the first element in the result list or null if empty
+	 */
+	public T getSingleResult() {
+		T res = null;
+		if ( this.getList().size() == 1 ) {
+			res = this.getList().get( 0 );
+		} else if ( this.getList().size() > 1 ) {
+			throw new RuntimeException( "Multiple results : "+this.getList().size() );
+		}
+		return res;
+	}
+	
 }
