@@ -11,9 +11,16 @@ import java.util.Set;
 
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PropertyHolder extends BasicIdConfigType {
 
+	private final static Logger logger = LoggerFactory.getLogger( PropertyHolder.class );
+	
+	public static final String UNSAFE_TRUE = "true";
+	public static final String UNSAFE_FALSE = "false";
+	
 	public final static String MODE_CLASS_LOADER = "classloader";
 	public final static String MODE_CL = "cl";
 	
@@ -33,6 +40,8 @@ public class PropertyHolder extends BasicIdConfigType {
 	private String mode;
 	
 	private String xml;
+	
+	private String unsafe;
 	
 	private Properties props;
 
@@ -76,24 +85,36 @@ public class PropertyHolder extends BasicIdConfigType {
 		}
 	}
 	
-	public static Properties load( String mode, String path, String xml ) throws IOException {
+	public static Properties load( String mode, String path, String xml) throws IOException {
+		return load(mode, path, xml, UNSAFE_FALSE );
+	}
+	
+	public static Properties load( String mode, String path, String xml, String unsafe ) throws IOException {
 		Properties props = new Properties();
-		if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
-			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( path ) ) {
-				loadWorker( is , props, BooleanUtils.isTrue( xml ) );
-			} catch (Exception e) {
-				throw new IOException( e );
-			}
-		} else {
-			try ( InputStream is = new FileInputStream( new File( path ) ) ) {
-				loadWorker( is , props, BooleanUtils.isTrue( xml ) );
+		try {
+			if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
+				try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( path ) ) {
+					loadWorker( is , props, BooleanUtils.isTrue( xml ) );
+				} catch (Exception e) {
+					throw new IOException( e );
+				}
+			} else {
+				try ( InputStream is = new FileInputStream( new File( path ) ) ) {
+					loadWorker( is , props, BooleanUtils.isTrue( xml ) );
+				}
+			}	
+		} catch ( Exception e ) {
+			if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) ) {
+				logger.warn( "Error loading unsafe property holder : "+path, e );
+			} else {
+				throw new IOException( "Property holder load error : "+path, e );
 			}
 		}
 		return props;
 	}
 	
 	public void init() throws IOException {
-		this.props = load( this.getMode() , this.getPath(), this.getXml() ); 
+		this.props = load( this.getMode() , this.getPath(), this.getXml(), this.getUnsafe() ); 
 	}
 
 	public boolean isEmpty() {
@@ -134,6 +155,14 @@ public class PropertyHolder extends BasicIdConfigType {
 	
 	public String toString() {
 		return this.getClass().getSimpleName()+"[id:"+this.getId()+",description:"+this.getDescription()+"]";
+	}
+
+	public String getUnsafe() {
+		return unsafe;
+	}
+
+	public void setUnsafe(String unsafe) {
+		this.unsafe = unsafe;
 	}
 
 }
