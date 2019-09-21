@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +43,8 @@ public class PropertyHolder extends BasicIdConfigType {
 	private String xml;
 	
 	private String unsafe;
+	
+	private String unsafeMessage;
 	
 	private Properties props;
 
@@ -86,10 +89,10 @@ public class PropertyHolder extends BasicIdConfigType {
 	}
 	
 	public static Properties load( String mode, String path, String xml) throws IOException {
-		return load(mode, path, xml, UNSAFE_FALSE );
+		return load(mode, path, xml, UNSAFE_FALSE, null );
 	}
 	
-	public static Properties load( String mode, String path, String xml, String unsafe ) throws IOException {
+	public static Properties load( String mode, String path, String xml, String unsafe, String usafeMessage ) throws IOException {
 		Properties props = new Properties();
 		try {
 			if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
@@ -105,7 +108,11 @@ public class PropertyHolder extends BasicIdConfigType {
 			}	
 		} catch ( Exception e ) {
 			if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) ) {
-				logger.warn( "Error loading unsafe property holder : "+path, e );
+				String unsafeMessage = " ";
+				if ( StringUtils.isNotEmpty( unsafeMessage ) ) {
+					unsafeMessage+= unsafeMessage+" ";
+				}
+				logger.warn( "Error loading unsafe property holder : "+path+unsafe+e, e );
 			} else {
 				throw new IOException( "Property holder load error : "+path, e );
 			}
@@ -114,7 +121,7 @@ public class PropertyHolder extends BasicIdConfigType {
 	}
 	
 	public void init() throws IOException {
-		this.props = load( this.getMode() , this.getPath(), this.getXml(), this.getUnsafe() ); 
+		this.props = load( this.getMode() , this.getPath(), this.getXml(), this.getUnsafe(), this.getUnsafeMessage() ); 
 	}
 
 	public boolean isEmpty() {
@@ -163,6 +170,14 @@ public class PropertyHolder extends BasicIdConfigType {
 
 	public void setUnsafe(String unsafe) {
 		this.unsafe = unsafe;
+	}
+
+	public String getUnsafeMessage() {
+		return unsafeMessage;
+	}
+
+	public void setUnsafeMessage(String unsafeMessage) {
+		this.unsafeMessage = unsafeMessage;
 	}
 
 }
