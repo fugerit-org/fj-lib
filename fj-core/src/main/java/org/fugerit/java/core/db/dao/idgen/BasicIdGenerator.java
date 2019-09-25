@@ -1,6 +1,7 @@
 package org.fugerit.java.core.db.dao.idgen;
 
 import java.io.InputStream;
+import java.sql.Connection;
 import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
@@ -45,10 +46,14 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 		
 	}
 
+	public abstract DAOID generateId( Connection conn ) throws DAOException;
+	
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.IdGenerator#generateID()
 	 */
-	public abstract DAOID generateId() throws DAOException;
+	public DAOID generateId() throws DAOException {
+		return this.generateId( this.getConnectionFactory().getConnection() );
+	}
 	
 	private ConnectionFactory connectionFactory;
 

@@ -35,7 +35,7 @@ public class BasicDataFacade<T> extends BasicHelper {
 			this.idGenerator = IdGeneratorFacade.sequenceGenerator( context.getConnection() , this.getSequenceName() );
 		}
 		if ( this.idGenerator != null ) {
-			DAOID daoid = idGenerator.generateId();
+			DAOID daoid = idGenerator.generateId( context.getConnection() );
 			id = new BigDecimal( daoid.longValue() );
 		}
 		return id;

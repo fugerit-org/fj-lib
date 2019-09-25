@@ -37,10 +37,9 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#generateID()
 	 */
-	public DAOID generateId() throws DAOException {
+	public DAOID generateId( Connection conn ) throws DAOException {
 		this.getLogger().debug( "generateId start " );
 		DAOID id = null;
-		Connection conn = this.getConnectionFactory().getConnection();
 		try {
 			String sql = this.createSequenceQuery();
 			this.getLogger().debug( "generateId query : '"+sql+"'" );

@@ -20,6 +20,8 @@
  */
 package org.fugerit.java.core.db.dao;
 
+import java.sql.Connection;
+
 import org.fugerit.java.core.cfg.ConfigurableObject;
 import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.core.db.helpers.DAOID;
@@ -32,6 +34,8 @@ import org.fugerit.java.core.db.helpers.DAOID;
  *
  */
 public interface IdGenerator extends ConfigurableObject {
+	
+	public DAOID generateId( Connection conn ) throws DAOException;
 	
 	public DAOID generateId() throws DAOException;
 	
