@@ -40,7 +40,7 @@ public class ConcatHelper {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append( convertNullToBlank( values[0] ) );
 		for ( int k=1; k<values.length; k++ ) {
-			buffer.append( CONCAT_SEPARATOR_DEFAULT );
+			buffer.append( separator );
 			buffer.append( convertNullToBlank( values[k] ) );	
 		}
 		return buffer.toString();
