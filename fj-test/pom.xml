@@ -10,7 +10,7 @@
 		<version>0.5-SNAPSHOT</version>
 	</parent>
 
-	<name>fj-core</name>
+	<name>fj-test</name>
 	<description>Fugerit Java Core Library for JDK 1.7 and up</description>
 
 	<licenses>
