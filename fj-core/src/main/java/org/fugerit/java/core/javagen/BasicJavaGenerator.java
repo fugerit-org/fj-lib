@@ -49,7 +49,11 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 		this.javaFile = new File( packageFolder, javaName+".java" );
 		this.importList = new TreeSet<>();		
 	}
-	
+
+	protected void setJavaFile(File javaFile) {
+		this.javaFile = javaFile;
+	}
+
 	public PrintWriter getWriter() {
 		return writer;
 	}
@@ -120,6 +124,14 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 	}
 	
 	public void println( String s ) {
+		writer.println( s );
+	}
+	
+	public void printlnWithTabs( int n, String s ) {
+		while ( n>0 ) {
+			writer.print( "  " );
+			n--;
+		}
 		writer.println( s );
 	}
 
