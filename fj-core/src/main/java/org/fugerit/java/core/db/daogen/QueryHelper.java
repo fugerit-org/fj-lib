@@ -34,4 +34,8 @@ public class QueryHelper extends BasicHelper {
 		return this.getQuery().toString();
 	}
 	
+	public void appendToQuery( String s ) {
+		this.getQuery().append( s );
+	}
+	
 }
