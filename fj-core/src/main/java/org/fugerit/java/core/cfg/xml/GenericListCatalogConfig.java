@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -104,12 +105,18 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		this.attTagData = attTagData;
 		this.generalProps = new Properties();
 		this.orderedId = new ConcurrentSkipListSet<String>();
+		this.entryIdCheck = new HashSet<String>();
 	}
 
 	/**
-	 * General configurazion property for checking duplicate id 
+	 * General configurazion property for checking duplicate catalog id 
 	 */
 	public static final String CONFIG_CHECK_DUPLICATE_ID = "check-duplicate-id";
+	
+	/**
+	 * General configurazion property for checking duplicate entry id
+	 */
+	public static final String CONFIG_CHECK_ENTRY_DUPLICATE_ID = "check-duplicate-entry-id";
 	
 	/**
 	 * If 'check-duplicate-id' is se to fail, the duplicate will cause the configuration to fail
@@ -194,13 +201,19 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	protected String attTagDataList;
 	protected String attTagData;
 
+	private Set<String> entryIdCheck;
+	
 	public static <T> GenericListCatalogConfig<T> load( InputStream is, GenericListCatalogConfig<T> config ) throws Exception {
 		Document doc = DOMIO.loadDOMDoc( is );
 		Element root = doc.getDocumentElement();
 		config.configure( root );
 		return config;
 	}
-	
+
+	protected Set<String> getEntryIdCheck() {
+		return entryIdCheck;
+	}
+
 	@SuppressWarnings("unchecked")
 	protected Collection<T> newCollection( Object typeSample, String listType, Element tag, Element current ) throws ConfigException {
 		Collection<T> c = null;
@@ -225,6 +238,10 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		return c;
 	}
 	
+	protected T customEntryHandling( T current ) {
+		return current;
+	}
+	
 	@Override
 	public void configure(Element tag) throws ConfigException {
 		
@@ -232,6 +249,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		logger.info( "general props : "+this.getGeneralProps() );
 		
 		String checkDuplicateId = this.getGeneralProps().getProperty( CONFIG_CHECK_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
+		String checkDuplicateUniversalId = this.getGeneralProps().getProperty( CONFIG_CHECK_ENTRY_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
 		
 		String listType = this.getGeneralProps().getProperty( ATT_LIST_TYPE );
 		
@@ -284,18 +302,25 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 			}
 			for ( int i=0; i<schemaIt.getLength(); i++ ) {
 				Element currentSchemaTag = (Element) schemaIt.item( i );
+				String idSchema = currentSchemaTag.getAttribute( "id" );
+				if ( StringUtils.isNotEmpty( idSchema ) && CONFIG_CHECK_DUPLICATE_ID_FAIL.equalsIgnoreCase( checkDuplicateUniversalId ) ) {
+					if ( !this.getEntryIdCheck().add( idSchema ) ) {
+						throw new ConfigException( "Duplicate entry id found : "+idSchema );
+					}
+				}
 				if ( ATT_TAG_TYPE_STRING.equals( type ) ) {
-					String idSchema = currentSchemaTag.getAttribute( "id" );
 					if ( StringUtils.isEmpty( idSchema ) ) {
 						throw new ConfigException( "No schema id definied" );
 					} else {
 						@SuppressWarnings("unchecked")
 						T id = ((T)idSchema);
+						id = this.customEntryHandling( id );
 						listCurrent.add( id );	
 					}	
 				} else {
 					try {
 						T t = XmlBeanHelper.setFromElement(type, currentSchemaTag );
+						t = this.customEntryHandling( t );
 						listCurrent.add( t );
 					} catch (Exception e) {
 						throw new ConfigException( "Error configuring type : "+e, e );
