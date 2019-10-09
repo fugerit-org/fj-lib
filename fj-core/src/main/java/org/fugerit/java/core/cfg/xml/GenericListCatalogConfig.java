@@ -153,6 +153,16 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	 * Type to use for the for the elements (data)
 	 */
 	public static final String ATT_TYPE = "type";
+
+	/**
+	 * Bean population mode
+	 */
+	public static final String ATT_BEAN_MODE = "bean-mode";
+	
+	/**
+	 * Default, bean population mode (by default read only attributes)
+	 */	
+	public static final String ATT_BEAN_MODE_DEFAULT = XmlBeanHelper.MODE_XML_ATTRIBUTES;
 	
 	/**
 	 * Type to use for the config containers (data-list)
@@ -253,6 +263,8 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		
 		String listType = this.getGeneralProps().getProperty( ATT_LIST_TYPE );
 		
+		String beanMode = this.getGeneralProps().getProperty( ATT_BEAN_MODE, ATT_BEAN_MODE_DEFAULT );
+		
 		String type = this.getGeneralProps().getProperty( ATT_TYPE );
 		if ( StringUtils.isEmpty( type ) ) {
 			throw new ConfigException( "No type defined" );
@@ -319,7 +331,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 					}	
 				} else {
 					try {
-						T t = XmlBeanHelper.setFromElement(type, currentSchemaTag );
+						T t = XmlBeanHelper.setFromElement( type, currentSchemaTag, beanMode );
 						t = this.customEntryHandling( t );
 						listCurrent.add( t );
 					} catch (Exception e) {
