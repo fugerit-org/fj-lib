@@ -248,7 +248,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		return c;
 	}
 	
-	protected T customEntryHandling( T current ) {
+	protected T customEntryHandling( T current, Element element ) throws ConfigException {
 		return current;
 	}
 	
@@ -326,13 +326,13 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 					} else {
 						@SuppressWarnings("unchecked")
 						T id = ((T)idSchema);
-						id = this.customEntryHandling( id );
+						id = this.customEntryHandling( id, currentSchemaTag );
 						listCurrent.add( id );	
 					}	
 				} else {
 					try {
 						T t = XmlBeanHelper.setFromElement( type, currentSchemaTag, beanMode );
-						t = this.customEntryHandling( t );
+						t = this.customEntryHandling( t, currentSchemaTag );
 						listCurrent.add( t );
 					} catch (Exception e) {
 						throw new ConfigException( "Error configuring type : "+e, e );
