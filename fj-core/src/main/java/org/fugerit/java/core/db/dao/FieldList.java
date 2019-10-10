@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
+import org.fugerit.java.core.db.daogen.CharArrayDataHandler;
 import org.fugerit.java.core.db.helpers.BlobData;
 import org.fugerit.java.core.db.helpers.DAOID;
 
@@ -108,5 +109,8 @@ public class FieldList {
 		this.addField( fieldFactory.newField( BlobData.valueOf( value) ) );
 	}
 
+	public void addField( CharArrayDataHandler value) {
+		this.addField( fieldFactory.newField( (CharArrayDataHandler)value ) );
+	}
 
 }
