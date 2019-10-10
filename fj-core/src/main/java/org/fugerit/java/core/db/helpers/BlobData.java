@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
 import org.fugerit.java.core.io.StreamIO;
 
 /**
@@ -30,9 +31,14 @@ public class BlobData implements Serializable {
 			is.close();
 			blobData.setData( baos.toByteArray() );
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw ( new SQLException( e.toString() ) );
 		}
+		return blobData;
+	}
+	
+	public static BlobData valueOf( ByteArrayDataHandler b ) {
+		BlobData blobData = new BlobData();
+		blobData.setData( b.getData() );
 		return blobData;
 	}
 	

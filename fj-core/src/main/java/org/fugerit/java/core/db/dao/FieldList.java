@@ -23,6 +23,8 @@ package org.fugerit.java.core.db.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
+import org.fugerit.java.core.db.helpers.BlobData;
 import org.fugerit.java.core.db.helpers.DAOID;
 
 /**
@@ -101,5 +103,10 @@ public class FieldList {
 	public void addNullField(int type) {
 		this.addField( fieldFactory.nullField(type) );
 	}    
+	
+	public void addField( ByteArrayDataHandler value) {
+		this.addField( fieldFactory.newField( BlobData.valueOf( value) ) );
+	}
+
 
 }

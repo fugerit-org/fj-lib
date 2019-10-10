@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
 import org.fugerit.java.core.db.helpers.BlobData;
 import org.fugerit.java.core.db.helpers.DAOID;
 
@@ -101,6 +102,8 @@ public class FieldFactory {
     	Field field = null;
     	if ( value instanceof BlobData ) {
     		field = new BlobDataField( (BlobData)value );
+    	} else if( value instanceof ByteArrayDataHandler ) {
+        	field = new BlobDataField( BlobData.valueOf( (ByteArrayDataHandler)value ) );    		
     	} else if (value instanceof DAOID) {
     		field = this.newField( (DAOID)value );
     	} else {
