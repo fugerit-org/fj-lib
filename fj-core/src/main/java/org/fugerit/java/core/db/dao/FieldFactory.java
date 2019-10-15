@@ -169,7 +169,17 @@ class ObjectField extends Field {
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
     public void setField(PreparedStatement ps, int index) throws SQLException {
-        ps.setObject(index, this.value);
+    	if ( this.value == null ) {
+    		ps.setObject(index, this.value);	
+    	} else if ( this.value instanceof java.sql.Date ) {
+    		ps.setDate(index, ((java.sql.Date)this.value));
+    	} else if ( this.value instanceof java.sql.Timestamp ) {
+    		ps.setTimestamp(index, ((java.sql.Timestamp)this.value));
+    	} else if ( this.value instanceof java.util.Date ) {
+    		ps.setTimestamp(index, new java.sql.Timestamp( ((java.util.Date)this.value).getTime() ) );    		
+    	} else {
+    		ps.setObject(index, this.value);
+    	}
     }
     
     private Object value;
