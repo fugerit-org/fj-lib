@@ -25,6 +25,8 @@ public class SelectHelper extends QueryHelper {
 	
 	public static final String COMPARE_LT_EQUAL = " <= ";
 	
+	public static final String COMPARE_GT_EQUAL = " >= ";
+	
 	public static final String ORDER_ASC = "ASC";
 	
 	public static final String ORDER_DESC = "DESC";

@@ -24,6 +24,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
+import org.fugerit.java.core.db.daogen.CharArrayDataHandler;
 import org.fugerit.java.core.db.helpers.BlobData;
 import org.fugerit.java.core.db.helpers.DAOID;
 
@@ -97,10 +99,22 @@ public class FieldFactory {
         return (new IntField(value));
     }
     
+    public Field newField(ByteArrayDataHandler value) {
+        return new BlobDataField( BlobData.valueOf( (ByteArrayDataHandler)value ) );
+    }
+    
+    public Field newField(CharArrayDataHandler value) {
+        return new ClobDataField( value );
+    }
+    
     public Field newField(Object value) {
     	Field field = null;
     	if ( value instanceof BlobData ) {
     		field = new BlobDataField( (BlobData)value );
+    	} else if( value instanceof CharArrayDataHandler ) {
+    		field = newField( ((CharArrayDataHandler)value) ); 
+    	} else if( value instanceof ByteArrayDataHandler ) {
+        	field = newField( ((ByteArrayDataHandler)value) );    		
     	} else if (value instanceof DAOID) {
     		field = this.newField( (DAOID)value );
     	} else {
@@ -155,7 +169,17 @@ class ObjectField extends Field {
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
     public void setField(PreparedStatement ps, int index) throws SQLException {
-        ps.setObject(index, this.value);
+    	if ( this.value == null ) {
+    		ps.setObject(index, this.value);	
+    	} else if ( this.value instanceof java.sql.Date ) {
+    		ps.setDate(index, ((java.sql.Date)this.value));
+    	} else if ( this.value instanceof java.sql.Timestamp ) {
+    		ps.setTimestamp(index, ((java.sql.Timestamp)this.value));
+    	} else if ( this.value instanceof java.util.Date ) {
+    		ps.setTimestamp(index, new java.sql.Timestamp( ((java.util.Date)this.value).getTime() ) );    		
+    	} else {
+    		ps.setObject(index, this.value);
+    	}
     }
     
     private Object value;
@@ -180,6 +204,27 @@ class BlobDataField extends Field {
     }
     
     private BlobData value;
+    
+}
+
+class ClobDataField extends Field {
+    
+    public String toString() {
+        return this.getClass().getName()+"[value:"+this.value+"]";
+    }   
+    
+    public ClobDataField( CharArrayDataHandler value ) {
+        this.value = value;
+    }
+    
+    /* (non-Javadoc)
+     * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
+     */
+    public void setField(PreparedStatement ps, int index) throws SQLException {
+        ps.setCharacterStream(index, this.value.toReader() );
+    }
+    
+    private CharArrayDataHandler value;
     
 }
 
