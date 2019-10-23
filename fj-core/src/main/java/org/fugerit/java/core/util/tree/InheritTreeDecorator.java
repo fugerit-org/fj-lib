@@ -16,6 +16,20 @@ public class InheritTreeDecorator<T> implements Serializable, TreeDecorator<T> {
 
 	public static final String ATT_INHERIT_PROPERTY = "inherit-property";
 
+	public static <T> void  inherit( Set<String> inheritProperties, T current, T parent ) throws Exception {
+		if ( parent != null && current != null ) {
+			for ( String currentProperty : inheritProperties ) {
+				Object currentValue = MethodHelper.invokeGetter( current , currentProperty );
+				if ( currentValue == null ) {
+					Object parentValue = MethodHelper.invokeGetter( parent , currentProperty );
+					if ( parentValue != null ) {
+						MethodHelper.invokeSetter( current , currentProperty, parentValue.getClass(), parentValue  );
+					}
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void init(Properties generalProps, Element root) throws ConfigException {
 		this.inheritAtt = new HashSet<>();
@@ -37,17 +51,7 @@ public class InheritTreeDecorator<T> implements Serializable, TreeDecorator<T> {
 
 	@Override
 	public void setupData(T current, T parent, Element tag) throws Exception {
-		if ( parent != null && current != null ) {
-			for ( String currentProperty : this.inheritAtt ) {
-				String currentValue = (String)MethodHelper.invokeGetter( current , currentProperty );
-				if ( StringUtils.isEmpty( currentValue ) ) {
-					String parentValue = (String)MethodHelper.invokeGetter( parent , currentProperty );
-					if ( StringUtils.isNotEmpty( parentValue ) ) {
-						MethodHelper.invokeSetter( current , currentProperty, String.class, parentValue  );
-					}
-				}
-			}
-		}
+		inherit( this.inheritAtt, current, parent );
 	}
 	
 }
