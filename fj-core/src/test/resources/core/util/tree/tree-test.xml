@@ -1,0 +1,8 @@
+<tree inherit-property="test1,test2">
+
+	<node key="1" test2="node 1 - prop 2" test3="node 1 - prop 3">
+		<node key="2" test1="node 2 - prop 1" test2="node 2 - prop 2" />
+		<node key="3" test1="node 3 - prop 1" />	
+	</node>
+
+</tree>
