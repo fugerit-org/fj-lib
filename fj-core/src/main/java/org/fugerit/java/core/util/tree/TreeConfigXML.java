@@ -47,7 +47,6 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 	@SuppressWarnings("unchecked")
 	protected void addKids( NodeList childs, T parent ) throws Exception {
 		for ( int k=0; k<childs.getLength(); k++ ) {
-			logger.info( "TEST "+childs.item( k ) );
 			if ( childs.item( k ).getNodeType() == Element.ELEMENT_NODE ) {
 				Element current = (Element)childs.item( k );
 				if ( TAG_NODE.equals( current.getTagName() ) ) {
