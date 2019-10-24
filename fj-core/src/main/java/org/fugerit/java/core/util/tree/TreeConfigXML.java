@@ -30,11 +30,11 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 	
 	private Properties generalProps;
 	
-	private Node<T, L> tree;
+	private T tree;
 	
 	protected Collection<TreeDecorator<T>> decorators;
 	
-	public Node<T, L> getTree() {
+	public T getTree() {
 		return tree;
 	}
 	
