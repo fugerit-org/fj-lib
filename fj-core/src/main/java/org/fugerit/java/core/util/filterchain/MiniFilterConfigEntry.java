@@ -1,5 +1,7 @@
 package org.fugerit.java.core.util.filterchain;
 
+import java.util.Properties;
+
 import org.fugerit.java.core.cfg.xml.BasicIdConfigType;
 
 public class MiniFilterConfigEntry extends BasicIdConfigType {
@@ -41,6 +43,16 @@ public class MiniFilterConfigEntry extends BasicIdConfigType {
 	private String defaultBehaviour;
 	
 	private String param01;
+	
+	private Properties props;
+	
+	public Properties getProps() {
+		return props;
+	}
+
+	public void setProps(Properties props) {
+		this.props = props;
+	}
 
 	public String getKey() {
 		return this.getId();

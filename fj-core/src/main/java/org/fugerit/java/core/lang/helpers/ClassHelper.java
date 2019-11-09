@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ClassHelper {
 
-	private static final Logger logger= LoggerFactory.getLogger(ClassHelper.class);
+	private static final Logger logger = LoggerFactory.getLogger(ClassHelper.class);
 	
 	/**
 	 * <p>Return default class loader to instantiate a new class.</p>

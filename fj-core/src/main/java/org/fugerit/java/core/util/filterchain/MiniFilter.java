@@ -1,5 +1,7 @@
 package org.fugerit.java.core.util.filterchain;
 
+import java.util.Properties;
+
 public interface MiniFilter {
 
 	/**
@@ -32,5 +34,9 @@ public interface MiniFilter {
 	public void config( String key, String description, Integer defaultBehaviour );
 	
 	public int apply( MiniFilterContext context, MiniFilterData data ) throws Exception;
+
+	public Properties getCustomConfig();
+
+	public void setCustomConfig(Properties customConfig);
 	
 }

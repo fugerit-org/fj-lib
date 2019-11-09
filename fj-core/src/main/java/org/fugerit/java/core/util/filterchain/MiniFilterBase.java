@@ -1,5 +1,6 @@
 package org.fugerit.java.core.util.filterchain;
 
+import java.util.Properties;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -38,6 +39,18 @@ public abstract class MiniFilterBase implements MiniFilter {
 	private int defaultBehaviour;
 	
 	private String param01;
+	
+	private Properties customConfig;
+
+	@Override
+	public Properties getCustomConfig() {
+		return customConfig;
+	}
+
+	@Override
+	public void setCustomConfig(Properties customConfig) {
+		this.customConfig = customConfig;
+	}
 	
 	@Override
 	public int getDefaultBehaviour() {

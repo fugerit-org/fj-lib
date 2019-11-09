@@ -32,7 +32,7 @@ public class MiniFilterChain extends MiniFilterBase {
 	public Properties getDefaultConfig() {
 		return defaultConfig;
 	}
-
+	
 	@Override
 	public int apply(MiniFilterContext context, MiniFilterData data) throws Exception {
 		int res = this.getDefaultBehaviour();
