@@ -56,6 +56,10 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 		return super.customEntryHandling(current, element);
 	}
 
+	protected void customFilterConfig( MiniFilter filter, MiniFilterConfigEntry entry ) {
+		
+	}
+	
 	public MiniFilterChain getChain( String id ) throws Exception {
 		ListMapConfig<MiniFilterConfigEntry> c = this.getListMap( id );
 		MiniFilterChain chain = new MiniFilterChain();
@@ -70,6 +74,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 			}
 			filter.config( entry.getKey() , entry.getDescription(), entry.getDefaultBehaviourInt() );
 			filter.setCustomConfig( entry.getProps() );
+			this.customFilterConfig(filter, entry);
 			chain.getFilterChain().add( filter );
 			logger.info( "adding filter to chain : "+filter );
 		} 
