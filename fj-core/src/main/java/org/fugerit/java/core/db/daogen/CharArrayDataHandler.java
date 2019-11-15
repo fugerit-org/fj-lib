@@ -14,7 +14,11 @@ public abstract class CharArrayDataHandler {
 	public abstract char[] getData();
 
 	public static CharArrayDataHandler newHandlerByte( char[] data ) throws Exception {
-		return new PreloadCharArrayDataHandler( data );
+		CharArrayDataHandler r = null;
+		if ( data != null ) {
+			r = new PreloadCharArrayDataHandler( data );
+		}
+		return r;
 	}
 	
 	public static CharArrayDataHandler newHandlerDefault( Clob c ) throws Exception {
@@ -27,7 +31,7 @@ public abstract class CharArrayDataHandler {
 	
 	public static CharArrayDataHandler newHandlerPreload( Clob c ) throws Exception {
 		CharArrayDataHandler handler = null;
-		if ( c.length() > 0 ) {
+		if ( c != null && c.length() > 0 ) {
 			CharArrayWriter writer = new CharArrayWriter();
 			StreamIO.pipeChar( c.getCharacterStream(), writer, StreamIO.MODE_CLOSE_BOTH );
 			char[] data = writer.toCharArray();
