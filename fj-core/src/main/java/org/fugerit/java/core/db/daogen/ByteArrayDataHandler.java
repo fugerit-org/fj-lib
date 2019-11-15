@@ -13,7 +13,11 @@ public abstract class ByteArrayDataHandler {
 	public abstract byte[] getData();
 
 	public static ByteArrayDataHandler newHandlerByte( byte[] data ) throws Exception {
-		return new PreloadByteArrayDataHandler( data );
+		ByteArrayDataHandler r = null;
+		if ( data != null ) {
+			r = new PreloadByteArrayDataHandler( data );
+		}
+		return r;
 	}
 	
 	public static ByteArrayDataHandler newHandlerDefault( Blob b ) throws Exception {
@@ -26,7 +30,7 @@ public abstract class ByteArrayDataHandler {
 	
 	public static ByteArrayDataHandler newHandlerPreload( final Blob b ) throws Exception {
 		ByteArrayDataHandler handler = null;
-		if ( b.length() > 0 ) {
+		if ( b != null && b.length() > 0 ) {
 			byte[] data = StreamIO.readBytes( b.getBinaryStream() );
 			if ( data != null && !( data.length == 1 && data[0] == 0) ) {
 				handler = new PreloadByteArrayDataHandler( data );
