@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<comment>Second properties file for JUNIT</comment>
+
+<entry key="props.02.01">test 02 01</entry>
+<entry key="props.02.02">test 02 02</entry>
+<entry key="props.02.03">test 02 03</entry>
+
+<entry key="props.common.01">common 02 01</entry>
+<!--
+<entry key="props.common.02">common 02 02</entry>
+-->
+<entry key="props.common.03">common 02 03</entry>
+
+</properties>

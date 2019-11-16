@@ -12,6 +12,7 @@ import java.util.Set;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
+import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,11 @@ public class PropertyHolder extends BasicIdConfigType {
 	
 	public final static String MODE_FILE = "file";
 	
+	/**
+	 * When this mode is used, you must define in PATH reference to other holders in the same catalog, semicolon separated.
+	 * For instace if props-01 and props-02 are two holder in the same catalog : 
+	 * path="props01;props-02"
+	 */
 	public final static String MODE_MULTI = "multi";
 	
 	/**
@@ -118,6 +124,30 @@ public class PropertyHolder extends BasicIdConfigType {
 			}
 		}
 		return props;
+	}
+	
+	public void init( PropertyCatalog catalog, String catalogId ) throws IOException {
+		if ( MODE_MULTI.equalsIgnoreCase( this.getMode() ) ) {
+			Properties multi = new Properties();
+			String[] data = this.getPath().split( ";" );
+			for ( String propsId : data ) {
+				ListMapStringKey<PropertyHolder> parent = catalog.getListMap( catalogId );
+				PropertyHolder current = parent.get( propsId );
+				Properties currentProps = current.getInnerProps();
+				for ( Object key : currentProps.keySet() ) {
+					String k = key.toString();
+					String oldValue = multi.getProperty( k );
+					String newValue = currentProps.getProperty( k );
+					if ( oldValue != null ) {
+						logger.info( "Override property '{}' from '{}' to '{}'", k, oldValue, newValue );
+					}
+					multi.setProperty( k , newValue );
+				}
+			}
+			this.props = multi;
+		} else {
+			this.init();	
+		}
 	}
 	
 	public void init() throws IOException {

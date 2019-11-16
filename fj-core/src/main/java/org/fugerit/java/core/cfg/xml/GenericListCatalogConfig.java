@@ -248,6 +248,11 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		return c;
 	}
 	
+	protected T customEntryHandling( String dataListId, T current, Element element ) throws ConfigException {
+		T result = this.customEntryHandling(current, element);
+		return result;
+	}
+	
 	protected T customEntryHandling( T current, Element element ) throws ConfigException {
 		return current;
 	}
@@ -299,6 +304,9 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 					logger.warn( "["+this.getClass().getSimpleName()+"]"+message );
 				}
 			}
+			logger.info( "add "+idList+" -> "+listCurrent );
+			this.dataMap.put( idList , listCurrent );
+			this.orderedId.add( idList );
 			String extendsAtt = currentListTag.getAttribute( "extends" );
 			if ( StringUtils.isNotEmpty( extendsAtt ) ) {
 				String[] extendsAttList = extendsAtt.split( "," );
@@ -326,22 +334,19 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 					} else {
 						@SuppressWarnings("unchecked")
 						T id = ((T)idSchema);
-						id = this.customEntryHandling( id, currentSchemaTag );
+						id = this.customEntryHandling( idList, id, currentSchemaTag );
 						listCurrent.add( id );	
 					}	
 				} else {
 					try {
 						T t = XmlBeanHelper.setFromElement( type, currentSchemaTag, beanMode );
-						t = this.customEntryHandling( t, currentSchemaTag );
+						t = this.customEntryHandling( idList, t, currentSchemaTag );
 						listCurrent.add( t );
 					} catch (Exception e) {
 						throw new ConfigException( "Error configuring type : "+e, e );
 					}
 				}
 			}
-			logger.info( "add "+idList+" -> "+listCurrent );
-			this.dataMap.put( idList , listCurrent );
-			this.orderedId.add( idList );
 		}
 		
 		NodeList moduleListTag = tag.getElementsByTagName( ATT_TAG_MODULE_LIST );
