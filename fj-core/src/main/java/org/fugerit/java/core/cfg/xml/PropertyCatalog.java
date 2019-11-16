@@ -1,7 +1,6 @@
 package org.fugerit.java.core.cfg.xml;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
@@ -21,24 +20,23 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 	 */
 	private static final long serialVersionUID = -8955747963894569155L;
 
+	
+	
+	@Override
+	protected PropertyHolder customEntryHandling(String dataListId, PropertyHolder current, Element element) throws ConfigException {
+		PropertyHolder holder = super.customEntryHandling(dataListId, current, element);
+		try {
+			holder.init( this, dataListId );
+			logger.warn( "PropertyCatalog - load ok for holder {} > {}", dataListId, holder.getId() );
+		} catch (IOException e) {
+			logger.warn( "PropertyCatalog - Failed init for holder {} > {}", dataListId, holder.getId(), e );
+		}
+		return holder;
+	}
+
 	@Override
 	public void configure(Element tag) throws ConfigException {
 		super.configure(tag);
-		Iterator<String> itCatalog = super.getIdSet().iterator();
-		while ( itCatalog.hasNext() ) {
-			String idCatalog = itCatalog.next();
-			ListMapStringKey<PropertyHolder> listProps = this.getListMap( idCatalog );
-			Iterator<PropertyHolder> itProps = listProps.iterator();
-			while ( itProps.hasNext() ) {
-				PropertyHolder holder = itProps.next(); 
-				try {
-					holder.init();
-					logger.warn( "PropertyCatalog - load ok "+idCatalog+">"+holder.getId() );
-				} catch (IOException e) {
-					logger.warn( "PropertyCatalog - Failed init for holder : "+idCatalog+">"+holder.getId(), e );
-				}
-			}
-		}
 		String keyDefaultCatalog = this.getGeneralProps().getProperty( PROP_DEFAULT_CATALOG );
 		if ( keyDefaultCatalog != null ) {
 			this.defaultCatalog = this.getListMap( keyDefaultCatalog );
