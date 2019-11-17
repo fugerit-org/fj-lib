@@ -1,18 +1,34 @@
 package org.fugerit.java.core.util.checkpoint;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import org.fugerit.java.core.util.format.TimeFormatDefault;
 import org.fugerit.java.core.util.fun.StringFormat;
+import org.fugerit.java.core.util.fun.helper.FormatTime;
 import org.fugerit.java.core.util.fun.helper.MillisToSecondsFormat;
 
 public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
 	
-	public static final CheckpointFormat DEFAULT = new CheckpointFormatHelper();
+	public static final StringFormat<Number> FORMAT_TIME_DEFAULT = new StringFormat<Number>() {
+		@Override
+		public String convert(Number input) {
+			return String.valueOf( input.longValue() );
+		}
+	};
 	
-	public static final CheckpointFormat DEFAULT_DECORATION = decorateDefault( DEFAULT );
+	public static final StringFormat<Number> FORMAT_TIME_NICE = FormatTime.DEFAULT;
+	
+	public static final StringFormat<Number> FORMAT_DURATION_DEFAULT = new StringFormat<Number>() {
+		@Override
+		public String convert(Number input) {
+			return String.valueOf( input.longValue() )+"ms";
+		}
+	};
+	
+	public static final StringFormat<Number> FORMAT_DURATION_NICE = MillisToSecondsFormat.INSTANCE_APPEND_SECOND;
+	
+	public static final CheckpointFormat DEFAULT = new CheckpointFormatHelper( FORMAT_TIME_DEFAULT, FORMAT_DURATION_DEFAULT );
+	
+	public static final CheckpointFormat DEFAULT_DECORATION = new CheckpointFormatHelper( FORMAT_TIME_NICE , FORMAT_DURATION_NICE );
 	
 	public final static String TOKEN_START_DEF = "[";
 	public final static String TOKEN_END_DEF = "]";
@@ -23,36 +39,24 @@ public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
 	 */
 	private static final long serialVersionUID = 134289656334324324L;
 
-	public static void formatDataHelperDefault( CheckpointFormat format, StringBuilder builder, CheckpointData data ) {
-		builder.append( format.tokenStart() );
+	public void formatDataHelperDefault( StringBuilder builder, CheckpointData data ) {
+		builder.append( this.tokenStart() );
 		builder.append( data.getId() );
-		builder.append( format.tokenSeparator() );
+		builder.append( this.tokenSeparator() );
 		builder.append( "endTime:" );
-		builder.append( format.formatTime( data.getCreationTime() ) );
-		builder.append( format.tokenSeparator() );
+		builder.append( this.formatTime( data.getCreationTime() ) );
+		builder.append( this.tokenSeparator() );
 		builder.append( "duration:" );
-		builder.append( format.formatDuration( data.getDuration() ) );
-		builder.append( "m" );
-		builder.append( format.tokenEnd() );
+		builder.append( this.formatDuration( data.getDuration() ) );
+		builder.append( this.tokenEnd() );
 	}
 	
 	@Override
 	public String formatData(CheckpointData data) {
 		StringBuilder builder = new StringBuilder();
-		formatDataHelperDefault( this, builder , data );
+		formatDataHelperDefault( builder , data );
 		return builder.toString();
 	}
-
-	@Override
-	public String formatTime(long time) {
-		return String.valueOf( time );
-	}
-
-	@Override
-	public String formatDuration(long duration) {
-		return String.valueOf( duration );
-	}
-
 	@Override
 	public String tokenStart() {
 		return TOKEN_START_DEF;
@@ -68,83 +72,48 @@ public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
 		return TOKEN_SEPARATOR_DEF;
 	}
 
-	public static CheckpointFormat decorateDefault( final CheckpointFormat format ) {
-		return decorateFormatTimeDefault( decorateFormatDurationDefault( format ) );
-	}
+	private StringFormat<Number> formatTime;
 	
-	public static CheckpointFormat decorateFormatTimeDefault( final CheckpointFormat format ) {
-		return decorateFormatTime( format, TimeFormatDefault.TIMESTAMP_ISO_TZ );
-	}
+	private StringFormat<Number> formatDuration;
 	
-	public static CheckpointFormat decorateFormatDurationDefault( final CheckpointFormat format ) {
-		return decorateFormatDuration( format, MillisToSecondsFormat.DEFAULT );
-	}
-	
-	public static CheckpointFormat decorateFormatTime( final CheckpointFormat format, final String timeFormat ) {
-		return new TimeDecorator(format,timeFormat);
-	}
-	
-	public static CheckpointFormat decorateFormatDuration( final CheckpointFormat format, final StringFormat<Number> durationFormat ) {
-		return new DurationDecorator(format,durationFormat);
-	}
-	
-}
-
-class BasicDecorator extends CheckpointFormatWrapper {
-
-	public BasicDecorator(CheckpointFormat wrapped) {
-		super(wrapped);
+	public StringFormat<Number>  getFormatTime() {
+		return formatTime;
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1872391687939666192L;
-	
-	@Override
-	public String formatData(CheckpointData data) {
-		StringBuilder builder = new StringBuilder();
-		formatDataHelperDefault( this, builder , data );
-		return builder.toString();
-	}
-	
-}
-
-class TimeDecorator extends BasicDecorator {
-	
-	private String timeFormat;
-	
-	public TimeDecorator(CheckpointFormat wrapped, String timeFormat) {
-		super(wrapped);	
-		this.timeFormat = timeFormat;
+	public void setFormatTime(StringFormat<Number> formatTime) {
+		this.formatTime = formatTime;
 	}
 
-	private static final long serialVersionUID = 6303015532097392362L;
+	public StringFormat<Number> getFormatDuration() {
+		return formatDuration;
+	}
+
+	public void setFormatDuration(StringFormat<Number> formatDuration) {
+		this.formatDuration = formatDuration;
+	}
+
+	public CheckpointFormatHelper() {
+		this( FORMAT_TIME_DEFAULT, FORMAT_DURATION_DEFAULT );
+	}
 	
+	public CheckpointFormatHelper(StringFormat<Number> formatTime, StringFormat<Number> formatDuration) {
+		super();
+		this.formatTime = formatTime;
+		this.formatDuration = formatDuration;
+	}
+
 	@Override
 	public String formatTime(long time) {
-		SimpleDateFormat sdf = new SimpleDateFormat( this.timeFormat );
-		return sdf.format( new Date( time ) );
-	}
-	
-}
-
-class DurationDecorator extends BasicDecorator {
-	
-	private StringFormat<Number> durationFormat;
-	
-	public DurationDecorator(CheckpointFormat wrapped, StringFormat<Number> durationFormat) {
-		super(wrapped);	
-		this.durationFormat = durationFormat;
+		return this.getFormatTime().convert( time );
 	}
 
-	private static final long serialVersionUID = 6303015532097392362L;
-	
 	@Override
 	public String formatDuration(long duration) {
-		return this.durationFormat.convert( duration );
+		return this.getFormatDuration().convert( duration );
+	}
+	
+	public static CheckpointFormat newInstance( StringFormat<Number> formatTime, StringFormat<Number> formatDuration ) {
+		return new CheckpointFormatHelper(formatTime, formatDuration);
 	}
 	
 }
-
-
