@@ -7,7 +7,7 @@ public interface CheckpointFormat {
 	String formatTime( long time );
 	
 	String formatDuration( long duration );
-
+	
 	String tokenStart();
 	
 	String tokenEnd();

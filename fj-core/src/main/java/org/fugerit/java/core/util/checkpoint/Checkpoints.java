@@ -57,29 +57,7 @@ public class Checkpoints implements Serializable {
 	public Iterator<CheckpointData> checkpointIterator() {
 		return this.checkpoints.iterator();
 	}
-	
-//	private void formatTime( long time, StringBuilder builder, String start, String end ) {
-//		builder.append( start );
-//		if ( time == 0 ) {
-//			builder.append( 0 );	
-//		} else {
-//			builder.append( (time/1000) );
-//			builder.append( "." );
-//			String millis = String.valueOf( (time%1000) );
-//			while ( millis.length() < 3 ) {
-//				millis = "0"+millis;
-//			}
-//			builder.append( millis );
-//		}
-//		builder.append( "s" );
-//		builder.append( end );
-//	}
-//	
-//	private final static String OPEN = "[";
-//	private final static String CLOSE = "]";
-//	private final static String DIV = ":";
-//	
-	
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append( this.getClass().getSimpleName() );
