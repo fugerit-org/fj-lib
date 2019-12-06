@@ -119,10 +119,11 @@ public class PropertyHolder extends BasicIdConfigType {
 				if ( StringUtils.isNotEmpty( unsafeMessage ) ) {
 					unsafeMessage+= unsafeMessage+" ";
 				}
+				unsafeMessage = path + ", " + unsafe + ", " + e;
 				if ( UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
-					logger.warn( "Error loading unsafe property holder : "+path+unsafe+e );	
+					logger.warn( "Error loading unsafe property holder : "+unsafeMessage );	
 				} else {
-					logger.warn( "WARNING! Error loading unsafe property holder : "+path+unsafe+e, e );
+					logger.error( "WARNING! Error loading unsafe property holder : "+unsafeMessage, e );
 				}
 			} else {
 				throw new IOException( "Property holder load error : "+path, e );
