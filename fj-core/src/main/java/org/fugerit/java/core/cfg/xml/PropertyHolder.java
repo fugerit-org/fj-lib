@@ -22,6 +22,7 @@ public class PropertyHolder extends BasicIdConfigType {
 	
 	public static final String UNSAFE_TRUE = "true";
 	public static final String UNSAFE_FALSE = "false";
+	public static final String UNSAFE_WARN = "warn";
 	
 	public final static String MODE_CLASS_LOADER = "classloader";
 	public final static String MODE_CL = "cl";
@@ -113,12 +114,16 @@ public class PropertyHolder extends BasicIdConfigType {
 				}
 			}	
 		} catch ( Exception e ) {
-			if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) ) {
+			if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) || UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
 				String unsafeMessage = " ";
 				if ( StringUtils.isNotEmpty( unsafeMessage ) ) {
 					unsafeMessage+= unsafeMessage+" ";
 				}
-				logger.warn( "Error loading unsafe property holder : "+path+unsafe+e, e );
+				if ( UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
+					logger.warn( "Error loading unsafe property holder : "+path+unsafe+e );	
+				} else {
+					logger.warn( "WARNING! Error loading unsafe property holder : "+path+unsafe+e, e );
+				}
 			} else {
 				throw new IOException( "Property holder load error : "+path, e );
 			}
