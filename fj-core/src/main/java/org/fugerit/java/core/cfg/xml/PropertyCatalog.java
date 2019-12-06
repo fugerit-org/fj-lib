@@ -1,9 +1,12 @@
 package org.fugerit.java.core.cfg.xml;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
+import org.fugerit.java.core.util.regex.ParamFinder;
 import org.w3c.dom.Element;
 
 public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
@@ -15,17 +18,20 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 
 	public static final String PROP_DEFAULT_CATALOG = "default-catalog";
 	
+	public static final String PROP_MAP_SYSTEM_ENV = "map-system-properties";
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8955747963894569155L;
 
-	
-	
 	@Override
 	protected PropertyHolder customEntryHandling(String dataListId, PropertyHolder current, Element element) throws ConfigException {
 		PropertyHolder holder = super.customEntryHandling(dataListId, current, element);
 		try {
+			if ( !this.getMapSysEnv().isEmpty() ) {
+				holder.setPath( PARAM_FINDER.substitute( holder.getPath() , this.getMapSysEnv() ) );	
+			}
 			holder.init( this, dataListId );
 			logger.warn( "PropertyCatalog - load ok for holder {} > {}", dataListId, holder.getId() );
 		} catch (IOException e) {
@@ -41,6 +47,32 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 		if ( keyDefaultCatalog != null ) {
 			this.defaultCatalog = this.getListMap( keyDefaultCatalog );
 		}
+		
+	}
+	
+	private static ParamFinder PARAM_FINDER = ParamFinder.newFinder();
+	
+	private Properties mapSysEnv;
+	
+	private Properties getMapSysEnv() {
+		Properties props = this.mapSysEnv;
+		if ( this.mapSysEnv == null ) {
+			String mapVars = this.getGeneralProps().getProperty( PROP_MAP_SYSTEM_ENV );
+			this.mapSysEnv = new Properties();
+			if ( StringUtils.isNotEmpty( mapVars ) ) {
+				String[] split = mapVars.split( "," );
+				for ( int k=0; k<split.length; k++ ) {
+					String key = split[k];
+					String value = System.getProperty( key );
+					logger.info( "map system env {} -> {}", key, value );
+					if ( value != null ) {
+						this.mapSysEnv.setProperty( key , value );
+					}
+				}
+			}
+			props = this.mapSysEnv;
+		}
+		return props;
 	}
 	
 	private ListMapStringKey<PropertyHolder> defaultCatalog;
