@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.util.regex.ParamFinder;
+import org.fugerit.java.core.util.regex.ParamProvider;
 import org.w3c.dom.Element;
 
 public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
@@ -20,6 +22,8 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 	
 	public static final String PROP_MAP_SYSTEM_ENV = "map-system-properties";
 	
+	public static final String PROP_PATH_PARAM_PROVIDER = "path-param-provider";
+	
 	/**
 	 * 
 	 */
@@ -29,7 +33,9 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 	protected PropertyHolder customEntryHandling(String dataListId, PropertyHolder current, Element element) throws ConfigException {
 		PropertyHolder holder = super.customEntryHandling(dataListId, current, element);
 		try {
-			if ( !this.getMapSysEnv().isEmpty() ) {
+			if ( this.getParamProvider() != null ) {
+				holder.setPath( PARAM_FINDER.substitute( holder.getPath() , this.getParamProvider().getProperties() ) );
+			} else  if ( !this.getMapSysEnv().isEmpty() ) {
 				holder.setPath( PARAM_FINDER.substitute( holder.getPath() , this.getMapSysEnv() ) );	
 			}
 			holder.init( this, dataListId );
@@ -51,6 +57,23 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 	}
 	
 	private static ParamFinder PARAM_FINDER = ParamFinder.newFinder();
+	
+	private ParamProvider pathParamProvider;
+	
+	private ParamProvider getParamProvider() throws ConfigException {
+		if ( this.pathParamProvider == null ) {
+			String pathParamProviderType = this.getGeneralProps().getProperty( PROP_PATH_PARAM_PROVIDER );
+			if ( pathParamProviderType != null ) {
+				logger.info( PROP_PATH_PARAM_PROVIDER+" -> "+pathParamProviderType );
+				try {
+					this.pathParamProvider = (ParamProvider) ClassHelper.newInstance( pathParamProviderType );
+				} catch (Exception e) {
+					throw new ConfigException( e );
+				}
+			}
+		}
+		return this.pathParamProvider; 
+	}
 	
 	private Properties mapSysEnv;
 	

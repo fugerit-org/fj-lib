@@ -13,6 +13,10 @@
 	<name>fj-tool</name>
 	<description>Fugerit Java Tool Library for JDK 1.7 and up</description>
 	
+	<properties>
+		<common-compress-version>[1.19,)</common-compress-version>
+	</properties>
+	
 	<organization>
 		<url>http://www.fugerit.org</url>
 		<name>Fugerit</name>
@@ -35,9 +39,9 @@
 	<dependencies>
 
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-compress</artifactId>
-		    <version>1.18</version>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-compress</artifactId>
+		  <version>${common-compress-version}</version>
 		</dependency>
 	
 		<dependency>
