@@ -7,6 +7,7 @@ import org.fugerit.java.core.db.dao.RSExtractor;
 import org.fugerit.java.core.db.dao.idgen.BasicSeqIdGenerator;
 import org.fugerit.java.core.db.dao.idgen.IdGeneratorFacade;
 import org.fugerit.java.core.db.helpers.DAOID;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,8 @@ public class BasicDataFacade<T> extends BasicHelper {
 	private static final long serialVersionUID = 5321073652254215522L;
 
 	private String tableName;
+	
+	private String queryView;
 
 	private RSExtractor<T> rse;
 	
@@ -48,11 +51,25 @@ public class BasicDataFacade<T> extends BasicHelper {
 	public RSExtractor<T> getRse() {
 		return rse;
 	}
+	
 
-	public BasicDataFacade(String tableName, RSExtractor<T> rse) {
+	public String getQueryView() {
+		return queryView;
+	}
+
+	public BasicDataFacade(String tableName, RSExtractor<T> rse, String queryView) {
 		super();
 		this.tableName = tableName;
 		this.rse = rse;
+		if ( StringUtils.isNotEmpty( queryView ) ) {
+			this.queryView = queryView;
+		} else {
+			this.queryView = null;
+		}
+	}
+	
+	public BasicDataFacade(String tableName, RSExtractor<T> rse) {
+		this( tableName, rse, null );
 	}
 
 	public BasicDaoResult<T> loadAll( DAOContext context ) throws DAOException {

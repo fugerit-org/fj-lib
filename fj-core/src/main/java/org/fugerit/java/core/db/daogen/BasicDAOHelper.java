@@ -15,6 +15,7 @@ import org.fugerit.java.core.db.dao.DAOHelper;
 import org.fugerit.java.core.db.dao.FieldFactory;
 import org.fugerit.java.core.db.dao.FieldList;
 import org.fugerit.java.core.db.dao.RSExtractor;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.log.LogObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,6 +140,17 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 			throw new DAOException( e );
 		}
 		return id;
+	}
+	
+	public SelectHelper newSelectHelper( String queryView, String tableName ) {
+		SelectHelper helper = null;
+		if ( StringUtils.isNotEmpty( queryView ) ) {
+			helper = new SelectHelper( tableName , this.newFieldList() );
+			helper.appendToQuery( " SELECT * FROM ( "+queryView+" ) v " );	
+		} else {
+			helper = newSelectHelper( tableName );
+		}
+		return helper;
 	}
 	
 	public SelectHelper newSelectHelper( String tableName ) {
