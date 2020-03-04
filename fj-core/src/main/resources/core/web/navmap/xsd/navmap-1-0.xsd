@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-	xmlns="http://www.fugerit.org/fj-core/navmap" 
-	targetNamespace="http://www.fugerit.org/fj-core/navmap" 
+	xmlns="https://www.fugerit.org/fj-core/navmap" 
+	targetNamespace="https://www.fugerit.org/fj-core/navmap" 
 	elementFormDefault="qualified">
 
 	<xsd:annotation>
@@ -10,7 +10,7 @@
 			@(#)navmap-1-0.xsd 1.0.0 28/01/2018
 			
 			source location :
-			http://www.fugerit.org/res/fj-core/navmap/navmap-1-0.xsd
+			https://www.fugerit.org/res/fj-core/navmap/navmap-1-0.xsd
 			https://github.com/fugerit79/fj-lib/blob/develop/fj-core/src/main/resources/core/web/navmap/xsd/navmap-1-0.xsd
 		</xsd:documentation>
 	</xsd:annotation>

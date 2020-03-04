@@ -2,8 +2,8 @@
 
 Provides helper libraries for other java projects (io, configuration, etc.)
 
-Usegul resources : 
-* [Fugerit Java Library Home](http://www.fugerit.org/java/) - Home page to the project
+Useful resources : 
+* [Fugerit Java Library Home](https://www.fugerit.org/perm/jupiter/) - Home page to the project
 
 Quick start : 
  	mvn clean install

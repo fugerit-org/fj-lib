@@ -10,8 +10,9 @@
 		<version>0.6-SNAPSHOT</version>
 	</parent>
 
-	<name>fj-core</name>
+	<name>Jupiter</name>
 	<description>Fugerit Java Core Library for JDK 1.7 and up</description>
+	<url>https://www.fugerit.org/perm/jupiter/</url>
 
 	<licenses>
 		<license>
@@ -20,6 +21,12 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+	
+
+	<organization>
+		<url>https://www.fugerit.org</url>
+		<name>Fugerit</name>
+	</organization>
 	
 	<build>
 		
@@ -78,13 +85,6 @@
 		</dependency>
 
 	</dependencies>
-
-	<organization>
-		<url>http://www.fugerit.org</url>
-		<name>Fugerit</name>
-	</organization>
-	
-	<url>http://www.fugerit.org/java/</url>
 	
 	<profiles>
 	

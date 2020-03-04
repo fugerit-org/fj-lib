@@ -1,7 +1,7 @@
 # fugerit-java-core
 
-Usegul resources : 
-* [Fugerit Java Library Home](http://www.fugerit.org/java/) - Home page to the project
+Useful resources : 
+* [Fugerit Java Library Home](https://www.fugerit.org/jupiter) - Home page to the project
 
 Quick start : 
  	mvn clean install
