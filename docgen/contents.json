@@ -1,0 +1,12 @@
+[
+	{
+		"heading" : "Documentation for project Jupiter (Fugerit Core A.P.I.)",
+		"column" : 1,
+		"pages" : [
+			{
+				"title": "Jupiter Overview",
+				"source": "index.md"
+			}		
+		]
+	}
+]

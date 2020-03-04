@@ -1,0 +1,37 @@
+{
+	"title" : "Jupiter (Fugerit Core A.P.I.)",
+	"name": "Jupiter",
+	"version" : "0.6.5.13",
+	"date" : "05/03/2020",
+	"organization" : {
+		"name" : "Fugerit Org",
+		"url" : "https://www.fugerit.org"
+	},
+	"author" : {
+		"name" : "Matteo a.k.a. Fugerit79",
+		"url" : "https://github.com/fugerit79"
+	},
+	"owner" : {
+		"name" : "Matteo a.k.a. Fugerit79",
+		"url" : "https://github.com/fugerit79"
+	},
+	"contributors" : [
+		{
+			"name" : "Daneel",
+			"url" : "https://github.com/daneeldeveloper"
+		}
+	],
+	"website" : {
+		"name" : "Jupiter Git Repository",
+		"url" : "https://github.com/fugerit-org/fj-lib"
+	},
+	"backlink" : {
+		"name" : "Mars Home Page",
+		"url" : "https://www.fugerit.org/perm/jupiter/"
+	},
+	"module" : "Jupiter",
+	"id" : "F001",
+	"summary" : "Provides helper libraries for other java projects (io, configuration, etc.).",
+	"marking" : "",
+	"legalese" : ""
+}
