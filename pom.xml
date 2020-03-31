@@ -5,7 +5,7 @@
 	<groupId>org.fugerit.java</groupId>
 	<artifactId>fj-lib</artifactId>
 
-	<version>0.6-SNAPSHOT</version>
+	<version>0.7.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -14,7 +14,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java-version-compliance>1.7</java-version-compliance>
+		<java-version-compliance>1.8</java-version-compliance>
 		<j2ee-version-compliance>6.0</j2ee-version-compliance>
 	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
 	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>
