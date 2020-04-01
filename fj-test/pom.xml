@@ -2,17 +2,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>fj-core</artifactId>
+	<artifactId>fj-test</artifactId>
 
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.7.0.3</version>
+		<version>0.6.5.15</version>
 	</parent>
 
-	<name>Jupiter</name>
+	<name>fj-test</name>
 	<description>Fugerit Java Core Library for JDK 1.7 and up</description>
-	<url>https://www.fugerit.org/perm/jupiter/</url>
 
 	<licenses>
 		<license>
@@ -22,25 +21,12 @@
 		</license>
 	</licenses>
 	
-
-	<organization>
-		<url>https://www.fugerit.org</url>
-		<name>Fugerit</name>
-	</organization>
-	
 	<build>
 		
 	</build>
 
 	<dependencies>
-
-		<!-- java core dependancies -->
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
+				
 		<!-- logging -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -79,6 +65,13 @@
 		</dependency>
 
 	</dependencies>
+
+	<organization>
+		<url>https://www.fugerit.org</url>
+		<name>Fugerit</name>
+	</organization>
+	
+	<url>https://www.fugerit.org/</url>
 	
 	<profiles>
 	
