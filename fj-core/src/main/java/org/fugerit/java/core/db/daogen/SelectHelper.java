@@ -8,7 +8,9 @@ import org.fugerit.java.core.db.dao.FieldList;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public class SelectHelper extends QueryHelper {
-
+	
+	public static final String MODE_NONE = "";
+	
 	public static final String MODE_AND = " AND ";
 	
 	public static final String MODE_OR = " OR ";
@@ -62,10 +64,18 @@ public class SelectHelper extends QueryHelper {
 			}
 			this.getQuery().append( columnName );
 			this.getQuery().append( compare );
-			this.getQuery().append( " ? " );
+			this.getQuery().append( QUESTION_MARK );
 			this.getFields().addField( value );
 		}
 		return added;
+	}
+
+	public boolean orEqualParam( String columnName, Object value ) {
+		return this.addParam( columnName , value, MODE_OR, COMPARE_EQUAL );
+	}
+	
+	public boolean orLikeParam( String columnName, Object value ) {
+		return this.addParam( columnName , value, MODE_OR, COMPARE_LIKE );
 	}
 	
 	public boolean andEqualParam( String columnName, Object value ) {
