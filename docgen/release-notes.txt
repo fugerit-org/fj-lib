@@ -1,4 +1,8 @@
-﻿0.7.0.4 (2020-04-01)
+﻿0.7.0.5 (2020-04-02)
+--------------------
++ Added functions to daogen query builder helper
+
+0.7.0.4 (2020-04-01)
 --------------------
 + Finishing touch on JDK 1.8 upgrade
 

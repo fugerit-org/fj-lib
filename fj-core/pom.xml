@@ -7,10 +7,10 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.7.0.4</version>
+		<version>0.7.0.5</version>
 	</parent>
 
-	<name>Jupiter</name>
+	<name>fj-core</name>
 	<description>Fugerit Java Core Library for JDK 1.7 and up</description>
 	<url>https://www.fugerit.org/perm/jupiter/</url>
 
