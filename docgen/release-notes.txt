@@ -1,4 +1,8 @@
-﻿0.7.0.5 (2020-04-02)
+﻿0.7.0.6 (2020-04-02)
+--------------------
++ Path helper for dot notation
+
+0.7.0.5 (2020-04-02)
 --------------------
 + Added functions to daogen query builder helper
 
