@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.io.FileIO;
+import org.fugerit.java.core.io.helper.CustomPrintWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 
 	private StringWriter buffer;
 	
-	private PrintWriter writer;
+	private CustomPrintWriter writer;
 	
 	private String packageName;
 	
@@ -39,9 +40,9 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 	
 	private Collection<String> importList;
 	
-	public void init( File sourceFolder, String fullObjectBName ) throws ConfigException {
+	public void init( File sourceFolder, String fullObjectBName, String lineSeparator ) throws ConfigException {
 		this.buffer = new StringWriter();
-		this.writer = new PrintWriter( this.buffer );
+		this.writer = new CustomPrintWriter( this.buffer, lineSeparator );
 		int index = fullObjectBName.lastIndexOf( '.' );
 		this.javaName = fullObjectBName.substring( index+1 );
 		this.packageName = fullObjectBName.substring( 0, index );
@@ -49,12 +50,16 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 		this.javaFile = new File( packageFolder, javaName+".java" );
 		this.importList = new TreeSet<>();		
 	}
+	
+	public void init( File sourceFolder, String fullObjectBName ) throws ConfigException {
+		this.init(sourceFolder, fullObjectBName, CustomPrintWriter.WINDOWS_LINE_SEPARATOR);
+	}
 
 	protected void setJavaFile(File javaFile) {
 		this.javaFile = javaFile;
 	}
 
-	public PrintWriter getWriter() {
+	public CustomPrintWriter getWriter() {
 		return writer;
 	}
 	

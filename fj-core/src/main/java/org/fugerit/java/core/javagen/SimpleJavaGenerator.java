@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.io.helper.CustomPrintWriter;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
@@ -21,10 +22,14 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	public static final String STYLE_CLASS = "class";
 	public static final String STYLE_INTERFACE = "interface";
 	
-	public void init( File sourceFolder, String fullObjectBName, String javaStyle, Properties config ) throws ConfigException {
-		super.init(sourceFolder, fullObjectBName);
+	public void init( File sourceFolder, String fullObjectBName, String javaStyle, Properties config, String lineSeparator ) throws ConfigException {
+		super.init(sourceFolder, fullObjectBName, lineSeparator);
 		this.setJavaStyle( javaStyle );
 		this.config = config;
+	}
+	
+	public void init( File sourceFolder, String fullObjectBName, String javaStyle, Properties config ) throws ConfigException {
+		this.init(sourceFolder, fullObjectBName, javaStyle, config, CustomPrintWriter.WINDOWS_LINE_SEPARATOR);
 	}
 
 	public static final String CUSTOM_CODE_START = "// custom code start ( code above here will be overwritten )";
