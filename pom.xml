@@ -5,11 +5,11 @@
 	<groupId>org.fugerit.java</groupId>
 	<artifactId>fj-lib</artifactId>
 
-	<version>0.7.0.6</version>
+	<version>0.7.0.7</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
-	<description>Fugerit Java Library for JDK 1.7 and up</description>
+	<description>Fugerit Java Library for JDK 1.8 and up</description>
 	<url>https://www.fugerit.org/perm/jupiter/</url>
 
 	<properties>
