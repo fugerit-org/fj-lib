@@ -41,6 +41,12 @@ public class QueryHelper extends BasicHelper {
 	public void appendToQuery( String s ) {
 		this.getQuery().append( s );
 	}
+
+	public void appendToQueryWithSpace( String s ) {
+		this.appendToQuery( " " );
+		this.appendToQuery( s );
+		this.appendToQuery( " " );
+	}
 	
 	public QueryHelper( String table, FieldList fl ) {
 		this.query = new StringBuilder();

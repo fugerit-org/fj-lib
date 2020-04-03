@@ -2,8 +2,10 @@
 
 Provides helper libraries for other java projects (io, configuration, etc.)
 
+**Note : Starting from version 0.7.0.0, minimum required java version changed to 1.8**
+
 Useful resources : 
-* [Fugerit Java Library Home](https://www.fugerit.org/perm/jupiter/) - Home page to the project
+* [Jupiter - Fugerit Java Library Home](https://www.fugerit.org/perm/jupiter/) - Home page to the project
 
 Quick start : 
  	mvn clean install

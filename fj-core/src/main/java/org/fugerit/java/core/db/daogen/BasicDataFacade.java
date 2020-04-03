@@ -11,7 +11,7 @@ import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BasicDataFacade<T> extends BasicHelper {
+public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 
 	protected static Logger logger = LoggerFactory.getLogger( BasicDataFacade.class );
 	

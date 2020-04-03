@@ -83,4 +83,20 @@ public class ClassHelper {
 		return getDefaultClassLoader().getResourceAsStream( path ); 
 	}
 	
+	public static String toFullClassName( Object c ) {
+		String res = null;
+		if ( c != null ) {
+			res = c.getClass().getName();
+		}
+		return res;
+	}
+	
+	public static String toSimpleClassName( Object c ) {
+		String res = null;
+		if ( c != null ) {
+			res = c.getClass().getSimpleName();
+		}
+		return res;
+	}
+	
 }
