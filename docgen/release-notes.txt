@@ -1,4 +1,9 @@
-﻿0.7.0.7 (2020-04-03)
+﻿0.7.0.8 (2020-04-03)
+--------------------
++ Added CustomPrintWriter allowing user defined line separator
++ Now JavaGenerator relies on CustomPrintWriter
+
+0.7.0.7 (2020-04-03)
 --------------------
 + Data entity info interface in daogen package
 + Methods to check collection status in CollectionsUtils
