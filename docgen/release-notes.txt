@@ -1,4 +1,8 @@
-﻿0.7.0.8 (2020-04-03)
+﻿0.7.0.9 (2020-04-08)
+--------------------
++ Fix to BasicDAOHelper.loadAllHelper() method [the query was not used completely]
+
+0.7.0.8 (2020-04-03)
 --------------------
 + Added CustomPrintWriter allowing user defined line separator
 + Now JavaGenerator relies on CustomPrintWriter

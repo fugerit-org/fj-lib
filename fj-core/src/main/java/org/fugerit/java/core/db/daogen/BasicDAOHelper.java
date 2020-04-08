@@ -76,7 +76,7 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 	}
 	
 	public void loadAllHelper( List<T> l, SelectHelper query, RSExtractor<T> re ) throws DAOException {
-		this.loadAllHelper( l, query.getQuery().toString(), query.getFields(), re );
+		this.loadAllHelper( l, query.getQueryContent(), query.getFields(), re );
 	}
 	
 
