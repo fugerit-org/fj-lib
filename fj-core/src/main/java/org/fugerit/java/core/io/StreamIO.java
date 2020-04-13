@@ -75,7 +75,7 @@ public class StreamIO {
     
 	/**
 	 * Default size buffer.
-	 * @see BUFFERSIZE_MEDIUM
+	 * {@link StreamIO#BUFFERSIZE_MEDIUM}
 	 */    
     public static final int BUFFERSIZE_DEFAULT = BUFFERSIZE_MEDIUM;
     

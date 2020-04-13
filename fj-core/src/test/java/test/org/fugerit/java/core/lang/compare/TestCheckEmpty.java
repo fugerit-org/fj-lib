@@ -14,6 +14,8 @@ public class TestCheckEmpty extends BasicTest {
 	public static boolean NOT_EMPTY = false;
 	
 	private void checkEmptyHelper( Object value, boolean shouldBeEmpty ) {
+		logger.error( "Test : {} -> {}", value, shouldBeEmpty );
+		logger.debug( "Test : {} -> {}", value, shouldBeEmpty );
 		boolean empty = CheckEmptyHelper.isEmpty( value );
 		if ( empty && !shouldBeEmpty ) {
 			fail( "Value is empty is not expected" );
