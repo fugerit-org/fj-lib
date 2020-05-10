@@ -71,8 +71,7 @@ public class PathHelper {
 	 * If a method in path method is not found will raise exception 
 	 * 
 	 * @param path		the path in the object (ex. prop1.prop2)
-	 * @param target	the target object
-	 * @param continueOnNull	<code>true</code> if the s, <code>false</code> 
+	 * @param target	the target object 
 	 * @return		the value found in the path
 	 * @throws Exception	in case of exception
 	 */
