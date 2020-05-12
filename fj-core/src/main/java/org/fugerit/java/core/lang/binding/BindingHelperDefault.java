@@ -51,7 +51,7 @@ public class BindingHelperDefault extends BasicIdConfigType implements Serializa
 		}
 		boolean bind = false;
 		if ( valueFrom != null ) {
-			bind = PathHelper.bind( bindTo , to, valueFrom );
+			bind = PathHelper.bind( bindTo , to, valueFrom, this.getParamType(), true );
 		}
 		logger.debug( "bindFrom {} to {} "+bind, bindFrom, bindTo );
 	}
@@ -65,4 +65,8 @@ public class BindingHelperDefault extends BasicIdConfigType implements Serializa
 		}
 	}
 
+	public Class<?> getParamType() {
+		return null;
+	}
+	
 }

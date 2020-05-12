@@ -1,5 +1,7 @@
 package org.fugerit.java.core.lang.helpers.reflect;
 
+import java.beans.PropertyDescriptor;
+
 /**
  * Simple class to look up a property path in a java object
  * 
@@ -12,18 +14,32 @@ public class PathHelper {
 	
 	public static final boolean EXIT_ON_NULL = false;
 	
-	public static boolean bind( String path, Object target, Object value ) throws Exception {
+	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit ) throws Exception {
 		boolean bind = false;
 		if ( value != null ) {
+			if ( paramType == null ) {
+				paramType = value.getClass();
+			}
 			String[] nodes = path.split( "\\." );
 			String setter = nodes[ nodes.length-1 ];
 			for ( int k=0; k<nodes.length-1; k++ ) {
-				target = MethodHelper.invokeGetter( target, nodes[k] );
+				Object temp = MethodHelper.invokeGetter( target, nodes[k] );
+				if ( temp == null && tryInit ) {
+					PropertyDescriptor pd = new PropertyDescriptor( nodes[k], target.getClass() );
+					Class<?> propertyClass = pd.getReadMethod().getReturnType();
+					temp = propertyClass.newInstance();
+					pd.getWriteMethod().invoke(target, temp);
+				}
+				target = temp;
 			}
-			MethodHelper.invokeSetter( target , setter, value.getClass(), value );
+			MethodHelper.invokeSetter( target , setter, paramType, value );
 			bind = true;
 		}
 		return bind;
+	}
+	
+	public static boolean bind( String path, Object target, Object value ) throws Exception {
+		return bind(path, target, value, null, false);
 	}
 	
 	/**
