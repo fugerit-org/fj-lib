@@ -12,6 +12,20 @@ public class PathHelper {
 	
 	public static final boolean EXIT_ON_NULL = false;
 	
+	public static boolean bind( String path, Object target, Object value ) throws Exception {
+		boolean bind = false;
+		if ( value != null ) {
+			String[] nodes = path.split( "\\." );
+			String setter = nodes[ nodes.length-1 ];
+			for ( int k=0; k<nodes.length-1; k++ ) {
+				target = MethodHelper.invokeGetter( target, nodes[k] );
+			}
+			MethodHelper.invokeSetter( target , setter, value.getClass(), value );
+			bind = true;
+		}
+		return bind;
+	}
+	
 	/**
 	 * Lookup for a value by full method value (no get prefix is assumed)
 	 * 

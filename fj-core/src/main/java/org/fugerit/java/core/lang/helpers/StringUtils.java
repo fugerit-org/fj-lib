@@ -47,4 +47,12 @@ public class StringUtils {
 		return builder.toString();
 	}
 	
+	public static boolean appendIfNotNull( StringBuilder builder, Object value ) {
+		boolean append = (value != null);
+		if ( append ) {
+			builder.append( value );
+		}
+		return append;
+	}
+	
 }

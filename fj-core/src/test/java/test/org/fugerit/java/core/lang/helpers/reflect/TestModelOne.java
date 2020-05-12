@@ -45,6 +45,9 @@ public class TestModelOne {
 		this.kid = kid;
 	}
 	
+	public String toString() {
+		return this.getClass().getSimpleName()+"[idOne:"+this.getIdOne()+",valueOne:"+this.getValueOne()+",kid:"+this.getKid()+"]";
+	}
 	
 	
 }

@@ -1,4 +1,10 @@
-﻿0.7.1.1 (2020-05-10)
+﻿0.7.2.0 (2020-05-12)
+--------------------
++ Added simple A.P.I. for model binding [org.fugerit.java.core.lang.binding.BindingCatalogConfig]
++ Added PathHelper method for setting property by path (bind)
++ Added StringUtils to concat StringBuilder
+
+0.7.1.1 (2020-05-10)
 --------------------
 + Added lookup methods in PathHelper for full method lookup
 + Default method behaviour will no EXIT ON NULL value in path lookup

@@ -34,4 +34,8 @@ public class TestModelTwo {
 		this.valueTwo = valueTwo;
 	}
 	
+	public String toString() {
+		return this.getClass().getSimpleName()+"[idTwo:"+this.getIdTwo()+",valueTwo:"+this.getValueTwo()+"]";
+	}
+	
 }

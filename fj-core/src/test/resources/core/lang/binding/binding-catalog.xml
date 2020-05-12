@@ -1,0 +1,35 @@
+<binding-config>
+
+	<!-- sample binding catalog configuration file -->
+
+	<!-- binding helper list, default-helper and string-value are always available even if not declared -->
+	<binding-helper-list>
+		<binding-helper id="default-helper" type="org.fugerit.java.core.lang.binding.BindingHelperDefault"/>
+		<binding-helper id="string-value" type="org.fugerit.java.core.lang.binding.BindingHelperStringValue"/>
+	</binding-helper-list>
+
+	<!-- case 01 full binding configuration -->
+	<binding id="binding-01">
+		<field id="01" bindFrom="kid.idTwo" bindTo="idOne" helper="default-helper"/>
+		<field id="02" bindFrom="kid" bindTo="kid" helper="default-helper"/>
+		<field id="03" bindFrom="kid.idTwo" bindTo="kid.valueTwo" helper="string-value"/>
+	</binding>
+
+	<!-- case 01 short version with this default : 
+		bindFrom -> id
+		helper = 'default-helper'
+		Note : so it's possibile to write shorted binding configuration 
+	 -->
+	<binding id="binding-01-default">
+		<field id="kid.idTwo" bindTo="idOne"/>
+		<field id="kid"/>
+		<field id="kid.idTwo" bindTo="kid.valueTwo" helper="string-value"/>
+	</binding>
+
+	<!-- case 02  when a field value is not found we initialize it with give type -->
+	<binding id="binding-02-default">
+		<field id="kid" initOnNull="test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo"/>
+		<field id="idOne" bindTo="kid.idTwo"/>
+	</binding>
+
+</binding-config>
