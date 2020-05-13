@@ -80,5 +80,10 @@ public class TestBindingCatalog {
 	public void bind002Def() {
 		this.bind002WOrker( "binding-02-default" );
 	}
+
+	@Test
+	public void bind003Def() {
+		this.bind002WOrker( "binding-02-tryinit" );
+	}
 	
 }

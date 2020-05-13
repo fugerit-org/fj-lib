@@ -26,10 +26,16 @@
 		<field id="kid.idTwo" bindTo="kid.valueTwo" helper="string-value"/>
 	</binding>
 
-	<!-- case 02  when a field value is not found we initialize it with give type -->
-	<binding id="binding-02-default">
+	<!-- case 02  when a field value is not found we privide init type -->
+	<binding id="binding-02-default" tryInit="0">
 		<field id="kid" initOnNull="test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo"/>
 		<field id="idOne" bindTo="kid.idTwo"/>
 	</binding>
+	
+	<!-- case 02  when a field value is not found we initialize it with give type -->
+	<binding id="binding-02-tryinit">
+		<field id="kid"/>
+		<field id="idOne" bindTo="kid.idTwo"/>
+	</binding>	
 
 </binding-config>
