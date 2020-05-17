@@ -3,7 +3,9 @@ package org.fugerit.java.core.lang.binding;
 import java.io.InputStream;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
 import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
+import org.fugerit.java.core.cfg.xml.XmlBeanHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
@@ -55,6 +57,8 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 		this.helperCatalog = new ListMapStringKey<>();
 		this.helperCatalog.add( BindingHelperDefault.DEFAULT );
 		this.helperCatalog.add( BindingHelperStringValue.DEFAULT );
+		this.helperCatalog.add( BindingHelperDateToXML.DEFAULT );
+		this.helperCatalog.add( BindingHelperCollectionToObject.DEFAULT );
 		NodeList helperTags = tag.getElementsByTagName( ATT_BINDING_HELPER );
 		for ( int k=0; k<helperTags.getLength(); k++ ) {
 			Element helperTag = (Element) helperTags.item( k );
@@ -63,13 +67,22 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 			try {
 				BindingHelper helper = (BindingHelper)ClassHelper.newInstance( type );
 				helper.setId( id );
+				XmlBeanHelper.setFromElementAtts( helper , helperTag );
+				if ( helper instanceof XMLConfigurableObject ) {
+					((XMLConfigurableObject)helper).configure( helperTag );
+				}
 				this.helperCatalog.add( helper );
 			} catch (Exception e) {
 				throw new ConfigException( "Error configuring helper : "+id, e );
 			}
 		}
+		for ( String bindingId : this.getIdSet() ) {
+			this.getListMap( bindingId ).setCatalog( this );
+		}
 	}
 
+	
+	
 	private ListMapStringKey<BindingHelper> helperCatalog;
 	
 	public void bind( String bindingId, Object from, Object to ) throws BindingException {

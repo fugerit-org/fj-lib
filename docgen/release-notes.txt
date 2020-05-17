@@ -1,4 +1,11 @@
-﻿0.7.2.2 (2020-05-13)
+﻿0.7.2.3 (2020-05-17)
+--------------------
++ Binding A.P.I. : Binding helper for conversion from java.util.Date to javax.xml.datatype.XMLGregorianCalendar
++ Binding A.P.I. : Support for overriding typeTo in field binding
++ Binding A.P.I. : Support for calling another binding in field binding
++ Binding A.P.I. : Support for conversion of list of object to single value in a binding
+
+0.7.2.2 (2020-05-13)
 --------------------
 + Binding A.P.I. tryInit property for empty object
 

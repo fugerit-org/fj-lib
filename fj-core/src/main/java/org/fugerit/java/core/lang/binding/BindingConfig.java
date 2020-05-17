@@ -4,6 +4,16 @@ import org.fugerit.java.core.cfg.xml.ListMapConfig;
 
 public class BindingConfig extends ListMapConfig<BindingFieldConfig> {
 
+	private BindingCatalogConfig catalog;
+
+	public BindingCatalogConfig getCatalog() {
+		return catalog;
+	}
+
+	public void setCatalog(BindingCatalogConfig catalog) {
+		this.catalog = catalog;
+	}
+
 	private String tryInit;
 	
 	public String getTryInit() {

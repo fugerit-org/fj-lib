@@ -14,6 +14,26 @@ public class PathHelper {
 	
 	public static final boolean EXIT_ON_NULL = false;
 	
+	public static Object initEmptyField( String property, Object target ) throws Exception {
+		PropertyDescriptor pd = new PropertyDescriptor( property, target.getClass() );
+		Class<?> propertyClass = pd.getReadMethod().getReturnType();
+		Object temp = propertyClass.newInstance();
+		pd.getWriteMethod().invoke(target, temp);
+		return temp;
+	}
+	
+	public static Object bindInit( String path, Object target ) throws Exception {
+		String[] nodes = path.split( "\\." );
+		for ( int k=0; k<nodes.length; k++ ) {
+			Object temp = MethodHelper.invokeGetter( target, nodes[k] );
+			if ( temp == null ) {
+				temp = initEmptyField( nodes[k] , target );
+			}
+			target = temp;
+		}
+		return target;
+	}
+	
 	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit ) throws Exception {
 		boolean bind = false;
 		if ( value != null ) {
@@ -25,10 +45,7 @@ public class PathHelper {
 			for ( int k=0; k<nodes.length-1; k++ ) {
 				Object temp = MethodHelper.invokeGetter( target, nodes[k] );
 				if ( temp == null && tryInit ) {
-					PropertyDescriptor pd = new PropertyDescriptor( nodes[k], target.getClass() );
-					Class<?> propertyClass = pd.getReadMethod().getReturnType();
-					temp = propertyClass.newInstance();
-					pd.getWriteMethod().invoke(target, temp);
+					temp = initEmptyField( nodes[k] , target );
 				}
 				target = temp;
 			}

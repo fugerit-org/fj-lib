@@ -2,9 +2,9 @@ package org.fugerit.java.core.cfg.xml;
 
 import java.io.Serializable;
 
-import org.fugerit.java.core.util.collection.KeyObject;
+import org.fugerit.java.core.util.collection.KeyString;
 
-public class BasicIdConfigType implements IdConfigType, KeyObject<String>, Serializable {
+public class BasicIdConfigType implements IdConfigType, KeyString, Serializable {
 
 	/**
 	 * 
@@ -30,7 +30,5 @@ public class BasicIdConfigType implements IdConfigType, KeyObject<String>, Seria
 	public String toString() {
 		return this.getClass().getSimpleName()+"[id:"+this.getId()+"]";
 	}
-	
-	
 	
 }

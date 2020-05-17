@@ -30,6 +30,10 @@ public class BindingFieldConfig extends BasicIdConfigType {
 
 	private String helper;
 	
+	private String useBinding;
+	
+	private String typeTo;
+
 	public String getBindFrom() {
 		return bindFrom;
 	}
@@ -60,6 +64,22 @@ public class BindingFieldConfig extends BasicIdConfigType {
 
 	public void setHelper(String helper) {
 		this.helper = helper;
+	}
+
+	public String getUseBinding() {
+		return useBinding;
+	}
+
+	public void setUseBinding(String useBinding) {
+		this.useBinding = useBinding;
+	}
+
+	public String getTypeTo() {
+		return typeTo;
+	}
+
+	public void setTypeTo(String typeTo) {
+		this.typeTo = typeTo;
 	}
 
 	/**
