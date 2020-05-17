@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+
+	/*
+	 * @(#)binding-config-1-0.xsd
+	 *
+	 * @project    : fj-core
+	 * @creation   : 2020-05-17
+	 * @version    : 1.0.0 (2020-05-17)
+	 *
+	 * XSD for fugerit binding config
+	 */
+
+	Sample doc : 	
+	
+<binding-config
+	xmlns="http://bindingconfig.fugerit.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-0.xsd" > 	
+</binding-config>	
+	
+-->
+<xsd:schema xmlns='http://www.w3.org/2000/10/XMLSchema'
+	targetNamespace='http://bindingconfig.fugerit.org'
+	xmlns:config='http://bindingconfig.fugerit.org' xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:element name='binding-config'>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref='config:binding-helper-list' minOccurs="0" maxOccurs="1" />
+				<xsd:element ref='config:binding' minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name='binding-helper-list'>
+		<xsd:annotation>
+			<xsd:documentation>List of custom helper, some helpers are build in even if not declared.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref='config:binding-helper' minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name='binding-helper'>
+		<xsd:annotation>
+			<xsd:documentation>A binding helper, param01/03 are for custom behaviours</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:complexType>
+			<xsd:attribute name='id' type='xsd:string' use='required' />
+			<xsd:attribute name='type' type='xsd:string' use='required' />
+			<xsd:attribute name='param01' type='xsd:string' use='optional' />
+			<xsd:attribute name='param02' type='xsd:string' use='optional' />
+			<xsd:attribute name='param03' type='xsd:string' use='optional' />
+		</xsd:complexType>
+	</xsd:element>	
+
+	<xsd:element name='binding'>
+		<xsd:annotation>
+			<xsd:documentation>
+				Binding configuration, accepts some configuration : 
+				tryInit (default '1') - if '1' will try to init null field
+			</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref='config:field' minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+			<xsd:attribute name='id' type='xsd:string' use='required' />
+			<xsd:attribute name='tryInit' type='xsd:string' use='optional' />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name='field'>
+		<xsd:annotation>
+			<xsd:documentation>
+				Field configuration, accepts some configuration : 
+				helper - 'default-helper' is used if not set
+				bindTo - 'id' attribute is used if not set, path in destination object
+				bindFrom - 'id' attribute is used if not set, path in source object
+				typeTo - override in type for destination object path
+				initOnNull - type to use if the value is null
+			</xsd:documentation>
+		</xsd:annotation>		
+		<xsd:complexType>
+			<xsd:attribute name='id' type='xsd:string' use='required' />
+			<xsd:attribute name='helper' type='xsd:string' use='optional' />
+			<xsd:attribute name='bindTo' type='xsd:string' use='optional' />
+			<xsd:attribute name='bindFrom' type='xsd:string' use='optional' />
+			<xsd:attribute name='typeTo' type='xsd:string' use='optional' />
+			<xsd:attribute name='initOnNull' type='xsd:string' use='optional' />
+		</xsd:complexType>
+	</xsd:element>
+	
+</xsd:schema>	

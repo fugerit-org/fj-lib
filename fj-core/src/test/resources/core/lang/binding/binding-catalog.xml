@@ -1,11 +1,17 @@
-<binding-config>
+<binding-config
+	xmlns="http://bindingconfig.fugerit.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-0-d.xsd">
 
 	<!-- sample binding catalog configuration file -->
 
-	<!-- binding helper list, default-helper and string-value are always available even if not declared -->
 	<binding-helper-list>
+		<!-- all of those helper are available even if not declared -->
 		<binding-helper id="default-helper" type="org.fugerit.java.core.lang.binding.BindingHelperDefault"/>
 		<binding-helper id="string-value" type="org.fugerit.java.core.lang.binding.BindingHelperStringValue"/>
+		<binding-helper id="date-to-xml" type="org.fugerit.java.core.lang.binding.BindingHelperDateToXML"/>
+		<binding-helper id="xml-to-date" type="org.fugerit.java.core.lang.binding.BindingHelperXMLToDate"/>
+		<binding-helper id="xml-to-date" type="org.fugerit.java.core.lang.binding.BindingHelperXMLToDate"/>
 	</binding-helper-list>
 
 	<!-- case 01 full binding configuration -->
@@ -37,5 +43,15 @@
 		<field id="kid"/>
 		<field id="idOne" bindTo="kid.idTwo"/>
 	</binding>	
+	
+	<!-- case 03  convert java to xml -->
+	<binding id="binding-03">
+		<field id="dateJava" bindTo="dateXml" helper="date-to-xml"/>
+	</binding>		
+	
+	<!-- case 03  convert java to xml -->
+	<binding id="binding-04">
+		<field id="dateXml" bindTo="dateJava" helper="xml-to-date"/>
+	</binding>			
 
 </binding-config>

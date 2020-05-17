@@ -1,9 +1,5 @@
 package org.fugerit.java.core.lang.binding;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
@@ -14,18 +10,18 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * @author Matteo a.k.a. Fugerit
  *
  */
-public class BindingHelperDateToXML extends BindingHelperDefault {
+public class BindingHelperXMLToDate extends BindingHelperDefault {
 
-	public static final String ID = "date-to-xml";
+	public static final String ID = "xml-to-date";
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 229728343462037771L;
 	
-	public static final BindingHelper DEFAULT = new BindingHelperDateToXML();
+	public static final BindingHelper DEFAULT = new BindingHelperXMLToDate();
 	
-	public BindingHelperDateToXML() {
+	public BindingHelperXMLToDate() {
 		super( ID );
 	}
 
@@ -33,17 +29,15 @@ public class BindingHelperDateToXML extends BindingHelperDefault {
 	public Object convertValue(BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
 		Object res = super.convertValue(binding, field, value);
 		if ( res != null ) {
-			Date d = (Date)res;
-			GregorianCalendar calendar = new GregorianCalendar();
-			calendar.setTime( d );
-			res = DatatypeFactory.newInstance().newXMLGregorianCalendar(calendar);
+			XMLGregorianCalendar d = (XMLGregorianCalendar)res;
+			res = d.toGregorianCalendar().getTime();
 		}
 		return res;
 	}
 
 	@Override
 	public Class<?> getParamType() {
-		return XMLGregorianCalendar.class;
+		return null;
 	}
 
 }

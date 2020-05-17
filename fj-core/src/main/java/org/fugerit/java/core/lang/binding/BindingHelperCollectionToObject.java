@@ -42,7 +42,7 @@ public class BindingHelperCollectionToObject extends BindingHelperDefault {
 	@Override
 	public Object convertValue(BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
 		Object res = super.convertValue(binding, field, value);
-		String multiValueMode = StringUtils.valueWithDefault( this.getMultiValueMode() , MULTI_VALUE_MODE_DEFAULT );
+		String multiValueMode = StringUtils.valueWithDefault( this.getParam01() , MULTI_VALUE_MODE_DEFAULT );
 		if ( res != null ) {
 			if ( value instanceof Collection<?> ) {
 				Collection<?> c = (Collection<?>)value;
@@ -62,16 +62,6 @@ public class BindingHelperCollectionToObject extends BindingHelperDefault {
 			}
 		}
 		return res;
-	}
-	
-	private String multiValueMode;
-
-	public String getMultiValueMode() {
-		return multiValueMode;
-	}
-
-	public void setMultiValueMode(String multiValueMode) {
-		this.multiValueMode = multiValueMode;
 	}
 	
 }

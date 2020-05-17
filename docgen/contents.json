@@ -1,6 +1,6 @@
 [
 	{
-		"heading" : "Documentation for project Jupiter (Fugerit Core A.P.I.)",
+		"heading" : "Jupiter Documentation",
 		"column" : 1,
 		"pages" : [
 			{
@@ -8,5 +8,15 @@
 				"source": "index.md"
 			}		
 		]
-	}
+	},
+	{
+		"heading" : "Configuration A.P.I.",
+		"column" : 2,
+		"pages" : [
+			{
+				"title": "Binding configuration",
+				"source": "binding-config.md"
+			}		
+		]
+	}	
 ]

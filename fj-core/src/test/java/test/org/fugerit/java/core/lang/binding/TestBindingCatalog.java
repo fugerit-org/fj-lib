@@ -3,6 +3,9 @@ package test.org.fugerit.java.core.lang.binding;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+
+import javax.xml.datatype.DatatypeFactory;
 
 import org.fugerit.java.core.lang.binding.BindingCatalogConfig;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
@@ -11,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelOne;
+import test.org.fugerit.java.core.lang.helpers.reflect.TestModelThree;
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo;
 
 public class TestBindingCatalog {
@@ -30,7 +34,7 @@ public class TestBindingCatalog {
  	
 	private final BindingCatalogConfig CATALOG = init();
 	
-	protected void bindWorder( String bindingId, Object from, Object to ) {
+	protected void bindWorker( String bindingId, Object from, Object to ) {
 		try {
 			logger.info( "test before -> {}", to );
 			CATALOG.bind( bindingId , from, to );
@@ -49,7 +53,7 @@ public class TestBindingCatalog {
 		kid.setIdTwo( testId );
 		from.setKid( kid );
 		TestModelOne to = new TestModelOne();
-		this.bindWorder( bindingId , from, to);
+		this.bindWorker( bindingId , from, to);
 		if ( !to.getIdOne().equals( testId ) ) {
 			fail( "Wrong id with binding - "+bindingId );
 		}
@@ -60,9 +64,37 @@ public class TestBindingCatalog {
 		TestModelOne from = new TestModelOne();
 		from.setIdOne( testId );
 		TestModelOne to = new TestModelOne();
-		this.bindWorder( bindingId , from, to);
+		this.bindWorker( bindingId , from, to);
 		if ( !to.getKid().getIdTwo().equals( testId ) ) {
 			fail( "Wrong id with binding - "+bindingId );
+		}
+	}
+	
+	private void bind003WOrker( String bindingId ) {
+		TestModelThree from = new TestModelThree();
+		from.setDateJava( Date.valueOf( "2020-01-01" ) );
+		TestModelThree to = new TestModelThree();
+		this.bindWorker( bindingId , from, to );
+		if ( to.getDateXml() == null ) {
+			fail( "Date not set "+from.getDateJava() );
+		} else {
+			logger.info( "date xml : "+to.getDateXml() );
+		}
+	}
+	
+	private void bind004WOrker( String bindingId ) {
+		try {
+			TestModelThree from = new TestModelThree();	
+			from.setDateXml( DatatypeFactory.newInstance().newXMLGregorianCalendar() );
+			TestModelThree to = new TestModelThree();
+			this.bindWorker( bindingId , from, to );
+			if ( to.getDateJava() == null ) {
+				fail( "Date not set "+from.getDateXml() );
+			} else {
+				logger.info( "date java : "+to.getDateJava() );
+			}
+		} catch (Exception e) {
+			fail( "Error "+e );
 		}
 	}
 	
@@ -82,8 +114,13 @@ public class TestBindingCatalog {
 	}
 
 	@Test
-	public void bind003Def() {
-		this.bind002WOrker( "binding-02-tryinit" );
+	public void bind003() {
+		this.bind003WOrker( "binding-03" );
 	}
+	
+	@Test
+	public void bind004() {
+		this.bind004WOrker( "binding-04" );
+	}	
 	
 }
