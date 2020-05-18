@@ -11,7 +11,6 @@ import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
-import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -92,7 +91,7 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 		return xsds;
 	}
 	
-	public void validateCacheSchema( ErrorHandler er, SAXSource source, String schemaListId ) throws Exception {
+	public void validateCacheSchema( ErrorHandler er, Source source, String schemaListId ) throws Exception {
 		Schema schema = this.schemaMapCache.get( schemaListId );
 		if ( schema == null ) {
 			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -103,18 +102,18 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 		validateWorker( er, source, schema );
 	}
 
-	public void validate( ErrorHandler er, SAXSource source, String schemaListId ) throws Exception {
+	public void validate( ErrorHandler er, Source source, String schemaListId ) throws Exception {
 		Source[] xsds = getXsds( schemaListId );
 		validateWorker( er, source, xsds );
 	}
 	
-	public static void validateWorker( ErrorHandler er, SAXSource source, Source[] xsds ) throws Exception {
+	public static void validateWorker( ErrorHandler er, Source source, Source[] xsds ) throws Exception {
         SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = sf.newSchema( xsds );
         validateWorker(er, source, schema);
 	}
 	
-	private static void validateWorker( ErrorHandler er, SAXSource source, Schema schema ) throws Exception {
+	private static void validateWorker( ErrorHandler er, Source source, Schema schema ) throws Exception {
         Validator validator = schema.newValidator();
         validator.setErrorHandler( er );
         validator.validate(source);

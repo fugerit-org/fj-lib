@@ -10,17 +10,24 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
+
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
 import org.fugerit.java.core.io.helper.StreamHelper;
+import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.KeyObject;
+import org.fugerit.java.core.xml.config.XMLSchemaCatalogConfig;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.fugerit.java.core.xml.dom.DOMUtils;
+import org.fugerit.java.core.xml.sax.SAXErrorHandlerStore;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * Class for loading an xml configuration in the form of : 
@@ -140,6 +147,14 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	public static final String ATT_DATA_CATALOG_CONFIG = "data-catalog-config";
 	
 	/**
+	 * True if the catalog should try xsd validation (will be used only if a schema catalog is set) 
+	 */
+	public static final String ATT_TRY_XSD_VALIDATION = "try-xsd-validation";
+	public static final String ATT_TRY_XSD_VALIDATION_TRUE = "1";
+	public static final String ATT_TRY_XSD_VALIDATION_FALSE = "0";
+	public static final String ATT_TRY_XSD_VALIDATION_DEFAULT = ATT_TRY_XSD_VALIDATION_FALSE;
+	
+	/**
 	 * Default configuration element for a data list
 	 */
 	public static final String ATT_TAG_DATA_LIST = "data-list";
@@ -214,7 +229,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	private Set<String> entryIdCheck;
 	
 	public static <T> GenericListCatalogConfig<T> load( InputStream is, GenericListCatalogConfig<T> config ) throws Exception {
-		Document doc = DOMIO.loadDOMDoc( is );
+		Document doc = DOMIO.loadDOMDoc( is, true );
 		Element root = doc.getDocumentElement();
 		config.configure( root );
 		return config;
@@ -262,6 +277,31 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		
 		DOMUtils.attributesToProperties( tag, this.getGeneralProps() );
 		logger.info( "general props : "+this.getGeneralProps() );
+		
+		String tryXsdValidation = this.getGeneralProps().getProperty( ATT_TRY_XSD_VALIDATION, ATT_TRY_XSD_VALIDATION_DEFAULT );
+		if ( BooleanUtils.isTrue( tryXsdValidation ) ) {
+			if ( this.hasDefinition() ) {
+				logger.info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
+				try {
+					SAXErrorHandlerStore eh = this.validate( new DOMSource( tag ) );
+					for ( SAXException se : eh.getFatals() ) {
+						logger.error( "xsd validation fatal : {}", se );
+					}
+					for ( SAXException se : eh.getErrors() ) {
+						logger.error( "xsd validation error : {}", se );
+					}
+					for ( SAXException se : eh.getWarnings() ) {
+						logger.warn( "xsd validation warning : {}", se );
+					}
+				} catch (Exception e) {
+					throw new ConfigException( "Xsd Validation Error "+e, e );
+				}
+			} else {
+				logger.info( "No xsd definition set, skip xsd validation" );
+			}
+		} else {
+			logger.info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
+		}
 		
 		String checkDuplicateId = this.getGeneralProps().getProperty( CONFIG_CHECK_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
 		String checkDuplicateUniversalId = this.getGeneralProps().getProperty( CONFIG_CHECK_ENTRY_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
@@ -405,4 +445,40 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		return generalProps;
 	}
 
+	private XMLSchemaCatalogConfig definition;
+	
+	private String schemaId;
+	
+	public XMLSchemaCatalogConfig getDefinition() {
+		return definition;
+	}
+
+	public void setDefinition(XMLSchemaCatalogConfig definition) {
+		this.definition = definition;
+	}
+
+	public String getSchemaId() {
+		return schemaId;
+	}
+
+	public void setSchemaId(String schemaId) {
+		this.schemaId = schemaId;
+	}
+	
+	/**
+	 * Check if the catalog config has a schema definition
+	 * 
+	 * @return
+	 */
+	public boolean hasDefinition() {
+		return StringUtils.isNotEmpty( this.getSchemaId() ) && this.getDefinition() != null 
+				&& this.getDefinition().getDataList( this.getSchemaId() ) != null;
+	}
+	
+	public SAXErrorHandlerStore validate( Source source ) throws Exception {
+		SAXErrorHandlerStore eh = new SAXErrorHandlerStore();
+		this.getDefinition().validate( eh , source, this.getSchemaId() );
+		return eh;
+	}
+	
 }

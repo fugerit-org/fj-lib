@@ -1,4 +1,4 @@
-<binding-config
+<binding-config try-xsd-validation="1"
 	xmlns="http://bindingconfig.fugerit.org"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-0.xsd">

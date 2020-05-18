@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
 	/*
@@ -6,7 +6,7 @@
 	 *
 	 * @project    : fj-core
 	 * @creation   : 2020-05-17
-	 * @version    : 1.0.0 (2020-05-17)
+	 * @version    : 1.0.1 (2020-05-17)
 	 *
 	 * XSD for fugerit binding config
 	 */
@@ -19,17 +19,26 @@
     xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-0.xsd" > 	
 </binding-config>	
 	
+	Basically, this configuration is made of 
+	
 -->
-<xsd:schema xmlns='http://www.w3.org/2000/10/XMLSchema'
+<xsd:schema
+	xmlns='http://www.w3.org/2000/10/XMLSchema'
 	targetNamespace='http://bindingconfig.fugerit.org'
 	xmlns:config='http://bindingconfig.fugerit.org' xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
 	<xsd:element name='binding-config'>
+		<xsd:annotation>
+			<xsd:documentation>
+				Binding catalog, inherits all feature from CustomListCatalogConfig 
+			</xsd:documentation>
+		</xsd:annotation>		
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref='config:binding-helper-list' minOccurs="0" maxOccurs="1" />
 				<xsd:element ref='config:binding' minOccurs="0" maxOccurs="unbounded" />
 			</xsd:sequence>
+			<xsd:attribute name='try-xsd-validation' type='xsd:string' use='optional' />
 		</xsd:complexType>
 	</xsd:element>
 
@@ -60,16 +69,33 @@
 	<xsd:element name='binding'>
 		<xsd:annotation>
 			<xsd:documentation>
-				Binding configuration, accepts some configuration : 
-				tryInit (default '1') - if '1' will try to init null field
+				Binding configuration, basically a lit of fields
 			</xsd:documentation>
 		</xsd:annotation>	
 		<xsd:complexType>
 			<xsd:sequence>
 				<xsd:element ref='config:field' minOccurs="0" maxOccurs="unbounded" />
 			</xsd:sequence>
-			<xsd:attribute name='id' type='xsd:string' use='required' />
-			<xsd:attribute name='tryInit' type='xsd:string' use='optional' />
+			<xsd:attribute name='id' type='xsd:string' use='required'>
+				<xsd:annotation>
+					<xsd:documentation>id of the binding</xsd:documentation>
+				</xsd:annotation>			
+			</xsd:attribute>
+			<xsd:attribute name='extends' type='xsd:string' use='optional'>
+				<xsd:annotation>
+					<xsd:documentation>
+						binding id list, comma separated, 
+						all the field in the said binding are included in the current binding 
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
+			<xsd:attribute name='tryInit' type='xsd:string' use='optional'>
+				<xsd:annotation>
+					<xsd:documentation>
+						if set to '1' or 'true' the catalog will try to init null field (default value is '1')
+					</xsd:documentation>
+				</xsd:annotation>			
+			</xsd:attribute>
 		</xsd:complexType>
 	</xsd:element>
 

@@ -9,6 +9,7 @@ import org.fugerit.java.core.cfg.xml.XmlBeanHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
+import org.fugerit.java.core.xml.config.FugeritXmlSchemaCatalogConfig;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -34,10 +35,14 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 	
 	public static final String ATT_BINDING_HELPER = "binding-helper";
 	
+	public static final String XSD_VALIDATION_SCHEMA_ID = "binding-config-current";
+	
 	public BindingCatalogConfig() {
 		super( "binding", "field" );
 		this.getGeneralProps().setProperty( ATT_TYPE , BindingFieldConfig.class.getName() );
 		this.getGeneralProps().setProperty( ATT_LIST_TYPE , BindingConfig.class.getName() );
+		this.setSchemaId( XSD_VALIDATION_SCHEMA_ID );
+		this.setDefinition( FugeritXmlSchemaCatalogConfig.getInstance() );
 	}
 	
 	/**

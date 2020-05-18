@@ -1,0 +1,12 @@
+<schema-catalog 
+	path-mode="class-loader"
+	path-base="xsd">
+
+	<schema-list id="binding-config-1-0">
+		<schema id="binding/binding-config-1-0.xsd"/>
+	</schema-list>
+	
+	<schema-list id="binding-config-current" extends="binding-config-1-0">
+	</schema-list>	
+	
+</schema-catalog>

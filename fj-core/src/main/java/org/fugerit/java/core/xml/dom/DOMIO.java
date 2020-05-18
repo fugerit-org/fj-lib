@@ -87,6 +87,19 @@ public class DOMIO {
         return result;
      }    
     
+    public static Document loadDOMDoc(InputSource source, EntityResolver er, boolean nsa) throws XMLException {
+        Document result = null;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware( nsa );
+            DocumentBuilder parser = factory.newDocumentBuilder();
+            parser.setEntityResolver( er );
+            result = parser.parse(source);
+        } catch (Exception e) {
+            throw (new XMLException(e));
+        }
+        return result;
+     } 
     
     /**
      * Load a DOM structure from a source
@@ -106,6 +119,19 @@ public class DOMIO {
        }
        return result;
     }
+    
+    public static Document loadDOMDoc(InputSource source, boolean nsa) throws XMLException {
+        Document result = null;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware( nsa );
+            DocumentBuilder parser = factory.newDocumentBuilder();
+            result = parser.parse(source);
+        } catch (Exception e) {
+            throw (new XMLException(e));
+        }
+        return result;
+     }
 
     /**
      * Load a DOM structure from a Reader
@@ -118,6 +144,10 @@ public class DOMIO {
         return loadDOMDoc(new InputSource(source));
     }
 
+    public static Document loadDOMDoc(Reader source, boolean nsa) throws XMLException {
+        return loadDOMDoc(new InputSource(source), nsa);
+    }
+    
     /**
      * Load a DOM structure from a stream
      * 
@@ -127,6 +157,10 @@ public class DOMIO {
      */
     public static Document loadDOMDoc(InputStream source) throws XMLException {
         return loadDOMDoc(new InputSource(source));
+    }
+    
+    public static Document loadDOMDoc(InputStream source, boolean nsa) throws XMLException {
+        return loadDOMDoc(new InputSource(source), nsa);
     }
 
     /**
@@ -140,6 +174,16 @@ public class DOMIO {
         Document result = null;
         try {
             result = loadDOMDoc(new FileInputStream(source));
+        } catch (IOException ioe) {
+            throw (new XMLException(ioe));
+        }
+        return result;
+    }    
+    
+    public static Document loadDOMDoc(File source, boolean nsa) throws XMLException {
+        Document result = null;
+        try {
+            result = loadDOMDoc(new FileInputStream(source), nsa);
         } catch (IOException ioe) {
             throw (new XMLException(ioe));
         }
