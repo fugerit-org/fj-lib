@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -89,6 +90,18 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 			}
 		}
 		return xsds;
+	}
+	
+	public void validateCacheSchema( ErrorHandler er, SAXSource source, String schemaListId ) throws Exception {
+		validateCacheSchema(er, (Source)source, schemaListId);
+	}
+
+	public void validate( ErrorHandler er, SAXSource source, String schemaListId ) throws Exception {
+		validate(er, (Source)source, schemaListId);
+	}
+	
+	public static void validateWorker( ErrorHandler er, SAXSource source, Source[] xsds ) throws Exception {
+        validateWorker(er, (Source)source, xsds);
 	}
 	
 	public void validateCacheSchema( ErrorHandler er, Source source, String schemaListId ) throws Exception {
