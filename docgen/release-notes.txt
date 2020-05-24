@@ -1,4 +1,8 @@
-﻿0.7.2.6 (2020-05-21)
+﻿0.7.2.7 (2020-05-24)
+-------------------- 
++ FilterFacade A.P.I. (package org.fugerit.java.core.lang.helpers.filter)
+
+0.7.2.6 (2020-05-21)
 -------------------- 
 + Catalog A.P.I. : Schema validation bugfix (avoid using version 0.7.2.5)
 
