@@ -1,4 +1,9 @@
-﻿0.7.2.7 (2020-05-24)
+﻿0.7.2.8 (2020-05-25)
+-------------------- 
++ Binding A.P.I. : Added init-to helper
++ Annotation : FugeritImpl (allow to define implementing class for interfaces)
+
+0.7.2.7 (2020-05-24)
 -------------------- 
 + FilterFacade A.P.I. (package org.fugerit.java.core.lang.helpers.filter)
 

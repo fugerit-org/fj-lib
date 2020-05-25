@@ -2,6 +2,8 @@ package org.fugerit.java.core.lang.helpers.reflect;
 
 import java.beans.PropertyDescriptor;
 
+import org.fugerit.java.core.lang.annotate.FacadeFugeritImpl;
+
 /**
  * Simple class to look up a property path in a java object
  * 
@@ -17,7 +19,8 @@ public class PathHelper {
 	public static Object initEmptyField( String property, Object target ) throws Exception {
 		PropertyDescriptor pd = new PropertyDescriptor( property, target.getClass() );
 		Class<?> propertyClass = pd.getReadMethod().getReturnType();
-		Object temp = propertyClass.newInstance();
+		Class<?> implClass = FacadeFugeritImpl.resolveImplClass( propertyClass );
+		Object temp = implClass.newInstance();
 		pd.getWriteMethod().invoke(target, temp);
 		return temp;
 	}

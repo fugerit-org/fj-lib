@@ -65,6 +65,7 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 		this.helperCatalog.add( BindingHelperDateToXML.DEFAULT );
 		this.helperCatalog.add( BindingHelperXMLToDate.DEFAULT );
 		this.helperCatalog.add( BindingHelperCollectionToObject.DEFAULT );
+		this.helperCatalog.add( BindingHelperInitTo.DEFAULT );
 		NodeList helperTags = tag.getElementsByTagName( ATT_BINDING_HELPER );
 		for ( int k=0; k<helperTags.getLength(); k++ ) {
 			Element helperTag = (Element) helperTags.item( k );

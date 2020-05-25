@@ -468,7 +468,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	/**
 	 * Check if the catalog config has a schema definition
 	 * 
-	 * @return
+	 * @return	<code>true</code> if the schemaId exists and has the catalog defined
 	 */
 	public boolean hasDefinition() {
 		return StringUtils.isNotEmpty( this.getSchemaId() ) && this.getDefinition() != null 
