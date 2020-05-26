@@ -13,8 +13,12 @@
 	<schema-list id="binding-config-1-2">
 		<schema id="binding/binding-config-1-2.xsd"/>
 	</schema-list>
+
+	<schema-list id="binding-config-1-3">
+		<schema id="binding/binding-config-1-3.xsd"/>
+	</schema-list>
 	
-	<schema-list id="binding-config-current" extends="binding-config-1-2">
+	<schema-list id="binding-config-current" extends="binding-config-1-3">
 	</schema-list>	
 	
 </schema-catalog>
