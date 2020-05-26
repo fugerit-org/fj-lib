@@ -1,11 +1,11 @@
 package org.fugerit.java.core.lang.annotate;
 
-public class FacadeFugeritImpl {
+public class FacadeDefineImpl {
 
 	public static Class<?> resolveImplClass( Class<?> propertyClass ) {
 		Class<?> ret = propertyClass;
-		if ( propertyClass.isAnnotationPresent(FugeritImpl.class) ) {
-			FugeritImpl fug = propertyClass.getAnnotation( FugeritImpl.class );
+		if ( propertyClass.isAnnotationPresent(DefineImpl.class) ) {
+			DefineImpl fug = propertyClass.getAnnotation( DefineImpl.class );
 			ret = fug.as();
 	    }
 		return ret;

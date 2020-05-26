@@ -2,8 +2,6 @@ package org.fugerit.java.core.lang.helpers.reflect;
 
 import java.beans.PropertyDescriptor;
 
-import org.fugerit.java.core.lang.annotate.FacadeFugeritImpl;
-
 /**
  * Simple class to look up a property path in a java object
  * 
@@ -12,14 +10,20 @@ import org.fugerit.java.core.lang.annotate.FacadeFugeritImpl;
  */
 public class PathHelper {
 
+	private static FacadeImplFinder FACADE_IMPL_FINDER = FacadeImplFinder.newFacadeDefault();
+	
 	public static final boolean CONTINUE_ON_NULL = true;
 	
 	public static final boolean EXIT_ON_NULL = false;
 	
 	public static Object initEmptyField( String property, Object target ) throws Exception {
+		return initEmptyField(property, target, FACADE_IMPL_FINDER);
+	}
+	
+	public static Object initEmptyField( String property, Object target, FacadeImplFinder facadeImplFinder ) throws Exception {
 		PropertyDescriptor pd = new PropertyDescriptor( property, target.getClass() );
 		Class<?> propertyClass = pd.getReadMethod().getReturnType();
-		Class<?> implClass = FacadeFugeritImpl.resolveImplClass( propertyClass );
+		Class<?> implClass = facadeImplFinder.findImpl( propertyClass );
 		Object temp = implClass.newInstance();
 		pd.getWriteMethod().invoke(target, temp);
 		return temp;
@@ -38,6 +42,10 @@ public class PathHelper {
 	}
 	
 	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit ) throws Exception {
+		return bind(path, target, value, paramType, tryInit, FACADE_IMPL_FINDER);
+	}
+	
+	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit, FacadeImplFinder facadeImplFinder ) throws Exception {
 		boolean bind = false;
 		if ( value != null ) {
 			if ( paramType == null ) {
@@ -48,7 +56,7 @@ public class PathHelper {
 			for ( int k=0; k<nodes.length-1; k++ ) {
 				Object temp = MethodHelper.invokeGetter( target, nodes[k] );
 				if ( temp == null && tryInit ) {
-					temp = initEmptyField( nodes[k] , target );
+					temp = initEmptyField( nodes[k] , target, facadeImplFinder );
 				}
 				target = temp;
 			}

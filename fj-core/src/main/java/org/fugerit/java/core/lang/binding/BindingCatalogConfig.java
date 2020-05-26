@@ -8,6 +8,8 @@ import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
 import org.fugerit.java.core.cfg.xml.XmlBeanHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
+import org.fugerit.java.core.lang.helpers.reflect.FacadeImplFinder;
+import org.fugerit.java.core.lang.helpers.reflect.ImplFinder;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.xml.config.FugeritXmlSchemaCatalogConfig;
 import org.w3c.dom.Element;
@@ -31,18 +33,28 @@ import org.w3c.dom.NodeList;
 public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldConfig, BindingConfig> {
 
 	public static final String ID_DEFAULT_HELPER = "default-helper";
+	
 	public static final String ID_STRING_VALUE_HELPER = "string-value";
 	
 	public static final String ATT_BINDING_HELPER = "binding-helper";
 	
+	public static final String ATT_IMPL_FINDER = "impl-finder";
+	
 	public static final String XSD_VALIDATION_SCHEMA_ID = "binding-config-current";
 	
+	private FacadeImplFinder facadeImplFinder;
+	
+	public FacadeImplFinder getFacadeImplFinder() {
+		return facadeImplFinder;
+	}
+
 	public BindingCatalogConfig() {
 		super( "binding", "field" );
 		this.getGeneralProps().setProperty( ATT_TYPE , BindingFieldConfig.class.getName() );
 		this.getGeneralProps().setProperty( ATT_LIST_TYPE , BindingConfig.class.getName() );
 		this.setSchemaId( XSD_VALIDATION_SCHEMA_ID );
 		this.setDefinition( FugeritXmlSchemaCatalogConfig.getInstance() );
+		this.facadeImplFinder = FacadeImplFinder.newFacadeDefault();
 	}
 	
 	/**
@@ -66,6 +78,20 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 		this.helperCatalog.add( BindingHelperXMLToDate.DEFAULT );
 		this.helperCatalog.add( BindingHelperCollectionToObject.DEFAULT );
 		this.helperCatalog.add( BindingHelperInitTo.DEFAULT );
+		// setup impl finders
+		NodeList implFinderTags = tag.getElementsByTagName( ATT_IMPL_FINDER );
+		for ( int k=0; k<implFinderTags.getLength(); k++ ) {
+			Element implFinderTag = (Element) implFinderTags.item( k );
+			String id = implFinderTag.getAttribute( "id" );
+			String type = implFinderTag.getAttribute( "type" );
+			try {
+				ImplFinder finder = (ImplFinder)ClassHelper.newInstance( type );
+				this.getFacadeImplFinder().registerFinder( finder );
+			} catch (Exception e) {
+				throw new ConfigException( "Error configuring ImplFinder : "+id, e );
+			}
+		}
+		// setup biding helpers
 		NodeList helperTags = tag.getElementsByTagName( ATT_BINDING_HELPER );
 		for ( int k=0; k<helperTags.getLength(); k++ ) {
 			Element helperTag = (Element) helperTags.item( k );
@@ -83,13 +109,12 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 				throw new ConfigException( "Error configuring helper : "+id, e );
 			}
 		}
+		// setup catalog configuration
 		for ( String bindingId : this.getIdSet() ) {
 			this.getListMap( bindingId ).setCatalog( this );
 		}
 	}
 
-	
-	
 	private ListMapStringKey<BindingHelper> helperCatalog;
 	
 	public void bind( String bindingId, Object from, Object to ) throws BindingException {

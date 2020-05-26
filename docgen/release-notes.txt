@@ -1,4 +1,9 @@
-﻿0.7.2.8 (2020-05-25)
+﻿0.7.2.9 (2020-05-26)
+-------------------- 
++ Binding A.P.I. : Added custom new Object creation
++ ImplFinder A.P.I. : Library for look up of implementing classes
+
+0.7.2.8 (2020-05-25)
 -------------------- 
 + Binding A.P.I. : Added init-to helper
 + Annotation : FugeritImpl (allow to define implementing class for interfaces)

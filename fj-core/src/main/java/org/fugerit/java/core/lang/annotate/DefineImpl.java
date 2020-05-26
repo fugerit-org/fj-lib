@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FugeritImpl
+public @interface DefineImpl
 {
 
     public Class<?> as() default Void.class;
