@@ -1,7 +1,7 @@
 <binding-config try-xsd-validation="1"
 	xmlns="http://bindingconfig.fugerit.org"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-0.xsd">
+    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-1.xsd">
 
 	<!-- sample binding catalog configuration file -->
 
@@ -13,6 +13,10 @@
 		<binding-helper id="xml-to-date" type="org.fugerit.java.core.lang.binding.BindingHelperXMLToDate"/>
 		<binding-helper id="xml-to-date" type="org.fugerit.java.core.lang.binding.BindingHelperXMLToDate"/>
 	</binding-helper-list>
+
+	<impl-finder-list>
+		<impl-finder id="DefineImplFinder" type="org.fugerit.java.core.lang.annotate.DefineImplFinder"/>
+	</impl-finder-list>
 
 	<!-- case 01 full binding configuration -->
 	<binding id="binding-01">
