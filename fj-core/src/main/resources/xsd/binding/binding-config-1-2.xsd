@@ -2,11 +2,11 @@
 <!--
 
 	/*
-	 * @(#)binding-config-1-1.xsd
+	 * @(#)binding-config-1-2.xsd
 	 *
 	 * @project    : fj-core
 	 * @creation   : 2020-05-26
-	 * @version    : 1.1.0 (2020-05-26)
+	 * @version    : 1.2.0 (2020-05-26)
 	 *
 	 * XSD for fugerit binding config
 	 */
@@ -38,6 +38,7 @@
 				<xsd:element ref='config:binding-helper-list' minOccurs="0" maxOccurs="1" />
 				<xsd:element ref='config:impl-finder-list' minOccurs="0" maxOccurs="1" />
 				<xsd:element ref='config:binding' minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element ref='config:module-list' minOccurs="0" maxOccurs="1" />
 			</xsd:sequence>
 			<xsd:attribute name='try-xsd-validation' type='xsd:string' use='optional' />
 		</xsd:complexType>
@@ -141,5 +142,28 @@
 			<xsd:attribute name='initOnNull' type='xsd:string' use='optional' />
 		</xsd:complexType>
 	</xsd:element>
+	
+	<xsd:element name='module-list'>
+		<xsd:annotation>
+			<xsd:documentation>List of binding modules</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref='config:module' minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name='module'>
+		<xsd:annotation>
+			<xsd:documentation>Binding module definition</xsd:documentation>
+		</xsd:annotation>	
+		<xsd:complexType>
+			<xsd:attribute name='id' type='xsd:string' use='required' />
+			<xsd:attribute name='mode' type='xsd:string' use='required' />
+			<xsd:attribute name='path' type='xsd:string' use='required' />
+			<xsd:attribute name='unsafe' type='xsd:string' use="optional" />
+		</xsd:complexType>
+	</xsd:element>		
 	
 </xsd:schema>	
