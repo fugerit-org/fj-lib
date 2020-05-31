@@ -117,7 +117,13 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 
 	private ListMapStringKey<BindingHelper> helperCatalog;
 	
-	public void bind( String bindingId, Object from, Object to ) throws BindingException {
+	public BindingContext newContext() {
+		BindingContext context = new BindingContext();
+		context.setCatalog( this );
+		return context;
+	}
+	
+	public void bind( BindingContext context, String bindingId, Object from, Object to ) throws BindingException {
 		BindingConfig binding = this.getListMap( bindingId );
 		for ( BindingFieldConfig field : binding ) {
 			BindingHelper helper = BindingHelperDefault.DEFAULT;
@@ -128,9 +134,13 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 			if ( helper == null ) {
 				throw new BindingException( "No helper found for id "+helperId );
 			} else {
-				helper.bind(binding, field, from, to);
+				helper.bind(context, binding, field, from, to);
 			}
 		}
+	}
+	
+	public void bind( String bindingId, Object from, Object to ) throws BindingException {
+		this.bind( this.newContext(), bindingId, from, to);
 	}
 	
 }

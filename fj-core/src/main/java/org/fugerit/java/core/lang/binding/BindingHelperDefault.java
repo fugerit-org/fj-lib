@@ -54,7 +54,7 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 		return c;
 	}
 	
-	public void bindingWorker(BindingConfig binding, BindingFieldConfig field, Object from, Object to) throws Exception {
+	public void bindingWorker(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object from, Object to) throws Exception {
 		String bindFrom = field.getActualBindFrom();
 		String bindTo = field.getActualBindTo();
 		Object valueFrom = PathHelper.lookup( bindFrom , from );
@@ -82,9 +82,9 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 	}
 	
 	@Override
-	public void bind(BindingConfig binding, BindingFieldConfig field, Object from, Object to) throws BindingException {
+	public void bind(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object from, Object to) throws BindingException {
 		try {
-			this.bindingWorker(binding, field, from, to);
+			this.bindingWorker(context, binding, field, from, to);
 		} catch (Exception e) {
 			throw new BindingException( binding, field, from, to, e );
 		}

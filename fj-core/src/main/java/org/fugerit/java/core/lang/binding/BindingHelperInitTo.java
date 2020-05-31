@@ -27,7 +27,7 @@ public class BindingHelperInitTo extends BindingHelperDefault {
 	}
 
 	@Override
-	public void bindingWorker(BindingConfig binding, BindingFieldConfig field, Object from, Object to) throws Exception {
+	public void bindingWorker(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object from, Object to) throws Exception {
 		String actualBindingTo = field.getActualBindTo();
 		Object value = PathHelper.bindInit( actualBindingTo, to );
 		if ( value == null ) {

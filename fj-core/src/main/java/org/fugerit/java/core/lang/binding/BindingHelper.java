@@ -4,6 +4,6 @@ import org.fugerit.java.core.cfg.xml.IdConfigType;
 
 public interface BindingHelper extends IdConfigType {
 
-	void bind( BindingConfig binding, BindingFieldConfig field, Object from, Object to ) throws BindingException;
+	void bind( BindingContext context, BindingConfig binding, BindingFieldConfig field, Object from, Object to ) throws BindingException;
 	
 }
