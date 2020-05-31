@@ -42,7 +42,7 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 	 */
 	private static final long serialVersionUID = 1342342342323L;
 
-	public Object convertValue(BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
+	public Object convertValue(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
 		return value;
 	}
 	
@@ -58,7 +58,7 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 		String bindFrom = field.getActualBindFrom();
 		String bindTo = field.getActualBindTo();
 		Object valueFrom = PathHelper.lookup( bindFrom , from );
-		valueFrom = this.convertValue(binding, field, valueFrom );
+		valueFrom = this.convertValue(context, binding, field, valueFrom );
 		if ( valueFrom == null && StringUtils.isNotEmpty( field.getInitOnNull() ) ) {
 			valueFrom = ClassHelper.newInstance( field.getInitOnNull() );
 		}

@@ -23,8 +23,8 @@ public class BindingHelperStringValue extends BindingHelperDefault {
 	}
 
 	@Override
-	public Object convertValue(BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
-		Object res = super.convertValue(binding, field, value);
+	public Object convertValue(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
+		Object res = super.convertValue(context, binding, field, value);
 		if ( res != null ) {
 			res = res.toString();
 		}

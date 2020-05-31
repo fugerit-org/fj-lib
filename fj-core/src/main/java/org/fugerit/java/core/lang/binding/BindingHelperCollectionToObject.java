@@ -40,8 +40,8 @@ public class BindingHelperCollectionToObject extends BindingHelperDefault {
 	}
 
 	@Override
-	public Object convertValue(BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
-		Object res = super.convertValue(binding, field, value);
+	public Object convertValue(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
+		Object res = super.convertValue(context, binding, field, value);
 		String multiValueMode = StringUtils.valueWithDefault( this.getParam01() , MULTI_VALUE_MODE_DEFAULT );
 		if ( res != null ) {
 			if ( value instanceof Collection<?> ) {
