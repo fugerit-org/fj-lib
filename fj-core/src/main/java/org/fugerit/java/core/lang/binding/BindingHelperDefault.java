@@ -57,7 +57,10 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 	public void bindingWorker(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object from, Object to) throws Exception {
 		String bindFrom = field.getActualBindFrom();
 		String bindTo = field.getActualBindTo();
-		Object valueFrom = PathHelper.lookup( bindFrom , from );
+		Object valueFrom = field.getValue();
+		if ( valueFrom == null ) {
+			valueFrom = PathHelper.lookup( bindFrom , from );
+		}
 		valueFrom = this.convertValue(context, binding, field, valueFrom );
 		if ( valueFrom == null && StringUtils.isNotEmpty( field.getInitOnNull() ) ) {
 			valueFrom = ClassHelper.newInstance( field.getInitOnNull() );

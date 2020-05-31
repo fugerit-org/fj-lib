@@ -1,7 +1,7 @@
 <binding-config try-xsd-validation="1"
 	xmlns="http://bindingconfig.fugerit.org"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-1.xsd">
+    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-4.xsd">
 
 	<!-- sample binding catalog configuration file -->
 
@@ -34,6 +34,7 @@
 		<field id="kid.idTwo" bindTo="idOne"/>
 		<field id="kid"/>
 		<field id="kid.idTwo" bindTo="kid.valueTwo" helper="string-value"/>
+		<field id="valueOne" value="TEST"/>
 	</binding>
 
 	<!-- case 02  when a field value is not found we privide init type -->

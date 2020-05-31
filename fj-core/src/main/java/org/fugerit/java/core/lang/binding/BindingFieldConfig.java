@@ -33,6 +33,8 @@ public class BindingFieldConfig extends BasicIdConfigType {
 	private String useBinding;
 	
 	private String typeTo;
+	
+	private String value;
 
 	public String getBindFrom() {
 		return bindFrom;
@@ -80,6 +82,14 @@ public class BindingFieldConfig extends BasicIdConfigType {
 
 	public void setTypeTo(String typeTo) {
 		this.typeTo = typeTo;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	/**

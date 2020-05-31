@@ -1,4 +1,8 @@
-﻿0.7.3.3 (2020-05-31)
+﻿0.7.3.4 (2020-06-01)
+-------------------- 
++ Binding A.P.I. : Added fixed value binding
+
+0.7.3.3 (2020-05-31)
 -------------------- 
 + Binding A.P.I. : Fix to binding context
 
