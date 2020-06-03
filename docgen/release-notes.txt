@@ -1,4 +1,8 @@
-﻿0.7.3.4 (2020-06-01)
+﻿0.7.3.5 (2020-06-03)
+-------------------- 
++ MetaDataUtils : Added support for entity type, TABLE and VIEW
+
+0.7.3.4 (2020-06-01)
 -------------------- 
 + Binding A.P.I. : Added fixed value binding
 

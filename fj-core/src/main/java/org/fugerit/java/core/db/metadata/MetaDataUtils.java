@@ -45,6 +45,18 @@ public class MetaDataUtils {
 
 	private static Logger logger = LoggerFactory.getLogger( MetaDataUtils.class );
 	
+	public static final String TYPE_TABLE = "TABLE";
+	
+	public static final String TYPE_VIEW = "VIEW";
+	
+	public static final String[] TYPES_TABLE = { TYPE_TABLE };
+	
+	public static final String[] TYPES_VIEW = { TYPE_VIEW };
+	
+	public static final String[] TYPES_DEFAULT = TYPES_TABLE;
+	
+	public static final String[] TYPES_ALL = { TYPE_TABLE, TYPE_VIEW };
+	
 	public static String insertQueryBuilder( TableModel tableModel ) {
 		List<ColumnModel> columnList = tableModel.getColumnList();
 		StringBuffer insertSQL = new StringBuffer();
@@ -72,14 +84,18 @@ public class MetaDataUtils {
 	}
 	
 	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList ) throws Exception {
-		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList );	 
+		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList, TYPES_DEFAULT );	 
+	}
+	
+	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList, String[] types ) throws Exception {
+		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList, types );	 
 	}
 	
 	private static final int MODE_LOOSE = 1;
 	
 	private static final int MODE_STRICT = 2;
 	
-	private static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, JdbcAdaptor jdbcAdaptor, List<String> tableNameList ) throws Exception { 
+	private static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, JdbcAdaptor jdbcAdaptor, List<String> tableNameList, String[] types ) throws Exception { 
 		
 		DataBaseModel dataBaseModel = new DataBaseModel();
 
@@ -112,7 +128,6 @@ public class MetaDataUtils {
 		}
 		
 		// estrazione tabelle
-		String[] types = { "TABLE" };
 		ResultSet tableRS = dbmd.getTables( catalog, schema, null, types );
 		
 		while ( tableRS.next() ) {
