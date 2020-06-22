@@ -94,7 +94,9 @@ public class TestBindingCatalog {
 				logger.info( "date java : "+to.getDateJava() );
 			}
 		} catch (Exception e) {
-			fail( "Error "+e );
+			String message = "Error "+e;
+			logger.error( message, e );
+			fail( message );
 		}
 	}
 	
@@ -121,6 +123,11 @@ public class TestBindingCatalog {
 	@Test
 	public void bind004() {
 		this.bind004WOrker( "binding-04" );
+	}	
+
+	@Test
+	public void bind005() {
+		this.bind003WOrker( "binding-05" );
 	}	
 	
 }

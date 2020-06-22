@@ -1,0 +1,21 @@
+<binding-config 
+	xmlns="http://bindingconfig.fugerit.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-4.xsd">
+	
+	<!-- case 03  convert java to xml (xsd:dateTime) -->
+	<binding id="binding-03">
+		<field id="dateJava" bindTo="dateXml" helper="date-to-xml"/>
+	</binding>		
+	
+	<!-- case 04  convert xml to date -->
+	<binding id="binding-04">
+		<field id="dateXml" bindTo="dateJava" helper="xml-to-date"/>
+	</binding>	
+	
+	<!-- case 05  convert java to xml with no time (xsd:date) -->
+	<binding id="binding-05">
+		<field id="dateJava" bindTo="dateXml" helper="date-to-xml-only"/>
+	</binding>			
+
+</binding-config>

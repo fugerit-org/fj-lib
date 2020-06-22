@@ -1,0 +1,42 @@
+<binding-config
+	xmlns="http://bindingconfig.fugerit.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-4.xsd">
+
+	<binding-helper-list>
+		<!-- all of those helper are available even if not declared -->
+		<binding-helper id="test-helper" type="test.org.fugerit.java.core.lang.binding.TestBindingHelper"/>
+	</binding-helper-list>
+
+	<!-- case 01 full binding configuration -->
+	<binding id="binding-01">
+		<field id="01" bindFrom="kid.idTwo" bindTo="idOne" helper="default-helper"/>
+		<field id="02" bindFrom="kid" bindTo="kid" helper="default-helper"/>
+		<field id="03" bindFrom="kid.idTwo" bindTo="kid.valueTwo" helper="string-value"/>
+	</binding>
+
+	<!-- case 01 short version with this default : 
+		bindFrom -> id
+		helper = 'default-helper'
+		Note : so it's possibile to write shorted binding configuration 
+	 -->
+	<binding id="binding-01-default">
+		<field id="kid.idTwo" bindTo="idOne"/>
+		<field id="kid" helper="test-helper"/>
+		<field id="kid.idTwo" bindTo="kid.valueTwo" helper="string-value"/>
+		<field id="valueOne" value="TEST"/>
+	</binding>
+
+	<!-- case 02  when a field value is not found we privide init type -->
+	<binding id="binding-02-default" tryInit="0">
+		<field id="kid" initOnNull="test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo"/>
+		<field id="idOne" bindTo="kid.idTwo"/>
+	</binding>
+	
+	<!-- case 02  when a field value is not found we initialize it with give type -->
+	<binding id="binding-02-tryinit">
+		<field id="kid"/>
+		<field id="idOne" bindTo="kid.idTwo"/>
+	</binding>	
+
+</binding-config>

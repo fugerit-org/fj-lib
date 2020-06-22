@@ -55,6 +55,14 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 		this.setSchemaId( XSD_VALIDATION_SCHEMA_ID );
 		this.setDefinition( FugeritXmlSchemaCatalogConfig.getInstance() );
 		this.facadeImplFinder = FacadeImplFinder.newFacadeDefault();
+		this.helperCatalog = new ListMapStringKey<>();
+		this.helperCatalog.add( BindingHelperDefault.DEFAULT );
+		this.helperCatalog.add( BindingHelperStringValue.DEFAULT );
+		this.helperCatalog.add( BindingHelperDateToXML.DEFAULT );
+		this.helperCatalog.add( BindingHelperDateToXMLOnly.DEFAULT );
+		this.helperCatalog.add( BindingHelperXMLToDate.DEFAULT );
+		this.helperCatalog.add( BindingHelperCollectionToObject.DEFAULT );
+		this.helperCatalog.add( BindingHelperInitTo.DEFAULT );
 	}
 	
 	/**
@@ -71,13 +79,6 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 	@Override
 	public void configure(Element tag) throws ConfigException {
 		super.configure(tag);
-		this.helperCatalog = new ListMapStringKey<>();
-		this.helperCatalog.add( BindingHelperDefault.DEFAULT );
-		this.helperCatalog.add( BindingHelperStringValue.DEFAULT );
-		this.helperCatalog.add( BindingHelperDateToXML.DEFAULT );
-		this.helperCatalog.add( BindingHelperXMLToDate.DEFAULT );
-		this.helperCatalog.add( BindingHelperCollectionToObject.DEFAULT );
-		this.helperCatalog.add( BindingHelperInitTo.DEFAULT );
 		// setup impl finders
 		NodeList implFinderTags = tag.getElementsByTagName( ATT_IMPL_FINDER );
 		for ( int k=0; k<implFinderTags.getLength(); k++ ) {
@@ -113,8 +114,10 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 		for ( String bindingId : this.getIdSet() ) {
 			this.getListMap( bindingId ).setCatalog( this );
 		}
+		logger.info( "helperCatalog {}", this.helperCatalog );
+		logger.info( "helperCatalog.size() {}", this.helperCatalog.size() );
 	}
-
+	
 	private ListMapStringKey<BindingHelper> helperCatalog;
 	
 	public BindingContext newContext() {
