@@ -4,7 +4,7 @@
 
 0.7.3.6 (2020-06-22)
 -------------------- 
-+ Binding A.P.I. : Now is possibile to add binding-helpers in sub modules too
++ Binding A.P.I. : Now is possible to add binding-helpers in sub modules too
 + Binding A.P.I. : Added new built in helper to convert java.util.Date to xml date with no time (date-to-xml-only)
 
 0.7.3.5 (2020-06-03)
