@@ -1,4 +1,8 @@
-﻿0.7.3.4 (2020-06-22)
+﻿0.7.3.7 (2020-07-28)
+-------------------- 
++ Added encoding handling for property catalog
+
+0.7.3.6 (2020-06-22)
 -------------------- 
 + Binding A.P.I. : Now is possibile to add binding-helpers in sub modules too
 + Binding A.P.I. : Added new built in helper to convert java.util.Date to xml date with no time (date-to-xml-only)
