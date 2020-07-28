@@ -1,9 +1,11 @@
 package org.fugerit.java.core.cfg.xml;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -53,6 +55,8 @@ public class PropertyHolder extends BasicIdConfigType {
 	
 	private String unsafeMessage;
 	
+	private String encoding;
+	
 	private Properties props;
 
 	public String getDescription() {
@@ -87,30 +91,42 @@ public class PropertyHolder extends BasicIdConfigType {
 		this.xml = xml;
 	}
 
-	private static void loadWorker( InputStream is, Properties props, boolean xml ) throws IOException {
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	private static void loadWorker( InputStream is, Properties props, boolean xml, String encoding ) throws IOException {
 		if ( xml ) {
-			props.loadFromXML( is );
+			if ( StringUtils.isNotEmpty( encoding ) ) {
+				throw new IOException( "Xml properties doens't allow to set encoding" );
+			} else {
+				props.loadFromXML( is );
+			}
 		} else {
-			props.load( is );
+			if ( StringUtils.isNotEmpty( encoding ) ) {
+				props.load( new BufferedReader( new InputStreamReader( is , encoding ) ) );
+			} else {
+				props.load( is );
+			}
 		}
 	}
 	
-	public static Properties load( String mode, String path, String xml) throws IOException {
-		return load(mode, path, xml, UNSAFE_FALSE, null );
-	}
-	
-	public static Properties load( String mode, String path, String xml, String unsafe, String usafeMessage ) throws IOException {
+	private static Properties load( String mode, String path, String xml, String unsafe, String usafeMessage, String encoding ) throws IOException {
 		Properties props = new Properties();
 		try {
 			if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
 				try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( path ) ) {
-					loadWorker( is , props, BooleanUtils.isTrue( xml ) );
+					loadWorker( is , props, BooleanUtils.isTrue( xml ), encoding );
 				} catch (Exception e) {
 					throw new IOException( e );
 				}
 			} else {
 				try ( InputStream is = new FileInputStream( new File( path ) ) ) {
-					loadWorker( is , props, BooleanUtils.isTrue( xml ) );
+					loadWorker( is , props, BooleanUtils.isTrue( xml ), encoding );
 				}
 			}	
 		} catch ( Exception e ) {
@@ -157,7 +173,7 @@ public class PropertyHolder extends BasicIdConfigType {
 	}
 	
 	public void init() throws IOException {
-		this.props = load( this.getMode() , this.getPath(), this.getXml(), this.getUnsafe(), this.getUnsafeMessage() ); 
+		this.props = load( this.getMode() , this.getPath(), this.getXml(), this.getUnsafe(), this.getUnsafeMessage(), this.getEncoding() ); 
 	}
 
 	public boolean isEmpty() {

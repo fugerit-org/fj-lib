@@ -6,7 +6,7 @@
 
 	<data-list id="TEST">
 		<data id="props-01" description="First JUNIT config properties"
-			mode="classloader" path="${base-conf-path}/props-01.properties"/>
+			mode="classloader" path="${base-conf-path}/props-01.properties" encoding="utf-8"/>
 		<data id="props-02" description="Second JUNIT config properties"
 			mode="classloader" path="${base-conf-path}/props-02.xml" xml="true"/>
 		<!--
