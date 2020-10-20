@@ -1,4 +1,8 @@
-﻿0.7.3.9 (2020-10-15)
+﻿0.7.3.10 (2020-10-20)
+-------------------- 
++ Update common-compress version
+
+0.7.3.9 (2020-10-15)
 -------------------- 
 + Merge with dependabot/maven/junit-junit-4.13.1
 

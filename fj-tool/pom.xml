@@ -7,14 +7,14 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.7.3.9</version>
+		<version>0.7.3.10</version>
 	</parent>
 	
 	<name>fj-tool</name>
 	<description>Fugerit Java Tool Library for JDK 1.7 and up</description>
 	
 	<properties>
-		<common-compress-version>[1.19,)</common-compress-version>
+		<common-compress-version>1.20</common-compress-version>
 	</properties>
 	
 	<organization>
