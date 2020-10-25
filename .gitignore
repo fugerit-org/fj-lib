@@ -1,3 +1,7 @@
+### Idea Intellij ###
+.idea/	
+*.iml
+
 ### Eclipse ###
 
 .metadata
