@@ -1,0 +1,11 @@
+<validator-catalog bundle-path="core.validator.validator">
+
+	<validator id="testRegexValidator" 
+		type="org.fugerit.java.core.validator.ValidatorRegex" 
+		regex="^[a-zA-ZÀ-ž' \-\.,]*$" info="[A-ZÀ-ž]"/>
+
+	<validator id="testDateValidator" 
+		type="org.fugerit.java.core.validator.ValidatorDate"
+		dateFormat="dd/MM/yyyy" minDate="01/01/2020" maxDate="31/12/2020"/>
+
+</validator-catalog>
