@@ -21,8 +21,6 @@ public class ValidatorDate extends BasicValidator {
 	
 	public static final String KEY_MAXDATE = "maxDate";
 	
-	public static final String KEY_INFO = "info";
-	
 	public static final String ERROR_KEY_DATE = "error.date";
 	
 	public static final String ERROR_KEY_DATE_MIN = "error.date.min";
@@ -30,19 +28,13 @@ public class ValidatorDate extends BasicValidator {
 	public static final String ERROR_KEY_DATE_MAX = "error.date.max";
 
 	private String dateFormat;
-	
-	private String info;
-	
+
 	private String minDate;
 	
 	private String maxDate;
 	
 	public String getDateFormat() {
 		return dateFormat;
-	}
-	
-	public String getInfo() {
-		return info;
 	}
 
 	public String getMinDate() {
@@ -76,10 +68,6 @@ public class ValidatorDate extends BasicValidator {
 			String dateFormat = atts.getProperty( KEY_DATEFORMAT ); 
 			if ( StringUtils.isNotEmpty( dateFormat ) ) {
 				this.dateFormat = dateFormat;
-			}
-			String info = atts.getProperty( KEY_INFO );
-			if ( StringUtils.isNotEmpty( info ) ) {
-				this.info = info;
 			}
 			String minDate = atts.getProperty( KEY_MINDATE );
 			if ( StringUtils.isNotEmpty( minDate ) ) {

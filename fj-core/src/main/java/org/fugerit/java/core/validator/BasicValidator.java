@@ -24,6 +24,8 @@ public class BasicValidator extends BasicIdConfigType {
 	
 	public static final int NO_LENGTH_CONSTRAINT = -1;
 	
+	public static final String KEY_INFO = "info";
+	
 	public static final String KEY_OPTION1 = "option1";
 	public static final String KEY_OPTION2 = "option2";
 	public static final String KEY_OPTION3 = "option3";
@@ -37,6 +39,8 @@ public class BasicValidator extends BasicIdConfigType {
 	private int minLength = NO_LENGTH_CONSTRAINT;
 	
 	private int maxLength = NO_LENGTH_CONSTRAINT;
+	
+	private String info;
 	
 	private String option1;
 	
@@ -92,6 +96,10 @@ public class BasicValidator extends BasicIdConfigType {
 		if ( StringUtils.isNotEmpty( max ) ) {
 			this.maxLength = Integer.parseInt( max );
 		}
+		String info = atts.getProperty( KEY_INFO );
+		if ( StringUtils.isNotEmpty( info ) ) {
+			this.info = info;
+		}		
 		String opt1 = atts.getProperty( KEY_OPTION1 );
 		if ( StringUtils.isNotEmpty( opt1 ) ) {
 			this.option1 = opt1;
@@ -151,7 +159,11 @@ public class BasicValidator extends BasicIdConfigType {
 	public int getMaxLength() {
 		return maxLength;
 	}
-
+	
+	public String getInfo() {
+		return info;
+	}
+	
 	public String getOption1() {
 		return option1;
 	}

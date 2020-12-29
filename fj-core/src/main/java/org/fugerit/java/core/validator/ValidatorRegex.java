@@ -15,20 +15,12 @@ public class ValidatorRegex extends BasicValidator {
 
 	public static final String KEY_REGEX = "regex";
 	
-	public static final String KEY_INFO = "info";
-	
 	public static final String ERROR_KEY_REGEX = "error.regex";
 
 	private String regex;
 	
-	private String info;
-	
 	public String getRegex() {
 		return regex;
-	}
-	
-	public String getInfo() {
-		return info;
 	}
 	
 	@Override
@@ -45,10 +37,6 @@ public class ValidatorRegex extends BasicValidator {
 		String regex = atts.getProperty( KEY_REGEX );
 		if (  StringUtils.isNotEmpty( regex ) ) {
 			this.regex = regex;
-		}
-		String info = atts.getProperty( KEY_INFO );
-		if (  StringUtils.isNotEmpty( info ) ) {
-			this.info = info;
 		}
 	}
 
