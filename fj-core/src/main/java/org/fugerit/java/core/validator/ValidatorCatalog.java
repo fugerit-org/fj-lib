@@ -102,7 +102,7 @@ public class ValidatorCatalog implements Serializable {
 					}
 					validator.configure( current, parentValidator );
 					validator.checkConfig();
-					logger.info( "validator : {}", validator );
+					logger.info( "validator : {} -> {}", validator, validator.getParams() );
 					this.getValidators().add( validator );
 				}
 			}

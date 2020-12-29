@@ -26,10 +26,6 @@ public class BasicValidator extends BasicIdConfigType {
 	
 	public static final String KEY_INFO = "info";
 	
-	public static final String KEY_OPTION1 = "option1";
-	public static final String KEY_OPTION2 = "option2";
-	public static final String KEY_OPTION3 = "option3";
-	
 	public static final String ERROR_KEY_REQUIRED = "error.required";
 	public static final String ERROR_KEY_LENGTH_MIN = "error.length.min";
 	public static final String ERROR_KEY_LENGTH_MAX = "error.length.max";
@@ -42,15 +38,15 @@ public class BasicValidator extends BasicIdConfigType {
 	
 	private String info;
 	
-	private String option1;
-	
-	private String option2;
-	
-	private String option3;
-	
 	private Element config;
 	
+	private Properties params;
+	
 	private BasicValidator parent;
+	
+	public BasicValidator() {
+		this.params = new Properties();
+	}
 
 	/**
 	 * 
@@ -100,18 +96,7 @@ public class BasicValidator extends BasicIdConfigType {
 		if ( StringUtils.isNotEmpty( info ) ) {
 			this.info = info;
 		}		
-		String opt1 = atts.getProperty( KEY_OPTION1 );
-		if ( StringUtils.isNotEmpty( opt1 ) ) {
-			this.option1 = opt1;
-		}
-		String opt2 = atts.getProperty( KEY_OPTION2 );
-		if ( StringUtils.isNotEmpty( opt2 ) ) {
-			this.option2 = opt2;
-		}
-		String opt3 = atts.getProperty( KEY_OPTION3 );
-		if ( StringUtils.isNotEmpty( opt3 ) ) {
-			this.option3 = opt3;
-		}
+		this.getParams().putAll( atts );
 	}
 	
 	protected String checkOverride( ValidatorContext context, String def, String key ) {
@@ -164,24 +149,16 @@ public class BasicValidator extends BasicIdConfigType {
 		return info;
 	}
 	
-	public String getOption1() {
-		return option1;
-	}
-
-	public String getOption2() {
-		return option2;
-	}
-
-	public String getOption3() {
-		return option3;
-	}
-	
 	protected Element getConfig() {
 		return config;
 	}
 
 	protected BasicValidator getParent() {
 		return parent;
+	}
+
+	public Properties getParams() {
+		return params;
 	}
 
 	@Override
