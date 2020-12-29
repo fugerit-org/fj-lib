@@ -7,6 +7,7 @@ import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.xml.BasicIdConfigType;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.StringUtils;
+import org.fugerit.java.core.xml.dom.DOMProperty;
 import org.fugerit.java.core.xml.dom.DOMUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +75,7 @@ public class BasicValidator extends BasicIdConfigType {
 		} else {
 			throw new ConfigException( "no id attribute defined" );
 		}
+		DOMProperty.fill( atts , config );
 		configure( atts );
 	}
 	

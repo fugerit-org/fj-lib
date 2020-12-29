@@ -1,25 +1,29 @@
 <validator-catalog bundle-path="core.validator.validator">
 
 	<custom-messages locale="default">
-		<message key='error.length.min'>Field "{0}" length is {1}, should be at least {2}.</message>
+		<entry key='error.length.min'>Field "{0}" length is {1}, should be at least {2}.</entry>
 	</custom-messages>
 
 	<custom-messages locale="it">
-		<message key='error.length.min'>Il campo "{0}" ha lunghezza {1}, ma dovrebbe essere almeno {2}.</message>
+		<entry key='error.length.min'>Il campo "{0}" ha lunghezza {1}, ma dovrebbe essere almeno {2}.</entry>
 	</custom-messages>
 
-	<validator id="testDateValidator" 
-		type="org.fugerit.java.core.validator.ValidatorDate"
-		dateFormat="dd/MM/yyyy" minDate="01/01/2020" maxDate="31/12/2020"/>
+	<validator id="testDateValidator" type="org.fugerit.java.core.validator.ValidatorDate">
+		<entry key="dateFormat">dd/MM/yyyy</entry>
+		<entry key="minDate">01/01/2020</entry>
+		<entry key="maxDate">31/12/2020</entry>
+	</validator>
 
-	<validator id="testRegexValidator" 
-		type="org.fugerit.java.core.validator.ValidatorRegex" 
-		regex="^[a-zA-ZÀ-ž' \-\.,]*$" info="[A-ZÀ-ž]"/>
-
+	<validator id="testRegexValidator" type="org.fugerit.java.core.validator.ValidatorRegex">
+		<entry key="regex">^[a-zA-ZÀ-ž' \-\.,]*$</entry>
+		<entry key="info">[A-ZÀ-ž]</entry>
+	</validator>
+	
 	<!-- inherit all attributes set in parent -->
-	<validator id="testRegexValidatorExt" 
-		type="org.fugerit.java.core.validator.ValidatorRegex" 
-		minLength="2" maxLength="5" 
-		parent="testRegexValidator"/>
-
+	<validator id="testRegexValidatorExt" parent="testRegexValidator"
+		type="org.fugerit.java.core.validator.ValidatorRegex">
+		<entry key="minLength">2</entry>
+		<entry key="maxLength">5</entry>		
+	</validator>
+	
 </validator-catalog>

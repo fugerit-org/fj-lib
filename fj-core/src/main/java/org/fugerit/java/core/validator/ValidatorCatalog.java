@@ -13,6 +13,7 @@ import org.fugerit.java.core.fixed.parser.FixedFileFieldBasicValidator;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.xml.dom.DOMIO;
+import org.fugerit.java.core.xml.dom.DOMProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -24,9 +25,7 @@ public class ValidatorCatalog implements Serializable {
 	private final static Logger logger = LoggerFactory.getLogger( ValidatorCatalog.class );
 	
 	public static final String TAG_CUSTOM_MESSAGE = "custom-messages";
-	
-	public static final String TAG_MESSAGE = "message";
-	
+
 	public static final String DEFAULT_CUSTOM_MESSAGE_LOCALE = "default";
 	
 	public static final String TAG_VALIDATOR = "validator";
@@ -69,14 +68,8 @@ public class ValidatorCatalog implements Serializable {
 			for ( int i=0; i<tagsMessages.getLength(); i++ ) {
 				Element current = (Element) tagsMessages.item( i );
 				String locale = current.getAttribute( "locale" );
-				NodeList tagsM = current.getElementsByTagName( TAG_MESSAGE );
 				Properties customMessages = new Properties();
-				for ( int j=0; j<tagsM.getLength(); j++ ) {
-					Element currentMessage = (Element) tagsM.item( j );
-					String key = currentMessage.getAttribute( "key" );
-					String value = currentMessage.getTextContent().trim();
-					customMessages.setProperty(key, value);
-				}
+				DOMProperty.fill(customMessages, current );
 				this.customMessageMap.put(  locale, customMessages );
 			}
 			// validators
