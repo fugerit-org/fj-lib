@@ -126,19 +126,19 @@ public class BasicValidator extends BasicIdConfigType {
 		boolean valid = this.isOptional() || ( StringUtils.isNotEmpty( context.getValue() ) );
 		if ( !valid ) {
 			String message = this.formatMessage( context.getBundle() , ERROR_KEY_REQUIRED, context.getLabel() );
-			context.getResult().getErrors().add( message );
+			context.getResult().addError( context.getFieldId(), message );
 		}
 		if ( valid && StringUtils.isNotEmpty( context.getValue() ) ) {
 			int length = context.getValue().length();
 			if ( this.getMinLength() != NO_LENGTH_CONSTRAINT && length < this.getMinLength() ) {
 				valid = false;
 				String message = this.formatMessage( context.getBundle() , ERROR_KEY_LENGTH_MIN, context.getLabel(), String.valueOf( length ), String.valueOf( this.getMinLength() ) );
-				context.getResult().getErrors().add( message );
+				context.getResult().addError( context.getFieldId(), message );
 			}
 			if ( this.getMaxLength() != NO_LENGTH_CONSTRAINT && length > this.getMaxLength() ) {
 				valid = false;
 				String message = this.formatMessage( context.getBundle() , ERROR_KEY_LENGTH_MAX, context.getLabel(), String.valueOf( length ), String.valueOf( this.getMaxLength() ) );
-				context.getResult().getErrors().add( message );
+				context.getResult().addError( context.getFieldId(), message );
 			}
 		}
 		return valid;

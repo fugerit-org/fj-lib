@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.util.PropertyEntry;
 import org.fugerit.java.core.validator.ValidatorCatalog;
 import org.fugerit.java.core.validator.ValidatorDate;
 import org.fugerit.java.core.validator.ValidatorResult;
@@ -28,7 +29,7 @@ public class TestValidatorCatalog extends BasicTest {
 	
 	private void validatorWorker( String validatorId, ValidatorResult result, Locale l, String value, String label, boolean expected, Properties params ) {
 		try {
-			boolean valid = catalog.validate( validatorId , result, l, value, label, params );
+			boolean valid = catalog.validate( validatorId , result, l, label, value, label, params );
 			logger.info( "valid? -> {} ", valid );
 			if ( expected != valid ) {
 				fail( "Expected:"+expected+" != Result:"+valid );
@@ -41,8 +42,8 @@ public class TestValidatorCatalog extends BasicTest {
 	}
 	
 	private void printResult( ValidatorResult result ) {
-		for ( String message : result.getErrors() ) {
-			logger.info( "Error : {}", message );
+		for ( PropertyEntry entry : result.getErrors() ) {
+			logger.info( "Error : {}", entry.getValue() );
 		}
 	}
 	

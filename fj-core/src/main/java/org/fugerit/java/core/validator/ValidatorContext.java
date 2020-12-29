@@ -18,6 +18,8 @@ public class ValidatorContext extends AttributeHolderDefault {
 	
 	private Locale locale;
 	
+	private String fieldId;
+	
 	private String value;
 	
 	private String label;
@@ -46,6 +48,14 @@ public class ValidatorContext extends AttributeHolderDefault {
 		this.locale = locale;
 	}
 
+	public String getFieldId() {
+		return fieldId;
+	}
+
+	public void setFieldId(String fieldId) {
+		this.fieldId = fieldId;
+	}
+
 	public String getValue() {
 		return value;
 	}
@@ -62,11 +72,12 @@ public class ValidatorContext extends AttributeHolderDefault {
 		this.label = label;
 	}
 
-	public ValidatorContext(ValidatorCatalog catalog, ValidatorResult result, Locale locale, String value, String label) {
+	public ValidatorContext(ValidatorCatalog catalog, ValidatorResult result, Locale locale, String fieldId, String value, String label) {
 		super();
 		this.catalog = catalog;
 		this.result = result;
 		this.locale = locale;
+		this.fieldId = fieldId;
 		this.value = value;
 		this.label = label;
 	}

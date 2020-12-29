@@ -135,8 +135,8 @@ public class ValidatorCatalog implements Serializable {
 		return bundle;
 	}
 	
-	public boolean validate( String validatorId, ValidatorResult result, Locale l, String value, String label, Properties params ) throws Exception {
-		ValidatorContext context = new ValidatorContext( this , result, l, value, label);
+	public boolean validate( String validatorId, ValidatorResult result, Locale l, String fieldId, String value, String label, Properties params ) throws Exception {
+		ValidatorContext context = new ValidatorContext( this , result, l, fieldId, value, label );
 		for ( Object key : params.keySet() ) {
 			String k = String.valueOf( key );
 			context.setAttribute( k , params.getProperty( k ) );

@@ -97,17 +97,17 @@ public class ValidatorDate extends BasicValidator {
 			if ( StringUtils.isNotEmpty( minDate ) && d.before( sdf.parse( minDate ) ) ) {
 				valid = false;
 				String message = this.formatMessage( context.getBundle() , ERROR_KEY_DATE_MIN, context.getLabel(), context.getValue(), minDate );
-				context.getResult().getErrors().add( message );
+				context.getResult().addError( context.getFieldId(), message );
 			}
 			if ( StringUtils.isNotEmpty( maxDate ) && d.after( sdf.parse( maxDate ) ) ) {
 				valid = false;
 				String message = this.formatMessage( context.getBundle() , ERROR_KEY_DATE_MAX, context.getLabel(), context.getValue(), maxDate );
-				context.getResult().getErrors().add( message );
+				context.getResult().addError( context.getFieldId(), message );
 			}
 		} catch (Exception e) {
 			valid = false;
 			String message = this.formatMessage( context.getBundle() , ERROR_KEY_DATE, context.getLabel(), context.getValue(), StringUtils.valueWithDefault( this.getInfo(), this.getDateFormat() ) );
-			context.getResult().getErrors().add( message );
+			context.getResult().addError( context.getFieldId(), message );
 		}
 		return valid;
 	}

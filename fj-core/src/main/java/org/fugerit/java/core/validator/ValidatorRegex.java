@@ -46,7 +46,7 @@ public class ValidatorRegex extends BasicValidator {
 		if ( !Pattern.matches( this.getRegex() , context.getValue() ) ) {
 			valid = false;
 			String message = this.formatMessage( context.getBundle() , ERROR_KEY_REGEX, context.getLabel(), context.getValue(), StringUtils.valueWithDefault( this.getInfo(), this.getRegex() ) );
-			context.getResult().getErrors().add( message );
+			context.getResult().addError( context.getFieldId(), message );
 		}
 		return valid;
 	}
