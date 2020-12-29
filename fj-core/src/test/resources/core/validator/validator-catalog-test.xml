@@ -1,4 +1,8 @@
-<validator-catalog bundle-path="core.validator.validator">
+<validator-catalog
+	xmlns="http://validatorcatalog.fugerit.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://validatorcatalog.fugerit.org https://www.fugerit.org/data/java/core/xsd/validator/validator-catalog-1-0.xsd" 
+    bundle-path="core.validator.validator"> 	
 
 	<custom-messages locale="default">
 		<entry key='error.length.min'>Field "{0}" length is {1}, should be at least {2}.</entry>

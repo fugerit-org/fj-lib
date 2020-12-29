@@ -20,6 +20,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+/**
+ * Validator Catalog is the main configuration item of this simple configuration framework.
+ * 
+ * You can find a sample configuration at : 
+ * fj-core/src/test/resources/core/validator/validator-catalog-test.xml
+ * And sample usage in junit test :
+ * fj-core/src/test/java/test/org/fugerit/java/core/validator/TestValidatorCatalog.java
+ * 
+ * @author Matteo a.k.a. Fugerit
+ *
+ */
 public class ValidatorCatalog implements Serializable {
 
 	private final static Logger logger = LoggerFactory.getLogger( ValidatorCatalog.class );
