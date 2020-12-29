@@ -62,21 +62,33 @@ public class ValidatorDate extends BasicValidator {
 	}
 	
 	@Override
+	public void checkConfig() throws ConfigException {
+		super.checkConfig();
+		if ( StringUtils.isEmpty( this.getDateFormat() ) ) {
+			throw new ConfigException( "You must configure a 'dateFormat' attribute for this validator "+this.getId() );
+		}
+	}
+
+	@Override
 	public void configure( Properties atts ) throws ConfigException {
 		super.configure(atts);
 		try {
 			String dateFormat = atts.getProperty( KEY_DATEFORMAT ); 
 			if ( StringUtils.isNotEmpty( dateFormat ) ) {
 				this.dateFormat = dateFormat;
-			} else {
-				throw new ConfigException( "You must configure a 'dateFormat' attribute for this validator "+this.getId() );
 			}
 			String info = atts.getProperty( KEY_INFO );
 			if ( StringUtils.isNotEmpty( info ) ) {
 				this.info = info;
 			}
-			this.minDate = setIfPresent( atts , KEY_MINDATE );
-			this.maxDate = setIfPresent( atts , KEY_MAXDATE );
+			String minDate = atts.getProperty( KEY_MINDATE );
+			if ( StringUtils.isNotEmpty( minDate ) ) {
+				this.minDate = minDate;
+			}
+			String maxDate = atts.getProperty( KEY_MAXDATE );
+			if ( StringUtils.isNotEmpty( maxDate ) ) {
+				this.maxDate = maxDate;
+			}
 		} catch (Exception e) {
 			throw new ConfigException( e );
 		}

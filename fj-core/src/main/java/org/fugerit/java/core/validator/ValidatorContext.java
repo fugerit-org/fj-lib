@@ -1,7 +1,7 @@
 package org.fugerit.java.core.validator;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Properties;
 
 import org.fugerit.java.core.lang.helpers.AttributeHolderDefault;
 
@@ -71,7 +71,7 @@ public class ValidatorContext extends AttributeHolderDefault {
 		this.label = label;
 	}
 
-	public ResourceBundle getBundle() {
+	public Properties getBundle() {
 		return this.getCatalog().getBundle( this.getLocale() );
 	}
 	

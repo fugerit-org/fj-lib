@@ -30,18 +30,24 @@ public class ValidatorRegex extends BasicValidator {
 	public String getInfo() {
 		return info;
 	}
+	
+	@Override
+	public void checkConfig() throws ConfigException {
+		super.checkConfig();
+		if ( StringUtils.isEmpty( this.getRegex() ) ) {
+			throw new ConfigException( "You must configure a 'regex' attribute for this validator "+this.getId() );
+		}
+	}
 
 	@Override
 	public void configure( Properties atts ) throws ConfigException {
 		super.configure(atts);
-		String regex = atts.getProperty( KEY_REGEX ); 
-		if ( StringUtils.isNotEmpty( regex ) ) {
+		String regex = atts.getProperty( KEY_REGEX );
+		if (  StringUtils.isNotEmpty( regex ) ) {
 			this.regex = regex;
-		} else {
-			throw new ConfigException( "You must configure a 'regex' attribute for this validator "+this.getId() );
 		}
 		String info = atts.getProperty( KEY_INFO );
-		if ( StringUtils.isNotEmpty( info ) ) {
+		if (  StringUtils.isNotEmpty( info ) ) {
 			this.info = info;
 		}
 	}

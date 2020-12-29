@@ -23,15 +23,25 @@ public class ValidatorCatalog implements Serializable {
 
 	private final static Logger logger = LoggerFactory.getLogger( ValidatorCatalog.class );
 	
+	public static final String TAG_CUSTOM_MESSAGE = "custom-messages";
+	
+	public static final String TAG_MESSAGE = "message";
+	
+	public static final String DEFAULT_CUSTOM_MESSAGE_LOCALE = "default";
+	
 	public static final String TAG_VALIDATOR = "validator";
 	
 	public static final String ATT_TYPE = "type";
+	
+	public static final String ATT_PARENT = "parent";
 	
 	public static final String CONF_BUNDLE_PATH = "bundle-path";
 	
 	public static final String DEFAULT_BUNDLE_PATH = "core.validator.validator";
 	
-	private Map<Locale, ResourceBundle> bundleMap;
+	private Map<Locale, Properties> bundleMap;
+	
+	private Map<String, Properties> customMessageMap;
 	
 	/**
 	 * 
@@ -44,7 +54,8 @@ public class ValidatorCatalog implements Serializable {
 	
 	public ValidatorCatalog() {
 		this.validators = new ListMapConfig<BasicValidator>();
-		this.bundleMap = new HashMap<Locale, ResourceBundle>();
+		this.bundleMap = new HashMap<Locale, Properties>();
+		this.customMessageMap = new HashMap<String, Properties>();
 	}
 	
 	public ListMapConfig<BasicValidator> getValidators() {
@@ -53,6 +64,22 @@ public class ValidatorCatalog implements Serializable {
 	
 	public void configure( Element element ) throws ConfigException {
 		try {
+			// custom mssages
+			NodeList tagsMessages = element.getElementsByTagName( TAG_CUSTOM_MESSAGE );
+			for ( int i=0; i<tagsMessages.getLength(); i++ ) {
+				Element current = (Element) tagsMessages.item( i );
+				String locale = current.getAttribute( "locale" );
+				NodeList tagsM = current.getElementsByTagName( TAG_MESSAGE );
+				Properties customMessages = new Properties();
+				for ( int j=0; j<tagsM.getLength(); j++ ) {
+					Element currentMessage = (Element) tagsM.item( j );
+					String key = currentMessage.getAttribute( "key" );
+					String value = currentMessage.getTextContent().trim();
+					customMessages.setProperty(key, value);
+				}
+				this.customMessageMap.put(  locale, customMessages );
+			}
+			// validators
 			NodeList tagsValidator = element.getElementsByTagName( TAG_VALIDATOR );
 			for ( int k=0; k<tagsValidator.getLength(); k++ ) {
 				Element current = (Element) tagsValidator.item( k );
@@ -61,7 +88,16 @@ public class ValidatorCatalog implements Serializable {
 					throw new ConfigException( "Attribute "+ATT_TYPE+" must be set " );
 				} else {
 					BasicValidator validator = (BasicValidator) ClassHelper.newInstance( type );
-					validator.configure( current );
+					String parent = current.getAttribute( "parent" );
+					BasicValidator parentValidator = null;
+					if ( StringUtils.isNotEmpty( parent ) ) {
+						parentValidator = this.getValidators().get( parent );
+						if ( parentValidator == null ) {
+							throw new ConfigException( "No parent validator found : "+parent );
+						}
+					}
+					validator.configure( current, parentValidator );
+					validator.checkConfig();
 					logger.info( "validator : {}", validator );
 					this.getValidators().add( validator );
 				}
@@ -75,10 +111,21 @@ public class ValidatorCatalog implements Serializable {
 		}
 	}
 	
-	public ResourceBundle getBundle( Locale l ) {
-		ResourceBundle bundle = this.bundleMap.get( l );
+	public Properties getBundle( Locale l ) {
+		Properties bundle = this.bundleMap.get( l );
 		if ( bundle == null ) {
-			bundle = FixedFileFieldBasicValidator.newBundle( StringUtils.valueWithDefault( this.bundlePath , DEFAULT_BUNDLE_PATH), l.getLanguage() );
+			ResourceBundle temp = FixedFileFieldBasicValidator.newBundle( StringUtils.valueWithDefault( this.bundlePath , DEFAULT_BUNDLE_PATH), l.getLanguage() );
+			bundle = new Properties();
+			for ( String key : temp.keySet() ) {
+				bundle.setProperty( key , temp.getString( key ) );
+			}
+			Properties customMessages = this.customMessageMap.get( l.toString() );
+			if ( customMessages == null ) {
+				customMessages = this.customMessageMap.get( DEFAULT_CUSTOM_MESSAGE_LOCALE );
+			}
+			if ( customMessages != null ) {
+				bundle.putAll( customMessages );
+			}
 			this.bundleMap.put( l , bundle );
 		}
 		return bundle;
