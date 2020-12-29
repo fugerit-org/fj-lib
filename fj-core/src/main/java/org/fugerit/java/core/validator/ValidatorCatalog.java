@@ -125,6 +125,9 @@ public class ValidatorCatalog implements Serializable {
 			}
 			Properties customMessages = this.customMessageMap.get( l.toString() );
 			if ( customMessages == null ) {
+				customMessages = this.customMessageMap.get( l.getLanguage() );
+			}
+			if ( customMessages == null ) {
 				customMessages = this.customMessageMap.get( DEFAULT_CUSTOM_MESSAGE_LOCALE );
 			}
 			if ( customMessages != null ) {

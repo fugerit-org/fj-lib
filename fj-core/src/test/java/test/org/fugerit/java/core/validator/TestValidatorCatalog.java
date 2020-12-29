@@ -65,12 +65,12 @@ public class TestValidatorCatalog extends BasicTest {
 	
 	@Test
 	public void testRegexValidator001_EN() {
-		this.testRegexValidator001( Locale.ENGLISH );
+		this.testRegexValidator001( Locale.UK );
 	}
 	
 	@Test
 	public void testRegexValidator001_IT() {
-		this.testRegexValidator001( Locale.ITALIAN );
+		this.testRegexValidator001( Locale.ITALY );
 	}
 	
 }
