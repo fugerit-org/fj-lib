@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+	/*
+	 * @(#)validator-catalog-1-3.xsd
+	 *
+	 * @project    : fj-core
+	 * @creation   : 2020-12-29
+	 * @version    : 1.0.0 (2020-12-29)
+	 *
+	 * XSD for fugerit validator catalog
+	 */
+
+	Sample doc : 	
+	
+<validator-catalog
+	xmlns="http://validatorcatalog.fugerit.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://validatorcatalog.fugerit.org https://www.fugerit.org/data/java/core/xsd/validator/validator-catalog-1-0.xsd" > 	
+</validator-catalog>	
+	
+	Basically, this configuration is made of 
+	
+-->
+<xsd:schema xmlns='http://www.w3.org/2000/10/XMLSchema'
+	targetNamespace='http://validatorcatalog.fugerit.org'
+	xmlns:config='http://validatorcatalog.fugerit.org'
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:element name="validator-catalog">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="custom-messages" maxOccurs="unbounded" minOccurs="0" type="config:CustomMessagesType">
+				</xsd:element>
+				<xsd:element name="validator" maxOccurs="unbounded" minOccurs="0" type="config:ValidatorType" />
+			</xsd:sequence>
+			<xsd:attribute type="xsd:string" name="bundle-path" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="CustomMessagesType">
+		<xsd:sequence>
+			<xsd:element name="entry" maxOccurs="unbounded" minOccurs="0" type="config:PropertyType"/>
+		</xsd:sequence>
+		<xsd:attribute type="xsd:string" name="locale" use="optional" />
+	</xsd:complexType>
+
+	<xsd:complexType name="ValidatorType">
+		<xsd:annotation>
+			<xsd:documentation>inherit all attributes set in parent</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="entry" maxOccurs="unbounded" minOccurs="0" type="config:PropertyType" />
+		</xsd:sequence>
+		<xsd:attribute type="xsd:string" name="id" use="required" />
+		<xsd:attribute type="xsd:string" name="type" use="required" />
+		<xsd:attribute type="xsd:string" name="parent" use="optional" />
+	</xsd:complexType>
+
+	<xsd:complexType name="PropertyType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute type="xsd:string" name="key" use="required" />
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+
+</xsd:schema>
