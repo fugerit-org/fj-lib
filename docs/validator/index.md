@@ -19,9 +19,10 @@ Configuration reference :
 * [entry](tag_validator-catalog_entry.md)
   
 Build in validators : 
-* [BasicValidator](validator_basic.md)
-* [ValidatorRegex](validator_regex.md)
-* [ValidatorDate](validator_date.md)
+* [BasicValidator (since 0.7.4.6)](validator_basic.md)
+* [ValidatorRegex (since 0.7.4.6)](validator_regex.md)
+* [ValidatorDate (since 0.7.4.6)](validator_date.md)
+* [ValidatorNumber (since 0.7.4.7)](validator_number.md)
   
 Other configurations : 
 * [Default Validator Messages](../../fj-core/src/main/resources/core/validator/validator.properties)
