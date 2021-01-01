@@ -14,7 +14,8 @@ import org.fugerit.java.core.lang.helpers.StringUtils;
 /**
  * Basic number validation implementation.
  * 
- * @see {@link https://jupiterdocs.fugerit.org/docs/validator/validator_number.html}
+ * @see <a href="https://jupiterdocs.fugerit.org/docs/validator/validator_number.html">ValidatorNumber Docs @ fugerit.org</a>
+ * @see <a href="https://jupiterdocs.fugerit.org/docs/validator/">ValidatorCatalog Docs @ fugerit.org</a>
  * @author Matteo a.k.a. Fugerit
  * @since 0.7.4.7
  *
