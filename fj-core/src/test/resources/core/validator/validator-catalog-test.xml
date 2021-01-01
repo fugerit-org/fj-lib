@@ -30,4 +30,10 @@
 		<entry key="maxLength">5</entry>		
 	</validator>
 	
+	<validator id="testNumberValidator1" type="org.fugerit.java.core.validator.ValidatorNumber">
+		<entry key="groupingUsed">true</entry>
+		<entry key="maximumIntegerDigits">10</entry>
+		<entry key="maximumFractionDigits">3</entry>
+	</validator>
+	
 </validator-catalog>

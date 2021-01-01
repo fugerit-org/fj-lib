@@ -60,6 +60,7 @@ public class TestValidatorCatalog extends BasicTest {
 		this.validatorWorker( "testDateValidator" , result, l, "01/03/2019", "Invalid date 3", false, params);
 		params.setProperty( ValidatorDate.KEY_MINDATE , "05/05/2020" );
 		this.validatorWorker( "testDateValidator" , result, l, "01/03/2020", "Invalid date Params 1", false, params );
+		//this.validatorWorker( "testNumberValidator1" , result, l, "100", "Valid Number 1", true, params );
 		this.printResult(result);
 	}
 	
@@ -73,4 +74,28 @@ public class TestValidatorCatalog extends BasicTest {
 		this.testRegexValidator001( Locale.ITALY );
 	}
 	
+	@Test
+	public void testNumberValidator001_EN() {
+		Locale l = Locale.UK;
+		ValidatorResult result = new ValidatorResult();
+		Properties params = new Properties();
+		this.validatorWorker( "testNumberValidator1" , result, l, "100", "Valid Number 1", true, params );
+		this.validatorWorker( "testNumberValidator1" , result, l, "1,000.123", "Valid Number 2", true, params );
+		this.validatorWorker( "testNumberValidator1" , result, l, "1,000.1234", "Invalid number 1", false, params );
+		this.validatorWorker( "testNumberValidator1" , result, l, "1,000,134,234,243.123", "Invalid number 2", false, params );
+		this.printResult(result);
+	}
+	
+	@Test
+	public void testNumberValidator001_IT() {
+		Locale l = Locale.ITALY;
+		ValidatorResult result = new ValidatorResult();
+		Properties params = new Properties();
+		this.validatorWorker( "testNumberValidator1" , result, l, "100", "Valid Number 1", true, params );
+		this.validatorWorker( "testNumberValidator1" , result, l, "1.000,123", "Valid Number 2", true, params );
+		this.validatorWorker( "testNumberValidator1" , result, l, "1.000,1234", "Invalid number 1", false, params );
+		this.validatorWorker( "testNumberValidator1" , result, l, "1.000.134.234.243,123", "Invalid number 2", false, params );
+		this.printResult(result);
+	}
+		
 }
