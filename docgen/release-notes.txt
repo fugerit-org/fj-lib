@@ -1,4 +1,8 @@
-﻿0.7.4.7 (2021-01-01)
+﻿0.7.4.8 (2021-01-XX)
+-------------------- 
++ Added wrappers utilities
+
+0.7.4.7 (2021-01-01)
 -------------------- 
 + Added ValidatorNumber for ValidatorCatalog A.P.I.
 
