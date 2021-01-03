@@ -1,6 +1,7 @@
-﻿0.7.4.8 (2021-01-XX)
+﻿0.7.4.8 (2021-01-03)
 -------------------- 
 + Added wrappers utilities
++ Changed ValidatorCatalog.init() to use StreamHelper.resolvePath()
 
 0.7.4.7 (2021-01-01)
 -------------------- 

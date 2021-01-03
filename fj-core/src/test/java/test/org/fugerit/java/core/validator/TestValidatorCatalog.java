@@ -16,7 +16,7 @@ import test.org.fugerit.java.BasicTest;
 
 public class TestValidatorCatalog extends BasicTest {
 
-	private final static String CONFIG_PATH = "core/validator/validator-catalog-test.xml";
+	private final static String CONFIG_PATH = "cl://core/validator/validator-catalog-test.xml";
 
 	private static ValidatorCatalog catalog = null;
 	static {
