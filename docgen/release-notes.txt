@@ -1,4 +1,8 @@
-﻿0.7.4.9 (2021-01-30)
+﻿0.7.4.10 (2021-01-31)
+-------------------- 
++ Correct optional message in ValidatorRegex
+
+0.7.4.9 (2021-01-30) [DEPRECATED]
 -------------------- 
 + Correct optional message in ValidatorRegex
 
