@@ -1,4 +1,8 @@
-﻿0.7.4.10 (2021-01-31)
+﻿0.7.5.0 (2021-02-14)
+-------------------- 
++ FactoryCatalog can now read custom configuration parameters
+
+0.7.4.10 (2021-01-31)
 -------------------- 
 + Correct optional message in ValidatorRegex
 
