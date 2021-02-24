@@ -21,5 +21,16 @@ public class MiniFilterContext extends AttributeHolderDefault {
 	public Properties getCustomConfig() {
 		return customConfig;
 	}
+	
+	private String chainId;
+
+
+	public String getChainId() {
+		return chainId;
+	}
+
+	public void setChainId(String chainId) {
+		this.chainId = chainId;
+	}
 
 }

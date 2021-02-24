@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.fugerit.java.core.lang.helpers.StringUtils;
+
 public class MiniFilterChain extends MiniFilterBase {
 
 	public MiniFilterChain() {
@@ -36,6 +38,9 @@ public class MiniFilterChain extends MiniFilterBase {
 	@Override
 	public int apply(MiniFilterContext context, MiniFilterData data) throws Exception {
 		int res = this.getDefaultBehaviour();
+		if ( StringUtils.isEmpty( context.getChainId() ) ) {
+			context.setChainId( this.getChainId() );
+		}
 		Iterator<MiniFilter> it = this.getFilterChain().iterator();
 		boolean goOn = true;
 		context.getCustomConfig().putAll( this.getDefaultConfig() );

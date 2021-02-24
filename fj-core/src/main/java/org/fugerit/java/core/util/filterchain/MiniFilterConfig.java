@@ -63,14 +63,19 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 	public MiniFilterChain getChain( String id ) throws Exception {
 		ListMapConfig<MiniFilterConfigEntry> c = this.getListMap( id );
 		MiniFilterChain chain = new MiniFilterChain();
+		chain.setChainId( id );
 		chain.getDefaultConfig().putAll( c.getConfig() );
 		Iterator<MiniFilterConfigEntry> it = c.iterator();
 		while ( it.hasNext() ) {
 			MiniFilterConfigEntry entry = it.next();
 			String type = entry.getType();
 			MiniFilter filter = (MiniFilter) ClassHelper.newInstance( type );
-			if ( StringUtils.isNotEmpty( entry.getParam01() ) && filter instanceof MiniFilterBase ) {
-				((MiniFilterBase)filter).setParam01( entry.getParam01() );
+			if ( filter instanceof MiniFilterBase ) {
+				MiniFilterBase filterBase = (MiniFilterBase)filter;
+				filterBase.setChainId( id );
+				if ( StringUtils.isNotEmpty( entry.getParam01() ) ) {
+					filterBase.setParam01( entry.getParam01() );
+				}
 			}
 			filter.config( entry.getKey() , entry.getDescription(), entry.getDefaultBehaviourInt() );
 			filter.setCustomConfig( entry.getProps() );
