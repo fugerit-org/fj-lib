@@ -41,4 +41,12 @@ public class AttributeHolderDefault implements Serializable, AttributesHolder {
 		return map.keySet();
 	}	
 	
+	public void setAll( Map<String, Object> attributeMap ) {
+		this.map.putAll( attributeMap );
+	}
+	
+	public Map<String, Object> toMap() {
+		return new HashMap<String, Object>( this.map );
+	}
+
 }
