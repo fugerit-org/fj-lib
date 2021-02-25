@@ -1,4 +1,8 @@
-﻿0.7.5.2 (2021-02-24)
+﻿0.7.5.3 (2021-02-25)
+-------------------- 
++ SimpleJavaGenerator has now an option to avoid generating custom part comments
+
+0.7.5.2 (2021-02-24)
 -------------------- 
 + MiniFilterChain automatically propagate chainId
 
