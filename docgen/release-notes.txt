@@ -1,4 +1,8 @@
-﻿0.7.5.3 (2021-02-25)
+﻿0.7.5.4 (2021-03-04)
+-------------------- 
++ DAOUtilsNG for handling query without closing connection
+
+0.7.5.3 (2021-02-25)
 -------------------- 
 + SimpleJavaGenerator has now an option to avoid generating custom part comments
 

@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.db.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,13 @@ import org.fugerit.java.core.db.helpers.DAOID;
  * @author Fugerit
  *
  */
-public class FieldList {
+public class FieldList implements Serializable {
 	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2575285768771302903L;
+
 	private FieldFactory fieldFactory;
 	
     private List<Field> list;
@@ -51,14 +57,16 @@ public class FieldList {
     public void addField(Field f) {
         this.list.add(f);
     }
-    
+
+    public FieldList() {
+        this( new FieldFactory() );
+    }
 
     public FieldList( FieldFactory fieldFactory ) {
         super();
         this.list = new ArrayList<Field>();
         this.fieldFactory = fieldFactory;
     }
-    
 
     public FieldList(FieldFactory fieldFactory, Field f) {
         this( fieldFactory );
@@ -111,6 +119,30 @@ public class FieldList {
 
 	public void addField( CharArrayDataHandler value) {
 		this.addField( fieldFactory.newField( (CharArrayDataHandler)value ) );
+	}
+
+	public static FieldList newFieldList() {
+		return new FieldList();
+	}
+	
+	public static FieldList newFieldList( Field... fields ) {
+		FieldList fl = newFieldList();
+		if ( fields != null ) {
+			for ( Field f : fields ) {
+				fl.addField( f );
+			}
+		}
+		return fl;
+	}
+
+	public static FieldList newFieldList( Object... fields ) {
+		FieldList fl = newFieldList();
+		if ( fields != null ) {
+			for ( Object f : fields ) {
+				fl.addField( f );
+			}
+		}
+		return fl;
 	}
 
 }
