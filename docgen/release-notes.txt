@@ -1,4 +1,8 @@
-﻿0.7.5.4 (2021-03-04)
+﻿0.7.5.5 (2021-03-05)
+-------------------- 
++ Added DaoResult and DaoResultList interface
+
+0.7.5.4 (2021-03-04)
 -------------------- 
 + DAOUtilsNG for handling query without closing connection
 
