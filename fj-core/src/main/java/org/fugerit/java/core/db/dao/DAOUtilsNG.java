@@ -12,6 +12,10 @@ public class DAOUtilsNG {
 
 	private final static Logger logger = LoggerFactory.getLogger( DAOUtilsNG.class );
 	
+	public static <T> LoadResultNG<T> extractAll( Connection conn, OpDAO<T> op ) throws Exception {
+		return DefaultLoadResultNG.newLoadResult( conn, op );
+	}
+	
 	public static <T> void extractAll( Connection conn, Collection<T> result, OpDAO<T> op ) throws Exception {
 		try ( PreparedStatement pstm = conn.prepareStatement( op.getSql() ) ) {
 			DAOHelper.setAll( pstm , op.getFieldList(), logger );
@@ -43,6 +47,14 @@ public class DAOUtilsNG {
 	
 	public static <T> T extraOneFields( Connection conn, String sql, RSExtractor<T> rse, Field... fields ) throws Exception {
 		return extractOne( conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
+	}
+	
+	public static <T> LoadResultNG<T> extraAll( Connection conn,  String sql, RSExtractor<T> rse, Field... fields ) throws Exception {
+		return extractAll( conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
+	}
+	
+	public static <T> LoadResultNG<T> extraAllFields( Connection conn,  String sql, RSExtractor<T> rse, Object... fields ) throws Exception {
+		return extractAll( conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
 	}
 	
 	public static <T> void extraAll( Connection conn, Collection<T> result, String sql, RSExtractor<T> rse, Field... fields ) throws Exception {
