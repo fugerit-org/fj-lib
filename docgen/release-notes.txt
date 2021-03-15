@@ -1,4 +1,8 @@
-﻿0.7.5.7 (2021-03-07)
+﻿0.7.5.8 (2021-03-15)
+-------------------- 
++ Added support for daogen service result
+
+0.7.5.7 (2021-03-07)
 -------------------- 
 + Added ItemCheck interface
 
