@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,16 +16,16 @@ public class DefaultLoadResultNG<T> implements LoadResultNG<T> {
 	
 	private RSExtractor<T> rse;
 	
-	private PreparedStatement pstm;
+	private Statement stm;
 	
 	private ResultSet rs;
 	
 	private long count;
 	
-	protected DefaultLoadResultNG(RSExtractor<T> rse, PreparedStatement pstm, ResultSet rs) {
+	protected DefaultLoadResultNG(RSExtractor<T> rse, Statement stm, ResultSet rs) {
 		super();
 		this.rse = rse;
-		this.pstm = pstm;
+		this.stm = stm;
 		this.rs = rs;
 		this.count = 0;
 	}
@@ -39,7 +40,7 @@ public class DefaultLoadResultNG<T> implements LoadResultNG<T> {
 			res = e;
 		}
 		try {
-			this.pstm.close();
+			this.stm.close();
 		} catch (Exception e) {
 			logger.error( "Errore closing prepared statement : "+e, e );
 			res = e;
@@ -78,6 +79,14 @@ public class DefaultLoadResultNG<T> implements LoadResultNG<T> {
 		return this.count;
 	}
 
+	public static <T> LoadResultNG<T> newLoadResult( RSExtractor<T> rse, Statement stm, ResultSet rs ) throws Exception {
+		return new DefaultLoadResultNG<T>( rse, stm, rs );
+	}
+	
+	public static <T> LoadResultNG<T> newLoadResult( Connection conn, RSExtractor<T> rse, Statement stm, ResultSet rs ) throws Exception {
+		return new CloseConnectionLoadResultNG<T>( rse, stm, rs, conn );
+	}
+	
 	public static <T> LoadResultNG<T> newLoadResult( Connection conn, OpDAO<T> opDAO ) throws Exception {
 		PreparedStatement pstm = conn.prepareStatement( opDAO.getSql() );
 		DAOHelper.setAll( pstm , opDAO.getFieldList(), logger );
@@ -100,8 +109,8 @@ class CloseConnectionLoadResultNG<T> extends DefaultLoadResultNG<T> {
 
 	private Connection conn;
 	
-	public CloseConnectionLoadResultNG(RSExtractor<T> rse, PreparedStatement pstm, ResultSet rs, Connection conn) {
-		super(rse, pstm, rs);
+	public CloseConnectionLoadResultNG(RSExtractor<T> rse, Statement stm, ResultSet rs, Connection conn) {
+		super(rse, stm, rs);
 		this.conn  = conn;
 	}
 

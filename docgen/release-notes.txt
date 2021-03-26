@@ -1,4 +1,8 @@
-﻿0.7.5.8 (2021-03-15)
+﻿0.7.5.9 (2021-03-26)
+-------------------- 
++ DefaultLoadResultNG now support generic sql statement
+
+0.7.5.8 (2021-03-15)
 -------------------- 
 + Added support for daogen service result
 
