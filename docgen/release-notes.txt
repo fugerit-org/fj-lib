@@ -1,4 +1,8 @@
-﻿0.7.5.9 (2021-03-26)
+﻿0.7.5.10 (2021-05-04)
+-------------------- 
++ PreloadByteArrayDataHandler e PreloadCharArrayDataHandler serializable
+
+0.7.5.9 (2021-03-26)
 -------------------- 
 + DefaultLoadResultNG now support generic sql statement
 
