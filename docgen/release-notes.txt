@@ -1,4 +1,8 @@
-﻿0.7.5.10 (2021-05-04)
+﻿0.7.5.11 (2021-06-11)
+-------------------- 
++ PropertyEntry now implements KeyString
+
+0.7.5.10 (2021-05-04)
 -------------------- 
 + PreloadByteArrayDataHandler e PreloadCharArrayDataHandler serializable
 

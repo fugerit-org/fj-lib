@@ -3,7 +3,9 @@ package org.fugerit.java.core.util;
 import java.io.Serializable;
 import java.util.Map;
 
-public class MapEntry<K, V> implements Serializable {
+import org.fugerit.java.core.util.collection.KeyObject;
+
+public class MapEntry<K, V> implements Serializable, KeyObject<K> {
 
 	/**
 	 * 
