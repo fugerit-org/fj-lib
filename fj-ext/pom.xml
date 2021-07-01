@@ -7,16 +7,25 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.7.5.11</version>
+		<version>0.7.6.0</version>
 	</parent>
 	
 	<name>fj-ext</name>
-	<description>Fugerit Java Extension Library for JDK 1.7 and up</description>
+	<description>Fugerit Java Extension Library for JDK 1.8 and up</description>
+	
+	<properties>
+		<esapi-version>2.1.0.1</esapi-version>
+		<itext-version>2.1.7</itext-version>
+		<jxl-version>2.6.12</jxl-version>
+		<common-lang3-version>3.12.0</common-lang3-version>
+		<struts-version>1.3.10</struts-version>
+	</properties>	
 	
 	<organization>
 		<url>https://www.fugerit.org</url>
 		<name>Fugerit</name>
 	</organization>
+	
 	<url>https://www.fugerit.org/</url>
 
 	<licenses>
@@ -42,86 +51,52 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>org.owasp.esapi</groupId>
-		    <artifactId>esapi</artifactId>
-		    <version>2.1.0.1</version>
+			<groupId>org.fugerit.java</groupId>
+			<artifactId>fj-core</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.fugerit.java</groupId>
-			<artifactId>fj-core</artifactId>
+		    <groupId>org.owasp.esapi</groupId>
+		    <artifactId>esapi</artifactId>
+		    <version>${esapi-version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.struts/struts-core -->
 		<dependency>
 		    <groupId>org.apache.struts</groupId>
 		    <artifactId>struts-core</artifactId>
-		    <version>1.3.10</version>
-		    <scope>provided</scope>
+		    <version>${struts-version}</version>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/net.sourceforge.jexcelapi/jxl -->
 		<dependency>
 		    <groupId>net.sourceforge.jexcelapi</groupId>
 		    <artifactId>jxl</artifactId>
-		    <version>2.6.12</version>
-		    <scope>provided</scope>
+		    <version>${jxl-version}</version>
 		</dependency>		
 		
 		<!-- itext -->
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
-			<version>2.1.7</version>
+			<version>${itext-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext-rtf</artifactId>
-			<version>2.1.7</version>
+			<version>${itext-version}</version>
 		</dependency>		
 		
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-lang3</artifactId>
-		    <version>3.5</version>
+		    <version>${common-lang3-version}</version>
 		</dependency>				
 		
 	</dependencies>
 
 	<profiles>
-	
-		<profile>
-			<id>full</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>			
-				</plugins>
-			</build>
-		</profile>
-	
+		
 	</profiles>
 
 </project>

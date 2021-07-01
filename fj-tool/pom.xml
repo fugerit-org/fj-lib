@@ -7,11 +7,11 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.7.5.11</version>
+		<version>0.7.6.0</version>
 	</parent>
 	
 	<name>fj-tool</name>
-	<description>Fugerit Java Tool Library for JDK 1.7 and up</description>
+	<description>Fugerit Java Tool Library for JDK 1.8 and up</description>
 	
 	<properties>
 		<common-compress-version>1.20</common-compress-version>
@@ -64,7 +64,6 @@
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-slf4j-impl</artifactId>
-		    <version>${log4j-slf4j-impl-version}</version>
 		</dependency>
 
 		<dependency>
@@ -101,36 +100,39 @@
 	<profiles>
 	
 		<profile>
-			<id>full</id>
+			<id>singlepackage</id>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+						<artifactId>maven-jar-plugin</artifactId>
+						<configuration>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<mainClass>org.fugerit.java.tool.Launcher</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</plugin>				
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
+						<artifactId>maven-shade-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>attach-javadocs</id>
+								<phase>package</phase>
 								<goals>
-									<goal>jar</goal>
+									<goal>shade</goal>
 								</goals>
 							</execution>
 						</executions>
-					</plugin>			
+						<configuration>
+							<finalName>dist-${project.artifactId}-${project.version}</finalName>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
-		</profile>
+		</profile>	
 	
 	</profiles>
 
