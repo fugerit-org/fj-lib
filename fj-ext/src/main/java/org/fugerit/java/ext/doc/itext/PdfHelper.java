@@ -54,6 +54,7 @@ public class PdfHelper  extends PdfPageEventHelper {
 		return pageNumberAlignment;
 	}
 
+	@Override
 	public void onStartPage(PdfWriter writer, Document document) {
     	this.currentPageNumber = writer.getPageNumber();
     	this.docHelper.getParams().setProperty( ITextDocHandler.PARAM_PAGE_CURRENT , String.valueOf( writer.getPageNumber() ) );
@@ -67,6 +68,7 @@ public class PdfHelper  extends PdfPageEventHelper {
 		}
 	}
 
+	@Override
 	public void onOpenDocument(PdfWriter writer, Document document) {
         totalPages = writer.getDirectContent().createTemplate(100, 100);
         totalPages.setBoundingBox( new Rectangle(-20, -20, 100, 100) );

@@ -24,6 +24,7 @@ public class CommandConfig extends BasicConfig {
 	
 	public static final String OPERATION_COMMAND = "command";
 	
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		throw ( new ConfigException( "Unsupported" ) );
 	}
@@ -34,6 +35,7 @@ public class CommandConfig extends BasicConfig {
 		return command.execute(context, request, response, params );
 	}
 	
+	@Override
 	public void configure(Element tag) throws ConfigException {
 		this.getLogger().info( "configure start" );
 		try {

@@ -24,6 +24,7 @@ public class BasicTypeHandler extends BasicLogObject implements DocTypeHandler {
 	private String extension;
 
 	
+	@Override
 	public String getExtension() {
 		return this.extension;
 	}
@@ -38,13 +39,16 @@ public class BasicTypeHandler extends BasicLogObject implements DocTypeHandler {
 		this.extension = extension;
 	}
 
+	@Override
 	public void handleDocTypeInit(HttpServletRequest request, HttpServletResponse response, DocContext docContext) throws Exception {
 		this.setContentDisposition( request, response, docContext );
 	}
 	
+	@Override
 	public void handleDocType(HttpServletRequest request, HttpServletResponse response, DocContext docContext) throws Exception {
 	}
 
+	@Override
 	public void handleDocTypePost(HttpServletRequest request, HttpServletResponse response, DocContext docContext) throws Exception {
 	}
 

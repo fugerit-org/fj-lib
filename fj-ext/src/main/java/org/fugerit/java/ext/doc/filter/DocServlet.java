@@ -29,6 +29,7 @@ public class DocServlet extends LogObjectServlet {
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.ent.servlet.filter.HttpFilter#destroy()
 	 */
+	@Override
 	public void destroy() {
 		this.configFacade = null;
 	}
@@ -41,6 +42,7 @@ public class DocServlet extends LogObjectServlet {
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.ent.servlet.filter.HttpFilter#doFilter(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
 	 */
+	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if ( this.configFacade == null ) {
 			this.configFacade = (DocRequestFacade)this.getServletContext().getAttribute( DocServletConfig.ATT_NAME_DOCFACADE );

@@ -8,6 +8,7 @@ package org.fugerit.java.ext.doc;
  */
 public class DocBorders {
 
+	@Override
 	public Object clone() throws CloneNotSupportedException {
 		DocBorders borders = new DocBorders();
 		borders.setBorderWidthBottom( this.getBorderWidthBottom() );

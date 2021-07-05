@@ -18,10 +18,12 @@ public class BasicIdConfigType implements IdConfigType, KeyString, Serializable 
 		return this.id;
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(String id) {
 		this.id = id;
 	}

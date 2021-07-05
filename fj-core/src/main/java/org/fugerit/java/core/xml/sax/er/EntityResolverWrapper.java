@@ -21,6 +21,7 @@ public class EntityResolverWrapper implements EntityResolver {
     /* (non-Javadoc)
      * @see org.xml.sax.EntityResolver#resolveEntity(java.lang.String, java.lang.String)
      */
+    @Override
     public InputSource resolveEntity(String arg0, String arg1) throws SAXException, IOException {
         return this.getWrappedEntityResolver().resolveEntity(arg0, arg1);
     }

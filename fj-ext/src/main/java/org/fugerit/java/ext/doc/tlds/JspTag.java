@@ -22,6 +22,7 @@ public class JspTag extends TagSupportHelper {
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagSupport#doEndTag()
 	 */
+	@Override
 	public int doEndTag() throws JspException {
 		try {
 			this.pageContext.getOut().flush();
@@ -34,6 +35,7 @@ public class JspTag extends TagSupportHelper {
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
 	 */
+	@Override
 	public int doStartTag() throws JspException {
 		return EVAL_PAGE;
 	}

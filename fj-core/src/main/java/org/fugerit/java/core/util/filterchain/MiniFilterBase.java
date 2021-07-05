@@ -85,6 +85,7 @@ public abstract class MiniFilterBase implements MiniFilter {
 		this.chainId = chainId;
 	}
 
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"["+this.getKey()+",default-behaviour:"+this.getDefaultBehaviour()+"]";
 	}

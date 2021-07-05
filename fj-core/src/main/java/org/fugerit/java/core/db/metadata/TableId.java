@@ -46,6 +46,7 @@ public class TableId implements KeyObject<String> {
 		return null;
 	}
 
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[tableName:"+this.getTableName()+",tableSchema:"+this.getTableSchema()+"]";
 	}
@@ -87,6 +88,7 @@ public class TableId implements KeyObject<String> {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj) {
 		boolean eq = false;
 		if ( obj instanceof TableId ) {
@@ -101,6 +103,7 @@ public class TableId implements KeyObject<String> {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode() {
 		int h = Integer.MIN_VALUE;
 		if ( this.getTableCatalog()!=null ) {

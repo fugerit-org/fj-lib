@@ -84,6 +84,7 @@ public class ImageTag extends TagSupportHelper {
 	/* (non-Javadoc)
 	 * @see javax.servlet.jsp.tagext.TagSupport#doStartTag()
 	 */
+	@Override
 	public int doStartTag() throws JspException {
 		StringBuffer render = new StringBuffer();
 		render.append( "<image url='" );

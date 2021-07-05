@@ -16,6 +16,7 @@ public class MapEntry<K, V> implements Serializable, KeyObject<K> {
 	
 	private V value;
 
+	@Override
 	public K getKey() {
 		return key;
 	}
@@ -46,6 +47,7 @@ public class MapEntry<K, V> implements Serializable, KeyObject<K> {
 		return map.put( key , value );
 	}
 		
+	@Override
 	public String toString() {
 		return ObjectUtils.toDefaultString( this , 
 				new PropertyEntry( "key", String.valueOf( this.getKey() ) ),

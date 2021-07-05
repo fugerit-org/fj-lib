@@ -59,6 +59,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#getDataBaseInfo()
 	 */
+	@Override
 	public DataBaseInfo getDataBaseInfo() throws DAOException {
 		if ( this.dataBaseInfo == null ) {
 			this.init();
@@ -353,6 +354,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#getConnection()
 	 */
+	@Override
 	public abstract Connection getConnection() throws DAOException;
 
 	/*
@@ -407,6 +409,7 @@ class DirectConnectionFactory extends ConnectionFactoryImpl {
  */
 class DSConnectionFactory extends ConnectionFactoryImpl {
 	
+	@Override
 	public String toString() {
 		return this.getClass().getName()+"[dsName:"+this.dsName+",source:"+this.source+"]";
 	}	

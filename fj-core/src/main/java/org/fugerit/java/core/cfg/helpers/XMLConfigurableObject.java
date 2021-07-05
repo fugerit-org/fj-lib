@@ -42,6 +42,7 @@ public abstract class XMLConfigurableObject extends AbstractConfigurableObject {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.cfg.ConfigurableObject#configure(java.util.Properties)
 	 */
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		throw ( new ConfigException( "Properties configuration not supported" ) );
 	}

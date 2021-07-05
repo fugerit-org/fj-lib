@@ -106,10 +106,12 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 	
 	private String type;
 	
+	@Override
 	public String getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(String id) {
 		this.id = id;
 	}

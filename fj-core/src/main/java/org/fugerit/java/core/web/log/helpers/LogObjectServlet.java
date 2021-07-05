@@ -24,6 +24,7 @@ public class LogObjectServlet extends HttpServlet implements LogObject {
 	
 	private Logger log;
 
+	@Override
 	public Logger getLogger() {
 		return this.log;
 	}

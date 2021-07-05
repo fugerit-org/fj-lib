@@ -43,6 +43,7 @@ public class ConnectionFacadeWrapper implements ConnectionFactory {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactoryImpl#getDataBaseInfo()
 	 */
+	@Override
 	public DataBaseInfo getDataBaseInfo() throws DAOException {
 		return this.getWrapperConnectionFactory().getDataBaseInfo();
 	}
@@ -50,6 +51,7 @@ public class ConnectionFacadeWrapper implements ConnectionFactory {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactoryImpl#release()
 	 */
+	@Override
 	public void release() throws DAOException {
 		this.getWrapperConnectionFactory().release();
 	}

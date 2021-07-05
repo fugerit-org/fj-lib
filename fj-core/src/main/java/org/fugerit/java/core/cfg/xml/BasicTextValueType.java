@@ -9,10 +9,12 @@ public class BasicTextValueType extends BasicIdConfigType implements TextValueTy
 	
 	private String textValue;
 
+	@Override
 	public String getTextValue() {
 		return textValue;
 	}
 
+	@Override
 	public void setTextValue(String textValue) {
 		this.textValue = textValue;
 	}

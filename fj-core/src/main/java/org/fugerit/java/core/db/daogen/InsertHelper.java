@@ -21,6 +21,7 @@ public class InsertHelper extends QueryHelper {
 		this.queryParams = new StringBuilder();
 	}
 
+	@Override
 	public String getQueryContent() {
 		StringBuilder result = new StringBuilder();
 		result.append( super.getQueryContent() );

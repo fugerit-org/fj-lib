@@ -481,6 +481,7 @@ public class ITextDocHandler implements DocHandler {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.ext.doc.DocHandler#handleDoc(org.fugerit.java.ext.doc.DocBase)
 	 */
+	@Override
 	public void handleDoc(DocBase docBase) throws Exception {
 		Properties info = docBase.getInfo();
 		
@@ -687,6 +688,7 @@ class PhraseParent implements ParentElement {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.ext.doc.itext.ParentElement#add(com.lowagie.text.Element)
 	 */
+	@Override
 	public void add(Element element) throws Exception {
 		this.phrase.add( element );
 	}
@@ -704,6 +706,7 @@ class DocumentParent implements ParentElement {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.ext.doc.itext.ParentElement#add(com.lowagie.text.Element)
 	 */
+	@Override
 	public void add(Element element) throws Exception {
 		this.document.add( element );
 	}

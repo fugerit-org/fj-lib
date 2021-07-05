@@ -29,6 +29,7 @@ public class ZipFileFun extends AbstractFileFun {
     /* (non-Javadoc)
      * @see org.fugerit.java.core.io.FileFun#handleFile(java.io.File)
      */
+    @Override
     public void handleFile(File file) throws IOException {
         String path = file.getAbsolutePath();
         String entryPath = path.substring(this.base);

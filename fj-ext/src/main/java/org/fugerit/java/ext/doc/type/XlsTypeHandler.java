@@ -301,6 +301,7 @@ public class XlsTypeHandler extends BasicTypeHandler {
 		outputXls.close();
 	}
 	
+	@Override
 	public void handleDocType(HttpServletRequest request, HttpServletResponse response, DocContext docContext ) throws Exception {
 		this.getLogger().info( "XlsTypeHandler start" );
 		try {

@@ -156,6 +156,7 @@ class BinaryNumber {
 		return this.getString( VALUES_HEX, HEX_RADIX );
 	}	
 	
+	@Override
 	public String toString() {
 		return this.getBinString();
 	}

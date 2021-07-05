@@ -8,6 +8,7 @@ package org.fugerit.java.ext.doc;
  */
 public class DocElement {
 
+	@Override
 	public String toString() {
 		return this.getClass().getName();
 	}

@@ -35,6 +35,7 @@ public class ModuleConfig extends BasicConfig {
 	 */
 	private static final long serialVersionUID = 8795230475686969554L;
 
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		
 	}

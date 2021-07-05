@@ -12,6 +12,7 @@ public class DataServletOutputStream extends ServletOutputStream {
 	/* (non-Javadoc)
 	 * @see java.io.OutputStream#write(int)
 	 */
+	@Override
 	public void write(int b) throws IOException {
 		baos.write( b );
 	}

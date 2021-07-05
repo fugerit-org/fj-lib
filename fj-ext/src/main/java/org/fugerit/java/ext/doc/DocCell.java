@@ -8,6 +8,7 @@ package org.fugerit.java.ext.doc;
  */
 public class DocCell extends DocContainer implements DocStyle {
 	
+	@Override
 	public String toString() {
 		return super.toString()+"[align:"+this.getAlign()+"]";
 	}
@@ -134,6 +135,7 @@ public class DocCell extends DocContainer implements DocStyle {
 	/*
 	 * @param foreColor the foreColor to set
 	 */
+	@Override
 	public void setForeColor(String foreColor) {
 		this.foreColor = foreColor;
 	}

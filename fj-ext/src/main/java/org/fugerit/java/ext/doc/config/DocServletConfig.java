@@ -22,6 +22,7 @@ public class DocServletConfig extends BasicConfig {
 	
 	public static final String VERSION = "1.0.0 (2018-01-12)";
 	
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		try {
 			this.getLogger().info( "Doc Module Config : VERSION : "+VERSION );

@@ -24,6 +24,7 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 	
 	private String mode;
 	
+	@Override
 	public String getMode() {
 		return mode;
 	}
@@ -49,6 +50,7 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 		this.getLogger().info( "handleDoc" );
 	}
 
+	@Override
 	public void handleDocPost(HttpServletRequest request,HttpServletResponse response, ServletContext context) throws Exception {
 		this.getLogger().info( "handleDocPost" );
 	}
@@ -64,14 +66,17 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 		this.setForward( props.getProperty( "forward" ) );
 	}
 	
+	@Override
 	public boolean isUseJsp() {
 		return useJsp;
 	}
 
+	@Override
 	public void setUseJsp(boolean useJsp) {
 		this.useJsp = useJsp;
 	}
 
+	@Override
 	public String getJsp() {
 		return jsp;
 	}

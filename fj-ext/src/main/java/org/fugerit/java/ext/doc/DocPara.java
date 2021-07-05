@@ -51,6 +51,7 @@ public class DocPara extends DocElement implements DocStyle {
 	}
 
 	
+	@Override
 	public String getForeColor() {
 		return foreColor;
 	}

@@ -14,6 +14,7 @@ public abstract class SessionContext implements Serializable {
 	 */
 	private static final long serialVersionUID = -4543097476221921635L;
 
+	@Override
 	public String toString() {
 		StringBuffer b = new StringBuffer();
 		b.append( this.getClass().getName() );
@@ -94,18 +95,22 @@ class HttpSessionContext extends SessionContext {
 
 	private HttpSession session;
 	
+	@Override
 	public Iterator<String> attributeNames() {
 		return Collections.list( this.session.getAttributeNames() ).iterator();
 	}
 
+	@Override
 	public Object getAttribute(String name) {
 		return this.session.getAttribute( name );
 	}
 
+	@Override
 	public void removeAttribute(String name) {
 		this.session.removeAttribute( name );
 	}
 
+	@Override
 	public void setAttribute(String name, Object value) {
 		this.session.setAttribute( name , value );
 	}

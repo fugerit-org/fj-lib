@@ -23,6 +23,7 @@ public class SqlServerSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#generateId()
 	 */
+	@Override
 	public DAOID generateId() throws DAOException {
 		this.getLogger().debug( "generateId start " );
 		DAOID id = null;

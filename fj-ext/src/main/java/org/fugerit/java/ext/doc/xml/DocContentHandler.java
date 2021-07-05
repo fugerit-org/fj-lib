@@ -70,6 +70,7 @@ public class DocContentHandler implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#characters(char[], int, int)
 	 */
+	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		String text = this.docHelper.filterText( new String( ch, start, length ) );
 		if ( text.trim().length() > 0 && this.currentElement instanceof DocPhrase ) {	
@@ -87,6 +88,7 @@ public class DocContentHandler implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#endDocument()
 	 */
+	@Override
 	public void endDocument() throws SAXException {
 		
 	}
@@ -94,6 +96,7 @@ public class DocContentHandler implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
 	 */
+	@Override
 	public void endPrefixMapping(String prefix) throws SAXException {
 		
 		
@@ -209,6 +212,7 @@ public class DocContentHandler implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
+	@Override
 	public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
 		Properties props =  new Properties();
 		for ( int k=0; k<atts.getLength(); k++ ) {

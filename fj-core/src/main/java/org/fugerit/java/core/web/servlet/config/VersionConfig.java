@@ -32,6 +32,7 @@ public class VersionConfig extends BasicConfig {
 	
 	public static final String OPERATION_VERSION = "version";
 	
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		this.getLogger().info( "start" );
 		this.versionBean = new VersionBean( props.getProperty( "app-name" ), 

@@ -58,6 +58,7 @@ public class Checkpoints implements Serializable {
 		return this.checkpoints.iterator();
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append( this.getClass().getSimpleName() );

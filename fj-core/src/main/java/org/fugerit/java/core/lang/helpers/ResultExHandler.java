@@ -49,6 +49,7 @@ public class ResultExHandler implements ExHandler {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.lang.ExHandler#fatal(java.lang.Exception)
      */
+    @Override
     public void fatal(Exception e) {
         result.putFatal(e);
     }

@@ -62,6 +62,7 @@ public class DocTable extends DocContainer implements DocStyle {
 	/*
 	 * @return the backColor
 	 */
+	@Override
 	public String getBackColor() {
 		return backColor;
 	}
@@ -69,6 +70,7 @@ public class DocTable extends DocContainer implements DocStyle {
 	/*
 	 * @param backColor the backColor to set
 	 */
+	@Override
 	public void setBackColor(String backColor) {
 		this.backColor = backColor;
 	}
@@ -83,6 +85,7 @@ public class DocTable extends DocContainer implements DocStyle {
 	/*
 	 * @param foreColor the foreColor to set
 	 */
+	@Override
 	public void setForeColor(String foreColor) {
 		this.foreColor = foreColor;
 	}

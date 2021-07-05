@@ -2,6 +2,7 @@ package org.fugerit.java.core.web.servlet.config;
 
 public class VersionBean {
 
+	@Override
 	public int hashCode() {
 		return this.getAppName().hashCode();
 	}

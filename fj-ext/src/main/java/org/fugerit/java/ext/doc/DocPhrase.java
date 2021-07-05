@@ -37,12 +37,14 @@ public class DocPhrase extends DocElement implements DocStyle {
 	}
 
 	
+	@Override
 	public String getForeColor() {
 		return foreColor;
 	}
 
 
 
+	@Override
 	public void setForeColor(String foreColor) {
 		this.foreColor = foreColor;
 	}
@@ -55,6 +57,7 @@ public class DocPhrase extends DocElement implements DocStyle {
 
 
 
+	@Override
 	public void setBackColor(String backColor) {
 		this.backColor = backColor;
 	}

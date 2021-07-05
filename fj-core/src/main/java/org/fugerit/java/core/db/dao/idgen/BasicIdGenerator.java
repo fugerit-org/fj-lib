@@ -21,6 +21,7 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.std.cfg.ConfigurableObject#configureProperties(java.io.InputStream)
 	 */
+	@Override
 	public void configureProperties(InputStream source) throws ConfigException {
 		
 	}
@@ -28,6 +29,7 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.std.cfg.ConfigurableObject#configureXML(java.io.InputStream)
 	 */
+	@Override
 	public void configureXML(InputStream source) throws ConfigException {
 		
 	}
@@ -35,6 +37,7 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.std.cfg.ConfigurableObject#configure(org.w3c.dom.Element)
 	 */
+	@Override
 	public void configure(Element tag) throws ConfigException {
 		
 	}
@@ -42,6 +45,7 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.std.cfg.ConfigurableObject#configure(java.util.Properties)
 	 */
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		
 	}
@@ -51,6 +55,7 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.IdGenerator#generateID()
 	 */
+	@Override
 	public DAOID generateId() throws DAOException {
 		return this.generateId( this.getConnectionFactory().getConnection() );
 	}
@@ -67,6 +72,7 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 	/**
 	 * @param connectionFactory the connectionFactory to set
 	 */
+	@Override
 	public void setConnectionFactory(ConnectionFactory connectionFactory) {
 		this.connectionFactory = connectionFactory;
 	}

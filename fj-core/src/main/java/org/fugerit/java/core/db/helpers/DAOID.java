@@ -59,6 +59,7 @@ public class DAOID extends Number {
 	/* (non-Javadoc)
 	 * @see java.lang.Number#intValue()
 	 */
+	@Override
 	public int intValue() {
 		return this.id.intValue();
 	}
@@ -66,6 +67,7 @@ public class DAOID extends Number {
 	/* (non-Javadoc)
 	 * @see java.lang.Number#longValue()
 	 */
+	@Override
 	public long longValue() {
 		return this.id.longValue();
 	}
@@ -73,6 +75,7 @@ public class DAOID extends Number {
 	/* (non-Javadoc)
 	 * @see java.lang.Number#floatValue()
 	 */
+	@Override
 	public float floatValue() {
 		return this.id.floatValue();
 	}
@@ -80,6 +83,7 @@ public class DAOID extends Number {
 	/* (non-Javadoc)
 	 * @see java.lang.Number#doubleValue()
 	 */
+	@Override
 	public double doubleValue() {
 		return this.id.doubleValue();
 	}
@@ -87,6 +91,7 @@ public class DAOID extends Number {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		return this.id.toString();
 	}
@@ -94,6 +99,7 @@ public class DAOID extends Number {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj) {
 		boolean eq = false;
 		if ( obj instanceof DAOID ) {

@@ -35,6 +35,7 @@ public class HttpServletResponsePush extends HttpServletResponseWrapper  {
 	/* (non-Javadoc)
 	 * @see javax.servlet.ServletResponseWrapper#getOutputStream()
 	 */
+	@Override
 	public ServletOutputStream getOutputStream() throws IOException {
 		return new DataServletOutputStream( new ByteArrayOutputStream() );
 	}

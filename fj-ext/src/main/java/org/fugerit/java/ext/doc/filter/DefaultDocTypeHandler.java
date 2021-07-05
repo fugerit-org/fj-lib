@@ -9,10 +9,12 @@ import org.w3c.dom.Element;
 
 public abstract class DefaultDocTypeHandler extends BasicLogObject implements DocTypeHandler {
 
+	@Override
 	public void handleDocType(HttpServletRequest request, HttpServletResponse response, DocContext docContext) throws Exception {
 
 	}
 
+	@Override
 	public void handleDocTypeInit(HttpServletRequest request, HttpServletResponse response, DocContext docContext) throws Exception {
 
 	}

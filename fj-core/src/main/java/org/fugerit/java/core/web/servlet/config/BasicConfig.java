@@ -25,10 +25,12 @@ public abstract class BasicConfig extends PropertiesConfigurableObject {
 		this.configContext = configContext;
 	}
 
+	@Override
 	public void configure(Element tag) throws ConfigException {
 		this.configure( DOMUtils.attributesToProperties( tag ) );
 	}
 
+	@Override
 	public abstract void configure(Properties props) throws ConfigException;
 
 }
