@@ -41,6 +41,7 @@ public class OptionItem implements KeyObject<String>, Serializable {
 	 * 
 	 */
 	public final static Comparator<OptionItem> LABEL_SORTER = new Comparator<OptionItem>() {
+		@Override
 		public int compare(OptionItem object1, OptionItem object2) {
 			return object1.getLabel().compareTo( object2.getLabel() );
 		}
@@ -51,6 +52,7 @@ public class OptionItem implements KeyObject<String>, Serializable {
 	 * 
 	 */
 	public final static Comparator<OptionItem> VALUE_SORTER = new Comparator<OptionItem>() {
+		@Override
 		public int compare(OptionItem object1, OptionItem object2) {
 			return object1.getValue().compareTo( object2.getValue() );
 		}

@@ -25,6 +25,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(org.xml.sax.InputSource, org.fugerit.java.core.xml.sax.SAXParseResult)
      */
+    @Override
     public abstract boolean validateXML(InputSource source, SAXParseResult result) throws XMLException;
 
     /* (non-Javadoc)
@@ -39,6 +40,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#isValidaXML(org.xml.sax.InputSource)
      */
+    @Override
     public boolean isValidaXML(InputSource source) throws XMLException {
         return this.isValid(this.validateXML(source));
     }
@@ -46,6 +48,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(java.io.Reader, org.fugerit.java.core.xml.sax.SAXParseResult)
      */
+    @Override
     public boolean validateXML(Reader source, SAXParseResult result)
             throws XMLException {
         return this.validateXML(new InputSource(source), result);
@@ -70,6 +73,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(java.io.InputStream, org.fugerit.java.core.xml.sax.SAXParseResult)
      */
+    @Override
     public boolean validateXML(InputStream source, SAXParseResult result)
             throws XMLException {
         return this.validateXML(new InputSource(source), result);
@@ -78,6 +82,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(java.io.InputStream)
      */
+    @Override
     public SAXParseResult validateXML(InputStream source) throws XMLException {
         SAXParseResult result = new SAXParseResult();
         this.validateXML(source, result);
@@ -87,6 +92,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#isValidaXML(java.io.InputStream)
      */
+    @Override
     public boolean isValidaXML(InputStream source) throws XMLException {
         return this.isValid(this.validateXML(source));
     }

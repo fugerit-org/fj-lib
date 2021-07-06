@@ -34,6 +34,7 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 		this.mode = mode;
 	}
 
+	@Override
 	public String getForward() {
 		return forward;
 	}
@@ -61,6 +62,7 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 		return encoding;
 	}
 
+	@Override
 	public void init(Element config) throws ConfigException {
 		Properties props = DOMUtils.attributesToProperties( config );
 		this.encoding = props.getProperty( "encoding", "ISO-8859-15" );

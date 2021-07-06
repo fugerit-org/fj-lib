@@ -166,6 +166,7 @@ public class PdfHelper  extends PdfPageEventHelper {
 
     }
  
+    @Override
     public void onCloseDocument(PdfWriter writer, Document document) {
         totalPages.beginText();
         totalPages.setFontAndSize(baseFont, footerTextSize);

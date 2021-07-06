@@ -15,6 +15,7 @@ public class ConnectionFactoryConfig extends BasicConfig {
 	 */
 	private static final long serialVersionUID = 808870888421246321L;
 
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		this.getLogger().info( "configure start" );
 		String cfName = props.getProperty( "cf-name" );

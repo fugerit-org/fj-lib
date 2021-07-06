@@ -59,6 +59,7 @@ public class XMLValidatorSAX extends AbstractXMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(org.xml.sax.InputSource, org.fugerit.java.core.xml.sax.SAXParseResult)
      */
+    @Override
     public boolean validateXML(InputSource source, SAXParseResult result) throws XMLException {
         try {
             if (this.resolver!=null) {

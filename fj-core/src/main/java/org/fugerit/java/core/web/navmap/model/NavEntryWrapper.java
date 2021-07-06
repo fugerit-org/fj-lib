@@ -59,6 +59,7 @@ public class NavEntryWrapper implements NavEntryI, Serializable {
 		return entry.getLabel();
 	}
 
+	@Override
 	public NavEntryI getAliasFor() {
 		return entry.getAliasFor();
 	}
@@ -72,6 +73,7 @@ public class NavEntryWrapper implements NavEntryI, Serializable {
 		return entry.getKids();
 	}
 
+	@Override
 	public ListMapStringKey<NavEntryI> getAlias() {
 		return entry.getAlias();
 	}

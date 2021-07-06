@@ -24,6 +24,7 @@ public abstract class DefaultDocTypeHandler extends BasicLogObject implements Do
 
 	}
 
+	@Override
 	public void init(Element config) throws ConfigException {
 
 	}

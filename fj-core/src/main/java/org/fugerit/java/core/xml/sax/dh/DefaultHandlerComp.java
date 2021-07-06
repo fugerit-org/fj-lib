@@ -112,6 +112,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
         this.getWrappedContentHandler().characters(arg0, arg1, arg2);
     }
@@ -134,6 +135,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(String arg0) throws SAXException {
         this.getWrappedContentHandler().endPrefixMapping(arg0);
     }
@@ -157,6 +159,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(Locator arg0) {
         this.getWrappedContentHandler().setDocumentLocator(arg0);
     }

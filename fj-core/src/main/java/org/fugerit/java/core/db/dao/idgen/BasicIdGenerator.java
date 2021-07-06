@@ -50,6 +50,7 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 		
 	}
 
+	@Override
 	public abstract DAOID generateId( Connection conn ) throws DAOException;
 	
 	/* (non-Javadoc)

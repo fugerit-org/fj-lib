@@ -135,6 +135,7 @@ public class FieldFactory {
 
 class NullField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[type:"+this.value+"]";
     }    
@@ -146,6 +147,7 @@ class NullField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setNull(index, this.value);
     }
@@ -157,6 +159,7 @@ class NullField extends Field {
 
 class ObjectField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+", class:"+this.value.getClass().getName()+"]";
     }    
@@ -168,6 +171,7 @@ class ObjectField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
     	if ( this.value == null ) {
     		ps.setObject(index, this.value);	
@@ -188,6 +192,7 @@ class ObjectField extends Field {
 
 class BlobDataField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }   
@@ -251,6 +256,7 @@ class StringField extends Field {
 
 class LongField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }    

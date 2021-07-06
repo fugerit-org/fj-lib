@@ -58,6 +58,7 @@ public class FixedFieldDescriptor {
 		return buffer.toString();
 	}
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[name:"+this.getName()+",start:"+this.getStart()+",length:"+this.getLength()+",normalized-name:"+this.getNormalizedName()+"]";
 	}

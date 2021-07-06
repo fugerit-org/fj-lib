@@ -22,6 +22,7 @@ public class AttributeConfig extends BasicConfig {
 		throw ( new ConfigException( "Unsupported" ) );
 	}
 
+	@Override
 	public void configure(Element tag) throws ConfigException {
 		this.getLogger().info( "configure start" );
 		SearchDOM search = SearchDOM.newInstance( true , true );

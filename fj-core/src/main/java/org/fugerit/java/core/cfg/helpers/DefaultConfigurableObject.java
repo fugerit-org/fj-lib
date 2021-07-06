@@ -58,6 +58,7 @@ public class DefaultConfigurableObject extends AbstractConfigurableObject implem
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.cfg.ConfigurableObject#configure(java.util.Properties)
 	 */
+	@Override
 	public void configure(Properties props) throws ConfigException {
 
 	}
@@ -65,6 +66,7 @@ public class DefaultConfigurableObject extends AbstractConfigurableObject implem
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.cfg.ConfigurableObject#configure(org.w3c.dom.Element)
 	 */
+	@Override
 	public void configure(Element tag) throws ConfigException {
 		configure( defaultConversion( tag ) );
 	}
