@@ -109,6 +109,7 @@ public class OpDAO<T> {
 		type = i;
 	}
 
+	@Override
 	protected void finalize() throws Throwable {
 		super.finalize();
 		this.fieldList = null;

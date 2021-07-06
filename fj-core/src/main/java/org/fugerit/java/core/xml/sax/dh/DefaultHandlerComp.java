@@ -249,6 +249,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.DTDHandler#unparsedEntityDecl(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void unparsedEntityDecl(String arg0, String arg1, String arg2,
             String arg3) throws SAXException {
         this.getWrappedDTDHandler().unparsedEntityDecl(arg0, arg1, arg2, arg3);
@@ -279,6 +280,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
+    @Override
     public void error(SAXParseException arg0) throws SAXException {
         this.getWrappedErrorHandler().error(arg0);
     }
@@ -286,6 +288,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
+    @Override
     public void fatalError(SAXParseException arg0) throws SAXException {
         this.getWrappedErrorHandler().fatalError(arg0);
     }

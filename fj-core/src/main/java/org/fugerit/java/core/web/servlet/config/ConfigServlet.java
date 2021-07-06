@@ -20,6 +20,7 @@ public class ConfigServlet extends LogObjectServlet {
 	
 	private ConfigFacade configFacade = null;
 	
+	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			if ( req.getRequestURI().indexOf( "/"+ModuleConfig.OPERATION_RELOAD ) != -1 && this.configFacade.getModuleConfig()!= null ) {
@@ -59,6 +60,7 @@ public class ConfigServlet extends LogObjectServlet {
 	
 	private static final String SECRET_ATT = ConfigServlet.class.getName()+"_ATT_NAME";
 	
+	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init( config );
 		String configFilePath = config.getInitParameter( "config-file-path" );

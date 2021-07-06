@@ -35,6 +35,7 @@ public class DocServlet extends LogObjectServlet {
 	}
 
 
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		super.doGet(req, resp);
 	}
