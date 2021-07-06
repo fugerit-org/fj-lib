@@ -140,6 +140,7 @@ public class DocContentHandler implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#startDocument()
 	 */
+	@Override
 	public void startDocument() throws SAXException {
 		this.parents = new LinkedList<DocContainer>();
 		this.currentContainer = null;
