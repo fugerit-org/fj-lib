@@ -45,6 +45,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
         this.getWrappedContentHandler().characters(arg0, arg1, arg2);
     }
@@ -59,6 +60,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String arg0, String arg1, String arg2)
             throws SAXException {
         this.getWrappedContentHandler().endElement(arg0, arg1, arg2);
@@ -97,6 +99,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(String arg0) throws SAXException {
         this.getWrappedContentHandler().skippedEntity(arg0);
     }
@@ -104,6 +107,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
         this.getWrappedContentHandler().startDocument();
     }

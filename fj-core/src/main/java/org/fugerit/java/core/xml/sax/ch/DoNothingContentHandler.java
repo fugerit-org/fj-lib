@@ -25,6 +25,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
 
 
@@ -33,6 +34,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
 
 
@@ -41,6 +43,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
 
 

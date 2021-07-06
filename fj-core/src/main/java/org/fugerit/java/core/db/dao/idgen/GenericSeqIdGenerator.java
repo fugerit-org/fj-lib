@@ -17,6 +17,7 @@ public class GenericSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#generateId()
 	 */
+	@Override
 	public DAOID generateId() throws DAOException {
 		DAOID id = null;
 		if ( this.idGenerator == null ) {

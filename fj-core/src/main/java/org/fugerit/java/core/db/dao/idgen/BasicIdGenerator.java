@@ -66,6 +66,7 @@ public abstract class BasicIdGenerator extends BasicLogObject implements IdGener
 	/**
 	 * @return the connectionFactory
 	 */
+	@Override
 	public ConnectionFactory getConnectionFactory() {
 		return connectionFactory;
 	}

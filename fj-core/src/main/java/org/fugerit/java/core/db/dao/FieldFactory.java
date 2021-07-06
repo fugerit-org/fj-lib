@@ -204,6 +204,7 @@ class BlobDataField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setBytes(index, this.value.getData());
     }
@@ -214,6 +215,7 @@ class BlobDataField extends Field {
 
 class ClobDataField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }   
@@ -225,6 +227,7 @@ class ClobDataField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setCharacterStream(index, this.value.toReader() );
     }
@@ -278,6 +281,7 @@ class LongField extends Field {
 
 class IntField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }

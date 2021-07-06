@@ -69,6 +69,7 @@ public class NavEntryWrapper implements NavEntryI, Serializable {
 		return entry.getParent();
 	}
 
+	@Override
 	public ListMapStringKey<NavEntryI> getKids() {
 		return entry.getKids();
 	}

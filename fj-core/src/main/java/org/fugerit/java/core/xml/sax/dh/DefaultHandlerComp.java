@@ -120,6 +120,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
         this.getWrappedContentHandler().endDocument();
     }
@@ -143,6 +144,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
             throws SAXException {
         this.getWrappedContentHandler().ignorableWhitespace(arg0, arg1, arg2);
@@ -151,6 +153,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String)
      */
+    @Override
     public void processingInstruction(String arg0, String arg1)
             throws SAXException {
         this.getWrappedContentHandler().processingInstruction(arg0, arg1);
@@ -174,6 +177,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
         this.getWrappedContentHandler().startDocument();
     }
@@ -181,6 +185,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String arg0, String arg1, String arg2,
             Attributes arg3) throws SAXException {
         this.getWrappedContentHandler().startElement(arg0, arg1, arg2, arg3);
@@ -189,6 +194,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String arg0, String arg1)
             throws SAXException {
         this.getWrappedContentHandler().startPrefixMapping(arg0, arg1);
@@ -283,6 +289,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
+    @Override
     public void warning(SAXParseException arg0) throws SAXException {
         this.getWrappedErrorHandler().warning(arg0);
     }

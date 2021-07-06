@@ -122,6 +122,7 @@ class HttpSessionContext extends SessionContext {
 		this.session = session;
 	}
 
+	@Override
 	public String getId() {
 		return this.session.getId();
 	}

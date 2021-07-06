@@ -113,6 +113,7 @@ public class DocContentHandler implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String)
 	 */
+	@Override
 	public void processingInstruction(String target, String data) throws SAXException {
 		
 		
@@ -381,6 +382,7 @@ public class DocContentHandler implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String)
 	 */
+	@Override
 	public void startPrefixMapping(String prefix, String uri) throws SAXException {
 		
 	}

@@ -65,6 +65,7 @@ public class DocPara extends DocElement implements DocStyle {
 
 
 
+	@Override
 	public String getBackColor() {
 		return backColor;
 	}

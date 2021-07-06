@@ -149,6 +149,7 @@ public class ParamMap implements Serializable {
 		return qs.toString();
 	}
 	
+	@Override
 	public int hashCode() {
 		return this.getSortedQueryString().hashCode();
 	}
