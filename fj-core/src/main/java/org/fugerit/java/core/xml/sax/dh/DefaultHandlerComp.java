@@ -128,6 +128,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String arg0, String arg1, String arg2)
             throws SAXException {
         this.getWrappedContentHandler().endElement(arg0, arg1, arg2);
@@ -170,6 +171,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(String arg0) throws SAXException {
         this.getWrappedContentHandler().skippedEntity(arg0);
     }
@@ -204,6 +206,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.EntityResolver#resolveEntity(java.lang.String, java.lang.String)
      */
+    @Override
     public InputSource resolveEntity(String arg0, String arg1) throws SAXException {
         InputSource source = null;
         try {
@@ -237,6 +240,7 @@ public class DefaultHandlerComp extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.DTDHandler#notationDecl(java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void notationDecl(String arg0, String arg1, String arg2)
             throws SAXException {
         this.getWrappedDTDHandler().notationDecl(arg0, arg1, arg2);

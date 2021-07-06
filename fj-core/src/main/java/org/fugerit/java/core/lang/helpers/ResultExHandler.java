@@ -57,6 +57,7 @@ public class ResultExHandler implements ExHandler {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.lang.ExHandler#error(java.lang.Exception)
      */
+    @Override
     public void error(Exception e) {
         result.putError(e);
     }
@@ -64,6 +65,7 @@ public class ResultExHandler implements ExHandler {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.lang.ExHandler#warning(java.lang.Exception)
      */
+    @Override
     public void warning(Exception e) {
         result.putWarning(e);
     }
