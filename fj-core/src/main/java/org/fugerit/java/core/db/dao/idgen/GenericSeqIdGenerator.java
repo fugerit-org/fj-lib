@@ -33,6 +33,7 @@ public class GenericSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#configure(java.util.Properties)
 	 */
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		super.configure(props);
 		if ( this.getConnectionFactory() == null ) {

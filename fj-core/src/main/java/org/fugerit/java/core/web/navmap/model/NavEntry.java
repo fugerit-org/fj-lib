@@ -121,6 +121,7 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 	}
 
 
+	@Override
 	public String getTitle() {
 		return title;
 	}
@@ -132,11 +133,13 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 	}
 
 
+	@Override
 	public String getInfo2() {
 		return info2;
 	}
 
 
+	@Override
 	public String getInfo3() {
 		return info3;
 	}

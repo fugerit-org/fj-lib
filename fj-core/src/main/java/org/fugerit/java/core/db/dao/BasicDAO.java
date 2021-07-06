@@ -372,6 +372,7 @@ class OracleQueryWrapper extends QueryWrapper {
 
 	public static final QueryWrapper INSTANCE = new OracleQueryWrapper();
 	
+	@Override
 	public String createPagedQuery(String sql, PageInfoDB info) {
 		StringBuffer result = new StringBuffer();
 		int start = ((info.getNumber()-1)*info.getSize());
@@ -390,6 +391,7 @@ class PostgresQueryWrapper extends QueryWrapper {
 
 	public static final QueryWrapper INSTANCE = new PostgresQueryWrapper();
 	
+	@Override
 	public String createPagedQuery(String sql, PageInfoDB info) {
 		StringBuffer result = new StringBuffer();
 		result.append( "SELECT paged.* FROM ( " );
@@ -404,6 +406,7 @@ class MysqlQueryWrapper extends QueryWrapper {
 
 	public static final QueryWrapper INSTANCE = new MysqlQueryWrapper();
 	
+	@Override
 	public String createPagedQuery(String sql, PageInfoDB info) {
 		StringBuffer result = new StringBuffer();
 		result.append( "SELECT paged.* FROM ( " );

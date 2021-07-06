@@ -273,6 +273,7 @@ class LongField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setLong(index, this.value);
     }
@@ -295,6 +296,7 @@ class IntField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setInt(index, this.value);
     }

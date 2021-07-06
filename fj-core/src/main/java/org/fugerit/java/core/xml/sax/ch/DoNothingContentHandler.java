@@ -52,6 +52,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
             throws SAXException {
 
@@ -61,6 +62,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(String arg0) throws SAXException {
 
 
@@ -69,6 +71,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(String arg0) throws SAXException {
 
 
@@ -77,6 +80,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(Locator arg0) {
 
 
@@ -85,6 +89,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String)
      */
+    @Override
     public void processingInstruction(String arg0, String arg1)
             throws SAXException {
 
@@ -94,6 +99,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String arg0, String arg1)
             throws SAXException {
 

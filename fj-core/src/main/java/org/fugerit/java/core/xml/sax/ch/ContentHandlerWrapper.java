@@ -53,6 +53,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
         this.getWrappedContentHandler().endDocument();
     }
@@ -69,6 +70,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(String arg0) throws SAXException {
         this.getWrappedContentHandler().endPrefixMapping(arg0);
     }
@@ -76,6 +78,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
             throws SAXException {
         this.getWrappedContentHandler().ignorableWhitespace(arg0, arg1, arg2);
@@ -84,6 +87,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String, java.lang.String)
      */
+    @Override
     public void processingInstruction(String arg0, String arg1)
             throws SAXException {
         this.getWrappedContentHandler().processingInstruction(arg0, arg1);
@@ -92,6 +96,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(Locator arg0) {
         this.getWrappedContentHandler().setDocumentLocator(arg0);
     }

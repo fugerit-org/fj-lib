@@ -83,6 +83,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	total number of pages
 	 */
+	@Override
 	public Integer getPageCount() {
 		return new Integer( pageCount );
 	}		
@@ -92,6 +93,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	the size of the current page
 	 */
+	@Override
 	public Integer getCurrentPageSize() {
 		return new Integer( this.pageElements.size() );
 	}
