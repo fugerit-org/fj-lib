@@ -17,7 +17,7 @@ public class UrlTag extends TagSupport {
 	 */
 	@Override
 	public int doStartTag() throws JspException {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		if ( "true".equalsIgnoreCase( this.getRelative() ) ) {
 			HttpServletRequest request = (HttpServletRequest) this.pageContext.getRequest();
 			buffer.append( request.getScheme() );

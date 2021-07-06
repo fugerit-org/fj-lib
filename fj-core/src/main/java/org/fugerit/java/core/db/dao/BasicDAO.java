@@ -374,7 +374,7 @@ class OracleQueryWrapper extends QueryWrapper {
 	
 	@Override
 	public String createPagedQuery(String sql, PageInfoDB info) {
-		StringBuffer result = new StringBuffer();
+		StringBuilder result = new StringBuilder();
 		int start = ((info.getNumber()-1)*info.getSize());
 		int end = start+info.getSize();
 		result.append( "SELECT paged2.* FROM( " );
@@ -393,7 +393,7 @@ class PostgresQueryWrapper extends QueryWrapper {
 	
 	@Override
 	public String createPagedQuery(String sql, PageInfoDB info) {
-		StringBuffer result = new StringBuffer();
+		StringBuilder result = new StringBuilder();
 		result.append( "SELECT paged.* FROM ( " );
 		result.append( sql );
 		result.append( ") paged LIMIT "+info.getSize()+" OFFSET "+( (info.getNumber()-1)*info.getSize() ) );

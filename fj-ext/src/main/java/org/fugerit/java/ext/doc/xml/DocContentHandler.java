@@ -1,7 +1,7 @@
 package org.fugerit.java.ext.doc.xml;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -54,7 +54,7 @@ public class DocContentHandler implements ContentHandler {
 	
 	private DocContainer currentContainer;
 	
-	private LinkedList<DocContainer> parents;
+	private List<DocContainer> parents;
 	
 	private DocHelper docHelper;
 	
@@ -142,7 +142,7 @@ public class DocContentHandler implements ContentHandler {
 	 */
 	@Override
 	public void startDocument() throws SAXException {
-		this.parents = new LinkedList<DocContainer>();
+		this.parents = new ArrayList<DocContainer>();
 		this.currentContainer = null;
 		this.currentElement = null;
 	}

@@ -137,7 +137,7 @@ class BinaryNumber {
 	}
 
 	private String getString( char[] values, int radix ) { 
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for ( int k=0; k<this.size( radix ); k++ ) {
 			buffer.append( values[ this.get( k , radix ) ] );
 		}

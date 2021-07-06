@@ -29,7 +29,7 @@ public class ParamMap implements Serializable {
 	
 	public String getQueryString( String[] excludeParams ) {
 		List<String> listExclude = Arrays.asList( excludeParams );
-		StringBuffer qs = new StringBuffer();
+		StringBuilder qs = new StringBuilder();
 		Iterator<String> ki = this.getParamNames();
 		qs.append( "?"+PARAM_MAP_GENERATE+"=1" );
 		while ( ki.hasNext() ) {
@@ -47,7 +47,7 @@ public class ParamMap implements Serializable {
 	}
 	
 	public String getQueryString() {
-		StringBuffer qs = new StringBuffer();
+		StringBuilder qs = new StringBuilder();
 		Iterator<String> ki = this.getParamNames();
 		qs.append( "?"+PARAM_MAP_GENERATE+"=1" );
 		while ( ki.hasNext() ) {

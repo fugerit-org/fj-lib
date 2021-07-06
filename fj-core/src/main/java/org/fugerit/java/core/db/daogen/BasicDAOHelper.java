@@ -42,7 +42,7 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 	private static final long serialVersionUID = -2430439741412903230L;
 
 	public static String fieldListToString( FieldList fl ) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append( "[" );
 		if ( fl.size() > 0 ) {
 			buffer.append( fl.getField( 0 ).toString() );
