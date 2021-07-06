@@ -26,7 +26,7 @@ public class DocRequestFacade extends BasicLogObject {
 	private DocRequestPushbody docRequestPushbody;
 	
 	private void log( String uri, String render, String truncate, String fileName, String name, String type, String outMode ) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append( "start processing " );
 		buffer.append( DocServletConfig.VERSION );
 		LogUtils.appendPropDefault( buffer , "out-mode", outMode );

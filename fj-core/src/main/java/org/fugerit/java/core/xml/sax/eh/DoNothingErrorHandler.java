@@ -31,6 +31,7 @@ public class DoNothingErrorHandler implements ErrorHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
+    @Override
     public void fatalError(SAXParseException arg0) throws SAXException {
 
     }

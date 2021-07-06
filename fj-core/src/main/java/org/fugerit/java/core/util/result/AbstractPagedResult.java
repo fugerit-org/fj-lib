@@ -103,6 +103,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	elements in the current page
 	 */
+	@Override
 	public Iterator<T> getPageElements() {
 		return this.pageElements.iterator();
 	}
@@ -112,6 +113,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	elements in the current page
 	 */
+	@Override
 	public List<T> getPageElementsList() {
 		return this.pageElements;
 	}
@@ -121,6 +123,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	iterator over page numbers ( 1 - n )
 	 */
+	@Override
 	public Iterator<Integer> getPageCountIterator() {
 		List<Integer> list = new ArrayList<Integer>();
 		for ( int k=1; k<=this.pageCount; k++ ) {
@@ -129,10 +132,12 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 		return list.iterator();
 	}
 
+	@Override
 	public Map<String, Object> getInfo() {
 		return info;
 	}
 	
+	@Override
 	public boolean isLastPage() {
 		boolean lastPage = false;
 		long lp = (this.getElementCount()/this.getPerPage())+1;

@@ -44,6 +44,7 @@ public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 		return id;
 	}
 
+	@Override
 	public String getTableName() {
 		return tableName;
 	}
@@ -53,6 +54,7 @@ public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 	}
 	
 
+	@Override
 	public String getQueryView() {
 		return queryView;
 	}

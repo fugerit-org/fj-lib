@@ -36,6 +36,7 @@ public class HttpServletResponseByteData extends HttpServletResponseWrapper  {
 	/* (non-Javadoc)
 	 * @see javax.servlet.ServletResponseWrapper#getOutputStream()
 	 */
+	@Override
 	public ServletOutputStream getOutputStream() throws IOException {
 		this.stream = new DataServletOutputStream( baos );
 		return this.stream;
@@ -44,6 +45,7 @@ public class HttpServletResponseByteData extends HttpServletResponseWrapper  {
 	/* (non-Javadoc)
 	 * @see javax.servlet.ServletResponseWrapper#getWriter()
 	 */
+	@Override
 	public PrintWriter getWriter() throws IOException {
 		this.writer = new PrintWriter( new OutputStreamWriter( this.getOutputStream() ), true );
 		return this.writer;
@@ -67,6 +69,7 @@ public class HttpServletResponseByteData extends HttpServletResponseWrapper  {
 		}
 	}
 
+	@Override
 	public void setContentType(String type) {
 		LogFacade.getLog().info( "HttpServletResponseByteData.setContentType() do nothing : operation not allowed here" );
 	}

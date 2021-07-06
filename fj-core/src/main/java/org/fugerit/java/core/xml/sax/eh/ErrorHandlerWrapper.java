@@ -42,6 +42,7 @@ public class ErrorHandlerWrapper implements ErrorHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
+    @Override
     public void warning(SAXParseException arg0) throws SAXException {
         this.getWrappedErrorHandler().warning(arg0);
     }
