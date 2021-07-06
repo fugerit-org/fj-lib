@@ -58,6 +58,7 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 		this.getLogger().info( "handleDocPost" );
 	}
 
+	@Override
 	public String getEncoding() {
 		return encoding;
 	}
