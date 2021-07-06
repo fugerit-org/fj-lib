@@ -93,6 +93,7 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 		logger.info( "Content written to : "+this.getJavaFile().getCanonicalPath() );
 	}
 	
+	@Override
 	public abstract void generate() throws Exception;
 	
 	public static void customPartWorker( File file, PrintWriter writer, String startTag, String endTag, String indent ) throws FileNotFoundException, IOException {

@@ -104,6 +104,7 @@ public class SimpleServiceResult<T> implements Serializable {
 		return res;
 	}
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[result:"+result+"]";
 	}

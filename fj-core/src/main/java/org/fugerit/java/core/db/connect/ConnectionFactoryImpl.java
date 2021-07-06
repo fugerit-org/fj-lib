@@ -361,6 +361,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#release()
 	 */
+	@Override
 	public void release() throws DAOException {
 		
 	}	
@@ -387,6 +388,7 @@ class DirectConnectionFactory extends ConnectionFactoryImpl {
 		this.info.setProperty( "password", pwd );
 	}
 	
+	@Override
 	public Connection getConnection() throws DAOException {
 		Connection conn = null;
 		try {
@@ -414,6 +416,7 @@ class DSConnectionFactory extends ConnectionFactoryImpl {
 		return this.getClass().getName()+"[dsName:"+this.dsName+",source:"+this.source+"]";
 	}	
 	
+	@Override
 	public Connection getConnection() throws DAOException {
 		Connection conn = null;
 		try {
@@ -452,10 +455,12 @@ class DSConnectionFactory extends ConnectionFactoryImpl {
  */
 class DS2ConnectionFactory extends ConnectionFactoryImpl {
 	
+	@Override
 	public String toString() {
 		return this.getClass().getName()+"[source:"+this.source+"]";
 	}	
 	
+	@Override
 	public Connection getConnection() throws DAOException {
 		Connection conn = null;
 		try {

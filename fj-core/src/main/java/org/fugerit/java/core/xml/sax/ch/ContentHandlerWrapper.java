@@ -115,6 +115,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String arg0, String arg1, String arg2,
             Attributes arg3) throws SAXException {
         this.getWrappedContentHandler().startElement(arg0, arg1, arg2, arg3);
@@ -123,6 +124,7 @@ public class ContentHandlerWrapper implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String, java.lang.String)
      */
+    @Override
     public void startPrefixMapping(String arg0, String arg1)
             throws SAXException {
         this.getWrappedContentHandler().startPrefixMapping(arg0, arg1);

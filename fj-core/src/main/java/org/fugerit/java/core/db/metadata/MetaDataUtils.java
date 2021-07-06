@@ -328,6 +328,7 @@ class DefaulJdbcdaptor extends BasicLogObject implements JdbcAdaptor {
 		this.connectionFactory = connectionFactory;
 	}
 
+	@Override
 	public String getColumnExtraInfo(TableId tableId, String columnName) throws Exception {
 		this.getLogger().debug( "getColumnExtraInfo tableId    : "+tableId );
 		this.getLogger().debug( "getColumnExtraInfo columnName : "+columnName );
@@ -385,6 +386,7 @@ class OracleJdbcAdaptor extends DefaulJdbcdaptor {
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.mod.tools.db.meta.AbstractCommentAdaptor#getColumnComment(org.fugerit.java.core.db.metadata.TableId, java.lang.String)
 	 */
+	@Override
 	public String getColumnComment(TableId tableId, String columnName) throws Exception {
 		String comment = "";
 		Connection conn = this.getConnectionFactory().getConnection();
@@ -411,6 +413,7 @@ class OracleJdbcAdaptor extends DefaulJdbcdaptor {
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.mod.tools.db.meta.AbstractCommentAdaptor#getTableComment(org.fugerit.java.core.db.metadata.TableId)
 	 */
+	@Override
 	public String getTableComment(TableId tableId) throws Exception {
 		String comment = "";
 		Connection conn = this.getConnectionFactory().getConnection();

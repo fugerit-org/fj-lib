@@ -103,6 +103,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(String arg0, String arg1, String arg2)
             throws SAXException {
 
@@ -112,6 +113,7 @@ public class DoNothingContentHandler implements ContentHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(String arg0, String arg1, String arg2,
             Attributes arg3) throws SAXException {
 

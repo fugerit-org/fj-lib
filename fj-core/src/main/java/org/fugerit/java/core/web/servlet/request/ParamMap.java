@@ -154,6 +154,7 @@ public class ParamMap implements Serializable {
 		return this.getSortedQueryString().hashCode();
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		boolean ok = false;
 		if ( obj instanceof ParamMap ) {
@@ -162,6 +163,7 @@ public class ParamMap implements Serializable {
 		return ok;
 	}
 
+	@Override
 	public String toString() {
 		StringBuffer qs = new StringBuffer();
 		qs.append( this.getClass().getName() );

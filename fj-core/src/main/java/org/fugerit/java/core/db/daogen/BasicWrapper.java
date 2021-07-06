@@ -26,6 +26,7 @@ public class BasicWrapper<T> extends BasicHelper implements Wrapper<T> {
 		this.wrapped = wrapped;
 	}
 
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[wraps:"+unwrapModel().toString()+"]";
 	}

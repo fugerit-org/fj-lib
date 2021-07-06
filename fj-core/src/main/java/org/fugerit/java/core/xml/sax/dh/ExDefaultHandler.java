@@ -15,6 +15,7 @@ public class ExDefaultHandler extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
+    @Override
     public void error(SAXParseException arg0) throws SAXException {
         this.handler.error(arg0);
     }
@@ -22,6 +23,7 @@ public class ExDefaultHandler extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
+    @Override
     public void fatalError(SAXParseException arg0) throws SAXException {
         this.handler.fatal(arg0);
     }
@@ -29,6 +31,7 @@ public class ExDefaultHandler extends DefaultHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
+    @Override
     public void warning(SAXParseException arg0) throws SAXException {
         this.handler.warning(arg0);
     }

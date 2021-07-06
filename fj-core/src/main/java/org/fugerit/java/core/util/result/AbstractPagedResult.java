@@ -53,6 +53,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	maximum number of elements in a page
 	 */
+	@Override
 	public Integer getPerPage() {
 		return new Integer( this.perPage );
 	}
@@ -62,6 +63,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	total number of elements in all pages
 	 */
+	@Override
 	public Long getElementCount() {
 		return new Long( this.elementCount );
 	}
@@ -71,6 +73,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	position of current page
 	 */
+	@Override
 	public Integer getCurrentPage() {
 		return new Integer( this.currentPage );
 	}
