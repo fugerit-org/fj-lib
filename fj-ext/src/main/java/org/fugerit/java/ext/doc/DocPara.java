@@ -58,6 +58,7 @@ public class DocPara extends DocElement implements DocStyle {
 
 
 
+	@Override
 	public void setForeColor(String foreColor) {
 		this.foreColor = foreColor;
 	}
@@ -70,6 +71,7 @@ public class DocPara extends DocElement implements DocStyle {
 
 
 
+	@Override
 	public void setBackColor(String backColor) {
 		this.backColor = backColor;
 	}

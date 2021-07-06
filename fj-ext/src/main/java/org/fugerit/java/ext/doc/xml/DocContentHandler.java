@@ -105,6 +105,7 @@ public class DocContentHandler implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
 	 */
+	@Override
 	public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
 		this.characters(ch, start, length);
 	}

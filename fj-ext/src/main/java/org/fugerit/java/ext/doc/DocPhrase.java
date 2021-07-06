@@ -51,6 +51,7 @@ public class DocPhrase extends DocElement implements DocStyle {
 
 
 
+	@Override
 	public String getBackColor() {
 		return backColor;
 	}
@@ -100,6 +101,7 @@ public class DocPhrase extends DocElement implements DocStyle {
 
 
 
+	@Override
 	public String toString() {
 		return super.toString()+"[text:"+this.getText()+"]";
 	}

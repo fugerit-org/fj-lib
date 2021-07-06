@@ -29,6 +29,7 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 		return mode;
 	}
 
+	@Override
 	public void setMode(String mode) {
 		this.mode = mode;
 	}
@@ -46,6 +47,7 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 	/* (non-Javadoc)
 	 * @see net.jsomnium.jlib.mod.doc.filter.DocHandler#handleDoc(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.ServletContext)
 	 */
+	@Override
 	public void handleDoc(HttpServletRequest request, HttpServletResponse response, ServletContext context) throws Exception {
 		this.getLogger().info( "handleDoc" );
 	}
@@ -81,6 +83,7 @@ public class DefaultDocHandler extends BasicLogObject implements DocHandler {
 		return jsp;
 	}
 
+	@Override
 	public void setJsp(String jsp) {
 		this.jsp = jsp;
 	}

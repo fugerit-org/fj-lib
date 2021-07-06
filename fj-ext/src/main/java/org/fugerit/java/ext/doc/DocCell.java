@@ -114,6 +114,7 @@ public class DocCell extends DocContainer implements DocStyle {
 	/*
 	 * @return the backColor
 	 */
+	@Override
 	public String getBackColor() {
 		return backColor;
 	}
@@ -121,6 +122,7 @@ public class DocCell extends DocContainer implements DocStyle {
 	/*
 	 * @param backColor the backColor to set
 	 */
+	@Override
 	public void setBackColor(String backColor) {
 		this.backColor = backColor;
 	}

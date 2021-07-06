@@ -4,6 +4,7 @@ import org.fugerit.java.ext.doc.DocHelper;
 
 public class DocHelperEuro extends DocHelper {
 
+	@Override
 	public String filterText(String temp) {
 		StringBuffer text = new StringBuffer();
 		for ( int k=0; k<temp.length(); k++ ) {

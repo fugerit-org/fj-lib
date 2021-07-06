@@ -83,6 +83,7 @@ public class PdfHelper  extends PdfPageEventHelper {
 		}
     }
  
+    @Override
     public void onEndPage(PdfWriter writer, Document document) {
     	if ( this.getDocFooter() != null && !this.getDocFooter().isBasic() ) {
     		// allocate direct writer

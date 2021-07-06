@@ -320,6 +320,7 @@ public class XlsTypeHandler extends BasicTypeHandler {
 		this.getLogger().info( "XlsTypeHandler end" );
 	}
 
+	@Override
 	public void init(Element config) throws ConfigException {
 		
 	}	

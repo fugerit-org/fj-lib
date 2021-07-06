@@ -43,6 +43,7 @@ public class HttpServletResponsePush extends HttpServletResponseWrapper  {
 	/* (non-Javadoc)
 	 * @see javax.servlet.ServletResponseWrapper#getWriter()
 	 */
+	@Override
 	public PrintWriter getWriter() throws IOException {
 		return new PrintWriter( this.getOutputStream() );
 	}
@@ -54,6 +55,7 @@ public class HttpServletResponsePush extends HttpServletResponseWrapper  {
 	public void flush() throws IOException {
 	}
 
+	@Override
 	public void setContentType(String type) {
 		LogFacade.getLog().debug( "HttpServletResponseByteData.setContentType() do nothing : operation not allowed here" );
 	}

@@ -724,6 +724,7 @@ class CellParent implements ParentElement {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.ext.doc.itext.ParentElement#add(com.lowagie.text.Element)
 	 */
+	@Override
 	public void add(Element element) throws Exception {
 		this.cell.addElement( element );
 	}

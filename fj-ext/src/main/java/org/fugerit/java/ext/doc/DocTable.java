@@ -78,6 +78,7 @@ public class DocTable extends DocContainer implements DocStyle {
 	/*
 	 * @return the foreColor
 	 */
+	@Override
 	public String getForeColor() {
 		return foreColor;
 	}

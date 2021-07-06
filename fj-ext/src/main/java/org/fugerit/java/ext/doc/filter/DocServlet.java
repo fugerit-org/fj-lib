@@ -54,6 +54,7 @@ public class DocServlet extends LogObjectServlet {
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.ent.servlet.filter.HttpFilter#init(javax.servlet.FilterConfig)
 	 */
+	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init( config );
 		this.logInit( "start : "+DocServletConfig.VERSION );

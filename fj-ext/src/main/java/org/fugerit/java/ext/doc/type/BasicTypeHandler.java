@@ -29,6 +29,7 @@ public class BasicTypeHandler extends BasicLogObject implements DocTypeHandler {
 		return this.extension;
 	}
 
+	@Override
 	public String getType() {
 		return this.type;
 	}
@@ -52,6 +53,7 @@ public class BasicTypeHandler extends BasicLogObject implements DocTypeHandler {
 	public void handleDocTypePost(HttpServletRequest request, HttpServletResponse response, DocContext docContext) throws Exception {
 	}
 
+	@Override
 	public void init(Element config) throws ConfigException {
 	}
 

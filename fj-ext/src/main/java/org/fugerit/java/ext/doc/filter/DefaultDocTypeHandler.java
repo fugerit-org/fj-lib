@@ -19,6 +19,7 @@ public abstract class DefaultDocTypeHandler extends BasicLogObject implements Do
 
 	}
 
+	@Override
 	public void handleDocTypePost(HttpServletRequest request, HttpServletResponse response, DocContext docContext) throws Exception {
 
 	}
