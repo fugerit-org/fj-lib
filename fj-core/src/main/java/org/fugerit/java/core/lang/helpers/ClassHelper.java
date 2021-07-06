@@ -64,7 +64,7 @@ public class ClassHelper {
 		Object result = null;
 		ClassLoader classLoader = getDefaultClassLoader();
 		Class<?> c = classLoader.loadClass( type );
-		result = c.newInstance();
+		result = c.getDeclaredConstructor().newInstance();
 		return result;
 	}
 
