@@ -115,6 +115,7 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 
 	
 	
+	@Override
 	public String getDisplay() {
 		return display;
 	}
@@ -125,6 +126,7 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 	}
 
 
+	@Override
 	public String getInfo1() {
 		return info1;
 	}

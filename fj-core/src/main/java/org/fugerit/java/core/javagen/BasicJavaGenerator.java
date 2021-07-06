@@ -63,6 +63,7 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 		return writer;
 	}
 	
+	@Override
 	public String getContent() {
 		return this.buffer.toString();
 	}
@@ -83,6 +84,7 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 		return importList;
 	}
 	
+	@Override
 	public void write() throws IOException {
 		if ( !this.getJavaFile().getParentFile().exists() ) {
 			logger.info( "Created dir : "+this.getJavaFile().getParentFile().getCanonicalPath()+" -> "+this.getJavaFile().getParentFile().mkdirs() );

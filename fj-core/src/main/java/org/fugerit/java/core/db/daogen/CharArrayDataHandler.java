@@ -26,6 +26,7 @@ public abstract class CharArrayDataHandler {
 		return newHandlerPreload( c );
 	}
 	
+	@Override
 	public String toString() {
 		return new String( this.getData() );
 	}

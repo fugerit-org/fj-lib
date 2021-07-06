@@ -30,6 +30,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	/* (non-Javadoc)
 	 * @see org.xml.sax.ContentHandler#characters(char[], int, int)
 	 */
+	@Override
 	public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
 		this.ignorableWhitespace( arg0, arg1, arg2 );
 	}

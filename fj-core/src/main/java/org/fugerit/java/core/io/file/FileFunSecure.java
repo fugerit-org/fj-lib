@@ -61,6 +61,7 @@ public class FileFunSecure extends FileFunWrapper {
     /* (non-Javadoc)
      * @see org.fugerit.java.core.io.FileFun#handleFile(java.lang.String)
      */
+    @Override
     public void handleFile(String path) throws IOException {
         try {
             super.handleFile(path);    

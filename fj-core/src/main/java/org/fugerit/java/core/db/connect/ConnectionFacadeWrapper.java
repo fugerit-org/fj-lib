@@ -59,6 +59,7 @@ public class ConnectionFacadeWrapper implements ConnectionFactory {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactoryImpl#getConnection()
 	 */
+	@Override
 	public Connection getConnection() throws DAOException {
 		return this.getWrapperConnectionFactory().getConnection();
 	}

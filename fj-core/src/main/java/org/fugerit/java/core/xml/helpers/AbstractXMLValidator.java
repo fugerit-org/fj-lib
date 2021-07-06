@@ -31,6 +31,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(org.xml.sax.InputSource)
      */
+    @Override
     public SAXParseResult validateXML(InputSource source) throws XMLException {
         SAXParseResult result = new SAXParseResult();
         this.validateXML(source, result);
@@ -107,6 +108,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(java.lang.StringBuffer)
      */
+    @Override
     public SAXParseResult validateXML(StringBuffer source) throws XMLException {
         SAXParseResult result = new SAXParseResult();
         this.validateXML(source, result);
@@ -179,6 +181,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(char[])
      */
+    @Override
     public SAXParseResult validateXML(char[] source) throws XMLException {
         SAXParseResult result = new SAXParseResult();
         this.validateXML(source, result);

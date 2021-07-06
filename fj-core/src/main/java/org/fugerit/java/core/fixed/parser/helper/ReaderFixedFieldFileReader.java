@@ -23,6 +23,7 @@ public class ReaderFixedFieldFileReader extends FixedFieldFileReaderAbstract {
 		}
 	}
  	
+	@Override
 	public boolean hasNext() throws IOException {
 		if ( this.getDescriptor().isCustomEndlineActive() ) {
 			char[] buffer = new char[ this.getDescriptor().getCheckLengh() + this.getEndline().length() ];

@@ -43,6 +43,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 * 
 	 * @return	offset of the first element in this page
 	 */
+	@Override
 	public Integer getOffset() {
 		return new Integer( this.offset );
 	}

@@ -198,6 +198,7 @@ public class DocPara extends DocElement implements DocStyle {
 	}
 
 
+	@Override
 	public String toString() {
 		return super.toString()+"[text:"+this.getText()+"]";
 	}

@@ -47,6 +47,7 @@ public class FilterInfoDefault implements FilterInfo, Serializable {
 		this.value = value;
 	}
 
+	@Override
 	public String getEvaluate() {
 		return evaluate;
 	}

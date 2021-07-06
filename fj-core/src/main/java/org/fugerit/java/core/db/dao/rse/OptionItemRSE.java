@@ -54,6 +54,7 @@ public class OptionItemRSE implements RSExtractor<OptionItem> {
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.db.dao.RSExtractor#extractNext(java.sql.ResultSet)
 	 */
+	@Override
 	public OptionItem extractNext(ResultSet rs) throws SQLException {
 		String value = rs.getString( this.valueField );
 		String label = rs.getString( this.labelField );
