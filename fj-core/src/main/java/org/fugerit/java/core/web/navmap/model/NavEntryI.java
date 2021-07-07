@@ -17,6 +17,7 @@ public interface NavEntryI extends KeyObject<String> {
 
 	String getAuth();
 
+	@Override
 	String getKey();
 
 	NavEntryI getAliasFor();

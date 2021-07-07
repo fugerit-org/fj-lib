@@ -9,6 +9,7 @@ public class PostgresqlSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#createSequenceQuery()
 	 */
+	@Override
 	protected String createSequenceQuery() {
 		return createSequenceQuery( this.getSequenceName() ); 
 	}

@@ -69,6 +69,7 @@ public class GenericSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#createSequenceQuery()
 	 */
+	@Override
 	protected String createSequenceQuery() {
 		String sql = null;
 		if ( this.dbType == DbUtils.DB_ORACLE ) {
