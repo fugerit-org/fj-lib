@@ -317,7 +317,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 			if ( cl != null ) {
 				driver = (Driver)cl.loadClass( drv ).getDeclaredConstructor().newInstance();
 			} else {
-				driver= (Driver)Class.forName( drv ).getDeclaredConstructor().newInstance();
+				driver= (Driver)Class.forName( drv ).asSubclass( Driver.class ).getDeclaredConstructor().newInstance();
 			}
 			connectionFactory = ( new DirectConnectionFactory( driver, url, usr, pwd ) );
 		} catch (Exception e) {

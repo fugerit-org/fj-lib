@@ -41,6 +41,10 @@ public class HttpRequestCacheInput extends HttpServletRequestWrapper {
 			public int read() throws IOException {
 				return is.read();
 			}
+			@Override
+			public int read(byte[] b, int off, int len) throws IOException {
+				return is.read(b, off, len);
+			}
 		};
 	}
 	

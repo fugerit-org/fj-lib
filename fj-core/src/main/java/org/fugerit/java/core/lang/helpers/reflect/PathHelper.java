@@ -24,7 +24,7 @@ public class PathHelper {
 		PropertyDescriptor pd = new PropertyDescriptor( property, target.getClass() );
 		Class<?> propertyClass = pd.getReadMethod().getReturnType();
 		Class<?> implClass = facadeImplFinder.findImpl( propertyClass );
-		Object temp = implClass.newInstance();
+		Object temp = implClass.getConstructor().newInstance();
 		pd.getWriteMethod().invoke(target, temp);
 		return temp;
 	}
