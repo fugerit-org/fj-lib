@@ -42,7 +42,7 @@ public class StatusCodeFilter extends HttpFilterHelper {
 			exLog = e;
 		} finally {
 			if ( doLog ) {
-				StringBuffer log = new StringBuffer();
+				StringBuilder log = new StringBuilder();
 				log.append( this.getClass().getSimpleName() );
 				log.append( " uri : " );
 				log.append( request.getRequestURI() );

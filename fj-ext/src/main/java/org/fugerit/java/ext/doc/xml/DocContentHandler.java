@@ -1,5 +1,6 @@
 package org.fugerit.java.ext.doc.xml;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,7 +82,11 @@ public class DocContentHandler implements ContentHandler {
 			docPara.setText( docPara.getText()+text );
 		} else if ( text.trim().length() > 0 && this.currentElement instanceof DocInfo ) {
 			DocInfo docInfo = (DocInfo)this.currentElement;
-			docInfo.getContent().append( text );
+			try {
+				docInfo.getContent().append( text );
+			} catch (IOException e) {
+				throw new RuntimeException( e );
+			}
 		}
 	}
 

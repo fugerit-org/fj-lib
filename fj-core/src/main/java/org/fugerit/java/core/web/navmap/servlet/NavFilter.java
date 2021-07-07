@@ -106,7 +106,7 @@ public class NavFilter implements Filter {
 			requestContext.getResponse().sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 		} finally {
 			if ( doLog ) {
-				StringBuffer log = new StringBuffer();
+				StringBuilder log = new StringBuilder();
 				log.append( this.getClass().getSimpleName() );
 				log.append( " nav() " );
 				log.append( navLog.toString() );

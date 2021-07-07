@@ -200,7 +200,7 @@ public class FileIO {
      * @return					The content of the file as a <code>java.lang.StringBuffer</code> array.
      * @throws IOException		If something goes wrong during elaboration.
      */ 
-    public static StringBuffer readStringBuffer(String file) throws IOException {
+    public static StringBuilder readStringBuffer(String file) throws IOException {
         return readStringBuffer(new File(file));
     }    
     
@@ -252,8 +252,8 @@ public class FileIO {
      * @return					The content of the file as a <code>java.lang.String</code> array.
      * @throws IOException		If something goes wrong during elaboration.
      */
-    public static StringBuffer readStringBuffer(File file) throws IOException {
-        return (new StringBuffer(readString(file)));
+    public static StringBuilder readStringBuffer(File file) throws IOException {
+        return (new StringBuilder(readString(file)));
     }    
     
     /*

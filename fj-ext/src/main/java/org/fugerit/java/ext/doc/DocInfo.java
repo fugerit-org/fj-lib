@@ -18,7 +18,7 @@ public class DocInfo extends DocElement {
 	
 	private String name;
 	
-	private StringBuffer content = new StringBuffer();
+	private Appendable content = new StringBuilder();
 
 	/*
 	 * @return the name
@@ -37,14 +37,14 @@ public class DocInfo extends DocElement {
 	/*
 	 * @return the content
 	 */
-	public StringBuffer getContent() {
+	public Appendable getContent() {
 		return content;
 	}
 
 	/*
 	 * @param content the content to set
 	 */
-	public void setContent(StringBuffer content) {
+	public void setContent(Appendable content) {
 		this.content = content;
 	}
 	
