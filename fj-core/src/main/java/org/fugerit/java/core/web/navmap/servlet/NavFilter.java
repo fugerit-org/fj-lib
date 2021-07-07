@@ -47,9 +47,42 @@ public class NavFilter implements Filter {
 		this.context = null;
 	}
 
+	@Override
+	public void doFilter( ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		if ( request instanceof HttpServletRequest && response instanceof HttpServletResponse ) {
+			RequestContext requestContext = RequestContext.getRequestContext( this.context , (HttpServletRequest)request, (HttpServletResponse)response );
+			nav( requestContext , chain);
+		} else {
+			chain.doFilter(request, response);
+		}
+	}
+	
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		try {
+			logger.info( "NavFilter init() - start" );
+			this.context = filterConfig.getServletContext();
+			String config = filterConfig.getInitParameter( "config" );
+			logger.info( "NavFilter init() config "+config );
+			ServletContext context = filterConfig.getServletContext();
+			String basePath = context.getRealPath( "/" );
+			File configFile = new File( basePath, config );
+			FileInputStream fis = new FileInputStream( configFile );
+			NavMap map = NavConfig.parseConfig( fis, basePath );
+			AuthHandler authHandler = map.getAuthHandler();
+			context.setAttribute( AuthHandler.ATT_NAME, authHandler );
+			fis.close();
+			context.setAttribute( NavMap.CONTEXT_ATT_NAME , map );
+			this.navMap = map;
+			logger.info( "NavFilter init() - end" );
+		} catch (Exception e) {
+			logger.error( "NavFilter init() error", e );
+		}
+	}
+
 	public void nav( RequestContext requestContext, FilterChain chain ) throws IOException, ServletException {
 		String reqId = String.valueOf(  requestContext.getRequest().getSession( true ).getId()+"/"+System.currentTimeMillis() );
-		StringBuffer navLog = new StringBuffer();
+		StringBuilder navLog = new StringBuilder();
 		boolean doLog = true;
 		Exception exLog = null;
 		try {
@@ -86,39 +119,6 @@ public class NavFilter implements Filter {
 					logger.warn( log.toString() );
 				}
 			}
-		}
-	}
-	
-	@Override
-	public void doFilter( ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		if ( request instanceof HttpServletRequest && response instanceof HttpServletResponse ) {
-			RequestContext requestContext = RequestContext.getRequestContext( this.context , (HttpServletRequest)request, (HttpServletResponse)response );
-			nav( requestContext , chain);
-		} else {
-			chain.doFilter(request, response);
-		}
-	}
-
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		try {
-			logger.info( "NavFilter init() - start" );
-			this.context = filterConfig.getServletContext();
-			String config = filterConfig.getInitParameter( "config" );
-			logger.info( "NavFilter init() config "+config );
-			ServletContext context = filterConfig.getServletContext();
-			String basePath = context.getRealPath( "/" );
-			File configFile = new File( basePath, config );
-			FileInputStream fis = new FileInputStream( configFile );
-			NavMap map = NavConfig.parseConfig( fis, basePath );
-			AuthHandler authHandler = map.getAuthHandler();
-			context.setAttribute( AuthHandler.ATT_NAME, authHandler );
-			fis.close();
-			context.setAttribute( NavMap.CONTEXT_ATT_NAME , map );
-			this.navMap = map;
-			logger.info( "NavFilter init() - end" );
-		} catch (Exception e) {
-			logger.error( "NavFilter init() error", e );
 		}
 	}
 

@@ -408,7 +408,7 @@ class MysqlQueryWrapper extends QueryWrapper {
 	
 	@Override
 	public String createPagedQuery(String sql, PageInfoDB info) {
-		StringBuffer result = new StringBuffer();
+		StringBuilder result = new StringBuilder();
 		result.append( "SELECT paged.* FROM ( " );
 		result.append( sql );
 		result.append( ") paged LIMIT "+( (info.getNumber()-1)*info.getSize() )+", "+info.getSize() );

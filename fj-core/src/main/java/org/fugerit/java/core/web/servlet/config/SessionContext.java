@@ -16,7 +16,7 @@ public abstract class SessionContext implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer b = new StringBuffer();
+		StringBuilder b = new StringBuilder();
 		b.append( this.getClass().getName() );
 		b.append( "[ID:"+this.getId()+"," );
 		Iterator<String> attNames = this.attributeNames();
@@ -34,7 +34,7 @@ public abstract class SessionContext implements Serializable {
 	}
 	
 	public String toStringLines() {
-		StringBuffer b = new StringBuffer();
+		StringBuilder b = new StringBuilder();
 		b.append( this.getClass().getName() );
 		b.append( "[" );
 		Iterator<String> attNames = this.attributeNames();

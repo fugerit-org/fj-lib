@@ -37,7 +37,7 @@ public class ConcatHelper {
 	}
 	
 	public static String concat( String separator, String... values ) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append( convertNullToBlank( values[0] ) );
 		for ( int k=1; k<values.length; k++ ) {
 			buffer.append( separator );

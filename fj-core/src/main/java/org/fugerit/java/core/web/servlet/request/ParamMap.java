@@ -131,7 +131,7 @@ public class ParamMap implements Serializable {
 	}
 	
 	public String getSortedQueryString() {
-		StringBuffer qs = new StringBuffer();
+		StringBuilder qs = new StringBuilder();
 		ArrayList<String> l = new ArrayList<String>(  this.map.keySet() );
 		Collections.sort( l );
 		qs.append( "?"+PARAM_MAP_GENERATE+"=2" );
@@ -165,7 +165,7 @@ public class ParamMap implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuffer qs = new StringBuffer();
+		StringBuilder qs = new StringBuilder();
 		qs.append( this.getClass().getName() );
 		qs.append( "[" );
 		ArrayList<String> l = new ArrayList<String>(  this.map.keySet() );

@@ -63,7 +63,7 @@ public class RenderUrl extends NavTagHelper {
 		if ( entry == null ) {
 			throw new JspException( "No entry found" );
 		}
-		StringBuffer render = new StringBuffer();
+		StringBuilder render = new StringBuilder();
 		render.append( entry.getUrl() );
 		if ( this.getParamId() != null && this.getParamValue() != null ) {
 			render.append( "?" );
