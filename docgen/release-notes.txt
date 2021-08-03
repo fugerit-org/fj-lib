@@ -1,6 +1,7 @@
 ﻿0.7.6.1 (2021-08-03)
 -------------------- 
 + Default toString for result
++ Bump commons-compress from 1.20 to 1.21
 
 0.7.6.0 (2021-07-01)
 -------------------- 
