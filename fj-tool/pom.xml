@@ -14,7 +14,7 @@
 	<description>Fugerit Java Tool Library for JDK 1.8 and up</description>
 	
 	<properties>
-		<common-compress-version>1.20</common-compress-version>
+		<common-compress-version>1.21</common-compress-version>
 	</properties>
 	
 	<organization>
