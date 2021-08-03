@@ -40,4 +40,9 @@ public class BasicResult extends BasicLogObject implements Result {
 		return infoMap;
 	}
 
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName()+"[resultCode:"+this.getResultCode()+"]";
+	}
+	
 }

@@ -86,4 +86,9 @@ public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
 		return res;
 	}
 	
+	@Override
+	public String toString() {
+		return super.toString()+"[resultDescription"+this.getResultDescription()+",size:"+this.getList().size()+"]";
+	}
+	
 }
