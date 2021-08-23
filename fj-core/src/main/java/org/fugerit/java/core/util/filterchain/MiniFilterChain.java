@@ -50,8 +50,13 @@ public class MiniFilterChain extends MiniFilterBase {
 			int stepResult = SKIP;
 			// if previous status was continue apply this step
 			if ( goOn ) {
-				stepResult = filter.apply(context, data);
-				goOn = ( SKIP != stepResult );
+				try {
+					stepResult = filter.apply(context, data);
+					goOn = ( SKIP != stepResult );	
+				} catch (Exception e) {
+					logger.warn( "Error : "+e, e );
+					goOn = false;
+				}
 			// apply anyways if prevopus status was always but next step will not be affected
 			} else if ( filter.getDefaultBehaviour() == ALWAYS ) {
 				stepResult = filter.apply(context, data);

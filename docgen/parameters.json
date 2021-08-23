@@ -1,8 +1,8 @@
 {
 	"title" : "Jupiter (Fugerit Core A.P.I.)",
 	"name": "Jupiter",
-	"version" : "0.7.6.1",
-	"date" : "03/08/2021",
+	"version" : "0.7.6.2",
+	"date" : "23/08/2021",
 	"organization" : {
 		"name" : "Fugerit Org",
 		"url" : "https://www.fugerit.org"
