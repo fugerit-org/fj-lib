@@ -44,6 +44,7 @@ public class MiniFilterChain extends MiniFilterBase {
 		Iterator<MiniFilter> it = this.getFilterChain().iterator();
 		boolean goOn = true;
 		context.getCustomConfig().putAll( this.getDefaultConfig() );
+		Exception ex = null;
 		// now all the steps are always looked
 		while ( it.hasNext() ) {
 			MiniFilter filter = it.next();
@@ -56,12 +57,16 @@ public class MiniFilterChain extends MiniFilterBase {
 				} catch (Exception e) {
 					logger.warn( "Error : "+e, e );
 					goOn = false;
+					ex = e;
 				}
 			// apply anyways if prevopus status was always but next step will not be affected
 			} else if ( filter.getDefaultBehaviour() == ALWAYS ) {
 				stepResult = filter.apply(context, data);
 			}
 			logger.debug( this.toString() +", step : "+filter.toString()+", continue? "+goOn+" stepResult : "+stepResult );
+		}
+		if ( ex != null ) {
+			throw ex;
 		}
 		return res;
 	}
