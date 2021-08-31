@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Properties;
-
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.log.LogFacade;
 
@@ -37,7 +36,9 @@ import org.fugerit.java.core.log.LogFacade;
  * @author Fugerit
  *
  */
-public class PropsIO {
+public final class PropsIO {
+	
+	private PropsIO() {}
 
 	/**
 	 * <p>Copy all entries from a java.util.Properties to another.</p>
@@ -166,6 +167,78 @@ public class PropsIO {
 		props.load( is );
 		is.close();
 		return props;
+	}
+	
+	/**
+	 * Return a new <code>java.util.Properties</code> object containing only
+	 * the properties with given prefix.
+	 * 
+	 * NOTE: by default prefix is removed in resulting Properties
+	 * 
+	 * NOTE: prefix is build as basePrefix+separator
+	 * 
+	 * @param props			input java.util.Properties
+	 * @param basePrefix	base prefix to use for searching keys
+	 * @param separator		separator to use for searching keys
+	 * @return				resulting java.util.Properties
+	 */
+	public static Properties subProps( Properties props, String basePrefix, String separator ) {
+		return subProps(props, basePrefix+separator);
+	}
+	
+	/**
+	 * Return a new <code>java.util.Properties</code> object containing only
+	 * the properties with given prefix. 
+	 * 
+	 * NOTE: prefix is build as basePrefix+separator
+	 * 
+	 * @param props			input java.util.Properties
+	 * @param basePrefix	base prefix to use for searching keys
+	 * @param separator		separator to use for searching keys
+	 * @param removePrefix	<code>true</code> in case you want to remove the prefix from keys in the resulting Properties	
+	 * @return				resulting java.util.Properties
+	 */
+	public static Properties subProps( Properties props, String basePrefix, String separator, boolean removePrefix ) {
+		return subProps(props, basePrefix+separator, removePrefix);
+	}
+	
+	/**
+	 * Return a new <code>java.util.Properties</code> object containing only
+	 * the properties with given prefix.
+	 * 
+	 * NOTE: by default prefix is removed in resulting Properties
+	 * 
+	 * @param props			input java.util.Properties
+	 * @param prefix		prefix for the keys to search	
+	 * @return				resulting java.util.Properties
+	 */
+	public static Properties subProps( Properties props, String prefix ) {
+		return subProps(props, prefix, true);
+	}
+	
+	/**
+	 * Return a new <code>java.util.Properties</code> object containing only
+	 * the properties with given prefix.
+	 * 
+	 * @param props			input java.util.Properties
+	 * @param prefix		prefix for the keys to search
+	 * @param removePrefix	<code>true</code> in case you want to remove the prefix from keys in the resulting Properties	
+	 * @return				resulting java.util.Properties
+	 */
+	public static Properties subProps( Properties props, String prefix, boolean removePrefix ) {
+		Properties res = new Properties();
+		for ( Object k : props.keySet() ) {
+			String key = String.valueOf( k );
+			if ( key.startsWith( prefix ) ) {
+				String newKey = key;
+				if ( removePrefix ) {
+					newKey = key.substring( prefix.length() );
+				}
+				String value = props.getProperty( key );
+				res.setProperty( newKey , value );
+			}
+		}
+		return res;
 	}
 	
 }
