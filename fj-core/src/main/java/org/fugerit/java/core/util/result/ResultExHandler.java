@@ -10,7 +10,12 @@ import org.fugerit.java.core.lang.helpers.Result;
  */
 public class ResultExHandler implements ExHandler {
 
-    private Result result;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4117951766057775089L;
+	
+	private Result result;
     
     /*
      * <p>Restituisce il valore di result.</p>

@@ -58,6 +58,9 @@ public class MiniFilterChain extends MiniFilterBase {
 					logger.warn( "Error : "+e, e );
 					goOn = false;
 					ex = e;
+					if ( context.getExHandler() != null ) {
+						context.getExHandler().error( e );
+					}
 				}
 			// apply anyways if prevopus status was always but next step will not be affected
 			} else if ( filter.getDefaultBehaviour() == ALWAYS ) {

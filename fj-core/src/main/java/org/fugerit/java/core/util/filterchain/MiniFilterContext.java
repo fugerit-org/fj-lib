@@ -3,6 +3,8 @@ package org.fugerit.java.core.util.filterchain;
 import java.util.Properties;
 
 import org.fugerit.java.core.lang.helpers.AttributeHolderDefault;
+import org.fugerit.java.core.lang.helpers.ExHandler;
+import org.fugerit.java.core.lang.helpers.ExHandlerDefault;
 
 public class MiniFilterContext extends AttributeHolderDefault {
 
@@ -13,9 +15,11 @@ public class MiniFilterContext extends AttributeHolderDefault {
 	
 	private Properties customConfig;
 
+	private ExHandler exHandler;
 	
 	public MiniFilterContext() {
 		this.customConfig = new Properties();
+		this.exHandler = ExHandlerDefault.INSTANCCE;
 	}
 	
 	public Properties getCustomConfig() {
@@ -31,6 +35,14 @@ public class MiniFilterContext extends AttributeHolderDefault {
 
 	public void setChainId(String chainId) {
 		this.chainId = chainId;
+	}
+
+	public ExHandler getExHandler() {
+		return exHandler;
+	}
+
+	public void setExHandler(ExHandler exHandler) {
+		this.exHandler = exHandler;
 	}
 
 }
