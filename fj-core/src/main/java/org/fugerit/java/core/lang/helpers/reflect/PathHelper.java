@@ -9,17 +9,34 @@ import java.beans.PropertyDescriptor;
  *
  */
 public class PathHelper {
-
-	private static FacadeImplFinder FACADE_IMPL_FINDER = FacadeImplFinder.newFacadeDefault();
 	
+	private PathHelper() {}
+
+	private static final FacadeImplFinder FACADE_IMPL_FINDER = FacadeImplFinder.newFacadeDefault();
+	
+	/**
+	 * Constant for continuing on empty path value
+	 */
 	public static final boolean CONTINUE_ON_NULL = true;
 	
+	/**
+	 * Constant for stopping on empty path value 
+	 */
 	public static final boolean EXIT_ON_NULL = false;
 	
 	public static Object initEmptyField( String property, Object target ) throws Exception {
 		return initEmptyField(property, target, FACADE_IMPL_FINDER);
 	}
 	
+	/**
+	 * Init a property on object if empty
+	 * 
+	 * @param property	the property to init
+	 * @param target	the target object
+	 * @param facadeImplFinder	facade for finding target property type
+	 * @return	the object used to initialized the empty field
+	 * @throws Exception	in case of problems
+	 */
 	public static Object initEmptyField( String property, Object target, FacadeImplFinder facadeImplFinder ) throws Exception {
 		PropertyDescriptor pd = new PropertyDescriptor( property, target.getClass() );
 		Class<?> propertyClass = pd.getReadMethod().getReturnType();
@@ -29,6 +46,14 @@ public class PathHelper {
 		return temp;
 	}
 	
+	/**
+	 * Init a path in an object using initEmptyField() on any property in the path.
+	 * 
+	 * @param path		the path in the object
+	 * @param target	the target object
+	 * @return			the last created object
+	 * @throws Exception	in case of problems
+	 */
 	public static Object bindInit( String path, Object target ) throws Exception {
 		String[] nodes = path.split( "\\." );
 		for ( int k=0; k<nodes.length; k++ ) {
@@ -41,10 +66,33 @@ public class PathHelper {
 		return target;
 	}
 	
+	/**
+	 * Bind a value to a path in an object.
+	 * 
+	 * @param path		the path
+	 * @param target	the target object
+	 * @param value		the value to set
+	 * @param paramType	the property class type
+	 * @param tryInit	if <code>true</code> will try to init any null object in path
+	 * @return		if the binding is successful
+	 * @throws Exception	in case of problems
+	 */
 	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit ) throws Exception {
 		return bind(path, target, value, paramType, tryInit, FACADE_IMPL_FINDER);
 	}
 	
+	/**
+	 * Bind a value to a path in an object.
+	 * 
+	 * @param path		the path
+	 * @param target	the target object
+	 * @param value		the value to set
+	 * @param paramType	the property class type
+	 * @param tryInit	if <code>true</code> will try to init any null object in path
+	 * @param facadeImplFinder		facade for finding implementing class
+	 * @return		if the binding is successful
+	 * @throws Exception	in case of problems
+	 */
 	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit, FacadeImplFinder facadeImplFinder ) throws Exception {
 		boolean bind = false;
 		if ( value != null ) {
@@ -66,6 +114,15 @@ public class PathHelper {
 		return bind;
 	}
 	
+	/**
+	 * Bind a value to a path in an object
+	 * 
+	 * @param path		the path
+	 * @param target	the target object
+	 * @param value		the value to set
+	 * @return		if the binding is successful
+	 * @throws Exception	in case of problems
+	 */
 	public static boolean bind( String path, Object target, Object value ) throws Exception {
 		return bind(path, target, value, null, false);
 	}
