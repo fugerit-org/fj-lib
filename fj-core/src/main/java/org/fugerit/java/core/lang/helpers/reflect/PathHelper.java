@@ -5,7 +5,7 @@ import java.beans.PropertyDescriptor;
 /**
  * Simple class to look up a property path in a java object
  * 
- * @author fugerit
+ * @author Matteo a.k.a. fugerit
  *
  */
 public class PathHelper {
@@ -124,7 +124,7 @@ public class PathHelper {
 	 * @throws Exception	in case of problems
 	 */
 	public static boolean bind( String path, Object target, Object value ) throws Exception {
-		return bind(path, target, value, null, false);
+		return bind(path, target, value, null, EXIT_ON_NULL);
 	}
 	
 	/**
