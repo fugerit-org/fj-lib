@@ -1,4 +1,8 @@
-﻿0.7.6.5 (2021-09-12)
+﻿0.7.6.6 (2021-09-16)
+-------------------- 
++ Added appendDescription() method do interface DaoResult
+
+0.7.6.5 (2021-09-12)
 -------------------- 
 + Added CodeException
 

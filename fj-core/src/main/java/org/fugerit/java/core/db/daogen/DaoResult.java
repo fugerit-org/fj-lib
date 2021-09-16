@@ -6,6 +6,8 @@ public interface DaoResult extends Result {
 
 	String getResultDescription();
 	
+	void appendDescription( String v );
+	
 	void setResultDescription( String v );
 	
 	void setResult( DaoResult result);

@@ -12,12 +12,13 @@ public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
 	
 	public BasicDaoResult(int resultCode, String resultDescription) {
 		this( resultCode );
-		this.resultDescription = resultDescription;
+		this.appendDescription( resultDescription );
 	}
 	
 	public BasicDaoResult(int resultCode) {
 		super(resultCode);
 		this.list = new ArrayList<T>();
+		this.resultDescription = new StringBuilder();
 	}
 
 	public BasicDaoResult() {
@@ -31,16 +32,22 @@ public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
 		return list;
 	}
 
-	private String resultDescription;
+	private StringBuilder resultDescription;
+	
+	@Override
+	public void appendDescription( String v ) {
+		this.resultDescription.append( v );
+	}
 	
 	@Override
 	public String getResultDescription() {
-		return this.resultDescription;
+		return this.resultDescription.toString();
 	}
 	
 	@Override
 	public void setResultDescription( String v ) {
-		this.resultDescription = v;
+		this.resultDescription = new StringBuilder();
+		this.appendDescription( v );
 	}
 	
 	@Override
