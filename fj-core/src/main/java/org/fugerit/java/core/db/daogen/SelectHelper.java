@@ -1,5 +1,6 @@
 package org.fugerit.java.core.db.daogen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -42,10 +43,28 @@ public class SelectHelper extends QueryHelper {
 	
 	private List<OrderByHandler> orderByList;
 	
+	/**
+	 * Creates a new SelectHelper
+	 * 
+	 * NOTE : initSelectEntity() should not be invoked.
+	 * 
+	 * @param table			the entity this select helper is meant for.
+	 * @param fl			the list of fields
+	 * @param firstParam	<code>true</code> if WHERE must be set, <code>false</code> othewise.
+	 * @param queryView		the query to use instead of default query build on TABLE name.
+	 * @return				a new SelectHelper
+	 */
+	public static SelectHelper newCustomSelectHelper( String table, FieldList fl, boolean firstParam, String queryView ) {
+		SelectHelper helper = new SelectHelper(table, fl);
+		helper.firstParam = firstParam;
+		helper.appendToQuery( queryView );
+		return helper;
+	}
+	
 	public SelectHelper( String table, FieldList fl ) {
 		super( table, fl );
 		this.firstParam = true;
-		this.orderByList = new ArrayList<OrderByHandler>();
+		this.orderByList = new ArrayList<>();
 	}
 
 	public void initSelectEntity() {
@@ -124,8 +143,13 @@ public class SelectHelper extends QueryHelper {
 	
 }
 
-class OrderByHandler {
+class OrderByHandler implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6753430035123845585L;
+
 	private String columnName;
 	
 	private String orderByMode;

@@ -1,4 +1,8 @@
-﻿0.7.6.6 (2021-09-16)
+﻿0.7.6.7 (2021-09-17)
+-------------------- 
++ Added custom factory method for SelectHelper
+
+0.7.6.6 (2021-09-16)
 -------------------- 
 + Added appendDescription() method do interface DaoResult
 
