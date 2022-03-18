@@ -27,6 +27,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.ResourceBundle;
+
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.log.LogFacade;
 
@@ -239,6 +241,16 @@ public final class PropsIO {
 			}
 		}
 		return res;
+	}
+	
+	public static Properties loadFromBundle( ResourceBundle bundle ) {
+		Properties props = new Properties();
+		Enumeration<String> keys = bundle.getKeys();
+		while ( keys.hasMoreElements() ) {
+			String key = keys.nextElement();
+			props.setProperty( key , bundle.getString( key ) );
+		}
+		return props;
 	}
 	
 }
