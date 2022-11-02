@@ -1,4 +1,8 @@
-﻿0.7.6.8 (2022-03-18)
+﻿0.7.6.9 (2022-11-02)
+-------------------- 
++ Added daogen ResultUtils class
+
+0.7.6.8 (2022-03-18)
 -------------------- 
 + Added PropsIO.loadFromBundle() method
 
