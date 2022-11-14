@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.7.10</version>
+		<version>0.7.11</version>
 	</parent>
 	
 	<name>fj-ext</name>
@@ -73,18 +73,6 @@
 		    <groupId>net.sourceforge.jexcelapi</groupId>
 		    <artifactId>jxl</artifactId>
 		    <version>${jxl-version}</version>
-		</dependency>		
-		
-		<!-- itext -->
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
-			<version>${itext-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext-rtf</artifactId>
-			<version>${itext-version}</version>
 		</dependency>		
 		
 		<dependency>
