@@ -7,14 +7,15 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>0.8-RC1</version>
+		<version>0.8-RC2</version>
 	</parent>
 	
 	<name>fj-tool</name>
 	<description>Fugerit Java Tool Library for JDK 1.8 and up</description>
 	
 	<properties>
-		<common-compress-version>1.21</common-compress-version>
+		<common-compress-version>1.22</common-compress-version>
+		<org.tukaani.xz-version>1.9</org.tukaani.xz-version>
 	</properties>
 	
 	<organization>
@@ -75,7 +76,7 @@
 		<dependency>
 		  <groupId>org.tukaani</groupId>
 		  <artifactId>xz</artifactId>
-		  <version>1.8</version>
+		  <version>${org.tukaani.xz-version}</version>
 		</dependency>
 
 		<!-- java core dependancies -->
