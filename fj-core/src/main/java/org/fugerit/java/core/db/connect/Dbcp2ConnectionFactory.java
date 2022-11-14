@@ -23,7 +23,7 @@ package org.fugerit.java.core.db.connect;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.fugerit.java.core.db.dao.DAOException;
 
 /**
@@ -32,7 +32,7 @@ import org.fugerit.java.core.db.dao.DAOException;
  * @author Fugerit
  *
  */
-public class DbcpConnectionFactory extends ConnectionFactoryImpl {
+public class Dbcp2ConnectionFactory extends ConnectionFactoryImpl {
 
 	private BasicDataSource dataSource;
 
@@ -48,7 +48,7 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 	 * @param max		maximum connection	
 	 * @throws DAOException		in case of issues
 	 */
-	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max ) throws DAOException {
+	public Dbcp2ConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max ) throws DAOException {
 		this(drv, url, usr, pwd, init, min, max, null);
 	}
 	
@@ -65,14 +65,14 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 	 * @param cl		the class loader
 	 * @throws DAOException		in case of issues
 	 */
-	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max, ClassLoader cl ) throws DAOException {
+	public Dbcp2ConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max, ClassLoader cl ) throws DAOException {
 		try {
 			this.dataSource = new BasicDataSource();
 			this.dataSource.setDriverClassName( drv );
 			this.dataSource.setUrl( url );
 			this.dataSource.setUsername( usr );
 			this.dataSource.setPassword( pwd );
-			this.dataSource.setMaxActive( max );
+			this.dataSource.setMaxTotal( max );
 			this.dataSource.setMaxIdle( min );
 			this.dataSource.setInitialSize( init );
 			if ( cl != null ) {
