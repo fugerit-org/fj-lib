@@ -11,7 +11,7 @@
 		<relativePath></relativePath>
 	</parent>
 
-	<version>0.7.11</version>
+	<version>0.7.12</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -69,7 +69,6 @@
 
 	<modules>
 		<module>fj-core</module>
-		<module>fj-ext</module>
 		<module>fj-tool</module>
 	</modules>
 
