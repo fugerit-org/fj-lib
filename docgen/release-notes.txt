@@ -1,4 +1,8 @@
-﻿0.8.0 (2022-11-17)
+﻿0.8.X
+------------------
++ Removed inner methods that will be deprecated in java 11.
+
+0.8.0 (2022-11-17)
 ------------------ 
 + Changed dependency from dbcp to dbcp2
 + Updated of parent bom to 0.2.2 (many dependency versions updated) 

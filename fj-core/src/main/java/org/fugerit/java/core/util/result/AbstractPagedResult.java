@@ -45,7 +45,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 */
 	@Override
 	public Integer getOffset() {
-		return new Integer( this.offset );
+		return Integer.valueOf( this.offset );
 	}
 
 	/*
@@ -55,7 +55,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 */
 	@Override
 	public Integer getPerPage() {
-		return new Integer( this.perPage );
+		return Integer.valueOf( this.perPage );
 	}
 
 	/*
@@ -65,7 +65,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 */
 	@Override
 	public Long getElementCount() {
-		return new Long( this.elementCount );
+		return Long.valueOf( this.elementCount );
 	}
 
 	/*
@@ -75,7 +75,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 */
 	@Override
 	public Integer getCurrentPage() {
-		return new Integer( this.currentPage );
+		return Integer.valueOf( this.currentPage );
 	}
 	
 	/*
@@ -85,7 +85,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 */
 	@Override
 	public Integer getPageCount() {
-		return new Integer( pageCount );
+		return Integer.valueOf( pageCount );
 	}		
 
 	/*
@@ -95,7 +95,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 */
 	@Override
 	public Integer getCurrentPageSize() {
-		return new Integer( this.pageElements.size() );
+		return Integer.valueOf( this.pageElements.size() );
 	}
 	
 	/*
@@ -127,7 +127,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	public Iterator<Integer> getPageCountIterator() {
 		List<Integer> list = new ArrayList<Integer>();
 		for ( int k=1; k<=this.pageCount; k++ ) {
-			list.add( new Integer( k ) );
+			list.add( Integer.valueOf( k ) );
 		}
 		return list.iterator();
 	}

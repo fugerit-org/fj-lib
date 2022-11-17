@@ -18,7 +18,7 @@ public class DAOID extends Number {
 	
 	
 	public DAOID( long value ) {
-		this.id = new Long( value );
+		this.id = Long.valueOf( value );
 	}
 
 	public static DAOID valueOf( long value ) {
