@@ -1,4 +1,9 @@
-﻿0.7.13 (2022-11-14)
+﻿0.8.0 (2022-11-17)
+------------------ 
++ Changed dependency from dbcp to dbcp2
++ Updated of parent bom to 0.2.2 (many dependency versions updated) 
+
+0.7.13 (2022-11-14)
 ------------------ 
 + Module fj-ext moved to a separate [repository](https://github.com/fugerit-org/fj-ext.git) 
 + Updated of parent bom to 0.2.0 (many dependency versions updated) 
