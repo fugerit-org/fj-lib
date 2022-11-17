@@ -32,7 +32,7 @@ import org.fugerit.java.core.db.dao.DAOException;
  * @author Fugerit
  *
  */
-public class Dbcp2ConnectionFactory extends ConnectionFactoryImpl {
+public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 
 	private BasicDataSource dataSource;
 
@@ -48,7 +48,7 @@ public class Dbcp2ConnectionFactory extends ConnectionFactoryImpl {
 	 * @param max		maximum connection	
 	 * @throws DAOException		in case of issues
 	 */
-	public Dbcp2ConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max ) throws DAOException {
+	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max ) throws DAOException {
 		this(drv, url, usr, pwd, init, min, max, null);
 	}
 	
@@ -65,7 +65,7 @@ public class Dbcp2ConnectionFactory extends ConnectionFactoryImpl {
 	 * @param cl		the class loader
 	 * @throws DAOException		in case of issues
 	 */
-	public Dbcp2ConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max, ClassLoader cl ) throws DAOException {
+	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max, ClassLoader cl ) throws DAOException {
 		try {
 			this.dataSource = new BasicDataSource();
 			this.dataSource.setDriverClassName( drv );

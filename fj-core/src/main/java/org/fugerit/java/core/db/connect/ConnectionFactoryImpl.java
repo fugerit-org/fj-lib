@@ -240,7 +240,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 				int sc = Integer.parseInt( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED_SC ), "3" ) );
 				int ic = Integer.parseInt( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED_IC ), "10" ) );
 				int mc = Integer.parseInt( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED_MC ), "30" ) );
-				cf = new Dbcp2ConnectionFactory( props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_DRV ) ), 
+				cf = new DbcpConnectionFactory( props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_DRV ) ), 
 						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_URL ) ),
 						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_USR ) ),
 						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_PWD ) ), sc, ic, mc, cl );
