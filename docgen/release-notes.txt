@@ -1,5 +1,6 @@
-﻿0.8.X
+﻿0.8.1 (2022-11-24)
 ------------------
++ Added simple i18n support
 + Removed reference to J2ee version (no more needed)
 + Removed inner methods that will be deprecated in java 11.
 
