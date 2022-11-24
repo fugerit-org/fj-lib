@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-  <entry key="test.prop.1">Test property</entry>
+  <entry key="test.prop.1">Test property 1</entry>
+  <entry key="test.prop.2">Test property 2</entry>
+  <entry key="test.complex.prop.1">Complex property 1 -> simple parameter : {0} and i18n parameter : {1}</entry>
+  <entry key="test.param.1">(ParamI18N value)</entry>
 </properties>
   
