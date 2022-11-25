@@ -16,4 +16,9 @@ public class ParamI18N {
 		return new ParamI18N( key );
 	}
 
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName()+"[key:"+this.getKey()+"]";
+	}
+	
 }
