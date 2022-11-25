@@ -1,4 +1,9 @@
-﻿0.8.1 (2022-11-24)
+﻿0.8.2 (2022-11-25)
+------------------
++ Added 'fail-on-set' of duplicate entry for GenericListCatalogConfig
++ Added toString() to ParamI18N
+
+0.8.1 (2022-11-24)
 ------------------
 + Added simple i18n support
 + Removed reference to J2ee version (no more needed)
