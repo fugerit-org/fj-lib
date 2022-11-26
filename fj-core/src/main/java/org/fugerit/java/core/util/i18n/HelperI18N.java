@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
+import org.fugerit.java.core.util.ObjectUtils;
+
 public abstract class HelperI18N {
 		
 	protected HelperI18N( String baseName, String defaultLanguge,  String... altLocale ) {
@@ -35,7 +37,9 @@ public abstract class HelperI18N {
 			for ( int k=0; k<params.length; k++ ) {
 				Object current = params[k];
 				if ( current instanceof ParamI18N )  {
-					current = this.resolveString( lang, ((ParamI18N)current).getKey() );			
+					ParamI18N param = (ParamI18N)current;
+					HelperI18N helper = ObjectUtils.objectWithDefault( param.getHelper() , this );
+					current = helper.resolveString( lang, param.getKey() );			
 				}
 				realParams[k] = current;
 			}

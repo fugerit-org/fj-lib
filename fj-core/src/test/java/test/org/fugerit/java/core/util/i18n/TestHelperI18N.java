@@ -23,19 +23,25 @@ public class TestHelperI18N {
 	
 	private static final String CONF_PATH = "core.util.i18n.test";
 	
+	private static final String CONF_PATH_PARAM = "core.util.i18n.param";
+	
 	private HelperI18N helper;
+	
+	private HelperI18N helperParam;
+	
+
+	@Before
+	public void init() {
+		this.helper = BundleMapI18N.newHelperI18N( CONF_PATH, LANG_DEF, LANG_ALT );
+		this.helperParam = BundleMapI18N.newHelperI18N( CONF_PATH_PARAM, LANG_DEF, LANG_ALT );
+	}
 	
 	private void testHelper( String expectedValue, String lang, String key, Object... params ) {
 		String value = this.helper.getString( lang , key, params );
 		logger.info( "key:{} , lang:{} -> {}", lang, key, value );
 		Assert.assertEquals( "Value different for key : "+key+", lang : "+lang , expectedValue, value );
 	}
-	
-	@Before
-	public void init() {
-		this.helper = BundleMapI18N.newHelperI18N( CONF_PATH, LANG_DEF, LANG_ALT );
-	}
-	
+
 	@Test
 	public void testSimpleProperty1() {
 		String key = "test.prop.1"; // test.prop.1 is available for both languages
@@ -67,6 +73,14 @@ public class TestHelperI18N {
 				LANG_ALT[0],  key, new Integer( 3 ), ParamI18N.newParamI18N( keyParam ) );
 	}
 	
-	
+	@Test
+	public void testComplexProperty1Alt() {
+		String key = "test.complex.prop.1";	// contains a integer param and a i18n param
+		String keyParam = "test.param.1.alt";	// the key for the i18n param
+		this.testHelper( "Complex property 1 -> simple parameter : 3 and i18n parameter : (ParamI18N value alternative bundle)", 
+				LANG_DEF,  key, new Integer( 3 ), ParamI18N.newParamI18N( keyParam, this.helperParam ) );
+		this.testHelper( "Proprietà complessa test 1 -> parametro semplice : 3 e parametro i18n : (valore ParamI18N bundle alternativo)", 
+				LANG_ALT[0],  key, new Integer( 3 ), ParamI18N.newParamI18N( keyParam, this.helperParam ) );
+	}
 		
 }
