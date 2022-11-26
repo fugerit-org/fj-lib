@@ -1,4 +1,9 @@
-﻿0.8.2 (2022-11-25)
+﻿0.8.3 (2022-11-26)
+------------------
++ Added ObjectUtils.objectWithDefault() function
++ Added options to create a ParamI18N loading keys from a different bundle than the main property key
+
+0.8.2 (2022-11-25)
 ------------------
 + Added 'fail-on-set' of duplicate entry for GenericListCatalogConfig
 + Added toString() to ParamI18N
