@@ -109,10 +109,4 @@ public class OpDAO<T> {
 		type = i;
 	}
 
-	protected void finalize() throws Throwable {
-		super.finalize();
-		this.fieldList = null;
-		this.sql = null;
-	}
-
 }

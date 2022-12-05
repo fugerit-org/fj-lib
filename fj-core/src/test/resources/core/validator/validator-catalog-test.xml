@@ -35,5 +35,11 @@
 		<entry key="maximumIntegerDigits">10</entry>
 		<entry key="maximumFractionDigits">3</entry>
 	</validator>
+
+	<validator id="testRegexValidatorExtOptional" parent="testRegexValidator"
+		type="org.fugerit.java.core.validator.ValidatorRegex">
+		<entry key="required">false</entry>
+		<entry key="maxLength">5</entry>		
+	</validator>
 	
 </validator-catalog>

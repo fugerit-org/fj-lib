@@ -23,7 +23,7 @@ public class RequestHelper {
 	
 	public static final SecurityEncoder ENCODER = new DefaultSecurityEncoder( DEFAULT_ENCODING );
 	
-	private static void append( String base, String name, String value, StringBuffer buffer, String encoding, SecurityEncoder encoder ) throws UnsupportedEncodingException {
+	private static void append( String base, String name, String value, StringBuilder buffer, String encoding, SecurityEncoder encoder ) throws UnsupportedEncodingException {
 		buffer.append( base );
 		buffer.append( name );
 		buffer.append( "=" );
@@ -39,7 +39,7 @@ public class RequestHelper {
 	}
 	
 	public static String getParamString( HttpServletRequest request, List<String> skipParams, SecurityEncoder encoder ) throws UnsupportedEncodingException {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		append( CONST_START, PARAM_GENERATED, "1", buffer, DEFAULT_ENCODING, encoder );
 		Enumeration<String> paramNames = request.getParameterNames();
 		while ( paramNames.hasMoreElements() ) {

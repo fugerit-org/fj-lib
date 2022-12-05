@@ -16,6 +16,7 @@ public class MysqlSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#createSequenceQuery()
 	 */
+	@Override
 	protected String createSequenceQuery() {
 		return createSequenceQuery( this.getSequenceName() ); 
 	}
@@ -23,6 +24,7 @@ public class MysqlSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#generateId()
 	 */
+	@Override
 	public DAOID generateId() throws DAOException {
 		this.getLogger().debug( "generateId start " );
 		DAOID id = null;

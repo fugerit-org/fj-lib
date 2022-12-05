@@ -1,4 +1,145 @@
-﻿0.7.4.7 (2021-01-01)
+﻿0.8.3 (2022-11-26)
+------------------
++ Added ObjectUtils.objectWithDefault() function
++ Added options to create a ParamI18N loading keys from a different bundle than the main property key
+
+0.8.2 (2022-11-25)
+------------------
++ Added 'fail-on-set' of duplicate entry for GenericListCatalogConfig
++ Added toString() to ParamI18N
+
+0.8.1 (2022-11-24)
+------------------
++ Added simple i18n support
++ Removed reference to J2ee version (no more needed)
++ Removed inner methods that will be deprecated in java 11.
+
+0.8.0 (2022-11-17)
+------------------ 
++ Changed dependency from dbcp to dbcp2
++ Updated of parent bom to 0.2.2 (many dependency versions updated) 
+
+0.7.13 (2022-11-14)
+------------------ 
++ Module fj-ext moved to a separate [repository](https://github.com/fugerit-org/fj-ext.git) 
++ Updated of parent bom to 0.2.0 (many dependency versions updated) 
+
+0.7.9 (2022-11-07)
+------------------ 
++ Bump esapi from 2.1.0.1 to 2.3.0.0 in /fj-ext
+
+0.7.8 (2022-11-07)
+------------------
++ Build jdk 1.8
+
+0.7.7 (2022-11-07)
+-------------------- 
++ Changed version format to MAJOR.MINOR.PATH
+
+0.7.6.9 (2022-11-02)
+-------------------- 
++ Added daogen ResultUtils class
+
+0.7.6.8 (2022-03-18)
+-------------------- 
++ Added PropsIO.loadFromBundle() method
+
+0.7.6.7 (2021-09-17)
+-------------------- 
++ Added custom factory method for SelectHelper
+
+0.7.6.6 (2021-09-16)
+-------------------- 
++ Added appendDescription() method do interface DaoResult
+
+0.7.6.5 (2021-09-12)
+-------------------- 
++ Added CodeException
+
+0.7.6.4 (2021-08-31)
+-------------------- 
++ Added ExHandler capabilities to MiniFilterChain 
++ Added subprops utility
+
+0.7.6.3 (2021-08-23)
+-------------------- 
++ MiniFilterChain evalute ALWAYS step in case of Exception on previous step
+
+0.7.6.2 (2021-08-23)
+-------------------- 
++ MiniFilterChain evalute ALWAYS step in case of Exception on previous step
+
+0.7.6.1 (2021-08-03)
+-------------------- 
++ Default toString for result
++ Bump commons-compress from 1.20 to 1.21
+
+0.7.6.0 (2021-07-01)
+-------------------- 
++ new fj-bom 0.1.0 as parent pom
+
+0.7.5.11 (2021-06-11)
+-------------------- 
++ PropertyEntry now implements KeyString
+
+0.7.5.10 (2021-05-04)
+-------------------- 
++ PreloadByteArrayDataHandler e PreloadCharArrayDataHandler serializable
+
+0.7.5.9 (2021-03-26)
+-------------------- 
++ DefaultLoadResultNG now support generic sql statement
+
+0.7.5.8 (2021-03-15)
+-------------------- 
++ Added support for daogen service result
+
+0.7.5.7 (2021-03-07)
+-------------------- 
++ Added ItemCheck interface
+
+0.7.5.6 (2021-03-06)
+-------------------- 
++ Added LoadResultNG interface
+
+0.7.5.5 (2021-03-05)
+-------------------- 
++ Added DaoResult and DaoResultList interface
+
+0.7.5.4 (2021-03-04)
+-------------------- 
++ DAOUtilsNG for handling query without closing connection
+
+0.7.5.3 (2021-02-25)
+-------------------- 
++ SimpleJavaGenerator has now an option to avoid generating custom part comments
+
+0.7.5.2 (2021-02-24)
+-------------------- 
++ MiniFilterChain automatically propagate chainId
+
+0.7.5.1 (2021-02-24)
+-------------------- 
++ Added some functions to AttributeHolderDefault
+
+0.7.5.0 (2021-02-14)
+-------------------- 
++ FactoryCatalog can now read custom configuration parameters
+
+0.7.4.10 (2021-01-31)
+-------------------- 
++ Correct optional message in ValidatorRegex
+
+0.7.4.9 (2021-01-30) [DEPRECATED]
+-------------------- 
++ Correct optional message in ValidatorRegex
+
+0.7.4.8 (2021-01-03)
+-------------------- 
++ Added wrappers utilities
++ Changed ValidatorCatalog.init() to use StreamHelper.resolvePath()
+
+0.7.4.7 (2021-01-01)
 -------------------- 
 + Added ValidatorNumber for ValidatorCatalog A.P.I.
 

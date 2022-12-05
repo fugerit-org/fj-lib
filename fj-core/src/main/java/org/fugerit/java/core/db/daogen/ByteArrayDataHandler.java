@@ -2,6 +2,7 @@ package org.fugerit.java.core.db.daogen;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.sql.Blob;
 
 import org.fugerit.java.core.io.StreamIO;
@@ -24,6 +25,7 @@ public abstract class ByteArrayDataHandler {
 		return newHandlerPreload(b);
 	}
 	
+	@Override
 	public String toString() {
 		return new String( this.getData() );
 	}
@@ -41,8 +43,13 @@ public abstract class ByteArrayDataHandler {
 	
 }
 
-class PreloadByteArrayDataHandler extends ByteArrayDataHandler {
+class PreloadByteArrayDataHandler extends ByteArrayDataHandler implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 181786331304919843L;
+	
 	private byte[] data;
 	
 	public PreloadByteArrayDataHandler(byte[] data) {

@@ -20,6 +20,7 @@ import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.KeyObject;
+import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.xml.config.XMLSchemaCatalogConfig;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.fugerit.java.core.xml.dom.DOMUtils;
@@ -129,6 +130,11 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	 * If 'check-duplicate-id' is se to fail, the duplicate will cause the configuration to fail
 	 */
 	public static final String CONFIG_CHECK_DUPLICATE_ID_FAIL = "fail";
+
+	/**
+	 * If 'check-duplicate-entry-id' is se to fail, the duplicate will cause the configuration to fail
+	 */
+	public static final String CONFIG_CHECK_DUPLICATE_ID_FAIL_ON_SET = "fail-on-set";
 	
 	/**
 	 * If 'check-duplicate-id' is se to warn, the duplicate will only be logged
@@ -367,6 +373,14 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 					if ( !this.getEntryIdCheck().add( idSchema ) ) {
 						throw new ConfigException( "Duplicate entry id found : "+idSchema );
 					}
+				} else if ( StringUtils.isNotEmpty( idSchema ) && CONFIG_CHECK_DUPLICATE_ID_FAIL_ON_SET.equalsIgnoreCase( checkDuplicateUniversalId ) ) {
+					if ( listCurrent instanceof ListMapStringKey ) {
+						ListMapStringKey<?> listCheck = ((ListMapStringKey<?>)listCurrent);
+						if ( listCheck.getMap().containsKey( idSchema ) ) {
+							throw new ConfigException( "Duplicate entry id on set found : "+idSchema );
+						}	
+					}
+					
 				}
 				if ( ATT_TAG_TYPE_STRING.equals( type ) ) {
 					if ( StringUtils.isEmpty( idSchema ) ) {

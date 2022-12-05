@@ -54,6 +54,7 @@ public class MiniFilterConfigEntry extends BasicIdConfigType {
 		this.props = props;
 	}
 
+	@Override
 	public String getKey() {
 		return this.getId();
 	}
@@ -90,6 +91,7 @@ public class MiniFilterConfigEntry extends BasicIdConfigType {
 		this.param01 = param01;
 	}
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[id:"+this.getId()+"]";
 	}

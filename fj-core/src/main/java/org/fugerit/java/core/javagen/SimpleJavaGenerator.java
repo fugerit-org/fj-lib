@@ -26,6 +26,7 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 		super.init(sourceFolder, fullObjectBName, lineSeparator);
 		this.setJavaStyle( javaStyle );
 		this.config = config;
+		this.noCustomComment = false;
 	}
 	
 	public void init( File sourceFolder, String fullObjectBName, String javaStyle, Properties config ) throws ConfigException {
@@ -45,6 +46,16 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	private String implementsInterface;
 	
 	private Properties config;
+
+	private boolean noCustomComment;
+	
+	public boolean isNoCustomComment() {
+		return noCustomComment;
+	}
+
+	public void setNoCustomComment(boolean noCustomComment) {
+		this.noCustomComment = noCustomComment;
+	}
 
 	protected Properties getConfig() {
 		return config;
@@ -111,11 +122,13 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 			this.getWriter().println( " *" );
 			this.getWriter().println( " * author: "+author );
 		}
-		this.getWriter().println( " *" );
-		this.getWriter().println( " * warning!: auto generated object, insert custom code only between comments :" );
-		this.getWriter().println( " * "+CUSTOM_CODE_START );
-		this.getWriter().println( " * "+CUSTOM_CODE_END );
-		this.getWriter().println( " */" );
+		if ( !this.isNoCustomComment() ) {
+			this.getWriter().println( " *" );
+			this.getWriter().println( " * warning!: auto generated object, insert custom code only between comments :" );
+			this.getWriter().println( " * "+CUSTOM_CODE_START );
+			this.getWriter().println( " * "+CUSTOM_CODE_END );
+		}
+		this.getWriter().println( " */" );	
 		String impl = "";
 		if ( StringUtils.isNotEmpty( this.extendsClass ) ) {
 			impl+= " extends "+this.extendsClass;
@@ -135,7 +148,9 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	public abstract void generateBody() throws Exception;
 	
 	protected void customPartWorker( String startTag, String endTag, String indent ) throws FileNotFoundException, IOException {
-		customPartWorker( this.getJavaFile(), this.getWriter(), startTag, endTag, indent );
+		if ( !this.isNoCustomComment() ) {
+			customPartWorker( this.getJavaFile(), this.getWriter(), startTag, endTag, indent );
+		}
 	}
 	
 	protected void addSerialVerUID() throws IOException {

@@ -32,7 +32,7 @@ public class CharsetCorrect extends ToolHandlerHelper {
 		byte[] sourceData = os.toByteArray();
 		boolean hasErrors = ! EncodingCheck.checkEncoding( sourceData , targetCharset );
 		if ( hasErrors ) {
-			StringBuffer infoCommentBuffer = new StringBuffer();
+			StringBuilder infoCommentBuffer = new StringBuilder();
 			infoCommentBuffer.append( "/* " );
 			infoCommentBuffer.append( CharsetCorrect.class.getSimpleName() );
 			infoCommentBuffer.append( " found non " );

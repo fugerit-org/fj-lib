@@ -17,6 +17,7 @@ public class GenericSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#generateId()
 	 */
+	@Override
 	public DAOID generateId() throws DAOException {
 		DAOID id = null;
 		if ( this.idGenerator == null ) {
@@ -32,6 +33,7 @@ public class GenericSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#configure(java.util.Properties)
 	 */
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		super.configure(props);
 		if ( this.getConnectionFactory() == null ) {
@@ -67,6 +69,7 @@ public class GenericSeqIdGenerator extends BasicSeqIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#createSequenceQuery()
 	 */
+	@Override
 	protected String createSequenceQuery() {
 		String sql = null;
 		if ( this.dbType == DbUtils.DB_ORACLE ) {

@@ -72,6 +72,7 @@ public class CustomPrintWriter extends PrintWriter {
 			throw new IOException("Stream closed");
 	}
 
+	@Override
 	public void println() {
 		try {
 			synchronized (lock) {

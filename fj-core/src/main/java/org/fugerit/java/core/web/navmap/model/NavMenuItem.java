@@ -33,6 +33,7 @@ public class NavMenuItem extends NavEntryWrapper {
 		this.itemInfo3 = itemInfo3;
 	}
 
+	@Override
 	public NavEntryI getEntry() {
 		return entry;
 	}

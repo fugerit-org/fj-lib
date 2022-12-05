@@ -9,6 +9,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.fugerit.java.core.db.dao.DAOException;
+import org.fugerit.java.core.util.result.ResultHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,14 @@ public abstract class SimpleServiceProvider<T> extends BasicHelper {
 	
 	protected abstract CloseableDAOContext newDefaultContext() throws DAOException;
 
+	public Object createResultFromList( SimpleServiceResult<List<T>> result ) {
+		return result.getContent();
+	}
+	
+	public Object createResultFromObject( SimpleServiceResult<T> result ) {
+		return ResultHelper.createList( result.getContent() );
+	}
+			
 	public Response createResponseFromList( SimpleServiceResult<List<T>> result ) {
 		Response res = null;
 		if ( result.getContent() != null ) {

@@ -2,10 +2,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.fugerit.java</groupId>
 	<artifactId>fj-lib</artifactId>
 
-	<version>0.7.4.7</version>
+	<parent>
+		<groupId>org.fugerit.java</groupId>
+		<artifactId>fj-bom</artifactId>
+		<version>0.2.2</version>
+		<relativePath></relativePath>
+	</parent>
+
+	<version>0.8.3</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -15,26 +21,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version-compliance>1.8</java-version-compliance>
-		<j2ee-version-compliance>6.0</j2ee-version-compliance>
 	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
-	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>
-	    <maven.test.skip>false</maven.test.skip>
-	    <!-- maven plugin versions -->
-	    <mvn-source-version>3.2.1</mvn-source-version>
-	    <mvn-javadoc-version>3.2.0</mvn-javadoc-version>
-	    <mvn-jar-version>3.2.0</mvn-jar-version>
-	    <mvn-shade-version>3.2.2</mvn-shade-version>	     
-	    <!-- logging dependancies -->    
-	    <slf4j-version>1.7.30</slf4j-version>		
-	    <!-- release dependancies -->
-	    <nexus-version>1.6.8</nexus-version>
-	    <mvn-gpg-version>1.6</mvn-gpg-version>
-	    <!-- testing dependancies -->
-	    <poi-version>4.1.2</poi-version>
-	    <dbcp-version>1.4</dbcp-version>
-	    <log4j-slf4j-impl-version>2.13.1</log4j-slf4j-impl-version>	    
-	    <junit-version>4.13.1</junit-version>
-	    <hsqldb-version>2.5.0</hsqldb-version>	    	
+	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>	     	
 	</properties>
 
 	<licenses>
@@ -80,7 +68,6 @@
 
 	<modules>
 		<module>fj-core</module>
-		<module>fj-ext</module>
 		<module>fj-tool</module>
 	</modules>
 
@@ -92,26 +79,7 @@
 				<groupId>org.fugerit.java</groupId>
 				<artifactId>fj-core</artifactId>
 				<version>${project.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax</groupId>
-				<artifactId>javaee-api</artifactId>
-				<version>${j2ee-version-compliance}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-			    <groupId>commons-dbcp</groupId>
-			    <artifactId>commons-dbcp</artifactId>
-			    <version>${dbcp-version}</version>
-			</dependency>	
-
-			<dependency>
-			    <groupId>org.apache.poi</groupId>
-			    <artifactId>poi-ooxml</artifactId>
-			    <version>${poi-version}</version>
-			</dependency>
+			</dependency>			
 
 		</dependencies>
 
@@ -141,32 +109,26 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j-version}</version>
 			<scope>compile</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j-version}</version>
 			<scope>test</scope>
 		</dependency>	
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-slf4j-impl</artifactId>
-		    <version>${log4j-slf4j-impl-version}</version>
 		    <scope>test</scope>
 		</dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>${hsqldb-version}</version>
             <scope>test</scope>
         </dependency>			
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit-version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -174,104 +136,6 @@
 
 	<profiles>
 
-		<profile>
-			<id>full</id>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-source-plugin</artifactId>
-							<version>${mvn-source-version}</version>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-javadoc-plugin</artifactId>
-							<version>${mvn-javadoc-version}</version>
-						</plugin>
-					</plugins>					
-				</pluginManagement>
-			</build>
-		</profile>
-		
-		<profile>
-			<id>test</id>
-			<properties>
-			    <maven.test.skip>false</maven.test.skip>
-			</properties>
-		</profile>		
-
-		<profile>
-			<id>doRelease</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>${nexus-version}</version>
-						<extensions>true</extensions>
-						<configuration>
-							<serverId>ossrh</serverId>
-							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-							<autoReleaseAfterClose>true</autoReleaseAfterClose>
-						</configuration>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>${mvn-gpg-version}</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>singlepackage</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jar-plugin</artifactId>
-						<version>${mvn-jar-version}</version>
-						<configuration>
-							<archive>
-								<manifest>
-									<addClasspath>true</addClasspath>
-									<mainClass>org.fugerit.java.tool.Launcher</mainClass>
-								</manifest>
-							</archive>
-						</configuration>
-					</plugin>				
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-shade-plugin</artifactId>
-						<version>${mvn-shade-version}</version>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>shade</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<finalName>dist-${project.artifactId}-${project.version}</finalName>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 	</profiles>
 	
 </project>

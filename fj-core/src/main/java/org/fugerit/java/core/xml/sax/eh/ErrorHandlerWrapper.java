@@ -26,6 +26,7 @@ public class ErrorHandlerWrapper implements ErrorHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
      */
+    @Override
     public void error(SAXParseException arg0) throws SAXException {
         this.getWrappedErrorHandler().error(arg0);
     }
@@ -33,6 +34,7 @@ public class ErrorHandlerWrapper implements ErrorHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#fatalError(org.xml.sax.SAXParseException)
      */
+    @Override
     public void fatalError(SAXParseException arg0) throws SAXException {
         this.getWrappedErrorHandler().fatalError(arg0);
     }
@@ -40,6 +42,7 @@ public class ErrorHandlerWrapper implements ErrorHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
      */
+    @Override
     public void warning(SAXParseException arg0) throws SAXException {
         this.getWrappedErrorHandler().warning(arg0);
     }

@@ -115,7 +115,7 @@ public class ArgUtils {
 						Enumeration<Object> keys = toLoad.keys();
 						while ( keys.hasMoreElements() ) {
 							String currentKey = keys.nextElement().toString();
-							if ( !props.contains( currentKey ) ) {
+							if ( !props.containsKey( currentKey ) ) {
 								props.setProperty( currentKey , toLoad.getProperty( currentKey ) );
 							}
 						}

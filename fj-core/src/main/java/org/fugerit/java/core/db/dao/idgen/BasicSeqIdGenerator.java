@@ -23,6 +23,7 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#configure(org.w3c.dom.Element)
 	 */
+	@Override
 	public void configure(Element tag) throws ConfigException {
 		this.configure( DOMUtils.attributesToProperties( tag ) ); 
 	}
@@ -30,6 +31,7 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#configure(java.util.Properties)
 	 */
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		this.setSequenceName( props.getProperty( PROP_SEQ_NAME ) );
 	}	
@@ -37,6 +39,7 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#generateID()
 	 */
+	@Override
 	public DAOID generateId( Connection conn ) throws DAOException {
 		this.getLogger().debug( "generateId start " );
 		DAOID id = null;

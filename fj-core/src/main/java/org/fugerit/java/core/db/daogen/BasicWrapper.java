@@ -1,6 +1,9 @@
 package org.fugerit.java.core.db.daogen;
 
-public class BasicWrapper<T> extends BasicHelper {
+import org.fugerit.java.core.lang.helpers.Wrapper;
+import org.fugerit.java.core.lang.helpers.WrapperHelper;
+
+public class BasicWrapper<T> extends BasicHelper implements Wrapper<T> {
 	/**
 	 * 
 	 */
@@ -8,10 +11,12 @@ public class BasicWrapper<T> extends BasicHelper {
 	
 	private T wrapped;
 
+	@Override
 	public T unwrapModel() {
 		return wrapped;
 	}
 
+	@Override
 	public void wrapModel(T wrapped) {
 		this.wrapped = wrapped;
 	}
@@ -21,17 +26,14 @@ public class BasicWrapper<T> extends BasicHelper {
 		this.wrapped = wrapped;
 	}
 
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[wraps:"+unwrapModel().toString()+"]";
 	}
 
-	@SuppressWarnings("unchecked")
+	@Override
 	public T unwrap() {
-		T res = this.unwrapModel();
-		while ( res instanceof BasicWrapper ) {
-			res = ((BasicWrapper<T>)res).unwrapModel();
-		}
-		return res;
+		return WrapperHelper.unwrap( this.wrapped );
 	}
 
 }

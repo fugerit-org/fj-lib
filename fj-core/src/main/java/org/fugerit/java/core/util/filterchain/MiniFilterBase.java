@@ -41,6 +41,8 @@ public abstract class MiniFilterBase implements MiniFilter {
 	private String param01;
 	
 	private Properties customConfig;
+	
+	private String chainId;
 
 	@Override
 	public Properties getCustomConfig() {
@@ -75,6 +77,15 @@ public abstract class MiniFilterBase implements MiniFilter {
 		this.param01 = param01;
 	}
 
+	public String getChainId() {
+		return chainId;
+	}
+
+	public void setChainId(String chainId) {
+		this.chainId = chainId;
+	}
+
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"["+this.getKey()+",default-behaviour:"+this.getDefaultBehaviour()+"]";
 	}

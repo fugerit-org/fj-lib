@@ -59,6 +59,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#getDataBaseInfo()
 	 */
+	@Override
 	public DataBaseInfo getDataBaseInfo() throws DAOException {
 		if ( this.dataBaseInfo == null ) {
 			this.init();
@@ -314,9 +315,9 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection password : ******" );
 			Driver driver = null;
 			if ( cl != null ) {
-				driver = (Driver)cl.loadClass( drv ).newInstance();
+				driver = (Driver)cl.loadClass( drv ).getDeclaredConstructor().newInstance();
 			} else {
-				driver= (Driver)Class.forName( drv ).newInstance();
+				driver= (Driver)Class.forName( drv ).asSubclass( Driver.class ).getDeclaredConstructor().newInstance();
 			}
 			connectionFactory = ( new DirectConnectionFactory( driver, url, usr, pwd ) );
 		} catch (Exception e) {
@@ -353,12 +354,14 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#getConnection()
 	 */
+	@Override
 	public abstract Connection getConnection() throws DAOException;
 
 	/*
 	 * (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#release()
 	 */
+	@Override
 	public void release() throws DAOException {
 		
 	}	
@@ -385,6 +388,7 @@ class DirectConnectionFactory extends ConnectionFactoryImpl {
 		this.info.setProperty( "password", pwd );
 	}
 	
+	@Override
 	public Connection getConnection() throws DAOException {
 		Connection conn = null;
 		try {
@@ -407,10 +411,12 @@ class DirectConnectionFactory extends ConnectionFactoryImpl {
  */
 class DSConnectionFactory extends ConnectionFactoryImpl {
 	
+	@Override
 	public String toString() {
 		return this.getClass().getName()+"[dsName:"+this.dsName+",source:"+this.source+"]";
 	}	
 	
+	@Override
 	public Connection getConnection() throws DAOException {
 		Connection conn = null;
 		try {
@@ -449,10 +455,12 @@ class DSConnectionFactory extends ConnectionFactoryImpl {
  */
 class DS2ConnectionFactory extends ConnectionFactoryImpl {
 	
+	@Override
 	public String toString() {
 		return this.getClass().getName()+"[source:"+this.source+"]";
 	}	
 	
+	@Override
 	public Connection getConnection() throws DAOException {
 		Connection conn = null;
 		try {

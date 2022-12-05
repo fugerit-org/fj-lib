@@ -18,6 +18,7 @@ public class DTDHandlerWrapper implements DTDHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.DTDHandler#notationDecl(java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void notationDecl(String arg0, String arg1, String arg2)
             throws SAXException {
         this.getWrappedDTDHandler().notationDecl(arg0, arg1, arg2);
@@ -26,6 +27,7 @@ public class DTDHandlerWrapper implements DTDHandler {
     /* (non-Javadoc)
      * @see org.xml.sax.DTDHandler#unparsedEntityDecl(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void unparsedEntityDecl(String arg0, String arg1, String arg2,
             String arg3) throws SAXException {
         this.getWrappedDTDHandler().unparsedEntityDecl(arg0, arg1, arg2, arg3);

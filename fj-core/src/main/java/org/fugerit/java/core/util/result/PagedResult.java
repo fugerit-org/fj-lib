@@ -89,6 +89,7 @@ public interface PagedResult<T> extends Result {
 	 * 
 	 * @return result code
 	 */
+	@Override
 	public int getResultCode();
 	
 	/*

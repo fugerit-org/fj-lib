@@ -1,0 +1,27 @@
+<data-catalog-config
+	check-duplicate-entry-id="fail-on-set" 
+	type="org.fugerit.java.core.util.filterchain.MiniFilterConfigEntry">
+
+	<data-list id="chain-base-01" >
+		<data id="step-01-01" defaultBehaviour="CONTINUE"
+			description="Step 01 01 Continue (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.ContinueStep"/>
+		<data id="step-01-02" defaultBehaviour="CONTINUE"
+			description="Step 01 02 Continue (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.ContinueStep"/>			
+	</data-list>
+	
+	<data-list id="chain-base-02">
+		<data id="step-02-01" defaultBehaviour="CONTINUE"
+			description="Step 02 01 Skip (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
+		<data id="step-02-02" defaultBehaviour="CONTINUE"
+			description="Step 02 02 Skip (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>
+		<!-- has the same id of first step in this set -->
+		<data id="step-02-01" defaultBehaviour="CONTINUE"
+			description="Step 02 03 Skip (this one will be printed)" 
+			type="test.org.fugerit.java.core.util.filterchain.SkipStep"/>				
+	</data-list>	
+
+</data-catalog-config>

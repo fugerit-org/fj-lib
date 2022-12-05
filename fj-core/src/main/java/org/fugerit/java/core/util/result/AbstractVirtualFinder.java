@@ -27,6 +27,7 @@ public abstract class AbstractVirtualFinder implements VirtualFinder {
 		return this.getPerPage() < this.getRealPerPage();
 	}
 
+	@Override
 	public String toString() {
 		return "VirtualFinder[perPage:"+this.getPerPage()+",currentPage:"+this.getCurrentPage()+
 				",realPerPage:"+this.getRealPerPage()+",realCurrentPage:"+this.getRealCurrentPage()+"]";

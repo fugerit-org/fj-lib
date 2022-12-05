@@ -20,6 +20,8 @@
  */
 package org.fugerit.java.core.cfg;
 
+import org.fugerit.java.core.lang.ex.CodeException;
+
 /**
  * <p>Exception for handling unexpected situations during configuration.</p>
  *
@@ -28,22 +30,32 @@ package org.fugerit.java.core.cfg;
  * @author Fugerit
  *
  */
-public class ConfigException extends Exception {
+public class ConfigException extends CodeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6673695755101705239L;
+	
 	/**
 	 * <p>Default value for the code field in a ConfigException.</p>
 	 */
-	public static final int DEFAULT_CODE = -1;
-	
-	private int code = DEFAULT_CODE;
-	
-	/*
-	 * 
-	 */
-	private static final long serialVersionUID = -4205246051306630691L;
+	public static final int DEFAULT_CODE = CodeException.DEFAULT_CODE;
 
 	public ConfigException() {
 		super();
+	}
+
+	public ConfigException(int code) {
+		super(code);
+	}
+
+	public ConfigException(String message, int code) {
+		super(message, code);
+	}
+
+	public ConfigException(String message, Throwable cause, int code) {
+		super(message, cause, code);
 	}
 
 	public ConfigException(String message, Throwable cause) {
@@ -54,51 +66,12 @@ public class ConfigException extends Exception {
 		super(message);
 	}
 
+	public ConfigException(Throwable cause, int code) {
+		super(cause, code);
+	}
+
 	public ConfigException(Throwable cause) {
 		super(cause);
 	}
-
-	public ConfigException(int code) {
-		super();
-		this.code = code;
-	}
-
-	public ConfigException(String message, int code) {
-		super(message);
-		this.code = code;
-	}
-
-	public ConfigException(Throwable cause, int code) {
-		super(cause);
-		this.code = code;
-	}
-
-	public ConfigException(String message, Throwable cause, int code) {
-		super(message, cause);
-		this.code = code;
-	}
 	
-	/**
-	 * @return the code
-	 */
-	public int getCode() {
-		return code;
-	}
-
-	/**
-	 * @param code the code to set
-	 */
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Throwable#toString()
-	 */
-	@Override
-	public String toString() {
-		return super.toString()+"[code:"+this.code+"]";
-	}
-
 }

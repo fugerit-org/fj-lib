@@ -19,7 +19,7 @@ public class SessionStatusFilter extends HttpFilterHelper {
 	@Override
 	public void doFilterHttp(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 		chain.doFilter( request , response );
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append( "session id : " );
 		buffer.append( request.getSession().getId() );
 		try {

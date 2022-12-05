@@ -35,7 +35,7 @@ class BinaryNumber {
 	private static Character[] convert( char[] c ) {
 		Character[] result = new Character[ c.length ];
 		for ( int k = 0; k < c.length; k++ ) {
-			result[k] = new Character( c[k] );
+			result[k] = Character.valueOf( c[k] );
 		}
 		return result;
 	}
@@ -56,15 +56,15 @@ class BinaryNumber {
 	public static final List<Character> LIST_HEX = Arrays.asList( convert( VALUES_HEX ) );
 	
 	public static int hexToInt( char c ) {
-		return LIST_HEX.indexOf( new Character( c ) );
+		return LIST_HEX.indexOf( Character.valueOf( c ) );
 	}
 	
 	public static int octToInt( char c ) {
-		return LIST_OCT.indexOf( new Character( c ) );
+		return LIST_OCT.indexOf( Character.valueOf( c ) );
 	}
 	
 	public static int binToInt( char c ) {
-		return LIST_BIN.indexOf( new Character( c ) );
+		return LIST_BIN.indexOf( Character.valueOf( c ) );
 	}	
 	
 	public BinaryNumber() {
@@ -137,7 +137,7 @@ class BinaryNumber {
 	}
 
 	private String getString( char[] values, int radix ) { 
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for ( int k=0; k<this.size( radix ); k++ ) {
 			buffer.append( values[ this.get( k , radix ) ] );
 		}
@@ -156,6 +156,7 @@ class BinaryNumber {
 		return this.getString( VALUES_HEX, HEX_RADIX );
 	}	
 	
+	@Override
 	public String toString() {
 		return this.getBinString();
 	}

@@ -38,6 +38,7 @@ public class FilterInfoDefault implements FilterInfo, Serializable {
 	
 	private String path;
 
+	@Override
 	public Object getValue() {
 		return value;
 	}
@@ -46,6 +47,7 @@ public class FilterInfoDefault implements FilterInfo, Serializable {
 		this.value = value;
 	}
 
+	@Override
 	public String getEvaluate() {
 		return evaluate;
 	}
@@ -54,6 +56,7 @@ public class FilterInfoDefault implements FilterInfo, Serializable {
 		this.evaluate = evaluate;
 	}
 
+	@Override
 	public String getPath() {
 		return path;
 	}

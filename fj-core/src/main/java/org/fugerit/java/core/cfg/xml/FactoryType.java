@@ -1,5 +1,7 @@
 package org.fugerit.java.core.cfg.xml;
 
+import org.w3c.dom.Element;
+
 public class FactoryType extends BasicIdConfigType {
 
 	/**
@@ -27,4 +29,14 @@ public class FactoryType extends BasicIdConfigType {
 		this.info = info;
 	}
 	
+	private Element element;
+
+	public Element getElement() {
+		return element;
+	}
+
+	public void setElement(Element element) {
+		this.element = element;
+	}
+
 }

@@ -34,6 +34,7 @@ public class CheckpointData implements Serializable {
 		this.creationTime = System.currentTimeMillis();
 	}
 	
+	@Override
 	public String toString() {
 		return "[id:"+this.getId()+",time:"+this.getDuration()+"]"; 
 	}

@@ -4,8 +4,9 @@ import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.lang.helpers.StringUtils;
+import org.fugerit.java.core.util.collection.KeyString;
 
-public class PropertyEntry extends MapEntry<String, String> {
+public class PropertyEntry extends MapEntry<String, String> implements KeyString {
 
 	/**
 	 * 

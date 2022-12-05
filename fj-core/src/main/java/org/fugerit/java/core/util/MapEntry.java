@@ -3,7 +3,9 @@ package org.fugerit.java.core.util;
 import java.io.Serializable;
 import java.util.Map;
 
-public class MapEntry<K, V> implements Serializable {
+import org.fugerit.java.core.util.collection.KeyObject;
+
+public class MapEntry<K, V> implements Serializable, KeyObject<K> {
 
 	/**
 	 * 
@@ -14,6 +16,7 @@ public class MapEntry<K, V> implements Serializable {
 	
 	private V value;
 
+	@Override
 	public K getKey() {
 		return key;
 	}
@@ -44,6 +47,7 @@ public class MapEntry<K, V> implements Serializable {
 		return map.put( key , value );
 	}
 		
+	@Override
 	public String toString() {
 		return ObjectUtils.toDefaultString( this , 
 				new PropertyEntry( "key", String.valueOf( this.getKey() ) ),

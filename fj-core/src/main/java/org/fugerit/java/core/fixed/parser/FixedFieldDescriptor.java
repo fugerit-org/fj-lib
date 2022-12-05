@@ -47,7 +47,7 @@ public class FixedFieldDescriptor {
 	public static String normalizeName( String name ) {
 		String prenormalize = name.toLowerCase().replaceAll( "[^A-Za-z0-9]", " " ).trim();
 		String[] tokens = prenormalize.split( " " );
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append( tokens[0] );
 		for ( int k=1; k<tokens.length; k++ ) {
 			if ( tokens[k].length() > 0 ) {
@@ -58,6 +58,7 @@ public class FixedFieldDescriptor {
 		return buffer.toString();
 	}
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[name:"+this.getName()+",start:"+this.getStart()+",length:"+this.getLength()+",normalized-name:"+this.getNormalizedName()+"]";
 	}

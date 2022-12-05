@@ -23,7 +23,7 @@ package org.fugerit.java.core.db.connect;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.fugerit.java.core.db.dao.DAOException;
 
 /**
@@ -72,7 +72,7 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 			this.dataSource.setUrl( url );
 			this.dataSource.setUsername( usr );
 			this.dataSource.setPassword( pwd );
-			this.dataSource.setMaxActive( max );
+			this.dataSource.setMaxTotal( max );
 			this.dataSource.setMaxIdle( min );
 			this.dataSource.setInitialSize( init );
 			if ( cl != null ) {

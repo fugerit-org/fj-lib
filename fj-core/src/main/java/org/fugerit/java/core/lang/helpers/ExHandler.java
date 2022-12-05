@@ -1,11 +1,13 @@
 package org.fugerit.java.core.lang.helpers;
 
+import java.io.Serializable;
+
 /*
  * <p>Interfaccia per l'handling di eccezioni.</p>
  * 
  * @author  Fugerit
  */
-public interface ExHandler {
+public interface ExHandler extends Serializable {
 
     /*
      * <p>Gestisce un errore fatale.</p>

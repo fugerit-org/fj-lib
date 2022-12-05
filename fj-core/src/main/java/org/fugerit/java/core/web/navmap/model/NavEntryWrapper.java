@@ -24,62 +24,77 @@ public class NavEntryWrapper implements NavEntryI, Serializable {
 	
 	// NavEntryI implementation
 
+	@Override
 	public String getUrl() {
 		return entry.getUrl();
 	}
 
+	@Override
 	public String getMenu1() {
 		return entry.getMenu1();
 	}
 
+	@Override
 	public String getMenu2() {
 		return entry.getMenu2();
 	}
 
+	@Override
 	public String getMenu3() {
 		return entry.getMenu3();
 	}
 
+	@Override
 	public String getAuth() {
 		return entry.getAuth();
 	}
 
+	@Override
 	public String getKey() {
 		return entry.getKey();
 	}
 
+	@Override
 	public String getLabel() {
 		return entry.getLabel();
 	}
 
+	@Override
 	public NavEntryI getAliasFor() {
 		return entry.getAliasFor();
 	}
 
+	@Override
 	public NavEntryI getParent() {
 		return entry.getParent();
 	}
 
+	@Override
 	public ListMapStringKey<NavEntryI> getKids() {
 		return entry.getKids();
 	}
 
+	@Override
 	public ListMapStringKey<NavEntryI> getAlias() {
 		return entry.getAlias();
 	}
 
+	@Override
 	public boolean isLeaf() {
 		return entry.isLeaf();
 	}
 
+	@Override
 	public boolean isRoot() {
 		return entry.isRoot();
 	}
 
+	@Override
 	public boolean isAlias() {
 		return entry.isAlias();
 	}
 
+	@Override
 	public boolean isCurrentBranch(NavEntryI entry) {
 		return entry.isCurrentBranch(entry);
 	}

@@ -38,6 +38,7 @@ public class ColumnModel implements KeyObject<String> {
 	public static final int NULLABLE_TRUE = 1;
 	public static final int NULLABLE_UNKNOWN = -1;
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[name:"+this.getName()+";typeSql:"+this.getTypeSql()+";typeName:"+this.typeName+"]";
 	}

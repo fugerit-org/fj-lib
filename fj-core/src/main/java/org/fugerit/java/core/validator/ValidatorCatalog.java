@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.xml.ListMapConfig;
 import org.fugerit.java.core.fixed.parser.FixedFileFieldBasicValidator;
+import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.xml.dom.DOMIO;
@@ -150,13 +151,17 @@ public class ValidatorCatalog implements Serializable {
 	
 	public static ValidatorCatalog init( String path ) throws ConfigException {
 		ValidatorCatalog catalog = new ValidatorCatalog();
+		init(path, catalog);
+		return catalog;
+	}
+	
+	public static void init( String path, ValidatorCatalog catalog ) throws ConfigException {
 		try {
-			Document doc = DOMIO.loadDOMDoc( ClassHelper.loadFromDefaultClassLoader( path ) );
+			Document doc = DOMIO.loadDOMDoc( StreamHelper.resolveStream(path) );
 			catalog.configure( doc.getDocumentElement() );
 		} catch (Exception e) {
 			throw new ConfigException( e );
 		}
-		return catalog;
 	}
 	
 }

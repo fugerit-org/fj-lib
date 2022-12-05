@@ -3,6 +3,7 @@ package org.fugerit.java.core.db.daogen;
 import java.io.CharArrayReader;
 import java.io.CharArrayWriter;
 import java.io.Reader;
+import java.io.Serializable;
 import java.sql.Clob;
 
 import org.fugerit.java.core.io.StreamIO;
@@ -25,6 +26,7 @@ public abstract class CharArrayDataHandler {
 		return newHandlerPreload( c );
 	}
 	
+	@Override
 	public String toString() {
 		return new String( this.getData() );
 	}
@@ -44,8 +46,13 @@ public abstract class CharArrayDataHandler {
 	
 }
 
-class PreloadCharArrayDataHandler extends CharArrayDataHandler {
+class PreloadCharArrayDataHandler extends CharArrayDataHandler implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4655970671421459368L;
+	
 	private char[] data;
 	
 	public PreloadCharArrayDataHandler(char[] data) {

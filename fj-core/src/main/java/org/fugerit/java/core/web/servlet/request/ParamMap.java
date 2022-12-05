@@ -29,7 +29,7 @@ public class ParamMap implements Serializable {
 	
 	public String getQueryString( String[] excludeParams ) {
 		List<String> listExclude = Arrays.asList( excludeParams );
-		StringBuffer qs = new StringBuffer();
+		StringBuilder qs = new StringBuilder();
 		Iterator<String> ki = this.getParamNames();
 		qs.append( "?"+PARAM_MAP_GENERATE+"=1" );
 		while ( ki.hasNext() ) {
@@ -47,7 +47,7 @@ public class ParamMap implements Serializable {
 	}
 	
 	public String getQueryString() {
-		StringBuffer qs = new StringBuffer();
+		StringBuilder qs = new StringBuilder();
 		Iterator<String> ki = this.getParamNames();
 		qs.append( "?"+PARAM_MAP_GENERATE+"=1" );
 		while ( ki.hasNext() ) {
@@ -131,7 +131,7 @@ public class ParamMap implements Serializable {
 	}
 	
 	public String getSortedQueryString() {
-		StringBuffer qs = new StringBuffer();
+		StringBuilder qs = new StringBuilder();
 		ArrayList<String> l = new ArrayList<String>(  this.map.keySet() );
 		Collections.sort( l );
 		qs.append( "?"+PARAM_MAP_GENERATE+"=2" );
@@ -149,10 +149,12 @@ public class ParamMap implements Serializable {
 		return qs.toString();
 	}
 	
+	@Override
 	public int hashCode() {
 		return this.getSortedQueryString().hashCode();
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		boolean ok = false;
 		if ( obj instanceof ParamMap ) {
@@ -161,8 +163,9 @@ public class ParamMap implements Serializable {
 		return ok;
 	}
 
+	@Override
 	public String toString() {
-		StringBuffer qs = new StringBuffer();
+		StringBuilder qs = new StringBuilder();
 		qs.append( this.getClass().getName() );
 		qs.append( "[" );
 		ArrayList<String> l = new ArrayList<String>(  this.map.keySet() );

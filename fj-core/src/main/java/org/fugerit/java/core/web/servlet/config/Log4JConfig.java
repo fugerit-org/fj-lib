@@ -13,6 +13,7 @@ public class Log4JConfig extends BasicConfig {
 	 */
 	private static final long serialVersionUID = 8238463428937400722L;
 
+	@Override
 	public void configure(Properties props) throws ConfigException {
 		this.getLogger().info( "configure start" );
 		String configPath = props.getProperty( "log4j-config" );

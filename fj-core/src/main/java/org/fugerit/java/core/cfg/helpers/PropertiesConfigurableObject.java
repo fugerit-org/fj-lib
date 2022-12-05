@@ -41,6 +41,7 @@ public abstract class PropertiesConfigurableObject  extends AbstractConfigurable
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.cfg.ConfigurableObject#configure(org.w3c.dom.Element)
 	 */
+	@Override
 	public void configure(Element tag) throws ConfigException {
 		throw ( new ConfigException( "Properties configuration not supported" ) );
 	}

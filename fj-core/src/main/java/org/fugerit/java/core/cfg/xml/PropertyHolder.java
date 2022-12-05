@@ -212,6 +212,7 @@ public class PropertyHolder extends BasicIdConfigType {
 		return props;
 	}
 	
+	@Override
 	public String toString() {
 		return this.getClass().getSimpleName()+"[id:"+this.getId()+",description:"+this.getDescription()+"]";
 	}

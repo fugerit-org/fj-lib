@@ -43,10 +43,12 @@ public class ValidatorRegex extends BasicValidator {
 	@Override
 	public boolean validate(ValidatorContext context) throws Exception {
 		boolean valid = super.validate(context);
-		if ( !Pattern.matches( this.getRegex() , context.getValue() ) ) {
-			valid = false;
-			String message = this.formatMessage( context.getBundle() , ERROR_KEY_REGEX, context.getLabel(), context.getValue(), StringUtils.valueWithDefault( this.getInfo(), this.getRegex() ) );
-			context.getResult().addError( context.getFieldId(), message );
+		if ( this.isRequired() || StringUtils.isNotEmpty( context.getValue() )  ) {
+			if ( !Pattern.matches( this.getRegex() , context.getValue() ) ) {
+				valid = false;
+				String message = this.formatMessage( context.getBundle() , ERROR_KEY_REGEX, context.getLabel(), context.getValue(), StringUtils.valueWithDefault( this.getInfo(), this.getRegex() ) );
+				context.getResult().addError( context.getFieldId(), message );
+			}	
 		}
 		return valid;
 	}

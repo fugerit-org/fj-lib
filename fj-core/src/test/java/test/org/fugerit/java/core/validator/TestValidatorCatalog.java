@@ -16,7 +16,7 @@ import test.org.fugerit.java.BasicTest;
 
 public class TestValidatorCatalog extends BasicTest {
 
-	private final static String CONFIG_PATH = "core/validator/validator-catalog-test.xml";
+	private final static String CONFIG_PATH = "cl://core/validator/validator-catalog-test.xml";
 
 	private static ValidatorCatalog catalog = null;
 	static {
@@ -53,6 +53,8 @@ public class TestValidatorCatalog extends BasicTest {
 		this.validatorWorker( "testRegexValidator" , result, l, "test value one", "test label 1 (valid)", true, params);
 		this.validatorWorker( "testRegexValidatorExt" , result, l, "test value one", "test label 1 (not valid)", false, params);
 		this.validatorWorker( "testRegexValidatorExt" , result, l, "t", "t (not valid)", false, params);
+		this.validatorWorker( "testRegexValidatorExt" , result, l, "", "blank (required)", false, params);
+		this.validatorWorker( "testRegexValidatorExtOptional" , result, l, "", "blank (optional)", true, params);
 		this.validatorWorker( "testRegexValidator" , result, l, "test value 2 <>", "test label 2 (not valid)", false, params);
 		this.validatorWorker( "testDateValidator" , result, l, "01/03/2020", "Valid date", true, params);
 		this.validatorWorker( "testDateValidator" , result, l, "01/03-202A", "Invalid date 1", false, params);

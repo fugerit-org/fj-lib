@@ -115,26 +115,31 @@ public class NavEntry implements Serializable, KeyObject<String>, NavEntryI {
 
 	
 	
+	@Override
 	public String getDisplay() {
 		return display;
 	}
 
 
+	@Override
 	public String getTitle() {
 		return title;
 	}
 
 
+	@Override
 	public String getInfo1() {
 		return info1;
 	}
 
 
+	@Override
 	public String getInfo2() {
 		return info2;
 	}
 
 
+	@Override
 	public String getInfo3() {
 		return info3;
 	}

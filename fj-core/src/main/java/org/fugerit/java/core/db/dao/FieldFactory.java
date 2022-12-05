@@ -135,6 +135,7 @@ public class FieldFactory {
 
 class NullField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[type:"+this.value+"]";
     }    
@@ -146,6 +147,7 @@ class NullField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setNull(index, this.value);
     }
@@ -157,6 +159,7 @@ class NullField extends Field {
 
 class ObjectField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+", class:"+this.value.getClass().getName()+"]";
     }    
@@ -168,6 +171,7 @@ class ObjectField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
     	if ( this.value == null ) {
     		ps.setObject(index, this.value);	
@@ -188,6 +192,7 @@ class ObjectField extends Field {
 
 class BlobDataField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }   
@@ -199,6 +204,7 @@ class BlobDataField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setBytes(index, this.value.getData());
     }
@@ -209,6 +215,7 @@ class BlobDataField extends Field {
 
 class ClobDataField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }   
@@ -220,6 +227,7 @@ class ClobDataField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setCharacterStream(index, this.value.toReader() );
     }
@@ -230,6 +238,7 @@ class ClobDataField extends Field {
 
 class StringField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }   
@@ -241,6 +250,7 @@ class StringField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setString(index, this.value);
     }
@@ -251,6 +261,7 @@ class StringField extends Field {
 
 class LongField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }    
@@ -262,6 +273,7 @@ class LongField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setLong(index, this.value);
     }
@@ -272,6 +284,7 @@ class LongField extends Field {
 
 class IntField extends Field {
     
+    @Override
     public String toString() {
         return this.getClass().getName()+"[value:"+this.value+"]";
     }
@@ -283,6 +296,7 @@ class IntField extends Field {
     /* (non-Javadoc)
      * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
      */
+    @Override
     public void setField(PreparedStatement ps, int index) throws SQLException {
         ps.setInt(index, this.value);
     }
