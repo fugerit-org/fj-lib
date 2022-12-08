@@ -1,4 +1,8 @@
-﻿0.8.3 (2022-11-26)
+﻿0.8.4 (2022-12-08)
+------------------
++ Added some Exception and RuntimeException utilities
+
+0.8.3 (2022-11-26)
 ------------------
 + Added ObjectUtils.objectWithDefault() function
 + Added options to create a ParamI18N loading keys from a different bundle than the main property key
