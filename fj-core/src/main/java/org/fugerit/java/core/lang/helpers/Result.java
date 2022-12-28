@@ -2,6 +2,8 @@ package org.fugerit.java.core.lang.helpers;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -95,5 +97,22 @@ public class Result {
 	        this.fatalList = new ArrayList<Exception>();
 	        this.warningList = new ArrayList<Exception>();
 	    }
-	
+	    
+	    public Collection<Exception> errors() {
+	    	return Collections.unmodifiableCollection( this.errorList );
+	    }
+
+	    public Collection<Exception> fatals() {
+	    	return Collections.unmodifiableCollection( this.fatalList );
+	    }
+	    
+	    public Collection<Exception> warnings() {
+	    	return Collections.unmodifiableCollection( this.warningList );
+	    }
+	    
+
+	    public Collection<Exception> fatalsAndErrors() {
+	    	return Collections.unmodifiableCollection( CollectionUtils.merge( new ArrayList<Exception>( this.fatalList ) ,  this.errorList ) );
+	    }
+	    
 }
