@@ -46,4 +46,11 @@ public class CollectionUtils {
 		return added;
 	}
 	
+	public static <T> Collection<T> merge( Collection<T> merged, Collection<T> toAdd ) {
+		if ( toAdd != null ) {
+			merged.addAll( toAdd );
+		}
+		return merged;
+	}
+	
 }
