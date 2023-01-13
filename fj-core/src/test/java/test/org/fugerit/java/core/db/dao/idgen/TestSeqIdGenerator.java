@@ -27,12 +27,12 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	
 	@Test
 	public void testPopstgresSequence() throws Exception {
-		testSequenceWorker( "PGS" , "seq_test" , new PostgresqlSeqIdGenerator() );
+		testSequenceWorker( "PGS" , "fugerit.seq_test" , new PostgresqlSeqIdGenerator() );
 	}
 	
 	@Test
 	public void testOracleSequence() throws Exception {
-		testSequenceWorker( "ORA" , "seq_test" , new OracleSeqIdGenerator() );
+		testSequenceWorker( "ORA" , "fugerit.seq_test" , new OracleSeqIdGenerator() );
 	}
 	
 //	@Test

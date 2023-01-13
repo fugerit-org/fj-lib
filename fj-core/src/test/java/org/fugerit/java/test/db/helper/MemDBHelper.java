@@ -14,6 +14,8 @@ public class MemDBHelper {
 
 	public static final String DEFAULT_DB_CONN_PATH = "test/memdb/base-db-conn.properties";
 	public static final String DEFAULT_DB_INIT_PATH = "test/memdb/base_db_init.sql";
+	
+	public static final String[] DB_INIT_SCRIPTS = { DEFAULT_DB_INIT_PATH, "test/memdb/jvfs_db_init.sql" };
 
 	private static final String DRV = "db-mode-dc-drv";
 	private static final String URL = "db-mode-dc-url";
@@ -35,9 +37,11 @@ public class MemDBHelper {
     			Properties props = new Properties();
     			props.load( is );
             	try ( Connection conn = newConnection( props ) ) {
-            		try ( SQLScriptReader reader = new SQLScriptReader( MemDBHelper.class.getClassLoader().getResourceAsStream( DEFAULT_DB_INIT_PATH ) ) ) {
-            			executeAll(reader, conn);
-            			cf = props;
+            		for ( int k=0; k<DB_INIT_SCRIPTS.length; k++ ) {
+            			try ( SQLScriptReader reader = new SQLScriptReader( MemDBHelper.class.getClassLoader().getResourceAsStream( DB_INIT_SCRIPTS[k] ) ) ) {
+                			executeAll(reader, conn);
+                			cf = props;
+                		}	
             		}
         		}	
     		}
