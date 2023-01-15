@@ -1,0 +1,38 @@
+<daogen-config
+	base-src-folder="."
+	database-type="generic"
+	gen-version="1.0.0"
+	gen-author="fugerit"
+	src-main-java="src/main/java"
+	src-test-java="src/test/java"
+	src-main-resources="src/main/resources"
+	src-test-resources="src/test/resources"
+	src-helpers="SRC-MAIN-JAVA"
+	class-config="cl://config/daogen_default_class_config.xml"
+	type-mapper="org.fugerit.java.daogen.base.config.DaogenTypeMapper"
+	type-map-config="cl://config/daogen_default_type_mapping.xml"
+	generator-catalog="cl://config/default-generator-catalog.xml"
+	decorator-catalog="cl://config/default-decorator-catalog.xml"
+	default-column-time-insert="CREATION_TIME"
+	default-column-time-update="UPDATE_TIME"
+	package-model="org.fugerit.java.core.jvfs.db.daogen"
+	package-helper="org.fugerit.java.core.jvfs.db.daogen.impl"
+	package-rse="org.fugerit.java.core.jvfs.db.daogen.impl"
+	package-facade-def="org.fugerit.java.core.jvfs.db.daogen"
+	package-facade-data-impl="org.fugerit.java.core.jvfs.db.daogen.impl"
+	factory-def="org.fugerit.java.core.jvfs.db.daogen.JvfsLogicFacade"
+	factory-data-impl="org.fugerit.java.core.jvfs.db.daogen.impl.JvfsDataLogicFacade"
+	check-empty-interface="1"
+	>
+
+  <entity catalog="PUBLIC" comments="The files in the file system" id="PUBLIC.FUGERIT.DB_JVFS_FILE" name="DB_JVFS_FILE" primaryKey="FILE_NAME,PARENT_PATH" schema="FUGERIT">
+    <field comments="The file name" id="FILE_NAME" javaType="java.lang.String" nullable="no" size="1024" sqlType="12" sqlTypeName="VARCHAR"/>
+    <field comments="" id="PARENT_PATH" javaType="java.lang.String" nullable="no" size="2048" sqlType="12" sqlTypeName="VARCHAR"/>
+    <field comments="" id="FILE_PROPS" javaType="java.lang.String" nullable="yes" size="1024" sqlType="12" sqlTypeName="VARCHAR"/>
+    <field comments="" id="CREATION_TIME" javaType="java.sql.Timestamp" nullable="no" size="0" sqlType="93" sqlTypeName="TIMESTAMP"/>
+    <field comments="" id="UPDATE_TIME" javaType="java.sql.Timestamp" nullable="no" size="0" sqlType="93" sqlTypeName="TIMESTAMP"/>
+    <field comments="" id="FILE_SIZE" javaType="java.lang.Long" nullable="yes" size="0" sqlType="-5" sqlTypeName="BIGINT"/>
+    <field comments="" id="FILE_CONTENT" javaType="java.sql.Blob" nullable="yes" size="1073741824" sqlType="2004" sqlTypeName="BLOB"/>
+  </entity>
+
+</daogen-config>

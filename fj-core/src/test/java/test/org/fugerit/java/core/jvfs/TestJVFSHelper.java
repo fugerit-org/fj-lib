@@ -1,21 +1,15 @@
 package test.org.fugerit.java.core.jvfs;
 
-import static org.junit.Assert.fail;
-
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestJVFSHelper {
+import test.org.fugerit.java.BasicTest;
+
+public class TestJVFSHelper extends BasicTest {
 
 	private static final Logger logger = LoggerFactory.getLogger( TestJVFSHelper.class );
-	
-	protected void failEx( Exception e ) {
-		String message = "Error : "+e;
-		logger.error( "Error "+e, e );
-		fail( message );
-	}
 	
 	protected void testJVFSWorker( JVFS jvfs ) {
 		try {

@@ -10,6 +10,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.fugerit.java.core.db.connect.ConnectionFactory;
+import org.fugerit.java.core.db.dao.DAOException;
+import org.fugerit.java.core.db.metadata.DataBaseInfo;
+
 public class MemDBHelper {
 
 	public static final String DEFAULT_DB_CONN_PATH = "test/memdb/base-db-conn.properties";
@@ -21,7 +25,6 @@ public class MemDBHelper {
 	private static final String URL = "db-mode-dc-url";
 	private static final String USR = "db-mode-dc-usr";
 	private static final String PWD = "db-mode-dc-pwd";
-	
 
 	private static Properties cf;
 	
@@ -52,6 +55,28 @@ public class MemDBHelper {
     	init();
     	return newConnection( cf );
     }
+    
+
+	public static ConnectionFactory newCF() {
+		return new ConnectionFactory() {
+			@Override
+			public void release() throws DAOException {
+			}
+			
+			@Override
+			public DataBaseInfo getDataBaseInfo() throws DAOException {
+				return null;
+			}
+			@Override
+			public Connection getConnection() throws DAOException {
+				try {
+					return newConnection();
+				} catch (Exception e) {
+					throw new DAOException( e );
+				}
+			}
+		};
+	}
 	
 	private static int executeAll( SQLScriptReader reader, Connection conn ) throws SQLException, IOException {
 		int res = 0;

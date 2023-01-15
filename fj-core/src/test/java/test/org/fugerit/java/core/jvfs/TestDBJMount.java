@@ -21,7 +21,7 @@ public class TestDBJMount extends TestJVFSHelper {
 			MemDBHelper.init();
 			try ( Connection conn = MemDBHelper.newConnection() ) {
 				List<String> listFile = new ArrayList<>();
-				String testSql = "SELECT name FROM fugerit.db_jvfs_file";
+				String testSql = "SELECT file_name FROM fugerit.db_jvfs_file";
 				DAOUtilsNG.extraAll(conn, listFile, testSql, StringRSE.DEFAULT);
 				logger.info( "listFile {}", listFile );
 			}
