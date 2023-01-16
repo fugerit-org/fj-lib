@@ -55,6 +55,12 @@
 		    <artifactId>fj-daogen-base</artifactId>
 		    <version>${fj-daogen-version}</version>
 		    <scope>test</scope>
+		    <exclusions>
+				<exclusion>
+					<groupId>org.fugerit.java</groupId>
+					<artifactId>fj-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>
