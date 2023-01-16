@@ -19,7 +19,6 @@ public class DoNothingContentHandler implements ContentHandler {
      */
     public DoNothingContentHandler() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /* (non-Javadoc)
