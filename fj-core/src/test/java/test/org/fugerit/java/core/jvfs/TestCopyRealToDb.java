@@ -4,7 +4,6 @@ import java.io.File;
 
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.JMountDaogenDB;
-import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.file.RealJMount;
 import org.fugerit.java.test.db.helper.MemDBHelper;

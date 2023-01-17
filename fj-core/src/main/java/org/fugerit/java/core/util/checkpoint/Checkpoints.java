@@ -85,6 +85,14 @@ public class Checkpoints implements Serializable {
 	public static Checkpoints newInstance() {
 		return new Checkpoints( CheckpointFormatHelper.DEFAULT );
 	}
+
+	public long getStartTime() {
+		return startTime;
+	}
+
+	public long getLastCheckpoint() {
+		return lastCheckpoint;
+	}
 	
 }
 
