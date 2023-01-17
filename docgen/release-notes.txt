@@ -1,4 +1,13 @@
-﻿0.8.6 (2022-12-28)
+﻿0.8.6-jvfs1 (2023-01-17)
+------------------
++ Added java virtual file system utilities (JVFS)
++ JVFS Support for file system (read/write)
++ JVFS Support for class loader (read only)
++ JVFS Support for database (read/write) [DAO generated with Mars fj-daogen API](https://github.com/fugerit-org/fj-daogen)
++ Added methods for accessing startTime and previousCheckpoint data in Checkpoints
++ Added testing utilities
+
+0.8.6 (2022-12-28)
 ------------------
 + Collections merge utility
 + Result errors and warning accessory methods
