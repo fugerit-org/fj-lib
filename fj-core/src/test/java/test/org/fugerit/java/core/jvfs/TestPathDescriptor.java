@@ -22,7 +22,7 @@ public class TestPathDescriptor extends BasicTest {
 	
 	@Test
 	public void test01Root() {
-		this.testWorker( "/", null, "/" );
+		this.testWorker( "/", "", "/" );
 	}
 	
 	@Test
