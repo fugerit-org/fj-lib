@@ -33,10 +33,14 @@ public class DataEntityDbJvfsFileFacadeHelper extends BasicDataFacade<ModelDbJvf
 
 	private static final long serialVersionUID = 334818698796L;
 
-	private final static String TABLE_NAME = "PUBLIC.FUGERIT.DB_JVFS_FILE";
+	private final static String TABLE_NAME = "DB_JVFS_FILE";
 
 	public DataEntityDbJvfsFileFacadeHelper() {
 		super( TABLE_NAME, DbJvfsFileRSE.DEFAULT, null );
+	}
+
+	public DataEntityDbJvfsFileFacadeHelper( String tableName, String queryView ) {
+		super( tableName, DbJvfsFileRSE.DEFAULT, queryView );
 	}
 
  	public final static String COL_FILE_NAME = "FILE_NAME";

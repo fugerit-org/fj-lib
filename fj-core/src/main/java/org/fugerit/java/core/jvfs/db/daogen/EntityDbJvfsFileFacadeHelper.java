@@ -52,7 +52,7 @@ public interface EntityDbJvfsFileFacadeHelper {
 	 *
 	 * @param context	DAO Context
 	 * @param fileName The file name
-	 * @param parentPath part of the key
+	 * @param parentPath The parent path, empty for root
 
 	 *
 	 * @return The found object or <code>null</code>
@@ -78,7 +78,7 @@ public interface EntityDbJvfsFileFacadeHelper {
 	 *
 	 * @param context	DAO Context
 	 * @param fileName The file name
-	 * @param parentPath part of the key
+	 * @param parentPath The parent path, empty for root
 
 	 *
 	 * @return Delete result (resultCode=0, delete ok)

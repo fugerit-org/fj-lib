@@ -29,7 +29,7 @@
 	</organization>
 
 	<properties>
-		<fj-daogen-version>0.4.4</fj-daogen-version>
+		<fj-daogen-version>0.4.5</fj-daogen-version>
 	</properties>
 	
 	<build>

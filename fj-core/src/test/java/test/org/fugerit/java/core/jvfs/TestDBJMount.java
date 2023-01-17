@@ -8,6 +8,7 @@ import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.JMountDaogenDB;
+import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
 import org.fugerit.java.test.db.helper.MemDBHelper;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -33,13 +34,15 @@ public class TestDBJMount extends TestJVFSHelper {
 	@Test
 	public void testInitMemDB() {
 		try  {
-			JVFS jvfs =  JMountDaogenDB.createJVFS( MemDBHelper.newCF() );
+			String tableName = "FUGERIT.ALT_DB_JVFS_FILE";
+			DataEntityDbJvfsFileFacade facade = DataEntityDbJvfsFileFacade.newInstanceWithTable(tableName);
+			JVFS jvfs =  JMountDaogenDB.createJVFSWithTableName( MemDBHelper.newCF(), tableName );
 			JFile dbFile1 = jvfs.getJFile( "/test-mount/core/cfg/xml/property-catalog-test.xml" );
 			this.createFile( new File( "src/test/resources/core/cfg/xml/property-catalog-test.xml" ) , dbFile1 );
 			this.createFile( new File( "src/test/resources/core/jvfs/db/daogen/daogen-config-jvfs.xml" ) , jvfs.getJFile( "/test-mount/core/jvfs/db/daogen/daogen-config-jvfs.xml" ) );
 			boolean delete = dbFile1.delete();
 			logger.info( "delete {} -> {}", dbFile1, delete );
-			this.tryDumpTestDb();
+			this.tryDumpTestDb( facade );
 		} catch (Exception e) {
 			failEx(e);
 		}

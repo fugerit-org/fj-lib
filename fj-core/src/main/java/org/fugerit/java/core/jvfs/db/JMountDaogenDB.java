@@ -26,8 +26,8 @@ import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.JVFSImpl;
 import org.fugerit.java.core.jvfs.db.daogen.DbJvfsFileFinder;
 import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
-import org.fugerit.java.core.jvfs.db.daogen.JvfsLogicFacade;
 import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.db.daogen.impl.HelperDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.daogen.impl.JvfsDataLogicFacade;
 import org.fugerit.java.core.jvfs.helpers.JFileUtils;
@@ -36,32 +36,48 @@ import org.fugerit.java.core.jvfs.helpers.PathDescriptor;
 public class JMountDaogenDB implements JMount, Serializable {
 
 	private static final long serialVersionUID = -2733658870079838L;
-
-	private JvfsLogicFacade facade = new JvfsDataLogicFacade();
 	
 	private ConnectionFactory cf;
 	
-	public JMountDaogenDB(DataSource ds) throws DAOException {
-		this( ConnectionFactoryImpl.newInstance( ds ) );
+	private EntityDbJvfsFileFacade facade;
+	
+	public JMountDaogenDB(DataSource ds, EntityDbJvfsFileFacade facade) throws DAOException {
+		this( ConnectionFactoryImpl.newInstance( ds ), facade );
 	}
 	
-	public JMountDaogenDB(ConnectionFactory cf) {
+	public JMountDaogenDB(ConnectionFactory cf, EntityDbJvfsFileFacade facade) {
 		super();
 		this.cf = cf;
+		this.facade = facade;
+	}
+	
+	public static JVFS createJVFSWithPrefix( ConnectionFactory cf, String prefix ) throws IOException {
+		return createJVFS( cf, DataEntityDbJvfsFileFacade.newInstanceWithTable(prefix) );
+	}
+	
+	public static JVFS createJVFSWithTableName( ConnectionFactory cf, String tableName ) throws IOException {
+		return createJVFS( cf, DataEntityDbJvfsFileFacade.newInstanceWithTable(tableName) );
+	}
+	
+	public static JVFS createJVFS( ConnectionFactory cf, EntityDbJvfsFileFacade facade ) throws IOException {
+		return JVFSImpl.getInstance( new JMountDaogenDB(cf , facade ) );
 	}
 	
 	public static JVFS createJVFS( ConnectionFactory cf ) throws IOException {
-		return JVFSImpl.getInstance(new JMountDaogenDB(cf));
+		try {
+			return createJVFS( cf, JvfsDataLogicFacade.getInstance().getEntityDbJvfsFileFacade() );
+		} catch (DAOException e) {
+			throw new IOException( e ); 
+		}
 	}
 	
 	@Override
 	public JFile getJFile(JVFS jvfs, String point, String relPath) {
 		JFile file = null;
 		try ( CloseableDAOContext context = this.newContext() ) {
-			EntityDbJvfsFileFacade fileFacade = facade.getEntityDbJvfsFileFacade();
 			PathDescriptor descriptor = JFileUtils.pathDescriptor(relPath);
 			System.out.println( "relPath : '"+relPath+"', point : '"+point+"', descriptor : '"+descriptor+"'" );
-			ModelDbJvfsFile model = fileFacade.loadById( context, descriptor.getName(), descriptor.getParentPath() );
+			ModelDbJvfsFile model = this.facade.loadById( context, descriptor.getName(), descriptor.getParentPath() );
 			file = new DaogenJFileDB(relPath, jvfs, model, this);
 		} catch (Exception e) {
 			throw new ConfigRuntimeException( "Error loading file "+relPath, e );
@@ -73,8 +89,7 @@ public class JMountDaogenDB implements JMount, Serializable {
 		boolean ok = false;
 		if ( file != null ) {
 			try ( CloseableDAOContext context = this.newContext() ) {
-				EntityDbJvfsFileFacade fileFacade = facade.getEntityDbJvfsFileFacade();
-				BasicDaoResult<ModelDbJvfsFile> res = fileFacade.deleteById( context, file.getFileName(), file.getParentPath() );
+				BasicDaoResult<ModelDbJvfsFile> res = this.facade.deleteById( context, file.getFileName(), file.getParentPath() );
 				ok = res.isResultOk();
 			} catch (Exception e) {
 				throw new IOException( "Delete error "+file+"["+e+"]", e );
@@ -86,11 +101,10 @@ public class JMountDaogenDB implements JMount, Serializable {
 	public JFile[] listFiles( DaogenJFileDB file ) throws IOException {
 		JFile[] list = null;
 		try ( CloseableDAOContext context = newContext() ) {
-			EntityDbJvfsFileFacade fileFacade = facade.getEntityDbJvfsFileFacade();
 			DbJvfsFileFinder finder = new DbJvfsFileFinder();
 			finder.setModel( new HelperDbJvfsFile() );
 			finder.getModel().setParentPath( file.getPath() );
-			BasicDaoResult<ModelDbJvfsFile> res = fileFacade.loadAllByFinder( context , finder );
+			BasicDaoResult<ModelDbJvfsFile> res = this.facade.loadAllByFinder( context , finder );
 			if ( res.isResultOk() ) {
 				list = res.getList().stream().map( 
 						dbf -> new DaogenJFileDB( JFileUtils.createPath( dbf.getParentPath(), dbf.getFileName() ), file.getJVFS(), dbf, this )
@@ -140,9 +154,8 @@ public class JMountDaogenDB implements JMount, Serializable {
 	public boolean updateOrCreate( DaogenJFileDB file, byte[] data  ) throws IOException {
 		boolean updated = false;
 		try ( CloseableDAOContext context = newContext() ) {
-			EntityDbJvfsFileFacade fileFacade = facade.getEntityDbJvfsFileFacade();
 			PathDescriptor descriptor = JFileUtils.pathDescriptor( file.getPath() );
-			ModelDbJvfsFile model = fileFacade.loadById( context, descriptor.getName(), descriptor.getParentPath() );
+			ModelDbJvfsFile model = this.facade.loadById( context, descriptor.getName(), descriptor.getParentPath() );
 			boolean create = ( model == null );
 			Date currentTime = new Date();
 			if ( create ) {
@@ -160,9 +173,9 @@ public class JMountDaogenDB implements JMount, Serializable {
 			// create or update?
 			BasicDaoResult<ModelDbJvfsFile> updateResult = null;
 			if ( create ) {
-				updateResult = fileFacade.create(context, model);
+				updateResult = this.facade.create(context, model);
 			} else {
-				updateResult = fileFacade.updateById(context, model);
+				updateResult = this.facade.updateById(context, model);
 			}
 			updated = updateResult.isResultOk();
 			if ( !updated ) {

@@ -41,7 +41,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Getter method for property : parentPath (nullable: no)
 	 *
-	 * 
+	 * The parent path, empty for root
 	 *
 	 * @return the value of parentPath
 	 */
@@ -50,7 +50,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Setter method for property : parentPath (nullable: no)
 	 *
-	 * 
+	 * The parent path, empty for root
 	 *
 	 * @param value the value of parentPath
 	 */
@@ -59,7 +59,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Getter method for property : fileProps (nullable: yes)
 	 *
-	 * 
+	 * File properties, for example RO; if the file is readonly
 	 *
 	 * @return the value of fileProps
 	 */
@@ -68,7 +68,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Setter method for property : fileProps (nullable: yes)
 	 *
-	 * 
+	 * File properties, for example RO; if the file is readonly
 	 *
 	 * @param value the value of fileProps
 	 */
@@ -77,7 +77,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Getter method for property : creationTime (nullable: no)
 	 *
-	 * 
+	 * File creation time
 	 *
 	 * @return the value of creationTime
 	 */
@@ -86,7 +86,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Setter method for property : creationTime (nullable: no)
 	 *
-	 * 
+	 * File creation time
 	 *
 	 * @param value the value of creationTime
 	 */
@@ -95,7 +95,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Getter method for property : updateTime (nullable: no)
 	 *
-	 * 
+	 * File update time
 	 *
 	 * @return the value of updateTime
 	 */
@@ -104,7 +104,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Setter method for property : updateTime (nullable: no)
 	 *
-	 * 
+	 * File update time
 	 *
 	 * @param value the value of updateTime
 	 */
@@ -113,7 +113,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Getter method for property : fileSize (nullable: yes)
 	 *
-	 * 
+	 * The size of the file (not set for directories)
 	 *
 	 * @return the value of fileSize
 	 */
@@ -122,7 +122,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Setter method for property : fileSize (nullable: yes)
 	 *
-	 * 
+	 * The size of the file (not set for directories)
 	 *
 	 * @param value the value of fileSize
 	 */
@@ -131,7 +131,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Getter method for property : fileContent (nullable: yes)
 	 *
-	 * 
+	 * The content of the file (not set for directories)
 	 *
 	 * @return the value of fileContent
 	 */
@@ -140,7 +140,7 @@ public interface ModelDbJvfsFile extends org.fugerit.java.core.lang.compare.Chec
 	/**
 	 * Setter method for property : fileContent (nullable: yes)
 	 *
-	 * 
+	 * The content of the file (not set for directories)
 	 *
 	 * @param value the value of fileContent
 	 */

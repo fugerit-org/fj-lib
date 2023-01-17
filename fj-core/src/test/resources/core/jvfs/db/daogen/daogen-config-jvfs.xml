@@ -25,14 +25,14 @@
 	check-empty-interface="1"
 	>
 
-  <entity catalog="PUBLIC" comments="The files in the file system" id="PUBLIC.FUGERIT.DB_JVFS_FILE" name="DB_JVFS_FILE" primaryKey="FILE_NAME,PARENT_PATH" schema="FUGERIT">
+  <entity comments="The files in the file system" id="FUGERIT.DB_JVFS_FILE" name="DB_JVFS_FILE" primaryKey="FILE_NAME,PARENT_PATH">
     <field comments="The file name" id="FILE_NAME" javaType="java.lang.String" nullable="no" size="1024" sqlType="12" sqlTypeName="VARCHAR"/>
-    <field comments="" id="PARENT_PATH" javaType="java.lang.String" nullable="no" size="2048" sqlType="12" sqlTypeName="VARCHAR"/>
-    <field comments="" id="FILE_PROPS" javaType="java.lang.String" nullable="yes" size="1024" sqlType="12" sqlTypeName="VARCHAR"/>
-    <field comments="" id="CREATION_TIME" javaType="java.sql.Timestamp" nullable="no" size="0" sqlType="93" sqlTypeName="TIMESTAMP"/>
-    <field comments="" id="UPDATE_TIME" javaType="java.sql.Timestamp" nullable="no" size="0" sqlType="93" sqlTypeName="TIMESTAMP"/>
-    <field comments="" id="FILE_SIZE" javaType="java.lang.Long" nullable="yes" size="0" sqlType="-5" sqlTypeName="BIGINT"/>
-    <field comments="" id="FILE_CONTENT" javaType="java.sql.Blob" nullable="yes" size="1073741824" sqlType="2004" sqlTypeName="BLOB"/>
-  </entity>
+    <field comments="The parent path, empty for root" id="PARENT_PATH" javaType="java.lang.String" nullable="no" size="2048" sqlType="12" sqlTypeName="VARCHAR"/>
+    <field comments="File properties, for example RO; if the file is readonly" id="FILE_PROPS" javaType="java.lang.String" nullable="yes" size="1024" sqlType="12" sqlTypeName="VARCHAR"/>
+    <field comments="File creation time" id="CREATION_TIME" javaType="java.sql.Timestamp" nullable="no" size="0" sqlType="93" sqlTypeName="TIMESTAMP"/>
+    <field comments="File update time" id="UPDATE_TIME" javaType="java.sql.Timestamp" nullable="no" size="0" sqlType="93" sqlTypeName="TIMESTAMP"/>
+    <field comments="The size of the file (not set for directories)" id="FILE_SIZE" javaType="java.lang.Long" nullable="yes" size="0" sqlType="-5" sqlTypeName="BIGINT"/>
+    <field comments="The content of the file (not set for directories)" id="FILE_CONTENT" javaType="java.sql.Blob" nullable="yes" size="1073741824" sqlType="2004" sqlTypeName="BLOB"/>
+   </entity>
 
 </daogen-config>

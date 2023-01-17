@@ -11,7 +11,6 @@ import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
-import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.test.db.helper.MemDBHelper;
 
@@ -75,10 +74,9 @@ public class TestJVFSHelper extends BasicTest {
 		}
 	};
 	
-	protected void tryDumpTestDb() {
+	protected void tryDumpTestDb( EntityDbJvfsFileFacade fileFacade ) {
 		logger.info( "Try to dumb jvfs db : " );
 		try ( CloseableDAOContext context = new CloseableDAOContextSC( MemDBHelper.newConnection() ) )  {
-			EntityDbJvfsFileFacade fileFacade = new DataEntityDbJvfsFileFacade();
 			BasicDaoResult<ModelDbJvfsFile> res = fileFacade.loadAll( context );
 			logger.info( "dump result:{}, size:{}", res.getResultCode(), res.getList().size() );
 			if ( res.isResultOk() ) {
