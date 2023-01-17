@@ -26,7 +26,7 @@ public class JVFSImpl implements JVFS {
             String point = mp.getPoint();
             int index = absPath.indexOf(mp.getPoint());
             if (index==0) {
-                file = mp.getMount().getJFile(this, point, absPath.substring(point.length()));
+                file = mp.getMount().getJFile(this, point, absPath.substring(point.length()-JFile.SEPARATOR.length()));
                 found = true;
             }
         }

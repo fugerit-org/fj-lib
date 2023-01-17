@@ -1,6 +1,7 @@
 package org.fugerit.java.core.jvfs.helpers;
 
 import org.fugerit.java.core.jvfs.JFile;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public class PathDescriptor {
 
@@ -29,7 +30,7 @@ public class PathDescriptor {
 	
 	public String getPath() {
 		String path = this.getName();
-		if ( this.getParentPath() != null ) {
+		if ( StringUtils.isNotEmpty( this.parentPath ) ) {
 			path = this.getParentPath()+JFile.SEPARATOR+this.getName();
 		}
 		return path;

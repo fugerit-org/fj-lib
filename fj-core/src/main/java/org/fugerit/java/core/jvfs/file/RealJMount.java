@@ -42,7 +42,15 @@ public class RealJMount implements JMount , Serializable {
 
 	@Override
 	public JFile getJFile(JVFS jvfs, String point, String relPath) {
-		return (new RealJFile(point+relPath, jvfs, new File(base, relPath)));
+		File file = new File(base, relPath);
+		if ( point.endsWith( JFile.SEPARATOR ) ) {
+			point = point.substring( 0, point.length()-JFile.SEPARATOR.length() );
+		}
+		String path = point+relPath;
+		if ( file.isDirectory() && !path.endsWith( JFile.SEPARATOR ) ) {
+			path+=JFile.SEPARATOR;
+		}
+		return (new RealJFile(path, jvfs, file));
 	}
 
 }

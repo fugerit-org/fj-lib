@@ -23,6 +23,7 @@ import org.fugerit.java.core.db.daogen.CloseableDAOContextSC;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JMount;
 import org.fugerit.java.core.jvfs.JVFS;
+import org.fugerit.java.core.jvfs.JVFSImpl;
 import org.fugerit.java.core.jvfs.db.daogen.DbJvfsFileFinder;
 import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.db.daogen.JvfsLogicFacade;
@@ -48,13 +49,18 @@ public class JMountDaogenDB implements JMount, Serializable {
 		super();
 		this.cf = cf;
 	}
-
+	
+	public static JVFS createJVFS( ConnectionFactory cf ) throws IOException {
+		return JVFSImpl.getInstance(new JMountDaogenDB(cf));
+	}
+	
 	@Override
 	public JFile getJFile(JVFS jvfs, String point, String relPath) {
 		JFile file = null;
 		try ( CloseableDAOContext context = this.newContext() ) {
 			EntityDbJvfsFileFacade fileFacade = facade.getEntityDbJvfsFileFacade();
 			PathDescriptor descriptor = JFileUtils.pathDescriptor(relPath);
+			System.out.println( "relPath : '"+relPath+"', point : '"+point+"', descriptor : '"+descriptor+"'" );
 			ModelDbJvfsFile model = fileFacade.loadById( context, descriptor.getName(), descriptor.getParentPath() );
 			file = new DaogenJFileDB(relPath, jvfs, model, this);
 		} catch (Exception e) {
@@ -87,7 +93,7 @@ public class JMountDaogenDB implements JMount, Serializable {
 			BasicDaoResult<ModelDbJvfsFile> res = fileFacade.loadAllByFinder( context , finder );
 			if ( res.isResultOk() ) {
 				list = res.getList().stream().map( 
-						dbf -> new DaogenJFileDB( dbf.getParentPath()+JFile.SEPARATOR+dbf.getFileName(), file.getJVFS(), dbf, this )
+						dbf -> new DaogenJFileDB( JFileUtils.createPath( dbf.getParentPath(), dbf.getFileName() ), file.getJVFS(), dbf, this )
 					).collect( Collectors.toList() ).toArray( new JFile[0] );
 			}
 		} catch (Exception e) {

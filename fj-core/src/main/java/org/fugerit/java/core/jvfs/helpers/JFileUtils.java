@@ -1,6 +1,7 @@
 package org.fugerit.java.core.jvfs.helpers;
 
 import org.fugerit.java.core.jvfs.JFile;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,9 +25,19 @@ public class JFileUtils {
 		return res;
 	}
 	
+	public static String createPath( String parentPath, String name ) {
+		String path = StringUtils.valueWithDefault( parentPath, "" );
+		if ( path.endsWith( JFile.SEPARATOR ) ) {
+			path+=name;
+		} else {
+			path+=JFile.SEPARATOR+name;
+		}
+		return path;
+	}
+	
 	public static PathDescriptor pathDescriptor( String path ) {
-		String parentPath = null;
-		String name = null;
+		String parentPath = "";
+		String name = "";
 		String normalizedPath = normalizePath( path );
 		int index = normalizedPath.lastIndexOf( JFile.SEPARATOR );
 		logger.debug( "path:'{}', normalized path:'{}'", path, normalizedPath );
