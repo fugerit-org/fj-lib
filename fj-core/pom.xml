@@ -60,7 +60,7 @@
 					<groupId>org.fugerit.java</groupId>
 					<artifactId>fj-core</artifactId>
 				</exclusion>
-			</exclusions>
+			</exclusions>		    
 		</dependency>
 
 	</dependencies>

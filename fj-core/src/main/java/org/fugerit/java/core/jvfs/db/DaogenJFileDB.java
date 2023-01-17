@@ -80,6 +80,10 @@ public class DaogenJFileDB extends SimpleAbstractJFile {
 		return this.jMount.streamOut(this);
 	}
 
+	protected void setDbFile( ModelDbJvfsFile dbFile ) {
+		this.dbFile = dbFile;
+	}
+	
 	public ModelDbJvfsFile getDbFile() {
 		return dbFile;
 	}
