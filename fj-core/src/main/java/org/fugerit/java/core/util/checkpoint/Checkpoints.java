@@ -58,24 +58,44 @@ public class Checkpoints implements Serializable {
 		return this.checkpoints.iterator();
 	}
 
-	@Override
-	public String toString() {
+	private String toStringHelper( boolean pretty ) {
 		StringBuilder builder = new StringBuilder();
 		builder.append( this.getClass().getSimpleName() );
 		long previousTime = this.startTime;
-		logger.info( "FORMAT:"+this.format );  
+		if ( pretty ) {
+			builder.append( " prettyPrintinfo : " );
+			builder.append( '\n' );
+		}
 		for ( CheckpointData current : this.checkpoints ) {
 			builder.append( this.format.formatData( current ) );
 			previousTime = current.getCreationTime();
+			if ( pretty ) {
+				builder.append( '\n' );
+			}
 		}
 		builder.append( this.format.tokenStart() );
+		if ( pretty ) {
+			builder.append( "totalDuration:" );
+		}
 		builder.append( this.format.formatDuration( ( previousTime-this.startTime ) ) );
 		builder.append( this.format.tokenEnd() );
+		if ( pretty ) {
+			builder.append( '\n' );
+		}
 		return builder.toString();
 	}
 	
+	@Override
+	public String toString() {
+		return this.toStringHelper( false );
+	}
+	
 	public void printInfo() {
-		logger.info( this.toString() );
+		logger.info( this.toStringHelper( false ) );
+	}
+	
+	public void prettyPrintInfo() {
+		logger.info( this.toStringHelper( true ) );
 	}
 	
 	public static Checkpoints newInstance( CheckpointFormat format ) {
