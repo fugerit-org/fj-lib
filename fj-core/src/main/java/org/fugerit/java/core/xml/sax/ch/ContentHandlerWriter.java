@@ -125,8 +125,6 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void startPrefixMapping(String arg0, String arg1) throws SAXException {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
