@@ -1,6 +1,7 @@
 package test.org.fugerit.java.core.jvfs;
 
 import java.io.IOException;
+import java.util.Comparator;
 
 import org.fugerit.java.core.db.daogen.BasicDaoResult;
 import org.fugerit.java.core.db.daogen.CloseableDAOContext;
@@ -11,6 +12,7 @@ import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.test.db.helper.MemDBHelper;
 
 import test.org.fugerit.java.BasicTest;
@@ -37,7 +39,9 @@ public class TestJVFSHelper extends BasicTest {
 		JFile dest = to.getJFile( source.getPath() );
 		logger.info( "testCopyRecurse() source:{} -> dest:{}", source, dest );
 		if ( source.isDirectory() ) {
-			dest.mkdir();
+			if ( !dest.exists() ) {
+				dest.mkdir();	
+			}
 			JFile[] list = source.listFiles();
 			for ( int k=0; k<list.length; k++ ) {
 				testCopyRecurse( to , list[k] );
@@ -62,6 +66,15 @@ public class TestJVFSHelper extends BasicTest {
 		this.testReadRecurse( to.getRoot(), from.getRoot() );
 	}
 	
+	private static final Comparator<ModelDbJvfsFile> SORTER = new Comparator<ModelDbJvfsFile>() {
+		@Override
+		public int compare(ModelDbJvfsFile o1, ModelDbJvfsFile o2) {
+			String path1 = StringUtils.valueWithDefault( o1.getParentPath(), "" )+JFile.SEPARATOR+o1.getFileName();
+			String path2 = StringUtils.valueWithDefault( o2.getParentPath(), "" )+JFile.SEPARATOR+o2.getFileName();
+			return path1.compareTo( path2 );
+		}
+	};
+	
 	protected void tryDumpTestDb() {
 		logger.info( "Try to dumb jvfs db : " );
 		try ( CloseableDAOContext context = new CloseableDAOContextSC( MemDBHelper.newConnection() ) )  {
@@ -69,6 +82,7 @@ public class TestJVFSHelper extends BasicTest {
 			BasicDaoResult<ModelDbJvfsFile> res = fileFacade.loadAll( context );
 			logger.info( "dump result:{}, size:{}", res.getResultCode(), res.getList().size() );
 			if ( res.isResultOk() ) {
+				res.getList().sort( SORTER );
 				res.getList().forEach( f -> logger.info( "parentPath:{},fileName:{}", f.getParentPath(), f.getFileName() ) );
 			}
 		} catch (Exception e1) {

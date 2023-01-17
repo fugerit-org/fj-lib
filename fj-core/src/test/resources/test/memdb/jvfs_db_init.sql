@@ -10,8 +10,10 @@ CREATE TABLE fugerit.db_jvfs_file (
 ALTER TABLE fugerit.db_jvfs_file ADD CONSTRAINT db_jvfs_file_ok PRIMARY KEY ( file_name, parent_path );
 COMMENT ON TABLE fugerit.db_jvfs_file IS 'The files in the file system';
 COMMENT ON COLUMN fugerit.db_jvfs_file.file_name IS 'The file name';
+COMMENT ON COLUMN fugerit.db_jvfs_file.parent_path IS 'The parent path, empty for root';
+COMMENT ON COLUMN fugerit.db_jvfs_file.file_props IS 'File properties, for example RO; if the file is readonly';
+COMMENT ON COLUMN fugerit.db_jvfs_file.creation_time IS 'File creation time';
+COMMENT ON COLUMN fugerit.db_jvfs_file.update_time IS 'File update time';
+COMMENT ON COLUMN fugerit.db_jvfs_file.file_size IS 'The size of the file (not set for directories)';
+COMMENT ON COLUMN fugerit.db_jvfs_file.file_content IS 'The content of the file (not set for directories)';
 
-CREATE SEQUENCE fugerit.seq_jvfs START WITH 1;
-
-INSERT INTO fugerit.db_jvfs_file ( file_name, parent_path, file_props, creation_time, update_time, file_size, file_content ) 
-VALUES ( 'test_file', 'parent_path', nextval('fugerit.seq_jvfs'), current_timestamp, current_timestamp, 0, null );

@@ -41,12 +41,7 @@ public abstract class AbstractJFile implements JFile {
 
     @Override
     public String getName() {
-    	int index = this.path.lastIndexOf( SEPARATOR );
-    	String res = this.path;
-    	if ( index != -1 ) {
-    		res = this.path.substring( index+SEPARATOR.length() );
-    	}
-    	return res;
+    	return JFileUtils.pathDescriptor( this.getPath() ).getName();
     }
 
     @Override
@@ -97,7 +92,9 @@ public abstract class AbstractJFile implements JFile {
 	public JFile getParent() throws IOException {
 		JFile parent = null;
 		if ( !this.isRoot() ) {
-			String parentPath = this.getPath().substring( 0, this.getName().length() );
+			String path = this.getPath();
+			String name = this.getName();
+			String parentPath = path.substring( 0, path.length()-name.length() );
 			parent = this.getJVFS().getJFile( parentPath );
 		}
 		return parent;
