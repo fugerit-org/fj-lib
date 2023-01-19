@@ -9,8 +9,13 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class XMLClean {
 
+	private final static Logger logger = LoggerFactory.getLogger( XMLClean.class );
+	
 	public static final String CLEAN_REGEX = "(?<![\\uD800-\\uDBFF])[\\uDC00-\\uDFFF]|[\\uD800-\\uDBFF](?![\\uDC00-\\uDFFF])|[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F\\x7F-\\x9F\\uFEFF\\uFFFE\\uFFFF]"; 
 	
 	public static String cleanXML( String s ) {
@@ -46,7 +51,7 @@ public class XMLClean {
 		File[] list = dir.listFiles();
 		for ( int k = 0; k<list.length; k++ ) {
 			File current = list[k];
-			System.out.println( "PROCESSING : "+current.getCanonicalPath() );
+			logger.info( "PROCESSING : {}", current.getCanonicalPath() );
 			if ( current.isDirectory() ) {
 				cleanFolder( current, prefix );
 			} else {

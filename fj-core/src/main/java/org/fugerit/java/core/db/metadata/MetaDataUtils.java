@@ -167,7 +167,6 @@ public class MetaDataUtils {
 					columnModel.setName( columnsRS.getString( "COLUMN_NAME" ) );
 					columnModel.setTypeSql( columnsRS.getInt( "DATA_TYPE" ) );
 					columnModel.setTypeName( columnsRS.getString( "TYPE_NAME" ) );
-					//System.out.println( "columnModel : "+columnModel );
 					String isNullable = columnsRS.getString( "IS_NULLABLE" );
 					if ( "NO".equalsIgnoreCase( isNullable ) ) {
 						columnModel.setNullable( ColumnModel.NULLABLE_FALSE );	

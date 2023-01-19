@@ -20,14 +20,6 @@ public class BinaryCalc {
 		return result;
 	}
 	
-	public static void main( String[] args ) {
-		try {
-			System.out.println( "TEST : "+hexToLong( "FF" ) );
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}	
-	
 }
 
 class BinaryNumber {

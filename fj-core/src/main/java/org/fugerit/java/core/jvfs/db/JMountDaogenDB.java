@@ -76,7 +76,6 @@ public class JMountDaogenDB implements JMount, Serializable {
 		JFile file = null;
 		try ( CloseableDAOContext context = this.newContext() ) {
 			PathDescriptor descriptor = JFileUtils.pathDescriptor(relPath);
-			System.out.println( "relPath : '"+relPath+"', point : '"+point+"', descriptor : '"+descriptor+"'" );
 			ModelDbJvfsFile model = this.facade.loadById( context, descriptor.getName(), descriptor.getParentPath() );
 			file = new DaogenJFileDB(relPath, jvfs, model, this);
 		} catch (Exception e) {
