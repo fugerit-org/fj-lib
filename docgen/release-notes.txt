@@ -1,4 +1,8 @@
-﻿0.8.6-jvfs1 (2023-01-17)
+﻿0.8.6-jvfs2 (2023-01-19)
+------------------
++ Removed system out
+
+0.8.6-jvfs1 (2023-01-17)
 ------------------
 + Added java virtual file system utilities (JVFS)
 + JVFS Support for file system (read/write)
