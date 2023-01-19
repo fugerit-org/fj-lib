@@ -41,6 +41,8 @@ public class JMountDaogenDB implements JMount, Serializable {
 	
 	private EntityDbJvfsFileFacade facade;
 	
+	private String rootParentPath;
+	
 	public JMountDaogenDB(DataSource ds, EntityDbJvfsFileFacade facade) throws DAOException {
 		this( ConnectionFactoryImpl.newInstance( ds ), facade );
 	}
@@ -49,6 +51,7 @@ public class JMountDaogenDB implements JMount, Serializable {
 		super();
 		this.cf = cf;
 		this.facade = facade;
+		this.rootParentPath = JFile.SEPARATOR+JFile.SEPARATOR;
 	}
 	
 	public static JVFS createJVFSWithPrefix( ConnectionFactory cf, String prefix ) throws IOException {
@@ -71,12 +74,28 @@ public class JMountDaogenDB implements JMount, Serializable {
 		}
 	}
 	
+	public String getParentPath( PathDescriptor descriptor ) {
+		String parentPath = descriptor.getParentPath();
+		if ( this.rootParentPath != null && JFileUtils.isRoot( descriptor.getPath() ) ) {
+			parentPath = this.rootParentPath;
+		}
+		return parentPath;
+	}
+	
+	public String checkParentPath( String parentPath ) {
+		String path = parentPath;
+		if ( this.rootParentPath != null && this.rootParentPath.equals( parentPath ) ) {
+			path = "";
+		}
+		return path;
+	}
+	
 	@Override
 	public JFile getJFile(JVFS jvfs, String point, String relPath) {
 		JFile file = null;
 		try ( CloseableDAOContext context = this.newContext() ) {
 			PathDescriptor descriptor = JFileUtils.pathDescriptor(relPath);
-			ModelDbJvfsFile model = this.facade.loadById( context, descriptor.getName(), descriptor.getParentPath() );
+			ModelDbJvfsFile model = this.facade.loadById( context, descriptor.getName(), this.getParentPath(descriptor) );
 			file = new DaogenJFileDB(relPath, jvfs, model, this);
 		} catch (Exception e) {
 			throw new ConfigRuntimeException( "Error loading file "+relPath, e );
@@ -106,8 +125,10 @@ public class JMountDaogenDB implements JMount, Serializable {
 			BasicDaoResult<ModelDbJvfsFile> res = this.facade.loadAllByFinder( context , finder );
 			if ( res.isResultOk() ) {
 				list = res.getList().stream().map( 
-						dbf -> new DaogenJFileDB( JFileUtils.createPath( dbf.getParentPath(), dbf.getFileName() ), file.getJVFS(), dbf, this )
+						dbf -> new DaogenJFileDB( JFileUtils.createPath( this.checkParentPath( dbf.getParentPath() ), dbf.getFileName() ), file.getJVFS(), dbf, this )
 					).collect( Collectors.toList() ).toArray( new JFile[0] );
+			} else {
+				throw new DAOException( "Failed to created listing : "+res );
 			}
 		} catch (Exception e) {
 			throw new IOException( "Failed to created directory listing : "+file );
@@ -154,13 +175,13 @@ public class JMountDaogenDB implements JMount, Serializable {
 		boolean updated = false;
 		try ( CloseableDAOContext context = newContext() ) {
 			PathDescriptor descriptor = JFileUtils.pathDescriptor( file.getPath() );
-			ModelDbJvfsFile model = this.facade.loadById( context, descriptor.getName(), descriptor.getParentPath() );
+			ModelDbJvfsFile model = this.facade.loadById( context, descriptor.getName(), this.getParentPath(descriptor) );
 			boolean create = ( model == null );
 			Date currentTime = new Date();
 			if ( create ) {
 				model = new HelperDbJvfsFile();
 				model.setFileName( descriptor.getName() );
-				model.setParentPath( descriptor.getParentPath() );
+				model.setParentPath( this.getParentPath(descriptor) );
 				model.setCreationTime( currentTime );
 				file.setDbFile( model );
 			}

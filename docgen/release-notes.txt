@@ -1,4 +1,8 @@
-﻿0.8.6-jvfs2 (2023-01-19)
+﻿0.8.6-jvfs3 (2023-01-20)
+------------------
++ Fix in handling of db jvfs for oracle data base
+
+0.8.6-jvfs2 (2023-01-19)
 ------------------
 + Removed system out
 

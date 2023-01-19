@@ -11,6 +11,7 @@ import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.test.db.helper.MemDBHelper;
 
@@ -18,6 +19,8 @@ import test.org.fugerit.java.BasicTest;
 
 public class TestJVFSHelper extends BasicTest {
 
+	protected  EntityDbJvfsFileFacade facade = DataEntityDbJvfsFileFacade.newInstanceWithPrefix( "FUGERIT." );
+	
 	protected void testJVFSWorker( JVFS jvfs ) {
 		try {
 			JFile root =jvfs.getRoot();
@@ -73,6 +76,10 @@ public class TestJVFSHelper extends BasicTest {
 			return path1.compareTo( path2 );
 		}
 	};
+	
+	protected void tryDumpTestDb() {
+		this.tryDumpTestDb( this.facade );
+	}
 	
 	protected void tryDumpTestDb( EntityDbJvfsFileFacade fileFacade ) {
 		logger.info( "Try to dumb jvfs db : " );
