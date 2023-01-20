@@ -6,8 +6,8 @@ import java.util.Comparator;
 import org.fugerit.java.core.db.daogen.BasicDaoResult;
 import org.fugerit.java.core.db.daogen.CloseableDAOContext;
 import org.fugerit.java.core.db.daogen.CloseableDAOContextSC;
-import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.jvfs.JFile;
+import org.fugerit.java.core.jvfs.JFileCopyFacade;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
@@ -39,18 +39,7 @@ public class TestJVFSHelper extends BasicTest {
 	
 	private void testCopyRecurse( JVFS to, JFile source ) throws IOException {
 		JFile dest = to.getJFile( source.getPath() );
-		logger.info( "testCopyRecurse() source:{} -> dest:{}", source, dest );
-		if ( source.isDirectory() ) {
-			if ( !dest.exists() ) {
-				dest.mkdir();	
-			}
-			JFile[] list = source.listFiles();
-			for ( int k=0; k<list.length; k++ ) {
-				testCopyRecurse( to , list[k] );
-			}
-		} else {
-			StreamIO.pipeStream( source.getInputStream() , dest.getOutputStream(), StreamIO.MODE_CLOSE_BOTH );
-		}
+		JFileCopyFacade.copyFile( source , dest , true, true, true );
 	}
 	
 	private void testReadRecurse( JFile file1, JFile file2 ) throws IOException {

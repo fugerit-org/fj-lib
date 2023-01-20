@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.helpers.AbstractJFile;
@@ -42,7 +43,15 @@ public class RealJFile extends AbstractJFile {
 
     @Override
     public String getName() {
-        return this.file.getName();
+    	String name = this.file.getName();
+    	try {
+			if ( this.isDirectory() && !name.endsWith( SEPARATOR ) ) {
+				name+= SEPARATOR;
+			}
+		} catch (IOException e) {
+			throw new ConfigRuntimeException( e );
+		}
+        return name;
     }
 
     @Override

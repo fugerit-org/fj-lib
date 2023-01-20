@@ -1,6 +1,7 @@
-﻿0.8.6-jvfs3 (2023-01-20)
+﻿0.8.6-jvfs4 (2023-01-20)
 ------------------
-+ Fix in handling of db jvfs for oracle data base
++ Added db script for daogen jfile mount
++ Added JFileCopyFacade
 
 0.8.6-jvfs2 (2023-01-19)
 ------------------
