@@ -127,11 +127,13 @@ public class JMountDaogenDB implements JMount, Serializable {
 				list = res.getList().stream().map( 
 						dbf -> new DaogenJFileDB( JFileUtils.createPath( this.checkParentPath( dbf.getParentPath() ), dbf.getFileName() ), file.getJVFS(), dbf, this )
 					).collect( Collectors.toList() ).toArray( new JFile[0] );
+			} else if ( res.getResultCode() == BasicDaoResult.RESULT_NODATAFOUND ) {
+				list = new JFile[0];
 			} else {
 				throw new DAOException( "Failed to created listing : "+res );
 			}
 		} catch (Exception e) {
-			throw new IOException( "Failed to created directory listing : "+file );
+			throw new IOException( "Failed to created directory listing : "+file, e );
 		}
 		return list;
 	}

@@ -1,17 +1,21 @@
 package test.org.fugerit.java.core.jvfs;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Comparator;
 
 import org.fugerit.java.core.db.daogen.BasicDaoResult;
 import org.fugerit.java.core.db.daogen.CloseableDAOContext;
 import org.fugerit.java.core.db.daogen.CloseableDAOContextSC;
+import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.jvfs.JFile;
-import org.fugerit.java.core.jvfs.JFileCopyFacade;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
+import org.fugerit.java.core.jvfs.util.JFileUtilCP;
+import org.fugerit.java.core.jvfs.util.JFileUtilRM;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.test.db.helper.MemDBHelper;
 
@@ -37,10 +41,7 @@ public class TestJVFSHelper extends BasicTest {
 		}
 	}
 	
-	private void testCopyRecurse( JVFS to, JFile source ) throws IOException {
-		JFile dest = to.getJFile( source.getPath() );
-		JFileCopyFacade.copyFile( source , dest , true, true, true );
-	}
+	
 	
 	private void testReadRecurse( JFile file1, JFile file2 ) throws IOException {
 		logger.info( "testReadRecurse() file1:{} -> file2:{}", file1, file2 );
@@ -51,9 +52,15 @@ public class TestJVFSHelper extends BasicTest {
 			}
 		}
 	}
+
+	protected void testWriteDelete( JVFS from, JVFS to ) throws IOException {
+		JFileUtilCP.copyFileRecurseForceVerbose( from.getRoot() , to.getRoot() );
+		int del = JFileUtilRM.deleteRecurseForceVerbose( to.getRoot() );
+		logger.info( "delete result {}", del );
+	}
 	
 	protected void testWriteRead( JVFS from, JVFS to ) throws IOException {
-		this.testCopyRecurse( to, from.getRoot() );
+		JFileUtilCP.copyFileRecurseForceVerbose( from.getRoot() , to.getRoot() );
 		this.testReadRecurse( to.getRoot(), from.getRoot() );
 	}
 	
@@ -83,5 +90,27 @@ public class TestJVFSHelper extends BasicTest {
 			logger.warn( "dump failed : "+e1, e1 );
 		}
 	}
+
+	private void createFile( File source, JFile dest ) throws IOException {
+		logger.info( "source -> {} , dest -> {}", source, dest );
+		if ( source.isDirectory() ) {
+			dest.mkdirs();
+		} else {
+			JFile parent = dest.getParent();
+			if ( parent != null && !parent.exists() ) {
+				parent.mkdirs();
+			}
+			StreamIO.pipeStream( new FileInputStream( source ) , dest.getOutputStream() , StreamIO.MODE_CLOSE_BOTH );
+		}
+	}
+	
+	public void testCreateDelete( JVFS jvfs ) throws Exception {
+		JFile dbFile1 = jvfs.getJFile( "/test-mount/core/cfg/xml/property-catalog-test.xml" );
+		this.createFile( new File( "src/test/resources/core/cfg/xml/property-catalog-test.xml" ) , dbFile1 );
+		this.createFile( new File( "src/test/resources/core/jvfs/db/daogen/daogen-config-jvfs.xml" ) , jvfs.getJFile( "/test-mount/core/jvfs/db/daogen/daogen-config-jvfs.xml" ) );
+		boolean delete = dbFile1.delete();
+		logger.info( "delete {} -> {}", dbFile1, delete );
+	}
+
 	
 }

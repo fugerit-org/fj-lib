@@ -6,7 +6,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.List;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
 
@@ -108,5 +111,19 @@ public abstract class AbstractJFile implements JFile {
 	public boolean isRoot() {
 		return SEPARATOR.equals( this.getPath() );
 	}
-    
+
+	@Override
+	public List<JFile> lsFiles() throws IOException {
+		return Arrays.asList( this.listFiles() );
+	}
+
+	@Override
+	public String describe() {
+		try {
+			return this.getClass().getSimpleName()+"[path:"+this.getPath()+",isDirectory:"+this.isDirectory()+",isFile:"+this.isFile()+"]";
+		} catch (IOException e) {
+			throw new ConfigRuntimeException( e );
+		}
+	}
+	
 }

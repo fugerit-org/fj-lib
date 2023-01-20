@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.List;
 
 public interface JFile {
 
@@ -23,6 +24,8 @@ public interface JFile {
     public String[] list() throws IOException;
         
     public JFile[] listFiles() throws IOException;
+    
+    public List<JFile> lsFiles() throws IOException;
     
     public boolean delete() throws IOException;
     
@@ -58,4 +61,6 @@ public interface JFile {
 
 	public void setLastModified(long time) throws IOException;
     
+	public String describe();
+	
 }

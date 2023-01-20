@@ -28,3 +28,14 @@ CREATE TABLE fugerit.alt_db_jvfs_file (
 	file_content BLOB
 );
 ALTER TABLE fugerit.alt_db_jvfs_file ADD CONSTRAINT alt_db_jvfs_file_ok PRIMARY KEY ( file_name, parent_path );
+
+CREATE TABLE fugerit.alt2_db_jvfs_file (
+	file_name VARCHAR(1024) NOT NULL,
+	parent_path VARCHAR(2048) NOT NULL,
+	file_props VARCHAR(1024),
+	creation_time TIMESTAMP NOT NULL,
+	update_time TIMESTAMP NOT NULL,
+	file_size BIGINT,
+	file_content BLOB
+);
+ALTER TABLE fugerit.alt2_db_jvfs_file ADD CONSTRAINT alt2_db_jvfs_file_ok PRIMARY KEY ( file_name, parent_path );
