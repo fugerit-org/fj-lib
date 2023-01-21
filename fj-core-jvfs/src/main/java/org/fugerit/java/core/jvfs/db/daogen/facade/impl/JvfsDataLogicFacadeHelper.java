@@ -1,7 +1,7 @@
-package org.fugerit.java.core.jvfs.db.daogen.impl;
+package org.fugerit.java.core.jvfs.db.daogen.facade.impl;
 
 import org.fugerit.java.core.db.dao.DAOException;
-import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
+import org.fugerit.java.core.jvfs.db.daogen.def.facade.EntityDbJvfsFileFacade;
 
 // custom import start ( code above here will be overwritten )
 // custom import end ( code below here will be overwritten )
@@ -15,16 +15,16 @@ import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
  * // custom code start ( code above here will be overwritten )
  * // custom code end ( code below here will be overwritten )
  */
-public class JvfsDataLogicFacadeHelper implements org.fugerit.java.core.jvfs.db.daogen.JvfsLogicFacadeHelper, java.io.Serializable {
+public class JvfsDataLogicFacadeHelper implements org.fugerit.java.core.jvfs.db.daogen.facade.JvfsLogicFacadeHelper, java.io.Serializable {
 
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
-	private static final long serialVersionUID = 813564779935L;
+	private static final long serialVersionUID = 571843496225L;
 
 
 	public JvfsDataLogicFacadeHelper() {
-		this.entitydbjvfsfilefacade = new org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade();
+		this.entitydbjvfsfilefacade = new org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade();
 	}
 
 	private EntityDbJvfsFileFacade entitydbjvfsfilefacade;

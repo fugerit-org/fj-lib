@@ -1,6 +1,6 @@
-package org.fugerit.java.core.jvfs.db.daogen.impl;
+package org.fugerit.java.core.jvfs.db.impl.facade.data;
 
-import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
+import org.fugerit.java.core.jvfs.db.daogen.def.facade.EntityDbJvfsFileFacade;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.log.LogFacade;
 
@@ -11,10 +11,10 @@ import org.fugerit.java.core.log.LogFacade;
  */
 public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper implements EntityDbJvfsFileFacade {
 
+	private static final long serialVersionUID = 504022259276L;
+
 	public static final String DEFAULT_TABLE_NAME = "DB_JVFS_FILE";
 	
-	private static final long serialVersionUID = 579938867681L;
-
 	public DataEntityDbJvfsFileFacade() {
 		super();
 	}
@@ -34,5 +34,6 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 		return new DataEntityDbJvfsFileFacade( tableName, null );
 	}
 
+	
 	// [HELPER/IMPL MODEL] this class is a stub and can be modified as you see fit (it will not been overwritten)
 }

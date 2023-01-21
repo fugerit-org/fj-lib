@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
-import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
 import org.fugerit.java.core.jvfs.helpers.SimpleAbstractJFile;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 

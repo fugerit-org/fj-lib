@@ -1,7 +1,7 @@
-package org.fugerit.java.core.jvfs.db.daogen.impl;
+package org.fugerit.java.core.jvfs.db.daogen.helper;
 
 import org.fugerit.java.core.db.daogen.BasicWrapper;
-import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
 
 // custom import start ( code above here will be overwritten )
 // custom import end ( code below here will be overwritten )
@@ -20,7 +20,7 @@ public class WrapperDbJvfsFile extends BasicWrapper<ModelDbJvfsFile> implements 
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
-	private static final long serialVersionUID = 668449837079L;
+	private static final long serialVersionUID = 214575715631L;
 
 	public WrapperDbJvfsFile( ModelDbJvfsFile wrapped ) {
 		super( wrapped );

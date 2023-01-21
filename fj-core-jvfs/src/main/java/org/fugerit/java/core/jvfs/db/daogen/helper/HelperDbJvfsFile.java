@@ -1,7 +1,7 @@
-package org.fugerit.java.core.jvfs.db.daogen.impl;
+package org.fugerit.java.core.jvfs.db.daogen.helper;
 
 import org.fugerit.java.core.db.daogen.BasicHelper;
-import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
 
 // custom import start ( code above here will be overwritten )
 // custom import end ( code below here will be overwritten )
@@ -20,7 +20,7 @@ public class HelperDbJvfsFile extends BasicHelper implements ModelDbJvfsFile {
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
-	private static final long serialVersionUID = 960049245158L;
+	private static final long serialVersionUID = 405195931944L;
 
 	/*
 	 * fields generated for entity attributes 

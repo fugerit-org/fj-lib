@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.JMountDaogenDB;
-import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
+import org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade;
 import org.junit.Test;
 
 import test.org.fugerit.java.core.jvfs.db.helper.MemJvfsDBHelper;

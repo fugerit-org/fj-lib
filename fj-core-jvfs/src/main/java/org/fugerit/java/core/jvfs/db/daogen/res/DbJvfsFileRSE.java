@@ -1,10 +1,10 @@
-package org.fugerit.java.core.jvfs.db.daogen.impl;
+package org.fugerit.java.core.jvfs.db.daogen.res;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.fugerit.java.core.db.daogen.BasicRSExtractor;
-import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
-import org.fugerit.java.core.jvfs.db.daogen.impl.HelperDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
 
 // custom import start ( code above here will be overwritten )
 // custom import end ( code below here will be overwritten )
@@ -23,7 +23,7 @@ public class DbJvfsFileRSE extends BasicRSExtractor<ModelDbJvfsFile> {
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
-	private static final long serialVersionUID = 973386301639L;
+	private static final long serialVersionUID = 634313347220L;
 
 	public static final DbJvfsFileRSE DEFAULT = new DbJvfsFileRSE();
 

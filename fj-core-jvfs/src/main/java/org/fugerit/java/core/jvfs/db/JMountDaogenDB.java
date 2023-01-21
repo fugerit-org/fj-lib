@@ -24,12 +24,12 @@ import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JMount;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.JVFSImpl;
-import org.fugerit.java.core.jvfs.db.daogen.DbJvfsFileFinder;
-import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade;
-import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
-import org.fugerit.java.core.jvfs.db.daogen.impl.DataEntityDbJvfsFileFacade;
-import org.fugerit.java.core.jvfs.db.daogen.impl.HelperDbJvfsFile;
-import org.fugerit.java.core.jvfs.db.daogen.impl.JvfsDataLogicFacade;
+import org.fugerit.java.core.jvfs.db.daogen.def.facade.DbJvfsFileFinder;
+import org.fugerit.java.core.jvfs.db.daogen.def.facade.EntityDbJvfsFileFacade;
+import org.fugerit.java.core.jvfs.db.daogen.facade.impl.JvfsDataLogicFacade;
+import org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade;
 import org.fugerit.java.core.jvfs.helpers.JFileUtils;
 import org.fugerit.java.core.jvfs.helpers.PathDescriptor;
 

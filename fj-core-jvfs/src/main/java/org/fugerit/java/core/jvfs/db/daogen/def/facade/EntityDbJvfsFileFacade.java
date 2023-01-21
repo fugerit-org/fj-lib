@@ -1,4 +1,4 @@
-package org.fugerit.java.core.jvfs.db.daogen;
+package org.fugerit.java.core.jvfs.db.daogen.def.facade;
 
 /**
  * EntityDbJvfsFileFacade, version : 1.0.0

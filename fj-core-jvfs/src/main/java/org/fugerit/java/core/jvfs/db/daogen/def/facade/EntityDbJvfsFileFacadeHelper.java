@@ -1,9 +1,9 @@
-package org.fugerit.java.core.jvfs.db.daogen;
+package org.fugerit.java.core.jvfs.db.daogen.def.facade;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.daogen.BasicDaoResult;
 import org.fugerit.java.core.db.daogen.DAOContext;
-import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
 
 // custom import start ( code above here will be overwritten )
 // custom import end ( code below here will be overwritten )

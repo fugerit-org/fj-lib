@@ -1,6 +1,6 @@
-package org.fugerit.java.core.jvfs.db.daogen;
+package org.fugerit.java.core.jvfs.db.daogen.model;
 
-import org.fugerit.java.core.jvfs.db.daogen.impl.HelperDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile;
 
 // custom import start ( code above here will be overwritten )
 // custom import end ( code below here will be overwritten )

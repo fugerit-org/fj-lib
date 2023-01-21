@@ -1,7 +1,7 @@
-package org.fugerit.java.core.jvfs.db.daogen;
+package org.fugerit.java.core.jvfs.db.daogen.def.facade;
 
 import org.fugerit.java.core.db.daogen.BaseIdFinder;
-import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
 
 // custom import start ( code above here will be overwritten )
 // custom import end ( code below here will be overwritten )
@@ -20,7 +20,7 @@ public class DbJvfsFileFinder extends BaseIdFinder {
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
-	private static final long serialVersionUID = 351716636705L;
+	private static final long serialVersionUID = 435404424982L;
 
 	private ModelDbJvfsFile model;
 

@@ -13,7 +13,7 @@ public class JvfsDaogenRun extends BasicTest {
 	public static final String DAOGEN_CONFIG = "core-jvfs/db/daogen/daogen-config-jvfs.xml";
 	
 	@Test
-	public void testDumpJvfsDB() {
+	public void testRunJvfsDB() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( DAOGEN_CONFIG ) ) {
 			DaogenFacade.generate( is );
 		} catch (Exception e) {

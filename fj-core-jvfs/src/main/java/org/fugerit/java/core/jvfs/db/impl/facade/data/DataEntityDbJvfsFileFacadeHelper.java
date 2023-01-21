@@ -1,4 +1,4 @@
-package org.fugerit.java.core.jvfs.db.daogen.impl;
+package org.fugerit.java.core.jvfs.db.impl.facade.data;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.daogen.BasicDAOHelper;
@@ -9,10 +9,10 @@ import org.fugerit.java.core.db.daogen.DeleteHelper;
 import org.fugerit.java.core.db.daogen.InsertHelper;
 import org.fugerit.java.core.db.daogen.SelectHelper;
 import org.fugerit.java.core.db.daogen.UpdateHelper;
-import org.fugerit.java.core.jvfs.db.daogen.DbJvfsFileFinder;
-import org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacadeHelper;
-import org.fugerit.java.core.jvfs.db.daogen.ModelDbJvfsFile;
-import org.fugerit.java.core.jvfs.db.daogen.impl.DbJvfsFileRSE;
+import org.fugerit.java.core.jvfs.db.daogen.def.facade.DbJvfsFileFinder;
+import org.fugerit.java.core.jvfs.db.daogen.def.facade.EntityDbJvfsFileFacadeHelper;
+import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
+import org.fugerit.java.core.jvfs.db.daogen.res.DbJvfsFileRSE;
 
 // custom import start ( code above here will be overwritten )
 // custom import end ( code below here will be overwritten )
@@ -31,7 +31,7 @@ public class DataEntityDbJvfsFileFacadeHelper extends BasicDataFacade<ModelDbJvf
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
-	private static final long serialVersionUID = 334818698796L;
+	private static final long serialVersionUID = 436376053777L;
 
 	private final static String TABLE_NAME = "DB_JVFS_FILE";
 

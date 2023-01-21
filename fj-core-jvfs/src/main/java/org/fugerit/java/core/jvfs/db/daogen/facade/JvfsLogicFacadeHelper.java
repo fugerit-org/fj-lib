@@ -1,4 +1,4 @@
-package org.fugerit.java.core.jvfs.db.daogen;
+package org.fugerit.java.core.jvfs.db.daogen.facade;
 
 import org.fugerit.java.core.db.dao.DAOException;
 
@@ -27,6 +27,6 @@ public interface JvfsLogicFacadeHelper {
 	 * @return	the facade
 	 * @throws DAOException	in case of problems
 	 */
-	org.fugerit.java.core.jvfs.db.daogen.EntityDbJvfsFileFacade getEntityDbJvfsFileFacade() throws DAOException;
+	org.fugerit.java.core.jvfs.db.daogen.def.facade.EntityDbJvfsFileFacade getEntityDbJvfsFileFacade() throws DAOException;
 
 }
