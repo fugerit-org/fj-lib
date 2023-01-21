@@ -1,4 +1,9 @@
-﻿0.8.6-jvfs4 (2023-01-20)
+﻿0.8.7 (2023-01-21)
+------------------
++ Refactoring of jvfs as a new maven module (fj-core-jvfs)
+* Refcatoring of test classes to module fj-test-helper8
+
+0.8.6-jvfs4 (2023-01-20)
 ------------------
 + Added db script for daogen jfile mount
 + Added JFileCopyFacade
