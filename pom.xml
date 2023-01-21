@@ -22,7 +22,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version-compliance>1.8</java-version-compliance>
 	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
-	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>	     	
+	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>	
+	    <fj-test-helper-version>0.1.0</fj-test-helper-version>    	
 	</properties>
 
 	<licenses>
@@ -68,6 +69,7 @@
 
 	<modules>
 		<module>fj-core</module>
+		<module>fj-core-jvfs</module>
 		<module>fj-tool</module>
 	</modules>
 
@@ -79,6 +81,25 @@
 				<groupId>org.fugerit.java</groupId>
 				<artifactId>fj-core</artifactId>
 				<version>${project.version}</version>
+			</dependency>		
+
+			<dependency>
+				<groupId>org.fugerit.java</groupId>
+				<artifactId>fj-core-jvfs</artifactId>
+				<version>${project.version}</version>
+			</dependency>			
+
+			<dependency>
+				<groupId>org.fugerit.java</groupId>
+				<artifactId>fj-test-helper8</artifactId>
+				<version>${fj-test-helper-version}</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>*</groupId>
+						<artifactId>*</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>			
 
 		</dependencies>

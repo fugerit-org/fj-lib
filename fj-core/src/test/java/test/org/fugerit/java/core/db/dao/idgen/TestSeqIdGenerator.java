@@ -10,28 +10,32 @@ import org.fugerit.java.core.db.dao.idgen.OracleSeqIdGenerator;
 import org.fugerit.java.core.db.dao.idgen.PostgresqlSeqIdGenerator;
 import org.junit.Test;
 
-import test.org.fugerit.java.MemDBTestBase;
+import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
 
 public class TestSeqIdGenerator extends MemDBTestBase {
 	
-	protected void testSequenceWorker( String syntax, String sequenceName, BasicSeqIdGenerator gen ) throws Exception {
-		Connection conn = this.getConnection();
-		try ( Statement stm = conn.createStatement() ) {
-			stm.execute( "SET DATABASE SQL SYNTAX "+syntax+" TRUE" );
+	protected void testSequenceWorker( String syntax, String sequenceName, BasicSeqIdGenerator gen ) {
+		try {
+			Connection conn = this.getConnection();
+			try ( Statement stm = conn.createStatement() ) {
+				stm.execute( "SET DATABASE SQL SYNTAX "+syntax+" TRUE" );
+			}
+			ConnectionFactory cf = new SingleConnectionFactory( conn );
+			gen.setConnectionFactory( cf );
+			gen.setSequenceName( sequenceName );
+			logger.info( "new id : "+gen.generateId() );	
+		} catch (Exception e) {
+			this.failEx(e);
 		}
-		ConnectionFactory cf = new SingleConnectionFactory( conn );
-		gen.setConnectionFactory( cf );
-		gen.setSequenceName( sequenceName );
-		logger.info( "new id : "+gen.generateId() );
 	}
 	
 	@Test
-	public void testPopstgresSequence() throws Exception {
+	public void testPopstgresSequence() {
 		testSequenceWorker( "PGS" , "fugerit.seq_test" , new PostgresqlSeqIdGenerator() );
 	}
 	
 	@Test
-	public void testOracleSequence() throws Exception {
+	public void testOracleSequence() {
 		testSequenceWorker( "ORA" , "fugerit.seq_test" , new OracleSeqIdGenerator() );
 	}
 	

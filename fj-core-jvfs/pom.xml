@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>fj-core</artifactId>
+	<artifactId>fj-core-jvfs</artifactId>
 
 	<parent>
 		<groupId>org.fugerit.java</groupId>
@@ -10,7 +10,7 @@
 		<version>0.8.6-jvfs4</version>
 	</parent>
 
-	<name>fj-core</name>
+	<name>fj-core-jvfs</name>
 	<description>Fugerit Java Core Library for JDK 1.7 and up</description>
 	<url>https://www.fugerit.org/perm/jupiter/</url>
 
@@ -27,6 +27,10 @@
 		<url>https://www.fugerit.org</url>
 		<name>Fugerit</name>
 	</organization>
+
+	<properties>
+		<fj-daogen-version>0.4.5</fj-daogen-version>
+	</properties>
 	
 	<build>
 
@@ -34,18 +38,16 @@
 
 	<dependencies>
 
-		<!-- java core dependancies -->
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<scope>provided</scope>
+		    <groupId>org.fugerit.java</groupId>
+		    <artifactId>fj-core</artifactId>
 		</dependency>
 
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-dbcp2</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.fugerit.java</groupId>
 			<artifactId>fj-test-helper8</artifactId>
@@ -56,6 +58,13 @@
 					<artifactId>*</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.fugerit.java</groupId>
+		    <artifactId>fj-daogen-base</artifactId>
+		    <version>${fj-daogen-version}</version>
+		    <scope>test</scope>
 		</dependency>
 
 	</dependencies>

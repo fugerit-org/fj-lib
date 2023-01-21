@@ -12,7 +12,7 @@ import org.fugerit.java.core.db.metadata.MetaDataUtils;
 import org.fugerit.java.core.db.metadata.TableModel;
 import org.junit.Test;
 
-import test.org.fugerit.java.MemDBTestBase;
+import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
 
 public class TestMetadataUtils extends MemDBTestBase {
 	
