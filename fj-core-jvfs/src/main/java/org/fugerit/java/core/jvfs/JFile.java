@@ -61,6 +61,8 @@ public interface JFile {
 
 	public void setLastModified(long time) throws IOException;
     
+	public boolean rename( JFile newFile ) throws IOException;
+	
 	public String describe();
 	
 }

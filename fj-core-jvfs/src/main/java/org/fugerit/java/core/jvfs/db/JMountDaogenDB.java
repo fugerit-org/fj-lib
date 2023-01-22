@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
@@ -20,6 +20,7 @@ import org.fugerit.java.core.db.daogen.BasicDaoResult;
 import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
 import org.fugerit.java.core.db.daogen.CloseableDAOContext;
 import org.fugerit.java.core.db.daogen.CloseableDAOContextSC;
+import org.fugerit.java.core.db.helpers.TimeHelper;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JMount;
 import org.fugerit.java.core.jvfs.JVFS;
@@ -179,7 +180,7 @@ public class JMountDaogenDB implements JMount, Serializable {
 			PathDescriptor descriptor = JFileUtils.pathDescriptor( file.getPath() );
 			ModelDbJvfsFile model = this.facade.loadById( context, descriptor.getName(), this.getParentPath(descriptor) );
 			boolean create = ( model == null );
-			Date currentTime = new Date();
+			Timestamp currentTime = TimeHelper.nowTimestamp();
 			if ( create ) {
 				model = new HelperDbJvfsFile();
 				model.setFileName( descriptor.getName() );
@@ -188,6 +189,7 @@ public class JMountDaogenDB implements JMount, Serializable {
 				file.setDbFile( model );
 			}
 			model.setFileProps( getFileProps( file ) );
+			model.setUpdateTime( currentTime );
 			if ( data != null ) {
 				model.setFileSize( new BigDecimal( data.length ) );
 				model.setFileContent( ByteArrayDataHandler.newHandlerByte( data ) );
@@ -231,6 +233,22 @@ public class JMountDaogenDB implements JMount, Serializable {
 			}
 		}
  		return created;
+	}	
+	
+
+	public boolean rename( DaogenJFileDB file, JFile newFile ) throws IOException {
+		boolean renamed = false;
+		if ( ( file.isDirectory() && newFile.isDirectory() ) || ( file.isFile() && newFile.isFile() ) ) {
+			try ( CloseableDAOContext context = this.newContext() ) {
+				int res = this.facade.rename( context, file, newFile );
+				renamed = (res > 0);
+			} catch (Exception e) {
+				throw new IOException( e );
+			}
+		} else {
+			throw new IOException( "Cannot rename to different file type "+file.describe()+" -> "+newFile.describe() );
+		}	
+ 		return renamed;
 	}	
 	
 	protected CloseableDAOContext newContext() throws DAOException {

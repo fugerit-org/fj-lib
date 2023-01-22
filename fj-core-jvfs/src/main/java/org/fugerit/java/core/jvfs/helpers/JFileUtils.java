@@ -2,6 +2,7 @@ package org.fugerit.java.core.jvfs.helpers;
 
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.lang.helpers.StringUtils;
+import org.fugerit.java.core.lang.helpers.Wrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,6 +53,14 @@ public class JFileUtils {
 			name = path;
 		}
 		return new PathDescriptor(parentPath, name);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static JFile unwrapJFile( JFile jFile ) {
+		while ( jFile instanceof Wrapper ) {
+			jFile = ((Wrapper<JFile>)jFile).unwrap();
+		}
+		return jFile;
 	}
 	
 }
