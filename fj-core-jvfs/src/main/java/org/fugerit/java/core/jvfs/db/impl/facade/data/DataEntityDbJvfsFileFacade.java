@@ -1,12 +1,12 @@
 package org.fugerit.java.core.jvfs.db.impl.facade.data;
 
 import java.sql.Connection;
-import java.util.Date;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.DAOUtilsNG;
 import org.fugerit.java.core.db.dao.LoadResultNG;
 import org.fugerit.java.core.db.daogen.DAOContext;
+import org.fugerit.java.core.db.helpers.TimeHelper;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.db.DaogenJFileDB;
 import org.fugerit.java.core.jvfs.db.daogen.def.facade.EntityDbJvfsFileFacade;
@@ -50,7 +50,7 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 					}
 					try {
 						res = DAOUtilsNG.update( context.getConnection() , renameFileSql , 
-								descriptor2.getName(), descriptor2.getParentPath(), new Date(), descriptor1.getName(), descriptor1.getParentPath() );
+								descriptor2.getName(), descriptor2.getParentPath(), TimeHelper.nowTimestamp(), descriptor1.getName(), descriptor1.getParentPath() );
 						if ( res > 0 ) {
 							String searchDirSql = StringUtils.concat( " " , 
 									"SELECT * FROM", this.getTableName(), "WHERE", COL_PARENT_PATH, "LIKE ?");
@@ -60,7 +60,7 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 									ModelDbJvfsFile currentKid = loader.next();
 									String newParentPath = currentKid.getParentPath().replaceFirst( file.getPath(), newFile.getPath() );
 									resDir+= DAOUtilsNG.update( context.getConnection() , renameFileSql , 
-											currentKid.getFileName(), newParentPath, new Date(), currentKid.getFileName(), currentKid.getParentPath() );
+											currentKid.getFileName(), newParentPath, TimeHelper.nowTimestamp(), currentKid.getFileName(), currentKid.getParentPath() );
 								}
 							}
 							logger.debug( "result file {}, dir {}, found {}", res, resDir );
@@ -77,7 +77,7 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 					}
 				} else {
 					res = DAOUtilsNG.update( context.getConnection() , renameFileSql , 
-							descriptor2.getName(), descriptor2.getParentPath(), new Date(), descriptor1.getName(), descriptor1.getParentPath() );
+							descriptor2.getName(), descriptor2.getParentPath(), TimeHelper.nowTimestamp(), descriptor1.getName(), descriptor1.getParentPath() );
 				}	
 			}
 		} catch (Exception e) {
