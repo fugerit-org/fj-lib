@@ -1,4 +1,8 @@
-﻿0.8.7 (2023-01-21)
+﻿0.8.8 (2023-01-22)
+------------------
++ Rename JFile implementation
+
+0.8.7 (2023-01-21)
 ------------------
 + Refactoring of jvfs as a new maven module (fj-core-jvfs)
 * Refcatoring of test classes to module fj-test-helper8
