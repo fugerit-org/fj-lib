@@ -233,6 +233,22 @@ public class JMountDaogenDB implements JMount, Serializable {
  		return created;
 	}	
 	
+
+	public boolean rename( DaogenJFileDB file, JFile newFile ) throws IOException {
+		boolean renamed = false;
+		if ( ( file.isDirectory() && newFile.isDirectory() ) || ( file.isFile() && newFile.isFile() ) ) {
+			try ( CloseableDAOContext context = this.newContext() ) {
+				int res = this.facade.rename( context, file, newFile );
+				renamed = (res > 0);
+			} catch (Exception e) {
+				throw new IOException( e );
+			}
+		} else {
+			throw new IOException( "Cannot rename to different file type "+file.describe()+" -> "+newFile.describe() );
+		}	
+ 		return renamed;
+	}	
+	
 	protected CloseableDAOContext newContext() throws DAOException {
 		return new CloseableDAOContextSC( this.cf.getConnection() ) ;
 	}

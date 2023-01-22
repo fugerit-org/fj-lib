@@ -91,5 +91,10 @@ public class DaogenJFileDB extends SimpleAbstractJFile {
 	public JMountDaogenDB getjMount() {
 		return jMount;
 	}
+
+	@Override
+	public boolean rename(JFile newFile) throws IOException {
+		return this.jMount.rename(this, newFile);
+	}
 	
 }

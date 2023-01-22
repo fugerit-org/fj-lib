@@ -11,9 +11,22 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.helpers.AbstractJFile;
+import org.fugerit.java.core.jvfs.helpers.JFileUtils;
 
 public class RealJFile extends AbstractJFile {
 	
+	@Override
+	public boolean rename(JFile newFile) throws IOException {
+		File newF = null;
+		newFile = JFileUtils.unwrapJFile( newFile );
+		if ( newFile instanceof RealJFile ) {
+			newF = ((RealJFile)newFile).file;
+		} else {
+			throw new IOException( "Cannot rename to : "+newFile );
+		}
+		return this.file.renameTo( newF );
+	}
+
 	@Override
     public String toString() {
         return super.toString()+"[file:"+this.file+"]";

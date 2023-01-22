@@ -45,7 +45,9 @@ public class JFileUtilCP {
 		} else {
 			if ( from.isDirectory() && to.isDirectory() )  {
 				if ( recurse ) {
-					to.mkdir();
+					if ( !to.exists() ) {
+						to.mkdir();	
+					}
 					for ( JFile kidFrom : from.lsFiles() ) {
 						res+= copyFile(kidFrom, to.getChild( kidFrom.getName() ), recurse, force, verbose);
 					}
