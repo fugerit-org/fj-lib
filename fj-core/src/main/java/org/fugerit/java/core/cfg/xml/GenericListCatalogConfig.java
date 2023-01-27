@@ -15,6 +15,8 @@ import javax.xml.transform.dom.DOMSource;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
+import org.fugerit.java.core.cfg.provider.ConfigProvider;
+import org.fugerit.java.core.cfg.provider.ConfigProviderFacade;
 import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
@@ -93,6 +95,8 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	private Set<String> orderedId;
 	
 	private Properties generalProps;
+	
+	private ConfigProvider configProvider;
 	
 	/**
 	 * Creates a new DataListCatalogConfig wth default configuration.
@@ -179,6 +183,11 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	 * Bean population mode
 	 */
 	public static final String ATT_BEAN_MODE = "bean-mode";
+
+	/**
+	 * Name of the config provider to use
+	 */
+	public static final String ATT_CONFIG_PROVIDER_NAME = "config-provider-name";
 	
 	/**
 	 * Default, bean population mode (by default read only attributes)
@@ -283,6 +292,9 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		
 		DOMUtils.attributesToProperties( tag, this.getGeneralProps() );
 		logger.info( "general props : "+this.getGeneralProps() );
+		
+		String confgiProviderName = this.getGeneralProps().getProperty( ATT_CONFIG_PROVIDER_NAME );
+		this.configProvider = ConfigProviderFacade.getInstance().getProviderWithDefault( confgiProviderName , this );
 		
 		String tryXsdValidation = this.getGeneralProps().getProperty( ATT_TRY_XSD_VALIDATION, ATT_TRY_XSD_VALIDATION_DEFAULT );
 		if ( BooleanUtils.isTrue( tryXsdValidation ) ) {
@@ -414,8 +426,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 				String path = currentModule.getAttribute( ATT_TAG_MODULE_CONF_PATH );
 				String unsafe = currentModule.getAttribute( ATT_TAG_MODULE_CONF_UNSAFE );
 				logger.info( "Loading module id="+id+" mode="+mode+" path="+path );
-				try  {
-					InputStream is = StreamHelper.resolveStreamByMode( mode , path );
+				try ( InputStream is = this.getConfigProvider().readConfiguration( mode, path) )   {
 					Document currentModuleDoc = DOMIO.loadDOMDoc( is );
 					Element rootTag = currentModuleDoc.getDocumentElement();
 					this.configure( rootTag );
@@ -477,6 +488,10 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 
 	public void setSchemaId(String schemaId) {
 		this.schemaId = schemaId;
+	}
+	
+	protected ConfigProvider getConfigProvider() {
+		return this.configProvider;
 	}
 	
 	/**
