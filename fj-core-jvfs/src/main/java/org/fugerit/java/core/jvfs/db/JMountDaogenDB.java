@@ -141,8 +141,11 @@ public class JMountDaogenDB implements JMount, Serializable {
 	
 	public InputStream streamIn( ModelDbJvfsFile file ) throws IOException {
 		InputStream is = null;
-		if ( file != null ) {
-			is = new ByteArrayInputStream( file.getFileContent().getData() );
+		if ( file != null && file.getFileContent() != null ) {
+			byte[] data = file.getFileContent().getData();
+			if ( data != null ) {
+				is = new ByteArrayInputStream( file.getFileContent().getData() );	
+			}
 		}
 		return is;
 	}

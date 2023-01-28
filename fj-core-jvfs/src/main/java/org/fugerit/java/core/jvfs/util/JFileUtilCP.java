@@ -1,6 +1,7 @@
 package org.fugerit.java.core.jvfs.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.jvfs.JFile;
@@ -55,7 +56,14 @@ public class JFileUtilCP {
 					throw new IOException( "Directories can only be copied recursively, from:("+from+") to:("+to+")" );
 				}
 			} else {
-				StreamIO.pipeStream( from.getInputStream() , to.getOutputStream(), StreamIO.MODE_CLOSE_BOTH );
+				InputStream fromIS = from.getInputStream();
+				if ( fromIS != null ) {
+					StreamIO.pipeStream( fromIS , to.getOutputStream(), StreamIO.MODE_CLOSE_BOTH );
+				} else {
+					if ( verbose ) {
+						logger.info( "Input file empty (getInputStream() == null) : {}", from.describe() );
+					}
+				}
 			}
 		}
 		return res;
