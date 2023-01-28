@@ -3,6 +3,7 @@ package org.fugerit.java.core.jvfs.helpers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
@@ -74,12 +75,22 @@ public abstract class AbstractJFile implements JFile {
 
     @Override
     public Reader getReader() throws IOException {
-        return (new InputStreamReader(this.getInputStream()));
+    	Reader reader = null;
+    	InputStream is = this.getInputStream();
+    	if ( is != null ) {
+    		reader = (new InputStreamReader(this.getInputStream()));
+    	}
+        return reader;
     }
 
     @Override
     public Writer getWriter() throws IOException {
-        return (new OutputStreamWriter(this.getOutputStream()));
+    	Writer writer = null;
+    	OutputStream os = this.getOutputStream();
+    	if ( os != null ) {
+    		writer = (new OutputStreamWriter(this.getOutputStream()));
+    	}
+        return writer;
     }
 
 	@Override

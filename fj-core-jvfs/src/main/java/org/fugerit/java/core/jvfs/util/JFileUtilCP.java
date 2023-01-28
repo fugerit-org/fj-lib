@@ -1,10 +1,11 @@
 package org.fugerit.java.core.jvfs.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.jvfs.JFile;
+import org.fugerit.java.core.util.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,14 +57,11 @@ public class JFileUtilCP {
 					throw new IOException( "Directories can only be copied recursively, from:("+from+") to:("+to+")" );
 				}
 			} else {
-				InputStream fromIS = from.getInputStream();
-				if ( fromIS != null ) {
-					StreamIO.pipeStream( fromIS , to.getOutputStream(), StreamIO.MODE_CLOSE_BOTH );
-				} else {
-					if ( verbose ) {
-						logger.info( "Input file empty (getInputStream() == null) : {}", from.describe() );
-					}
-				}
+				// We want to create a blank file if the from input stream is null
+				StreamIO.pipeStream( 
+						ObjectUtils.objectWithDefault( from.getInputStream() , new ByteArrayInputStream( "".getBytes() ) ) , 
+						to.getOutputStream(), 
+						StreamIO.MODE_CLOSE_BOTH );
 			}
 		}
 		return res;
