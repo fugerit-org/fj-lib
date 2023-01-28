@@ -1,4 +1,4 @@
-﻿0.8.19 (2023-01-28)
+﻿0.8.10 (2023-01-28)
 ------------------
 + [fj-core-jvfs fix input stream retriave in db jmount](https://github.com/fugerit-org/fj-lib/issues/12)
 
