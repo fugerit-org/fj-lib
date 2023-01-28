@@ -1,4 +1,8 @@
-﻿0.8.11 (2023-01-28)
+﻿0.8.12 (2023-01-28)
+------------------
++ fix to jvfs copy (files with no null input streams were not copied)
+
+0.8.11 (2023-01-28)
 ------------------
 + fix to jvfs copy (files with no null input streams were not copied)
 
