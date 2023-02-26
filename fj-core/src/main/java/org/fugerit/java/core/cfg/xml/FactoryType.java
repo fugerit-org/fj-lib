@@ -4,6 +4,11 @@ import org.w3c.dom.Element;
 
 public class FactoryType extends BasicIdConfigType {
 
+	@Override
+	public String toString() {
+		return "FactoryType [type=" + type + ", info=" + info + ", unsafe=" + unsafe + ", element=" + element + "]";
+	}
+
 	/**
 	 * 
 	 */
@@ -12,6 +17,10 @@ public class FactoryType extends BasicIdConfigType {
 	private String type;
 	
 	private String info;
+	
+	private String unsafe;
+	
+	private String unsafeMode;
 
 	public String getType() {
 		return type;
@@ -29,6 +38,22 @@ public class FactoryType extends BasicIdConfigType {
 		this.info = info;
 	}
 	
+	public String getUnsafe() {
+		return unsafe;
+	}
+
+	public void setUnsafe(String unsafe) {
+		this.unsafe = unsafe;
+	}
+	
+	public String getUnsafeMode() {
+		return unsafeMode;
+	}
+
+	public void setUnsafeMode(String unsafeMode) {
+		this.unsafeMode = unsafeMode;
+	}
+
 	private Element element;
 
 	public Element getElement() {

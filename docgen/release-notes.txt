@@ -1,4 +1,8 @@
-﻿0.8.12 (2023-01-28)
+﻿0.8.13 (2023-02-26)
+------------------
++ [Added unsafe loading for factory type](https://github.com/fugerit-org/fj-doc/issues/31)
+
+0.8.12 (2023-01-28)
 ------------------
 + fix to jvfs copy (files with no null input streams were not copied)
 

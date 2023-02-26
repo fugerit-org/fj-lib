@@ -4,7 +4,7 @@ import org.fugerit.java.core.cfg.ConfigException;
 import org.w3c.dom.Element;
 
 public class FactoryCatalog extends CustomListCatalogConfig<FactoryType, ListMapConfig<FactoryType>> {
-
+	
 	/**
 	 * Default configuration element for a data list
 	 */
