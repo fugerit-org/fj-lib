@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.log.LogFacade;
+import org.fugerit.java.core.util.collection.SubPropsUtils;
 
 /**
  * <p>Utility for handling java.util.Property objects.</p>
@@ -228,19 +229,7 @@ public final class PropsIO {
 	 * @return				resulting java.util.Properties
 	 */
 	public static Properties subProps( Properties props, String prefix, boolean removePrefix ) {
-		Properties res = new Properties();
-		for ( Object k : props.keySet() ) {
-			String key = String.valueOf( k );
-			if ( key.startsWith( prefix ) ) {
-				String newKey = key;
-				if ( removePrefix ) {
-					newKey = key.substring( prefix.length() );
-				}
-				String value = props.getProperty( key );
-				res.setProperty( newKey , value );
-			}
-		}
-		return res;
+		return SubPropsUtils.subProps(props, prefix, removePrefix);
 	}
 	
 	public static Properties loadFromBundle( ResourceBundle bundle ) {
