@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.store.ConfigStore;
@@ -36,7 +37,9 @@ public class ConfigStoreProps extends ConfigStoreDefault {
 		if ( configProps.containsKey( KEY_ENTRY_NAMES ) ) {
 			String [] names = configProps.getProperty( KEY_ENTRY_NAMES ).split( SEP_NAMES );
 			for ( int k=0; k<names.length; k++ ) {
-				this.getConfigMap( names[k] );
+				if ( StringUtils.isNotEmpty( names[k] ) ) {
+					this.getConfigMap(names[k]);
+				}
 			}
 		}
 	}
@@ -67,8 +70,11 @@ public class ConfigStoreProps extends ConfigStoreDefault {
 
 	private Set<String> getNameSet() {
 		String names = this.configProps.getProperty( KEY_ENTRY_NAMES, "" );
-		logger.debug( "getNameSet() names {}", names );
-		return new LinkedHashSet<>( Arrays.asList( names.split( SEP_NAMES ) ) );
+		Set<String> res = Arrays.asList( names.split( SEP_NAMES ) ).stream()
+				.filter( v -> StringUtils.isNotEmpty( v ) )
+				.collect( Collectors.toCollection( LinkedHashSet::new ) );
+		logger.debug( "getNameSet() names '{}' -> {}", names, res );
+		return res;
 	}
 	
 	private void remove( String name, ConfigStoreMap res ) {
@@ -92,6 +98,7 @@ public class ConfigStoreProps extends ConfigStoreDefault {
 		} else {
 			this.remove(name,map);
 		}
+		logger.debug( "addConfigStoreMap() name set -> {}", nameSet );
 		this.configProps.setProperty( KEY_ENTRY_NAMES , StringUtils.concat( SEP_NAMES , nameSet ) );
 		add(this.configProps, name, map);
 		return res;
