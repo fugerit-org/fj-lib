@@ -2,6 +2,7 @@ package org.fugerit.java.core.jvfs.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.function.Predicate;
 
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.jvfs.JFile;
@@ -36,8 +37,12 @@ public class JFileUtilCP {
 	public static int copyFileRecurseForceVerbose( JFile from, JFile to ) throws IOException {
 		return copyFile(from, to, true, true, true );
 	}
-	
-	public static int copyFile( JFile from, JFile to, boolean recurse, boolean force, boolean verbose ) throws IOException {
+
+	public static int copyFile(JFile from, JFile to, boolean recurse, boolean force, boolean verbose) throws IOException {
+		return copyFile( from, to, recurse, force, verbose, ( f ) -> true );
+	}
+
+	public static int copyFile(JFile from, JFile to, boolean recurse, boolean force, boolean verbose, Predicate<JFile> filter) throws IOException {
 		int res = 1;
 		if ( verbose ) {
 			logger.info( "copyFile( recurse:"+recurse+", force:"+force+" ) {} -> {}", from, to );
@@ -48,19 +53,21 @@ public class JFileUtilCP {
 			if ( from.isDirectory() && to.isDirectory() )  {
 				if ( recurse ) {
 					if ( !to.exists() ) {
-						to.mkdir();	
+						to.mkdir();
 					}
 					for ( JFile kidFrom : from.lsFiles() ) {
-						res+= copyFile(kidFrom, to.getChild( kidFrom.getName() ), recurse, force, verbose);
+						if ( filter.test( kidFrom ) ) {
+							res+= copyFile(kidFrom, to.getChild( kidFrom.getName() ), recurse, force, verbose, filter);
+						}
 					}
 				} else {
 					throw new IOException( "Directories can only be copied recursively, from:("+from+") to:("+to+")" );
 				}
 			} else {
 				// We want to create a blank file if the from input stream is null
-				StreamIO.pipeStream( 
-						ObjectUtils.objectWithDefault( from.getInputStream() , new ByteArrayInputStream( "".getBytes() ) ) , 
-						to.getOutputStream(), 
+				StreamIO.pipeStream(
+						ObjectUtils.objectWithDefault( from.getInputStream() , new ByteArrayInputStream( "".getBytes() ) ) ,
+						to.getOutputStream(),
 						StreamIO.MODE_CLOSE_BOTH );
 			}
 		}
