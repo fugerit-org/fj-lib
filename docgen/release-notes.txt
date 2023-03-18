@@ -1,4 +1,9 @@
-﻿0.8.13 (2023-02-26)
+﻿8.0.0 (2023-03-18)
+------------------
++ [Added config store facilities](https://github.com/fugerit-org/fj-lib/issues/14)
++ [Dropping the 0 version (next release will not be 0.8.14 but 8.0.0](https://github.com/fugerit-org/fj-lib/issues/15)
+
+0.8.13 (2023-02-26)
 ------------------
 + [Added unsafe loading for factory type](https://github.com/fugerit-org/fj-doc/issues/31)
 
