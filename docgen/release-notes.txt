@@ -1,4 +1,9 @@
-﻿8.0.0 (2023-03-18)
+﻿8.0.1 (2023-03-19)
+------------------
++ [Moving github pages to main branch, documenting QueryHelper api](https://github.com/fugerit-org/fj-lib/issues/17)
++ Extensions method to SelectHelper, and junit
+
+8.0.0 (2023-03-18)
 ------------------
 + [Added config store facilities](https://github.com/fugerit-org/fj-lib/issues/14)
 + [Dropping the 0 version (next release will not be 0.8.14 but 8.0.0](https://github.com/fugerit-org/fj-lib/issues/15)
