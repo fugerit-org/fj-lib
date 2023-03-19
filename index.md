@@ -11,3 +11,4 @@
 
 * [javadoc main](https://www.fugerit.org/data/java/javadoc/fj-core/overview-summary.html) / [javadoc alt](https://javadoc.io/doc/org.fugerit.java/fj-core/latest/index.html)
 * [Validator Catalog reference](docs/validator/index.md)
+* [DaoGen API](docs/daogen/index.md)
