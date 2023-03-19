@@ -65,8 +65,8 @@ CREATE SEQUENCE fugerit.seq_test START WITH 1;
 INSERT INTO fugerit.user ( id, username, password, last_login, state ) VALUES ( nextval('fugerit.seq_test'), 'user1', 'a3f8h5h4h3n3n1n9', sysdate, 1 );
 INSERT INTO fugerit.user ( id, username, password, last_login, state ) VALUES ( nextval('fugerit.seq_test'), 'user2', '5h4h3n3n1n9a3f8h', sysdate, 0 );
 
-INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('fugerit.seq_test'), 1, 'test address 01' );
-INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('fugerit.seq_test'), 2, 'test address 02' );
-INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('fugerit.seq_test'), 1, 'test address 03' );
+INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('fugerit.seq_test'), 1, 'Test address 01' );
+INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('fugerit.seq_test'), 2, 'Test address 02' );
+INSERT INTO fugerit.address ( id, id_user, info ) VALUES ( nextval('fugerit.seq_test'), 1, 'Test address 03' );
 
 INSERT INTO fugerit.test_two_field_key ( id_one, id_two, info ) VALUES ( nextval('fugerit.seq_test'), nextval('fugerit.seq_test'), 'test info 01' );
