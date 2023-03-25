@@ -1,7 +1,6 @@
-﻿8.0.1 (2023-03-19)
+﻿8.0.2 (2023-03-25)
 ------------------
-+ [Moving github pages to main branch, documenting QueryHelper api](https://github.com/fugerit-org/fj-lib/issues/17)
-+ Extensions method to SelectHelper, and junit
++ [j2ee dependant api deprecation](https://github.com/fugerit-org/fj-lib/issues/19)
 
 8.0.0 (2023-03-18)
 ------------------

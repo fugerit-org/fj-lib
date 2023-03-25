@@ -1,21 +1,14 @@
 package test.org.fugerit.java.core.cfg.store;
 
+import java.util.Date;
+
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
-import org.fugerit.java.core.cfg.store.ConfigStore;
-import org.fugerit.java.core.cfg.store.ConfigStoreMap;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreIO;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreMapDefault;
-import org.fugerit.java.core.cfg.store.helper.ConfigStoreProps;
-import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.Date;
 
 public class TestConfigStoreIO {
 
@@ -30,6 +23,7 @@ public class TestConfigStoreIO {
             map.add( "test-entry-01", "value "+new Date());
             configStore.addConfigStoreMap( "test-map", map );
             configStoreIO.saveConfig( configStore );
+            logger.info( "teat ok" );
         } catch (Exception e) {
             throw new ConfigRuntimeException( e );
         }
