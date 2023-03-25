@@ -1,4 +1,10 @@
-﻿8.0.2 (2023-03-25)
+﻿8.0.3 (2023-03-25)
+------------------
++ [j2ee dependant api deprecation](https://github.com/fugerit-org/fj-lib/issues/19)
++ changed fj-bom version to 0.2.3
++ changed inner dependancy of submodules from project.version to fj-version
+
+8.0.2 (2023-03-25)
 ------------------
 + [j2ee dependant api deprecation](https://github.com/fugerit-org/fj-lib/issues/19)
 

@@ -7,11 +7,11 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-bom</artifactId>
-		<version>0.2.2</version>
+		<version>0.2.3</version>
 		<relativePath></relativePath>
 	</parent>
 
-	<version>8.0.2</version>
+	<version>8.0.3</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -25,6 +25,7 @@
 	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>	
 	    <fj-test-helper-version>0.1.0</fj-test-helper-version>    	
 	    <javax-rs-api-version>2.1.1</javax-rs-api-version>
+	    <fj-version>${project.version}</fj-version>
 	</properties>
 
 	<licenses>
@@ -81,13 +82,13 @@
 			<dependency>
 				<groupId>org.fugerit.java</groupId>
 				<artifactId>fj-core</artifactId>
-				<version>${project.version}</version>
+				<version>${fj-version}</version>
 			</dependency>		
 
 			<dependency>
 				<groupId>org.fugerit.java</groupId>
 				<artifactId>fj-core-jvfs</artifactId>
-				<version>${project.version}</version>
+				<version>${fj-version}</version>
 			</dependency>			
 
 			<dependency>
