@@ -17,8 +17,10 @@ import org.fugerit.java.core.db.dao.FieldList;
 import org.fugerit.java.core.db.dao.RSExtractor;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.log.LogObject;
+import org.fugerit.java.core.util.checkpoint.CheckpointUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -27,13 +29,12 @@ import org.slf4j.LoggerFactory;
  *
  * @param <T>	the type returned by this DAOHelper
  */
+@Slf4j
 public class BasicDAOHelper<T> implements Serializable, LogObject {
-
-	protected static Logger logger = LoggerFactory.getLogger( BasicDAOHelper.class );
 	
 	@Override
 	public Logger getLogger() {
-		return logger;
+		return log;
 	}
 
 	/**
@@ -79,39 +80,45 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 		this.loadAllHelper( l, query.getQueryContent(), query.getFields(), re );
 	}
 	
+	protected String createQueryId( long startTime ) {
+		return String.format( "%s_%s", Thread.currentThread().getId(), startTime );
+	}
 
 	public void loadAllHelper( List<T> l, String query, FieldList fields, RSExtractor<T> re ) throws DAOException {
 		try {
-			logger.debug( "loadAll START list : '{}' ", l.size() );
-			logger.debug( "loadAll fields        : '{}'", fields.size() );
-			logger.debug( "loadAll RSExtractor   : '{}'", re);
+			long startTime = System.currentTimeMillis();
+			String queryId = this.createQueryId(startTime);
+			log.debug( "queryId:{}, loadAll START list    : '{}' ", queryId, l.size() );
+			log.debug( "queryId:{}, loadAll fields        : '{}'", queryId, fields.size() );
+			log.debug( "queryId:{}, loadAll RSExtractor   : '{}'", queryId, re);
 			Connection conn = this.daoContext.getConnection();
 			int i=0;
 			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
 				DAOHelper.setAll( ps, fields , this );
 				try ( ResultSet rs = ps.executeQuery() ) {
+					log.debug("queryId:{}, loadAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
 					while (rs.next()) {
 						l.add( re.extractNext( rs ) );
 						i++;
 					}
+					log.debug("queryId:{}, loadAll query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
 				}
 			} catch (SQLException e) {
 				throw (new DAOException( e.getMessage()+"[query:"+query+",record:"+i+"]", e ));
 			}
-			logger.debug("loadAll END list : '{}'", l.size());
+			log.debug("queryId:{}, loadAll END list : '{}'", queryId, l.size());
 		} catch (DAOException e) {
 			throw new DAOException( e );
 		}
 	}
 	
-
 	public int update( QueryHelper queryHelper ) throws DAOException {
 		int res = 0;
 		try {
 			String query = queryHelper.getQueryContent();
 			FieldList fields = queryHelper.getFields();
-			logger.debug( "update START list : '{}' ", query );
-			logger.debug( "update fields        : '{}'", fields.size() );
+			log.debug( "update START list : '{}' ", query );
+			log.debug( "update fields        : '{}'", fields.size() );
 			Connection conn = this.daoContext.getConnection();
 			int i=0;
 			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
@@ -120,7 +127,7 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 			} catch (SQLException e) {
 				throw (new DAOException( e.getMessage()+"[query:"+query+",record:"+i+"]", e ));
 			}
-			logger.debug("update END res : '{}'", res );
+			log.debug("update END res : '{}'", res );
 		} catch (DAOException e) {
 			throw new DAOException( e );
 		}
@@ -130,7 +137,7 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 	public BigDecimal newSequenceValue( String sequence ) throws DAOException {
 		BigDecimal id = null;
 		String sql = " SELECT "+sequence+".NEXTVAL FROM DUAL";
-		logger.info( "newSequenceValue() sql > "+sql );
+		log.info( "newSequenceValue() sql > "+sql );
 		try ( Statement stm = this.daoContext.getConnection().createStatement();
 				ResultSet rs = stm.executeQuery( sql ) ) {
 			if ( rs.next() ) {

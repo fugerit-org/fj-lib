@@ -7,11 +7,11 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-bom</artifactId>
-		<version>0.2.3</version>
+		<version>1.0.0</version>
 		<relativePath></relativePath>
 	</parent>
 
-	<version>8.0.3</version>
+	<version>8.0.4</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -20,9 +20,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java-version-compliance>1.8</java-version-compliance>
+		<java-version-compliance>8</java-version-compliance>
 	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
 	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>	
+	    <maven.compiler.release>${java-version-compliance}</maven.compiler.release>
 	    <fj-test-helper-version>0.1.0</fj-test-helper-version>    	
 	    <javax-rs-api-version>2.1.1</javax-rs-api-version>
 	    <fj-version>${project.version}</fj-version>
@@ -128,22 +129,12 @@
 
 	<dependencies>
 
-		<!-- logging -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>compile</scope>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<scope>test</scope>
-		</dependency>	
-		<dependency>
-		    <groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-slf4j-impl</artifactId>
-		    <scope>test</scope>
-		</dependency>
+
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>

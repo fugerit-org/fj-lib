@@ -68,9 +68,9 @@ public class TestHelperI18N {
 		String key = "test.complex.prop.1";	// contains a integer param and a i18n param
 		String keyParam = "test.param.1";	// the key for the i18n param
 		this.testHelper( "Complex property 1 -> simple parameter : 3 and i18n parameter : (ParamI18N value)", 
-				LANG_DEF,  key, new Integer( 3 ), ParamI18N.newParamI18N( keyParam ) );
+				LANG_DEF,  key, Integer.valueOf( 3 ), ParamI18N.newParamI18N( keyParam ) );
 		this.testHelper( "Proprietà complessa test 1 -> parametro semplice : 3 e parametro i18n : (valore ParamI18N)", 
-				LANG_ALT[0],  key, new Integer( 3 ), ParamI18N.newParamI18N( keyParam ) );
+				LANG_ALT[0],  key, Integer.valueOf( 3 ), ParamI18N.newParamI18N( keyParam ) );
 	}
 	
 	@Test
@@ -78,9 +78,9 @@ public class TestHelperI18N {
 		String key = "test.complex.prop.1";	// contains a integer param and a i18n param
 		String keyParam = "test.param.1.alt";	// the key for the i18n param
 		this.testHelper( "Complex property 1 -> simple parameter : 3 and i18n parameter : (ParamI18N value alternative bundle)", 
-				LANG_DEF,  key, new Integer( 3 ), ParamI18N.newParamI18N( keyParam, this.helperParam ) );
+				LANG_DEF,  key, Integer.valueOf( 3 ), ParamI18N.newParamI18N( keyParam, this.helperParam ) );
 		this.testHelper( "Proprietà complessa test 1 -> parametro semplice : 3 e parametro i18n : (valore ParamI18N bundle alternativo)", 
-				LANG_ALT[0],  key, new Integer( 3 ), ParamI18N.newParamI18N( keyParam, this.helperParam ) );
+				LANG_ALT[0],  key, Integer.valueOf( 3 ), ParamI18N.newParamI18N( keyParam, this.helperParam ) );
 	}
 		
 }

@@ -1,4 +1,11 @@
-﻿8.0.3 (2023-03-25)
+﻿8.0.4 (2023-03-26)
+------------------
++ changed fj-bom version to 1.0.0
++ [As for the new parent version, building should be done using java11+](https://github.com/fugerit-org/fj-bom/issues/11)
++ maven.compiler.release property set to '8' (so the project is still compatible with java8+)
++ Introduced project lombok
+
+8.0.3 (2023-03-25)
 ------------------
 + [j2ee dependant api deprecation](https://github.com/fugerit-org/fj-lib/issues/19)
 + changed fj-bom version to 0.2.3
@@ -7,6 +14,11 @@
 8.0.2 (2023-03-25)
 ------------------
 + [j2ee dependant api deprecation](https://github.com/fugerit-org/fj-lib/issues/19)
+
+8.0.1 (2023-03-19)
+------------------
++ [Moving github pages to main branch, documenting QueryHelper api](https://github.com/fugerit-org/fj-lib/issues/17)
++ Extensions method to SelectHelper, and junit
 
 8.0.0 (2023-03-18)
 ------------------

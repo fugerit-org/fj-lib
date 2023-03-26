@@ -7,13 +7,14 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>8.0.3</version>
+		<version>8.0.4</version>
 	</parent>
 	
 	<name>fj-tool</name>
 	<description>Fugerit Java Tool Library for JDK 1.8 and up</description>
 	
 	<properties>
+		<javax-mail-api-version>1.6.2</javax-mail-api-version>
 	</properties>
 	
 	<organization>
@@ -60,9 +61,28 @@
 
 	<dependencies>
 
+		<dependency> 
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-api</artifactId>
+		</dependency>
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-slf4j-impl</artifactId>
+		    <artifactId>log4j-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-slf4j2-impl</artifactId>
+		</dependency>
+
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>${javax-mail-api-version}</version>
 		</dependency>
 
 		<dependency>
@@ -73,13 +93,6 @@
 		<dependency>
 		  <groupId>org.tukaani</groupId>
 		  <artifactId>xz</artifactId>
-		</dependency>
-
-		<!-- java core dependancies -->
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
