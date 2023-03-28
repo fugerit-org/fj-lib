@@ -31,21 +31,24 @@ import org.fugerit.java.core.log.LogObject;
 import org.slf4j.Logger;
 
 public class DAOHelper {
-
-    public static void setAll( PreparedStatement ps, FieldList fields, Logger logger ) throws SQLException {
-    	logger.debug( "Total Param Number : "+fields.size() );
+	
+	public static void setAll( String queryId, PreparedStatement ps, FieldList fields, Logger log ) throws SQLException {
+		log.debug( "queryId:'{}', setAll() Total Param Number : '{}'", queryId, fields.size() );
     	int np = 0;
     	int k = 0;
 		while ( k<fields.size() ) {
 			np++;
 			int param = (k+1);
 			Field f = fields.getField(k);
-			logger.debug( "Setting param n. "+param+", value: "+String.valueOf( f )+"(fl.size:"+fields.size()+")" );
+			log.debug( "queryId:'{}', setAll() Setting param : '{}'", queryId, "n. "+param+", value: "+String.valueOf( f )+"(fl.size:"+fields.size()+")" );
 			f.setField(ps, param);
 			k++;
-			logger.debug( "test : "+(k<fields.size())+" k:"+k+" fields.size:"+fields.size() );
-		}    		
-		logger.debug( "Total param set : "+np );
+		}    	
+		log.debug( "queryId:'{}', setAll() Total param set : '{}'", queryId, np );
+    }
+
+    public static void setAll( PreparedStatement ps, FieldList fields, Logger logger ) throws SQLException {
+    	setAll( "NO-QUERY-ID" , ps, fields, logger);
     }
 	
     public static void setAll( PreparedStatement ps, FieldList fields, LogObject log ) throws SQLException {

@@ -88,20 +88,21 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 		try {
 			long startTime = System.currentTimeMillis();
 			String queryId = this.createQueryId(startTime);
-			log.debug( "queryId:{}, loadAll START list    : '{}' ", queryId, l.size() );
-			log.debug( "queryId:{}, loadAll fields        : '{}'", queryId, fields.size() );
-			log.debug( "queryId:{}, loadAll RSExtractor   : '{}'", queryId, re);
+			log.debug( "queryId:'{}', loadAll START list    : '{}'", queryId, l.size() );
+			log.debug( "queryId:'{}', loadAll sql           : '{}'", queryId, query );
+			log.debug( "queryId:'{}', loadAll fields        : '{}'", queryId, fields.size() );
+			log.debug( "queryId:'{}', loadAll RSExtractor   : '{}'", queryId, re);
 			Connection conn = this.daoContext.getConnection();
 			int i=0;
 			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
-				DAOHelper.setAll( ps, fields , this );
+				DAOHelper.setAll( queryId, ps, fields , log );
 				try ( ResultSet rs = ps.executeQuery() ) {
-					log.debug("queryId:{}, loadAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+					log.debug("queryId:'{}', loadAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
 					while (rs.next()) {
 						l.add( re.extractNext( rs ) );
 						i++;
 					}
-					log.debug("queryId:{}, loadAll query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+					log.debug("queryId:'{}', loadAll query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
 				}
 			} catch (SQLException e) {
 				throw (new DAOException( e.getMessage()+"[query:"+query+",record:"+i+"]", e ));

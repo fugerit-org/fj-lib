@@ -1,4 +1,8 @@
-﻿8.0.4 (2023-03-26)
+﻿8.0.5 (2023-03-28)
+------------------
++ Improved BasicDAOHelper debugging
+
+8.0.4 (2023-03-26)
 ------------------
 + changed fj-bom version to 1.0.0
 + [As for the new parent version, building should be done using java11+](https://github.com/fugerit-org/fj-bom/issues/11)
