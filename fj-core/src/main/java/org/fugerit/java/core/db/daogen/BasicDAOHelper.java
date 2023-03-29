@@ -105,7 +105,7 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 					log.debug("queryId:'{}', loadAll query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
 				}
 			} catch (SQLException e) {
-				throw (new DAOException( e.getMessage()+"[query:"+query+",record:"+i+"]", e ));
+				throw (new DAOException( e.getMessage()+"[query:"+query+",queryId:"+queryId+",record:"+i+"]", e ));
 			}
 			log.debug("queryId:{}, loadAll END list : '{}'", queryId, l.size());
 		} catch (DAOException e) {
@@ -118,15 +118,17 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 		try {
 			String query = queryHelper.getQueryContent();
 			FieldList fields = queryHelper.getFields();
-			log.debug( "update START list : '{}' ", query );
-			log.debug( "update fields        : '{}'", fields.size() );
+			long startTime = System.currentTimeMillis();
+			String queryId = this.createQueryId(startTime);
+			log.debug( "queryId:'{}', update sql           : '{}'", queryId, query );
+			log.debug( "queryId:'{}', update fields        : '{}'", queryId, fields.size() );
 			Connection conn = this.daoContext.getConnection();
-			int i=0;
 			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
-				DAOHelper.setAll( ps, fields , this );
+				DAOHelper.setAll( queryId, ps, fields , log );
 				res = ps.executeUpdate();
+				log.debug("queryId:'{}', update query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
 			} catch (SQLException e) {
-				throw (new DAOException( e.getMessage()+"[query:"+query+",record:"+i+"]", e ));
+				throw (new DAOException( e.getMessage()+"[query:"+query+",queryId:"+queryId+"]", e ));
 			}
 			log.debug("update END res : '{}'", res );
 		} catch (DAOException e) {
