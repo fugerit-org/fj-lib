@@ -40,7 +40,7 @@ public class DAOHelper {
 			np++;
 			int param = (k+1);
 			Field f = fields.getField(k);
-			log.debug( "queryId:'{}', setAll() Setting param : '{}'", queryId, "n. "+param+", value: "+String.valueOf( f )+"(fl.size:"+fields.size()+")" );
+			log.trace( "queryId:'{}', setAll() Setting param : '{}'", queryId, "n. "+param+", value: "+String.valueOf( f )+"(fl.size:"+fields.size()+")" );
 			f.setField(ps, param);
 			k++;
 		}    	
