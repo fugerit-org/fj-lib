@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.DAOHelper;
+import org.fugerit.java.core.db.dao.DAOUtilsNG;
 import org.fugerit.java.core.db.dao.FieldFactory;
 import org.fugerit.java.core.db.dao.FieldList;
 import org.fugerit.java.core.db.dao.RSExtractor;
@@ -80,14 +81,11 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 		this.loadAllHelper( l, query.getQueryContent(), query.getFields(), re );
 	}
 	
-	protected String createQueryId( long startTime ) {
-		return String.format( "%s_%s", Thread.currentThread().getId(), startTime );
-	}
 
 	public void loadAllHelper( List<T> l, String query, FieldList fields, RSExtractor<T> re ) throws DAOException {
 		try {
 			long startTime = System.currentTimeMillis();
-			String queryId = this.createQueryId(startTime);
+			String queryId = DAOUtilsNG.createQueryId(startTime);
 			log.debug( "queryId:'{}', loadAll START list    : '{}'", queryId, l.size() );
 			log.debug( "queryId:'{}', loadAll sql           : '{}'", queryId, query );
 			log.debug( "queryId:'{}', loadAll fields        : '{}'", queryId, fields.size() );
@@ -119,7 +117,7 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 			String query = queryHelper.getQueryContent();
 			FieldList fields = queryHelper.getFields();
 			long startTime = System.currentTimeMillis();
-			String queryId = this.createQueryId(startTime);
+			String queryId = DAOUtilsNG.createQueryId(startTime);
 			log.debug( "queryId:'{}', update sql           : '{}'", queryId, query );
 			log.debug( "queryId:'{}', update fields        : '{}'", queryId, fields.size() );
 			Connection conn = this.daoContext.getConnection();

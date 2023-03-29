@@ -1,4 +1,8 @@
-﻿8.0.7 (2023-03-29)
+﻿8.0.8 (2023-03-29)
+------------------
++ Improved DAOUtilsNG debugging
+
+8.0.7 (2023-03-29)
 ------------------
 + Further improved BasicDAOHelper debugging
 
