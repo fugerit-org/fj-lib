@@ -194,7 +194,7 @@ class BlobDataField extends Field {
     
     @Override
     public String toString() {
-        return this.getClass().getName()+"[value:"+this.value+"]";
+        return this.getClass().getName()+"[value:skipped for blob]";
     }   
     
     public BlobDataField(BlobData value) {
@@ -217,7 +217,7 @@ class ClobDataField extends Field {
     
     @Override
     public String toString() {
-        return this.getClass().getName()+"[value:"+this.value+"]";
+        return this.getClass().getName()+"[value:skipped for clob]";
     }   
     
     public ClobDataField( CharArrayDataHandler value ) {
