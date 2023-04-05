@@ -10,4 +10,8 @@ public class CheckpointUtils {
 		return formatTimeDiff( end-start );
 	}
 	
+	public static String formatTimeDiffMillis( long start, long end ) {
+		return String.valueOf(end-start)+" ms";
+	}
+	
 }

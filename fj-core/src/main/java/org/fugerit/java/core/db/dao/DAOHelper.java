@@ -28,6 +28,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import org.fugerit.java.core.log.LogObject;
+import org.fugerit.java.core.util.checkpoint.CheckpointUtils;
 import org.slf4j.Logger;
 
 public class DAOHelper {
@@ -40,7 +41,8 @@ public class DAOHelper {
 			np++;
 			int param = (k+1);
 			Field f = fields.getField(k);
-			log.debug( "queryId:'{}', setAll() Setting param (ng1) : '{}'", queryId, "n. "+param+", value: "+String.valueOf( f ) );
+			long startTime = System.currentTimeMillis();
+			log.debug( "queryId:'{}', setAll() Setting param (ng1) : '{}'", queryId, "n. "+param+", value: "+String.valueOf( f )+" (set time : '"+CheckpointUtils.formatTimeDiffMillis( startTime, System.currentTimeMillis() )+"')" );
 			f.setField(ps, param);
 			k++;
 		}    	

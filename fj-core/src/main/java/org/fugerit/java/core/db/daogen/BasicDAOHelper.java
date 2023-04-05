@@ -94,13 +94,16 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 			int i=0;
 			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
 				DAOHelper.setAll( queryId, ps, fields , log );
+				long executeStart = System.currentTimeMillis();
 				try ( ResultSet rs = ps.executeQuery() ) {
-					log.debug("queryId:'{}', loadAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+					long executeEnd = System.currentTimeMillis();
+					log.debug("queryId:'{}', loadAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(executeStart, executeEnd ) );
 					while (rs.next()) {
 						l.add( re.extractNext( rs ) );
 						i++;
 					}
-					log.debug("queryId:'{}', loadAll query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+					log.debug("queryId:'{}', loadAll query result set end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis( executeEnd, System.currentTimeMillis()) );
+					log.debug("queryId:'{}', loadAll query total end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis( startTime, System.currentTimeMillis()) );
 				}
 			} catch (SQLException e) {
 				throw (new DAOException( e.getMessage()+"[query:"+query+",queryId:"+queryId+",record:"+i+"]", e ));
@@ -123,8 +126,10 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 			Connection conn = this.daoContext.getConnection();
 			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
 				DAOHelper.setAll( queryId, ps, fields , log );
+				long executeStart = System.currentTimeMillis();
 				res = ps.executeUpdate();
-				log.debug("queryId:'{}', update query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+				log.debug("queryId:'{}', update query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(executeStart, System.currentTimeMillis()) );
+				log.debug("queryId:'{}', update total time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(startTime, System.currentTimeMillis()) );
 			} catch (SQLException e) {
 				throw (new DAOException( e.getMessage()+"[query:"+query+",queryId:"+queryId+"]", e ));
 			}
