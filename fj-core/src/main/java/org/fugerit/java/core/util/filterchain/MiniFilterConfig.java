@@ -89,7 +89,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 				logger.info( "adding filter to chain : "+filter );
 			} 	
 		} else {
-			chain = this.getChainCache(id);
+			chain = this.mapChain.get( id );
 			if ( chain == null ) {
 				throw new ConfigException( "Chain not found : "+id );
 			}
