@@ -1,4 +1,9 @@
-﻿8.0.9 (2023-03-29)
+﻿8.0.11-rc.001 (2023-07-14)
+------------------
++ Added MiniFilterMap
++ Updated bom to 1.2.3
+
+8.0.9 (2023-03-29)
 ------------------
 + Parameter set in DAOHelper set to TRACE
 

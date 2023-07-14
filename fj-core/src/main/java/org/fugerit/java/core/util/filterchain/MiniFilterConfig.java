@@ -2,8 +2,10 @@ package org.fugerit.java.core.util.filterchain;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
@@ -16,7 +18,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEntry, ListMapConfig<MiniFilterConfigEntry>> {
+public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEntry, ListMapConfig<MiniFilterConfigEntry>> implements MiniFilterMap {
 
 	/**
 	 * 
@@ -37,7 +39,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 		this.getGeneralProps().setProperty( ATT_TYPE , MiniFilterConfigEntry.class.getName() );
 	}
 
-	public static MiniFilterConfig loadConfig( InputStream is, MiniFilterConfig config ) throws Exception {
+	public static MiniFilterMap loadConfig( InputStream is, MiniFilterConfig config ) throws Exception {
 		Document doc = DOMIO.loadDOMDoc( is );
 		Element root = doc.getDocumentElement();
 		config.configure( root );
@@ -60,32 +62,42 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 		
 	}
 	
+	@Override
 	public MiniFilterChain getChain( String id ) throws Exception {
+		MiniFilterChain chain = null;
 		ListMapConfig<MiniFilterConfigEntry> c = this.getListMap( id );
-		MiniFilterChain chain = new MiniFilterChain();
-		chain.setChainId( id );
-		chain.getDefaultConfig().putAll( c.getConfig() );
-		Iterator<MiniFilterConfigEntry> it = c.iterator();
-		while ( it.hasNext() ) {
-			MiniFilterConfigEntry entry = it.next();
-			String type = entry.getType();
-			MiniFilter filter = (MiniFilter) ClassHelper.newInstance( type );
-			if ( filter instanceof MiniFilterBase ) {
-				MiniFilterBase filterBase = (MiniFilterBase)filter;
-				filterBase.setChainId( id );
-				if ( StringUtils.isNotEmpty( entry.getParam01() ) ) {
-					filterBase.setParam01( entry.getParam01() );
+		if ( c != null ) {
+			chain = new MiniFilterChain();
+			chain.setChainId( id );
+			chain.getDefaultConfig().putAll( c.getConfig() );
+			Iterator<MiniFilterConfigEntry> it = c.iterator();
+			while ( it.hasNext() ) {
+				MiniFilterConfigEntry entry = it.next();
+				String type = entry.getType();
+				MiniFilter filter = (MiniFilter) ClassHelper.newInstance( type );
+				if ( filter instanceof MiniFilterBase ) {
+					MiniFilterBase filterBase = (MiniFilterBase)filter;
+					filterBase.setChainId( id );
+					if ( StringUtils.isNotEmpty( entry.getParam01() ) ) {
+						filterBase.setParam01( entry.getParam01() );
+					}
 				}
+				filter.config( entry.getKey() , entry.getDescription(), entry.getDefaultBehaviourInt() );
+				filter.setCustomConfig( entry.getProps() );
+				this.customFilterConfig(filter, entry);
+				chain.getFilterChain().add( filter );
+				logger.info( "adding filter to chain : "+filter );
+			} 	
+		} else {
+			chain = this.getChainCache(id);
+			if ( chain == null ) {
+				throw new ConfigException( "Chain not found : "+id );
 			}
-			filter.config( entry.getKey() , entry.getDescription(), entry.getDefaultBehaviourInt() );
-			filter.setCustomConfig( entry.getProps() );
-			this.customFilterConfig(filter, entry);
-			chain.getFilterChain().add( filter );
-			logger.info( "adding filter to chain : "+filter );
-		} 
+		}
 		return chain;
 	}
 	
+	@Override
 	public MiniFilterChain getChainCache( String id ) throws Exception {
 		MiniFilterChain chain = this.mapChain.get( id );
 		if ( chain == null ) {
@@ -94,6 +106,18 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 		}
 		return chain;
 	}	
+	
+	@Override
+	public Set<String> getKeys() {
+		Set<String> set = new HashSet<String>( this.getIdSet() );
+		set.addAll( this.mapChain.keySet() );
+		return set;
+	}
+
+	@Override
+	public void setChain(String id, MiniFilterChain chain) {
+		this.mapChain.put( id, chain );
+	}
 	
 	public static MiniFilterConfig initFromClassLoaderWithRuntimeException( String path ) {
 		MiniFilterConfig config = new MiniFilterConfig();
