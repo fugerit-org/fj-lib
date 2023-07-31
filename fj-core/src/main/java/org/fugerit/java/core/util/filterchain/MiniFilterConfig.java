@@ -39,7 +39,14 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 		this.getGeneralProps().setProperty( ATT_TYPE , MiniFilterConfigEntry.class.getName() );
 	}
 
-	public static MiniFilterMap loadConfig( InputStream is, MiniFilterConfig config ) throws Exception {
+	public static MiniFilterConfig loadConfig( InputStream is, MiniFilterConfig config ) throws Exception {
+		Document doc = DOMIO.loadDOMDoc( is );
+		Element root = doc.getDocumentElement();
+		config.configure( root );
+		return config;
+	}
+	
+	public static MiniFilterMap loadConfigMap( InputStream is, MiniFilterConfig config ) throws Exception {
 		Document doc = DOMIO.loadDOMDoc( is );
 		Element root = doc.getDocumentElement();
 		config.configure( root );

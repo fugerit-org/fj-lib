@@ -1,4 +1,8 @@
-﻿8.0.11-rc.002 (2023-07-14)
+﻿8.0.12-rc.001 (2023-07-31)
+------------------
++ Fixed MiniFilterConfig load compatibility
+
+8.0.11-rc.002 (2023-07-14)
 ------------------
 + Added MiniFilterMap
 + Updated bom to 1.2.3
