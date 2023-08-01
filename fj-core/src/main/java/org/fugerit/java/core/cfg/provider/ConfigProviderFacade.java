@@ -3,6 +3,7 @@ package org.fugerit.java.core.cfg.provider;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.fugerit.java.core.cfg.helpers.AbstractConfigurableObject;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.ObjectUtils;
 
@@ -43,6 +44,12 @@ public class ConfigProviderFacade {
 			configProvider = this.map.get( caller.getClass().getName() );
 		}
 		return ObjectUtils.objectWithDefault( configProvider , this.getDefaultProvider() );
+	}
+	
+	public ConfigProvider findAndSetConfigProvider( String name, AbstractConfigurableObject caller ) {
+		ConfigProvider configProvider = this.getProviderWithDefault(name, caller);
+		AbstractConfigurableObject.setConfigProvider(configProvider, caller);
+		return configProvider;
 	}
 	
 	public void setDefaultProvider( ConfigProvider configProvider ) {

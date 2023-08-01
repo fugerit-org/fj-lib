@@ -26,12 +26,17 @@ import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.ConfigurableObject;
+import org.fugerit.java.core.cfg.provider.ConfigProvider;
 import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>Abstract implementation of ConfigurableObject interface.
@@ -85,4 +90,12 @@ public abstract class AbstractConfigurableObject extends BasicLogObject implemen
 		}
 	}
 
+	@Setter(AccessLevel.PROTECTED)
+	@Getter(AccessLevel.PROTECTED)
+	private ConfigProvider configProvider;
+	
+	public static void setConfigProvider( ConfigProvider provider, AbstractConfigurableObject config ) {
+		 config.setConfigProvider(provider) ;
+	}
+	
 }

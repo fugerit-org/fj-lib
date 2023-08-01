@@ -15,7 +15,6 @@ import javax.xml.transform.dom.DOMSource;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
-import org.fugerit.java.core.cfg.provider.ConfigProvider;
 import org.fugerit.java.core.cfg.provider.ConfigProviderFacade;
 import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
@@ -31,6 +30,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Class for loading an xml configuration in the form of : 
@@ -94,9 +96,11 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	
 	private Set<String> orderedId;
 	
-	private Properties generalProps;
+	@Getter private Properties generalProps;
 	
-	private ConfigProvider configProvider;
+	@Getter @Setter private XMLSchemaCatalogConfig definition;
+	
+	@Getter @Setter private String schemaId;
 	
 	/**
 	 * Creates a new DataListCatalogConfig wth default configuration.
@@ -294,7 +298,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		logger.info( "general props : "+this.getGeneralProps() );
 		
 		String confgiProviderName = this.getGeneralProps().getProperty( ATT_CONFIG_PROVIDER_NAME );
-		this.configProvider = ConfigProviderFacade.getInstance().getProviderWithDefault( confgiProviderName , this );
+		this.setConfigProvider( ConfigProviderFacade.getInstance().getProviderWithDefault( confgiProviderName , this ) );
 		
 		String tryXsdValidation = this.getGeneralProps().getProperty( ATT_TRY_XSD_VALIDATION, ATT_TRY_XSD_VALIDATION_DEFAULT );
 		if ( BooleanUtils.isTrue( tryXsdValidation ) ) {
@@ -461,39 +465,6 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		return this.dataMap.get( id );
 	}
 
-	/**
-	 * Returns the general configuration properties of this configuration
-	 * 
-	 * @return general configuration properties
-	 */
-	public Properties getGeneralProps() {
-		return generalProps;
-	}
-
-	private XMLSchemaCatalogConfig definition;
-	
-	private String schemaId;
-	
-	public XMLSchemaCatalogConfig getDefinition() {
-		return definition;
-	}
-
-	public void setDefinition(XMLSchemaCatalogConfig definition) {
-		this.definition = definition;
-	}
-
-	public String getSchemaId() {
-		return schemaId;
-	}
-
-	public void setSchemaId(String schemaId) {
-		this.schemaId = schemaId;
-	}
-	
-	protected ConfigProvider getConfigProvider() {
-		return this.configProvider;
-	}
-	
 	/**
 	 * Check if the catalog config has a schema definition
 	 * 
