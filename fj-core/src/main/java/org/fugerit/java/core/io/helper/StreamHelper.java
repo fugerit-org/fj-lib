@@ -42,6 +42,8 @@ import org.slf4j.LoggerFactory;
  */
 public class StreamHelper {
 
+	private StreamHelper() {}
+	
 	private static Logger logger = LoggerFactory.getLogger( StreamHelper.class );
 
 	private static final String URL_HELPER = "://";
@@ -58,11 +60,11 @@ public class StreamHelper {
 	
 	public static final String PATH_JNDI = MODE_JNDI+URL_HELPER;
 	
-	public static InputStream resolveStream( String path ) throws Exception {
+	public static InputStream resolveStream( String path ) throws IOException {
 		return resolveStream( path, null );
 	}
 	
-	public static InputStream resolveStream( String path, String basePath ) throws Exception {
+	public static InputStream resolveStream( String path, String basePath ) throws IOException {
 		return resolveStream( path, basePath, StreamIO.class );
 	}
 	
@@ -75,23 +77,28 @@ public class StreamHelper {
 	 * @return			the resource in stream format
 	 * @throws Exception	if something goes wrong during loading
 	 */
-	public static <T> InputStream getResourceStream( String path, Class<T> c ) throws Exception {
-		InputStream is = ClassHelper.getDefaultClassLoader().getResourceAsStream( path );
-		if ( is == null && c != null ) {
-			is = c.getResourceAsStream( path );
+	public static <T> InputStream getResourceStream( String path, Class<T> c ) throws IOException {
+		InputStream is = null;
+		try {
+			is = ClassHelper.getDefaultClassLoader().getResourceAsStream( path );
+			if ( is == null && c != null ) {
+				is = c.getResourceAsStream( path );
+			}
+		} catch (Exception e) {
+			throw HelperIOException.convertExMethod( "getResourceStream", e );
 		}
 		return is;
 	}
 
-	public static InputStream resolveStreamByMode( String mode, String path ) throws Exception {	
+	public static InputStream resolveStreamByMode( String mode, String path ) throws IOException {	
 		return resolveStreamByMode( mode, path, StreamHelper.class );
 	}
 	
-	public static InputStream resolveStreamByMode( String mode, String path, Class<?> c ) throws Exception {	
+	public static InputStream resolveStreamByMode( String mode, String path, Class<?> c ) throws IOException {	
 		return resolveStream( mode+URL_HELPER+path, null, c );
 	}
 	
-	public static InputStream resolveStream( String path, String basePath, Class<?> c ) throws Exception {	
+	public static InputStream resolveStream( String path, String basePath, Class<?> c ) throws IOException {	
 		InputStream is = null;
 		if ( path.indexOf( PATH_CLASSLOADER ) == 0 ) {
 			// class loader

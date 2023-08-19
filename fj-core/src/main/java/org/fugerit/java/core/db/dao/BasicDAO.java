@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.core.log.BasicLogObject;
+import org.fugerit.java.core.log.LogFacade;
 
 
 /**
@@ -76,18 +77,22 @@ public class BasicDAO<T> extends BasicLogObject {
 			conn.setAutoCommit( false );
 			int tmp = 0;
 			PreparedStatement pstm = null;
-			for (int k=0; k<opList.size(); k++) {
-				OpDAO<T> currentOp = (OpDAO<T>)opList.get( k );
-				this.getLogger().debug( "updateBatch : "+currentOp.getSql()+" , params : "+currentOp.getFieldList().size() );
-				if ( pstm == null ) {
-					String query = this.queryFormat( currentOp.getSql(), "update(opdao)" );
-					pstm = conn.prepareStatement( query );
+			try {
+				for (int k=0; k<opList.size(); k++) {
+					OpDAO<T> currentOp = (OpDAO<T>)opList.get( k );
+					this.getLogger().debug( "updateBatch : "+currentOp.getSql()+" , params : "+currentOp.getFieldList().size() );
+					if ( pstm == null ) {
+						String query = this.queryFormat( currentOp.getSql(), "update(opdao)" );
+						pstm = conn.prepareStatement( query );
+					}
+					this.setAll( pstm, currentOp.getFieldList() );
+					pstm.addBatch();
 				}
-				this.setAll( pstm, currentOp.getFieldList() );
-				pstm.addBatch();
+				this.getLogger().debug( "updateBatch result : "+tmp+" / "+opList.size() );
+				conn.commit();
+			} finally {
+				this.closeSafe( pstm );
 			}
-			this.getLogger().debug( "updateBatch result : "+tmp+" / "+opList.size() );
-			conn.commit();
 		} catch (SQLException e) {
 			try {
 				conn.rollback();
@@ -218,16 +223,13 @@ public class BasicDAO<T> extends BasicLogObject {
     protected boolean execute(String query, FieldList fields) throws DAOException {
 		query = this.queryFormat( query, "execute" );	
         boolean result = false;
-        Connection conn = this.getConnection();
-        try {
-            PreparedStatement ps = conn.prepareStatement( query );
+        try ( Connection conn = this.getConnection();
+        		PreparedStatement ps = conn.prepareStatement( query ) ) {
             this.setAll(ps, fields);
             result = ps.execute();
             ps.close();
         } catch (SQLException e) {
             throw (new DAOException(e));
-        } finally {
-            this.close( conn );
         }
         return result;
     }
@@ -360,6 +362,16 @@ public class BasicDAO<T> extends BasicLogObject {
 		return DAOHelper.queryFormat(sql, method, this, this.getDaoFactory() );
 	}
 
+	private void closeSafe( AutoCloseable c ) {
+		if ( c != null ) {
+			try {
+				c.close();
+			} catch (Exception e) {
+				LogFacade.getLog().warn( "Failed to close : "+c, e );
+			}
+		}
+	}
+	
 }
 
 abstract class QueryWrapper {
