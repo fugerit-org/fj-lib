@@ -1,7 +1,8 @@
-﻿8.1.0-rc.1 (2023-08-01)
+﻿8.1.0-rc.3 (2023-08-30)
 ------------------
-+ Facilities for converting exceptions
-+ Fix for sonar cloud alerts
++ [enhancement][fj-core] Added factory methods for XMLConfigurableObject [8.1.0-rc.2]
++ [enhancement][fj-core] Facilities for converting exceptions [8.1.0-rc.1]
++ [enhancement][fj-lib] [added sonar cloud quality gate](https://github.com/fugerit-org/fj-lib/issues/21) [8.1.0-rc.1]
 
 8.0.13 (2023-08-01)
 ------------------
