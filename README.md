@@ -14,3 +14,5 @@ Quick start :
 Maven profiles :
 - full (create javadoc and sources package too)
 - test (run tests, by default tests are excluded) 
+
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=fugerit-org_fj-lib)](https://sonarcloud.io/summary/new_code?id=fugerit-org_fj-lib)
