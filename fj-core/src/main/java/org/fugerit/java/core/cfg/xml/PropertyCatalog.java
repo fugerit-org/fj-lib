@@ -39,9 +39,9 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 				holder.setPath( PARAM_FINDER.substitute( holder.getPath() , this.getMapSysEnv() ) );	
 			}
 			holder.init( this, dataListId );
-			logger.warn( "PropertyCatalog - load ok for holder {} > {}", dataListId, holder.getId() );
+			this.getLogger().warn( "PropertyCatalog - load ok for holder {} > {}", dataListId, holder.getId() );
 		} catch (IOException e) {
-			logger.warn( "PropertyCatalog - Failed init for holder {} > {}", dataListId, holder.getId(), e );
+			this.getLogger().warn( "PropertyCatalog - Failed init for holder {} > {}", dataListId, holder.getId(), e );
 		}
 		return holder;
 	}
@@ -64,7 +64,7 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 		if ( this.pathParamProvider == null ) {
 			String pathParamProviderType = this.getGeneralProps().getProperty( PROP_PATH_PARAM_PROVIDER );
 			if ( pathParamProviderType != null ) {
-				logger.info( PROP_PATH_PARAM_PROVIDER+" -> "+pathParamProviderType );
+				this.getLogger().info( PROP_PATH_PARAM_PROVIDER+" -> "+pathParamProviderType );
 				try {
 					this.pathParamProvider = (ParamProvider) ClassHelper.newInstance( pathParamProviderType );
 				} catch (Exception e) {
@@ -87,7 +87,7 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 				for ( int k=0; k<split.length; k++ ) {
 					String key = split[k];
 					String value = System.getProperty( key );
-					logger.info( "map system env {} -> {}", key, value );
+					this.getLogger().info( "map system env {} -> {}", key, value );
 					if ( value != null ) {
 						this.mapSysEnv.setProperty( key , value );
 					}

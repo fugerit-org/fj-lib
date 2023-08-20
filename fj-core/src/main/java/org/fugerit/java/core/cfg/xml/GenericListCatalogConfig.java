@@ -14,6 +14,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.helpers.AbstractConfigurableObject;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
 import org.fugerit.java.core.cfg.provider.ConfigProviderFacade;
 import org.fugerit.java.core.io.helper.StreamHelper;
@@ -26,6 +27,7 @@ import org.fugerit.java.core.xml.config.XMLSchemaCatalogConfig;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.fugerit.java.core.xml.dom.DOMUtils;
 import org.fugerit.java.core.xml.sax.SAXErrorHandlerStore;
+import org.slf4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -33,6 +35,7 @@ import org.xml.sax.SAXException;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class for loading an xml configuration in the form of : 
@@ -85,7 +88,8 @@ import lombok.Setter;
  * @author fugerit
  *
  */
-public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
+@Slf4j
+public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 	
 	/**
 	 * 
@@ -295,7 +299,7 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 	public void configure(Element tag) throws ConfigException {
 		
 		DOMUtils.attributesToProperties( tag, this.getGeneralProps() );
-		logger.info( "general props : "+this.getGeneralProps() );
+		this.getLogger().info( "general props : "+this.getGeneralProps() );
 		
 		String confgiProviderName = this.getGeneralProps().getProperty( ATT_CONFIG_PROVIDER_NAME );
 		this.setConfigProvider( ConfigProviderFacade.getInstance().getProviderWithDefault( confgiProviderName , this ) );
@@ -303,26 +307,26 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		String tryXsdValidation = this.getGeneralProps().getProperty( ATT_TRY_XSD_VALIDATION, ATT_TRY_XSD_VALIDATION_DEFAULT );
 		if ( BooleanUtils.isTrue( tryXsdValidation ) ) {
 			if ( this.hasDefinition() ) {
-				logger.info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
+				this.getLogger().info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
 				try {
 					SAXErrorHandlerStore eh = this.validate( new DOMSource( tag ) );
 					for ( SAXException se : eh.getFatals() ) {
-						logger.error( "xsd validation fatal : {}", se );
+						this.getLogger().error( "xsd validation fatal : {}", se );
 					}
 					for ( SAXException se : eh.getErrors() ) {
-						logger.error( "xsd validation error : {}", se );
+						this.getLogger().error( "xsd validation error : {}", se );
 					}
 					for ( SAXException se : eh.getWarnings() ) {
-						logger.warn( "xsd validation warning : {}", se );
+						this.getLogger().warn( "xsd validation warning : {}", se );
 					}
 				} catch (Exception e) {
 					throw new ConfigException( "Xsd Validation Error "+e, e );
 				}
 			} else {
-				logger.info( "No xsd definition set, skip xsd validation" );
+				this.getLogger().info( "No xsd definition set, skip xsd validation" );
 			}
 		} else {
-			logger.info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
+			this.getLogger().info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
 		}
 		
 		String checkDuplicateId = this.getGeneralProps().getProperty( CONFIG_CHECK_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
@@ -363,10 +367,10 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 				if ( CONFIG_CHECK_DUPLICATE_ID_FAIL.equalsIgnoreCase( checkDuplicateId ) ) {
 					throw new ConfigException( message );
 				} else {
-					logger.warn( "["+this.getClass().getSimpleName()+"]"+message );
+					this.getLogger().warn( "["+this.getClass().getSimpleName()+"]"+message );
 				}
 			}
-			logger.info( "add "+idList+" -> "+listCurrent );
+			this.getLogger().info( "add "+idList+" -> "+listCurrent );
 			this.dataMap.put( idList , listCurrent );
 			this.orderedId.add( idList );
 			String extendsAtt = currentListTag.getAttribute( "extends" );
@@ -429,14 +433,14 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 				String mode = currentModule.getAttribute( ATT_TAG_MODULE_CONF_MODE );
 				String path = currentModule.getAttribute( ATT_TAG_MODULE_CONF_PATH );
 				String unsafe = currentModule.getAttribute( ATT_TAG_MODULE_CONF_UNSAFE );
-				logger.info( "Loading module id="+id+" mode="+mode+" path="+path );
+				this.getLogger().info( "Loading module id="+id+" mode="+mode+" path="+path );
 				try ( InputStream is = this.getConfigProvider().readConfiguration( mode, path) )   {
 					Document currentModuleDoc = DOMIO.loadDOMDoc( is );
 					Element rootTag = currentModuleDoc.getDocumentElement();
 					this.configure( rootTag );
 				} catch (Exception e) {
 					if ( "true".equalsIgnoreCase( unsafe ) ) {
-						logger.warn( "Module "+id+" load failed, exception suppressed as it's marked 'unsafe'" );
+						this.getLogger().warn( "Module "+id+" load failed, exception suppressed as it's marked 'unsafe'" );
 					} else {
 						throw new ConfigException( "Error loading module : "+id, e );
 					}
@@ -479,6 +483,16 @@ public class GenericListCatalogConfig<T> extends XMLConfigurableObject {
 		SAXErrorHandlerStore eh = new SAXErrorHandlerStore();
 		this.getDefinition().validate( eh , source, this.getSchemaId() );
 		return eh;
+	}
+
+	@Override
+	public Logger getLogger() {
+		return log;
+	}
+
+	@Override
+	public void configure(Properties props) throws ConfigException {
+		XMLConfigurableObject.DO_NOTHING.configure(props);
 	}
 	
 }

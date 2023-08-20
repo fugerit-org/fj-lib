@@ -114,8 +114,8 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 		for ( String bindingId : this.getIdSet() ) {
 			this.getListMap( bindingId ).setCatalog( this );
 		}
-		logger.info( "helperCatalog {}", this.helperCatalog );
-		logger.info( "helperCatalog.size() {}", this.helperCatalog.size() );
+		this.getLogger().info( "helperCatalog {}", this.helperCatalog );
+		this.getLogger().info( "helperCatalog.size() {}", this.helperCatalog.size() );
 	}
 	
 	private ListMapStringKey<BindingHelper> helperCatalog;

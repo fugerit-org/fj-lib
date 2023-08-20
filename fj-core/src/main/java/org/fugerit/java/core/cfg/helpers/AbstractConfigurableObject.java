@@ -27,16 +27,16 @@ import java.util.Properties;
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.ConfigurableObject;
 import org.fugerit.java.core.cfg.provider.ConfigProvider;
-import org.fugerit.java.core.log.BasicLogObject;
+import org.fugerit.java.core.log.LogObject;
 import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>Abstract implementation of ConfigurableObject interface.
@@ -45,15 +45,16 @@ import lombok.Setter;
  * @author Fugerit
  *
  */
-public abstract class AbstractConfigurableObject extends BasicLogObject implements ConfigurableObject, Serializable {
+@Slf4j
+public abstract class AbstractConfigurableObject implements ConfigurableObject, LogObject, Serializable {
 
-	protected static final Logger logger = LoggerFactory.getLogger(ConfigurableObject.class);
-	
 	/*
 	 * 
 	 */
 	private static final long serialVersionUID = -5893401779153563982L;
 
+	protected static Logger logger = log; 	// for backward compatibility
+	
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.cfg.ConfigurableObject#configure(java.util.Properties)
 	 */
@@ -96,6 +97,11 @@ public abstract class AbstractConfigurableObject extends BasicLogObject implemen
 	
 	public static void setConfigProvider( ConfigProvider provider, AbstractConfigurableObject config ) {
 		 config.setConfigProvider(provider) ;
+	}
+
+	@Override
+	public Logger getLogger() {
+		return log;
 	}
 	
 }

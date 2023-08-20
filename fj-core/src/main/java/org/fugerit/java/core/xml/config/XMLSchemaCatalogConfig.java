@@ -60,8 +60,8 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 		super.configure(tag);
 		this.pathMode = StringUtils.valueWithDefault( tag.getAttribute( CONFIG_PATH_MODE ), CONFIG_PATH_MODE_DEFAULT );
 		this.pathBase = tag.getAttribute( CONFIG_PATH_BASE );
-		logger.info( "configure() "+CONFIG_PATH_MODE+"="+this.pathMode );
-		logger.info( "configure() "+CONFIG_PATH_BASE+"="+this.pathBase );
+		this.getLogger().info( "configure() "+CONFIG_PATH_MODE+"="+this.pathMode );
+		this.getLogger().info( "configure() "+CONFIG_PATH_BASE+"="+this.pathBase );
 	}
 
 	public Source[] getXsds( String setId ) {

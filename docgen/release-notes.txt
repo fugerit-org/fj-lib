@@ -1,4 +1,11 @@
-﻿8.1.0 (2023-08-20)
+﻿8.2.0 (next)
+------------------
++ [enhancement [to reduce hierarchy depth, if the correct interfaces have been used, this should have no impact] :
++ [enhancement][fj-core] Changed hierarchy of GenericListCatalogConfig to directly extends AbstractConfigurableObject [8.2.0-rc.1]
++ [enhancement][fj-core] Changed hierarchy of AbstractConfigurableObject to directly extends Object [8.2.0-rc.1]
+
+
+8.1.0 (2023-08-20)
 ------------------
 + [enhancement][fj-core] Added factory methods for XMLConfigurableObject [8.1.0-rc.2]
 + [enhancement][fj-core] Facilities for converting exceptions [8.1.0-rc.1]
