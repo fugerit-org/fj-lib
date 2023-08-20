@@ -2,6 +2,7 @@ package org.fugerit.java.core.cfg;
 
 import org.fugerit.java.core.lang.ex.CodeException;
 import org.fugerit.java.core.lang.ex.CodeRuntimeException;
+import org.fugerit.java.core.lang.ex.ExConverUtils;
 
 public class ConfigRuntimeException extends CodeRuntimeException {
 
@@ -45,6 +46,28 @@ public class ConfigRuntimeException extends CodeRuntimeException {
 
 	public ConfigRuntimeException(Throwable cause) {
 		super(cause);
+	}
+	
+	public ConfigRuntimeException stadardExceptionWrapping( Exception e ) throws ConfigRuntimeException {
+		throw convertEx( "Configuration error", e );
+	}
+	
+	public static ConfigRuntimeException convertEx( String baseMessage, Exception e ) {
+		ConfigRuntimeException res = null;
+		if ( e instanceof ConfigRuntimeException ) {
+			res = (ConfigRuntimeException)e;
+		} else {
+			res = new ConfigRuntimeException( ExConverUtils.defaultMessage(baseMessage, e), e );
+		}
+		return res;
+	}
+
+	public static ConfigRuntimeException convertExMethod( String method, Exception e ) {
+		return convertEx( ExConverUtils.defaultMethodMessage(method), e );
+	}
+	
+	public static ConfigRuntimeException convertEx( Exception e ) {
+		return convertEx( ExConverUtils.DEFAULT_CAUSE_MESSAGE, e );
 	}
 	
 }
