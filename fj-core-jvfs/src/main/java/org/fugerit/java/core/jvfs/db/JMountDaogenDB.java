@@ -21,6 +21,7 @@ import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
 import org.fugerit.java.core.db.daogen.CloseableDAOContext;
 import org.fugerit.java.core.db.daogen.CloseableDAOContextSC;
 import org.fugerit.java.core.db.helpers.TimeHelper;
+import org.fugerit.java.core.io.helper.HelperIOException;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JMount;
 import org.fugerit.java.core.jvfs.JVFS;
@@ -38,9 +39,9 @@ public class JMountDaogenDB implements JMount, Serializable {
 
 	private static final long serialVersionUID = -2733658870079838L;
 	
-	private ConnectionFactory cf;
+	private transient ConnectionFactory cf;
 	
-	private EntityDbJvfsFileFacade facade;
+	private transient EntityDbJvfsFileFacade facade;
 	
 	private String rootParentPath;
 	
@@ -71,7 +72,7 @@ public class JMountDaogenDB implements JMount, Serializable {
 		try {
 			return createJVFS( cf, JvfsDataLogicFacade.getInstance().getEntityDbJvfsFileFacade() );
 		} catch (DAOException e) {
-			throw new IOException( e ); 
+			throw HelperIOException.convertEx(e);
 		}
 	}
 	
@@ -134,18 +135,22 @@ public class JMountDaogenDB implements JMount, Serializable {
 				throw new DAOException( "Failed to created listing : "+res );
 			}
 		} catch (Exception e) {
-			throw new IOException( "Failed to created directory listing : "+file, e );
+			throw HelperIOException.convertEx( "Failed to created directory listing : "+file, e );
 		}
 		return list;
 	}
 	
 	public InputStream streamIn( ModelDbJvfsFile file ) throws IOException {
 		InputStream is = null;
-		if ( file != null && file.getFileContent() != null ) {
-			byte[] data = file.getFileContent().getData();
-			if ( data != null ) {
-				is = new ByteArrayInputStream( file.getFileContent().getData() );	
+		try {
+			if ( file != null && file.getFileContent() != null ) {
+				byte[] data = file.getFileContent().getData();
+				if ( data != null ) {
+					is = new ByteArrayInputStream( file.getFileContent().getData() );	
+				}
 			}
+		} catch (Exception e) {
+			throw HelperIOException.convertEx(e);
 		}
 		return is;
 	}

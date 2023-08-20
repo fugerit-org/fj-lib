@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.fugerit.java.core.io.helper.HelperIOException;
 import org.fugerit.java.core.io.line.LineWriter;
 
 public class JVFSImpl implements JVFS {
@@ -46,7 +47,11 @@ public class JVFSImpl implements JVFS {
 
     public static JVFSImpl getInstance(JMount root, Properties options) throws IOException {
         JVFSImpl jvfs = new JVFSImpl();
-        jvfs.mount(root, JFile.SEPARATOR, options);
+        try {
+        	jvfs.mount(root, JFile.SEPARATOR, options);	
+        } catch (Exception e) {
+        	throw HelperIOException.convertEx( e );
+        }
         return jvfs;
     }    
   

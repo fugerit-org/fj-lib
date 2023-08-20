@@ -17,7 +17,7 @@ public class UriFileClJMount implements JMount, Serializable {
 	 */
 	private static final long serialVersionUID = 6365971783948169969L;
 
-	private JMount mount;
+	transient private JMount mount;
 	
 	public static File toFile( String packageName ) throws IOException {
 		File res = null;

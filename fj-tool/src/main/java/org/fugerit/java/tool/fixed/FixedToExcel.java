@@ -50,52 +50,50 @@ public class FixedToExcel extends ToolHandlerHelper {
 		String configId = params.getProperty( PARAM_CONFIG_ID );
 		String outputXls = params.getProperty( PARAM_OUTPUT_XLS );
 		
-		FileInputStream fis = new FileInputStream( new File( inputConfigPath ) );
-		FixedFieldFileConfig config = FixedFieldFileConfig.parseConfig( fis );
-		fis.close();
-		FixedFieldFileDescriptor descriptor = config.getFileDescriptor( configId );
-		Reader fr = new FileReader( new File( inputFilePath) );
-		FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, fr );
-		
-		Workbook workbook = new HSSFWorkbook();
-		Sheet s = workbook.createSheet( "data" );
-		
-		int currentRow = 0;
-		
-		Row rowHead = s.createRow( 0 );
-		for ( int k=0; k<descriptor.getListFields().size(); k++ ) {
-			FixedFieldDescriptor ffd = descriptor.getListFields().get( k );
-			Cell cell = rowHead.createCell( k );
-			String value = ffd.getName();
-			cell.setCellValue( value );
-		}
-		currentRow++;
-		
-		while ( reader.hasNext() ) {
-			Map<String, String> map = reader.nextRawMap();
-			Row row = s.createRow( currentRow );
-			int currentCell = 0;
-			Iterator<FixedFieldDescriptor> it = descriptor.getListFields().iterator();
-			while ( it.hasNext() ) {
-				FixedFieldDescriptor ffd = it.next();
-				Cell cell = row.createCell( currentCell );
-				String value = map.get( ffd.getNormalizedName() );
-				cell.setCellValue( value );
-				currentCell++;
+		try ( FileInputStream fis = new FileInputStream( new File( inputConfigPath ) ) ) {
+			FixedFieldFileConfig config = FixedFieldFileConfig.parseConfig( fis );
+			FixedFieldFileDescriptor descriptor = config.getFileDescriptor( configId );
+			
+			try ( Reader fr = new FileReader( new File( inputFilePath) );
+					FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, fr );
+					Workbook workbook = new HSSFWorkbook() ) {
+				Sheet s = workbook.createSheet( "data" );
+				int currentRow = 0;
+				
+				Row rowHead = s.createRow( 0 );
+				for ( int k=0; k<descriptor.getListFields().size(); k++ ) {
+					FixedFieldDescriptor ffd = descriptor.getListFields().get( k );
+					Cell cell = rowHead.createCell( k );
+					String value = ffd.getName();
+					cell.setCellValue( value );
+				}
+				currentRow++;
+				while ( reader.hasNext() ) {
+					Map<String, String> map = reader.nextRawMap();
+					Row row = s.createRow( currentRow );
+					int currentCell = 0;
+					Iterator<FixedFieldDescriptor> it = descriptor.getListFields().iterator();
+					while ( it.hasNext() ) {
+						FixedFieldDescriptor ffd = it.next();
+						Cell cell = row.createCell( currentCell );
+						String value = map.get( ffd.getNormalizedName() );
+						cell.setCellValue( value );
+						currentCell++;
+					}
+					currentRow++;
+					if ( currentRow%1000 == 0 ) {
+						System.out.println( "CURRENT ROW "+currentRow );
+					}
+				}			
+				workbook.close();
+				try ( FileOutputStream fos = new FileOutputStream( new File( outputXls ) ) ) {
+					workbook.write( fos );
+					fos.flush();
+				}
+				
 			}
-			currentRow++;
-			if ( currentRow%1000 == 0 ) {
-				System.out.println( "CURRENT ROW "+currentRow );
-			}
+			
 		}
-		
-		reader.close();
-		FileOutputStream fos = new FileOutputStream( new File( outputXls ) );
-		workbook.close();
-		workbook.write( fos );
-		fos.flush();
-		fos.close();
-
 		return exit;
 	}
 

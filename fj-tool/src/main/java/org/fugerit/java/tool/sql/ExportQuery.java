@@ -67,43 +67,39 @@ public class ExportQuery extends ToolHandlerHelper {
 		int exit = EXIT_KO_DEFAULT;
 		ClassLoader cl = this.getClassLoader( params );
 		ConnectionFactory cf = ConnectionFactoryImpl.newInstance( params, null, cl );
-		Connection conn = cf.getConnection();
+		
 		String output = params.getProperty( ARG_OUTPUT );
-		FileOutputStream fos = new FileOutputStream( output );
-		PrintWriter pw = new PrintWriter( new OutputStreamWriter( fos ) );
-		try {
+		try (
+			PrintWriter pw = new PrintWriter( new OutputStreamWriter( new FileOutputStream( output ) ) );
+				Connection conn = cf.getConnection();
+				Statement stm = conn.createStatement() ) {
 			String sql = params.getProperty( ARG_QUERY );
 			String format = params.getProperty( ARG_FORMAT, ARG_FORMAT_DEFAULT );
-			Statement stm = conn.createStatement();
 			openFile( pw, format );
-			ResultSet rs = stm.executeQuery( sql );
-			ResultSetMetaData rsmd = rs.getMetaData();
-			String head[] = new String[rsmd.getColumnCount()];
-			for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
-				head[k] = rsmd.getColumnLabel( k+1 );
-			}
-			addRecord( pw , head , true );
-			while ( rs.next() ) {
-				String record[] = new String[rsmd.getColumnCount()];
+			try ( ResultSet rs = stm.executeQuery( sql ) ) {
+				ResultSetMetaData rsmd = rs.getMetaData();
+				String head[] = new String[rsmd.getColumnCount()];
 				for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
-					Object obj = rs.getObject( k+1 );
-					if ( obj == null ) {
-						obj = "";
-					}
-					record[k] = String.valueOf( obj );
+					head[k] = rsmd.getColumnLabel( k+1 );
 				}
-				addRecord( pw , record , false );				
+				addRecord( pw , head , true );
+				while ( rs.next() ) {
+					String record[] = new String[rsmd.getColumnCount()];
+					for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
+						Object obj = rs.getObject( k+1 );
+						if ( obj == null ) {
+							obj = "";
+						}
+						record[k] = String.valueOf( obj );
+					}
+					addRecord( pw , record , false );				
+				}
+				closeFile( pw, format );
 			}
-			closeFile( pw, format );
 			pw.flush();
-			rs.close();
-			stm.close();
 			exit = EXIT_OK;
 		} catch (Exception e) {
 			logger.error( "Error", e );
-		} finally {
-			conn.close();
-			fos.close();
 		}
 		return exit;
 	}

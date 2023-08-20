@@ -1,5 +1,6 @@
 package org.fugerit.java.core.fixed.parser;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,7 +12,7 @@ import org.fugerit.java.core.fixed.parser.helper.ReaderFixedFieldFileReader;
 import org.fugerit.java.core.fixed.parser.helper.StreamFixedFieldFileReader;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 
-public class FixedFieldFileReader {
+public class FixedFieldFileReader implements Closeable {
 	
 	private FixedFieldFileReaderAbstract readerImpl;
 	

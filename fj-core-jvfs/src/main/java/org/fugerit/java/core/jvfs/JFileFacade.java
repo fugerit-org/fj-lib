@@ -45,6 +45,8 @@ import org.fugerit.java.core.io.StreamIO;
  *
  */
 public class JFileFacade {
+	
+	private JFileFacade () {}
 
 	/*
 	 * <p> 
