@@ -2,19 +2,12 @@ package org.fugerit.java.core.jvfs.file;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
-
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JMount;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.JVFSImpl;
 
-public class RealJMount implements JMount , Serializable {
-
-	/*
-	 * 
-	 */
-	private static final long serialVersionUID = 2946128203628261102L;
+public class RealJMount implements JMount {
 
 	public static JVFS createDefaultJVFS() {
 		JVFS jvfs = null;

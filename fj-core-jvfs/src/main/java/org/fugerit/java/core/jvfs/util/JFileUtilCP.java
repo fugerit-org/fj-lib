@@ -2,17 +2,19 @@ package org.fugerit.java.core.jvfs.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.function.Predicate;
 
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.util.ObjectUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JFileUtilCP {
-
-	private final static Logger logger = LoggerFactory.getLogger( JFileUtilCP.class );
+	
+	private JFileUtilCP() {}
 	
 	public static int copyFile( JFile from, JFile to ) throws IOException {
 		return copyFile(from, to, false);
@@ -45,7 +47,8 @@ public class JFileUtilCP {
 	public static int copyFile(JFile from, JFile to, boolean recurse, boolean force, boolean verbose, Predicate<JFile> filter) throws IOException {
 		int res = 1;
 		if ( verbose ) {
-			logger.info( "copyFile( recurse:"+recurse+", force:"+force+" ) {} -> {}", from, to );
+			String formatInfo = MessageFormat.format( "copyFile( recurse:{0}, force:{1}) {2} -> {3}" , recurse, force, from, to ); // for compatibility with some logging implementations accepting only two parameters
+			log.info( formatInfo );
 		}
 		if ( to.exists() && !force ) {
 			throw new IOException( "You can overwrite existing files only with the 'force' flag" );

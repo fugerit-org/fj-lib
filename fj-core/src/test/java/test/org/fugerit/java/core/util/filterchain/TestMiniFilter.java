@@ -1,5 +1,6 @@
 package test.org.fugerit.java.core.util.filterchain;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Iterator;
@@ -95,11 +96,14 @@ public class TestMiniFilter {
 		logger.info(  "**********************************************" );
 		logger.info(  "**********************************************" );
 		Iterator<String> it = CONFIG.getIdSet().iterator();
+		int count = 0;
 		while ( it.hasNext() ) {
 			logger.info(  "id '"+it.next()+"'" );	
+			count++;
 		}
 		logger.info(  "**********************************************" );
 		logger.info(  "**********************************************" );
+		assertTrue( count>0 );
 	}		
 	
 	@Test

@@ -68,7 +68,7 @@ public class JVFSImpl implements JVFS {
         JMountPoint mp = new JMountPoint(mount, point, options);
         boolean insert = false;
         for (int k=0; k<mountList.size() && !insert; k++) {
-            JMountPoint current = (JMountPoint)mountList.get(k);
+            JMountPoint current = mountList.get(k);
             if (current.getPoint().indexOf(point)!=0) {
                 mountList.add(k, mp);
                 insert = true;

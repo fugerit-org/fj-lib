@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.stream.Collectors;
@@ -35,13 +34,11 @@ import org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade
 import org.fugerit.java.core.jvfs.helpers.JFileUtils;
 import org.fugerit.java.core.jvfs.helpers.PathDescriptor;
 
-public class JMountDaogenDB implements JMount, Serializable {
+public class JMountDaogenDB implements JMount {
 
-	private static final long serialVersionUID = -2733658870079838L;
+	private ConnectionFactory cf;
 	
-	private transient ConnectionFactory cf;
-	
-	private transient EntityDbJvfsFileFacade facade;
+	private EntityDbJvfsFileFacade facade;
 	
 	private String rootParentPath;
 	

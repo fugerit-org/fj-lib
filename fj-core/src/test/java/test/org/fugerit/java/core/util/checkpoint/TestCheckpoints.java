@@ -1,5 +1,7 @@
 package test.org.fugerit.java.core.util.checkpoint;
 
+import static org.junit.Assert.assertTrue;
+
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.util.checkpoint.Checkpoints;
 import org.junit.Test;
@@ -23,12 +25,16 @@ public class TestCheckpoints extends BasicTest {
 	
 	@Test
 	public void testPrintInfo() {
-		this.generate( 4 ).printInfo();
+		Checkpoints cp = this.generate( 4 );
+		assertTrue( ( cp != null ) );
+		cp.printInfo();
 	}
 	
 	@Test
 	public void testPrettyPrintInfo() {
-		this.generate( 4 ).prettyPrintInfo();
+		Checkpoints cp = this.generate( 4 );
+		assertTrue( ( cp != null ) );
+		cp.prettyPrintInfo();
 	}
 	
 }

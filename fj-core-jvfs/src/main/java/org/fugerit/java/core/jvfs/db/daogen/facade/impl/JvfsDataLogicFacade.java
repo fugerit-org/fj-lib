@@ -9,9 +9,7 @@ import org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade
  *
  * author: fugerit
  */
-public class JvfsDataLogicFacade extends JvfsDataLogicFacadeHelper implements org.fugerit.java.core.jvfs.db.daogen.facade.JvfsLogicFacade, java.io.Serializable {
-
-	private static final long serialVersionUID = 986922190446L;
+public class JvfsDataLogicFacade extends JvfsDataLogicFacadeHelper implements org.fugerit.java.core.jvfs.db.daogen.facade.JvfsLogicFacade {
 
 	private static final JvfsDataLogicFacade INSTANCE = new JvfsDataLogicFacade(); 
 	

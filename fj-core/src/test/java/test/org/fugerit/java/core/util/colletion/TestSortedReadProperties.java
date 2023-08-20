@@ -1,5 +1,7 @@
 package test.org.fugerit.java.core.util.colletion;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -21,6 +23,7 @@ public class TestSortedReadProperties extends BasicTest {
 
     @Test
     public void test1() {
+    	boolean ok = false;
         try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/util/collection/test_store_1.properties" );
         		FileOutputStream fos = new FileOutputStream( new File( "target/test_sorted_properties.properties" ) ) ) {
             Properties testProps = new SortedProperties();
@@ -37,9 +40,11 @@ public class TestSortedReadProperties extends BasicTest {
             	logger.info( "{} -> {}", k, testProps.get( k ) );
             }
             testProps.store( fos , "test sorted properties" );
+            ok = true;
         } catch (Exception e) {
             throw new ConfigRuntimeException( e );
         }
+        assertTrue( ok );
     }
 	
 }

@@ -15,13 +15,10 @@ import org.fugerit.java.core.jvfs.db.daogen.def.facade.EntityDbJvfsFileFacade;
  * // custom code start ( code above here will be overwritten )
  * // custom code end ( code below here will be overwritten )
  */
-public class JvfsDataLogicFacadeHelper implements org.fugerit.java.core.jvfs.db.daogen.facade.JvfsLogicFacadeHelper, java.io.Serializable {
+public class JvfsDataLogicFacadeHelper implements org.fugerit.java.core.jvfs.db.daogen.facade.JvfsLogicFacadeHelper {
 
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
-
-	private static final long serialVersionUID = 571843496225L;
-
 
 	public JvfsDataLogicFacadeHelper() {
 		this.entitydbjvfsfilefacade = new org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade();
