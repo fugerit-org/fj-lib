@@ -28,20 +28,13 @@ public class MysqlSeqIdGenerator extends BasicSeqIdGenerator {
 	public DAOID generateId() throws DAOException {
 		this.getLogger().debug( "generateId start " );
 		DAOID id = null;
-		try {
-			Connection conn = this.getConnectionFactory().getConnection();
-			try {
-				Statement stm = conn.createStatement();
-				stm.executeUpdate( "UPDATE "+this.getSequenceName()+" SET id=LAST_INSERT_ID(id+1);" );
-				ResultSet rs = stm.executeQuery( " SELECT LAST_INSERT_ID(); " );
+		try (  Connection conn = this.getConnectionFactory().getConnection();
+				Statement stm = conn.createStatement() ) {
+			stm.executeUpdate( "UPDATE "+this.getSequenceName()+" SET id=LAST_INSERT_ID(id+1);" );
+			try ( ResultSet rs = stm.executeQuery( " SELECT LAST_INSERT_ID(); " ) ) {
 				if ( rs.next() ) {
 					id = new DAOID( rs.getLong( 1 ) );	
 				}
-				rs.close();
-				stm.close();
-			} catch (Exception e) {
-				conn.close();
-				throw ( new DAOException( e ) );
 			}
 		} catch (Exception e) {
 			throw ( new DAOException( e ) );

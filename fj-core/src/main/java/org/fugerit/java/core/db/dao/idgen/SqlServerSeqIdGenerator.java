@@ -28,18 +28,12 @@ public class SqlServerSeqIdGenerator extends BasicSeqIdGenerator {
 	public DAOID generateId() throws DAOException {
 		this.getLogger().debug( "generateId start " );
 		DAOID id = null;
-		try {
-			Connection conn = this.getConnectionFactory().getConnection();
-			try {
-				CallableStatement cs = conn.prepareCall( "{call nextval( ?, ? )}" );
-				cs.setString( 1, this.getSequenceName() );
-				cs.registerOutParameter( 2, Types.BIGINT );
-				cs.execute();
-				id = new DAOID( cs.getLong( 2 ) );
-			} catch (Exception e) {
-				conn.close();
-				throw ( new DAOException( e ) );
-			}
+		try ( Connection conn = this.getConnectionFactory().getConnection();
+				CallableStatement cs = conn.prepareCall( "{call nextval( ?, ? )}" ) ) {
+			cs.setString( 1, this.getSequenceName() );
+			cs.registerOutParameter( 2, Types.BIGINT );
+			cs.execute();
+			id = new DAOID( cs.getLong( 2 ) );
 		} catch (Exception e) {
 			throw ( new DAOException( e ) );
 		}

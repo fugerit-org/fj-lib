@@ -25,11 +25,13 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
+import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.log.LogFacade;
 import org.slf4j.Logger;
@@ -275,11 +277,11 @@ public class MetaDataUtils {
 
 interface JdbcAdaptor {
 	
-	public String getTableComment( TableId tableId ) throws Exception;
+	public String getTableComment( TableId tableId ) throws DAOException;
 	
-	public String getColumnComment( TableId tableId, String columnName ) throws Exception;
+	public String getColumnComment( TableId tableId, String columnName ) throws DAOException;
 	
-	public String getColumnExtraInfo( TableId tableId, String columnName ) throws Exception;
+	public String getColumnExtraInfo( TableId tableId, String columnName ) throws DAOException;
 	
 }
 
@@ -301,7 +303,7 @@ class DefaulJdbcdaptor extends BasicLogObject implements JdbcAdaptor {
 	 * @see org.opinf.jlib.mod.tools.db.meta.JdbcCommentAdaptor#getColumnComment(org.fugerit.java.core.db.metadata.TableId, java.lang.String)
 	 */
 	@Override
-	public String getColumnComment(TableId tableId, String columnName) throws Exception {
+	public String getColumnComment(TableId tableId, String columnName) throws DAOException {
 		return "";
 	}
 
@@ -309,7 +311,7 @@ class DefaulJdbcdaptor extends BasicLogObject implements JdbcAdaptor {
 	 * @see org.opinf.jlib.mod.tools.db.meta.JdbcCommentAdaptor#getTableComment(org.fugerit.java.core.db.metadata.TableId)
 	 */
 	@Override
-	public String getTableComment(TableId tableId) throws Exception {
+	public String getTableComment(TableId tableId) throws DAOException {
 		return "";
 	}
 
@@ -328,7 +330,7 @@ class DefaulJdbcdaptor extends BasicLogObject implements JdbcAdaptor {
 	}
 
 	@Override
-	public String getColumnExtraInfo(TableId tableId, String columnName) throws Exception {
+	public String getColumnExtraInfo(TableId tableId, String columnName) throws DAOException {
 		this.getLogger().debug( "getColumnExtraInfo tableId    : "+tableId );
 		this.getLogger().debug( "getColumnExtraInfo columnName : "+columnName );
 		return "";
@@ -342,29 +344,27 @@ class MysqlJdbcAdatapor extends DefaulJdbcdaptor {
 		super(connectionFactory);
 	}
 
+	private static final String SQL = "SELECT extra FROM information_schema.columns WHERE table_catalog IS NULL AND table_schema=? AND table_name=? AND column_name=?";
+	
 	@Override
-	public String getColumnExtraInfo(TableId tableId, String columnName) throws Exception {
+	public String getColumnExtraInfo(TableId tableId, String columnName) throws DAOException {
 		String info = "";
-		Connection conn = this.getConnectionFactory().getConnection();
 		this.getLogger().debug( "getColumnExtraInfo tableId    : "+tableId );
 		this.getLogger().debug( "getColumnExtraInfo columnName : "+columnName );
-		try {
-			String sql = "SELECT extra FROM information_schema.columns WHERE table_catalog IS NULL AND table_schema=? AND table_name=? AND column_name=?";
-			PreparedStatement pstm = conn.prepareStatement( sql );
+		
+		try ( Connection conn = this.getConnectionFactory().getConnection();
+				PreparedStatement pstm = conn.prepareStatement( SQL ) ) {
 			pstm.setString( 1, tableId.getTableCatalog() );
 			pstm.setString( 2, tableId.getTableName() );
 			pstm.setString( 3, columnName );
-			ResultSet rs = pstm.executeQuery();
-			if ( rs.next() ) {
-				info = rs.getString( "extra" );
-				this.getLogger().debug( "getColumnExtraInfo extra : "+info );
+			try ( ResultSet rs = pstm.executeQuery() ) {
+				if ( rs.next() ) {
+					info = rs.getString( "extra" );
+					this.getLogger().debug( "getColumnExtraInfo extra : "+info );
+				}	
 			}
-			rs.close();
-			pstm.close();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			conn.close();
+		} catch (SQLException e) {
+			throw DAOException.convertExMethod( "getColumnExtraInfo[Mysql]" , e );
 		}
 		return info;
 	}
@@ -382,56 +382,50 @@ class OracleJdbcAdaptor extends DefaulJdbcdaptor {
 		super(connectionFactory);
 	}
 
+	private static final String SQL_COLUMN_COMMENT = "SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?";
+	
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.mod.tools.db.meta.AbstractCommentAdaptor#getColumnComment(org.fugerit.java.core.db.metadata.TableId, java.lang.String)
 	 */
 	@Override
-	public String getColumnComment(TableId tableId, String columnName) throws Exception {
+	public String getColumnComment(TableId tableId, String columnName) throws DAOException {
 		String comment = "";
-		Connection conn = this.getConnectionFactory().getConnection();
-		try {
-			String sql = "SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?";
-			PreparedStatement pstm = conn.prepareStatement( sql );
+		try ( Connection conn = this.getConnectionFactory().getConnection();
+				PreparedStatement pstm = conn.prepareStatement( SQL_COLUMN_COMMENT ) ) {
 			pstm.setString( 1, tableId.getTableSchema() );
 			pstm.setString( 2, tableId.getTableName() );
 			pstm.setString( 3, columnName );
-			ResultSet rs = pstm.executeQuery();
-			if ( rs.next() ) {
-				comment = rs.getString( "comments" );
+			try ( ResultSet rs = pstm.executeQuery() ) {
+				if ( rs.next() ) {
+					comment = rs.getString( "comments" );
+				}	
 			}
-			rs.close();
-			pstm.close();
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			conn.close();
+		} catch ( SQLException e ) {
+			throw DAOException.convertExMethod( "getColumnExtraInfo[Oracle]" , e );
 		}
 		return comment;
 	}
 
+	private static final String SQL_TABLE_COMMENT = "SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?";
+	
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.mod.tools.db.meta.AbstractCommentAdaptor#getTableComment(org.fugerit.java.core.db.metadata.TableId)
 	 */
 	@Override
-	public String getTableComment(TableId tableId) throws Exception {
+	public String getTableComment(TableId tableId) throws DAOException {
 		String comment = "";
-		Connection conn = this.getConnectionFactory().getConnection();
-		try {
-			String sql = "SELECT comments FROM all_tab_comments WHERE OWNER=? AND table_name=?";
-			PreparedStatement pstm = conn.prepareStatement( sql );
+		try ( Connection conn = this.getConnectionFactory().getConnection();
+				PreparedStatement pstm = conn.prepareStatement( SQL_TABLE_COMMENT ) ) {
 			pstm.setString( 1, tableId.getTableSchema() );
 			pstm.setString( 2, tableId.getTableName() );
-			ResultSet rs = pstm.executeQuery();
-			if ( rs.next() ) {
-				comment = rs.getString( "comments" );
+			try ( ResultSet rs = pstm.executeQuery() ) {
+				if ( rs.next() ) {
+					comment = rs.getString( "comments" );
+				}
 			}
-			rs.close();
-			pstm.close();
 		} catch (Exception e) {
-			throw e;
-		} finally {
-			conn.close();
-		} 
+			throw DAOException.convertExMethod( "getTableComment[Oracle]" , e );
+		}
 		return comment;
 	}
 	

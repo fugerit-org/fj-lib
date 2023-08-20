@@ -237,15 +237,11 @@ public class BasicDAO<T> extends BasicLogObject {
 	protected boolean execute(String query) throws DAOException {
 		query = this.queryFormat( query, "execute" );	
 		   boolean result = false;
-		   Connection conn = this.getConnection();
-		   try {
-			   PreparedStatement ps = conn.prepareStatement( query );
+		   try (Connection conn = this.getConnection();
+				   PreparedStatement ps = conn.prepareStatement( query )) {
 			   result = ps.execute();
-			   ps.close();
 		   } catch (SQLException e) {
 			   throw (new DAOException(e));
-		   } finally {
-			   this.close( conn );
 		   }
 		   return result;
 	   }

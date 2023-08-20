@@ -46,13 +46,12 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 		try {
 			String sql = this.createSequenceQuery();
 			this.getLogger().debug( "generateId query : '"+sql+"'" );
-			Statement stm = conn.createStatement();
-			ResultSet rs = stm.executeQuery( sql );
-			if ( rs.next() ) {
-				id = new DAOID( rs.getLong( 1 ) );
+			try ( Statement stm = conn.createStatement();
+					ResultSet rs = stm.executeQuery( sql ) ) {
+				if ( rs.next() ) {
+					id = new DAOID( rs.getLong( 1 ) );
+				}
 			}
-			rs.close();
-			stm.close();
 		} catch (SQLException e) {
 			throw ( new DAOException( e ) );
 		} finally {
