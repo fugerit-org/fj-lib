@@ -48,7 +48,7 @@ public class ConfigRuntimeException extends CodeRuntimeException {
 		super(cause);
 	}
 	
-	public ConfigRuntimeException stadardExceptionWrapping( Exception e ) throws ConfigRuntimeException {
+	public static ConfigRuntimeException stadardExceptionWrapping( Exception e ) throws ConfigRuntimeException {
 		throw convertEx( "Configuration error", e );
 	}
 	

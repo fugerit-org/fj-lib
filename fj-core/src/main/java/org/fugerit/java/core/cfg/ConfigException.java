@@ -75,7 +75,7 @@ public class ConfigException extends CodeException {
 		super(cause);
 	}
 
-	public ConfigException stadardExceptionWrapping( Exception e ) throws ConfigException {
+	public static ConfigException stadardExceptionWrapping( Exception e ) throws ConfigException {
 		throw convertEx( "Configuration error", e );
 	}
 	
