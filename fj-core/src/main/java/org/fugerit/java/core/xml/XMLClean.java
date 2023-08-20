@@ -9,12 +9,10 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class XMLClean {
-
-	private final static Logger logger = LoggerFactory.getLogger( XMLClean.class );
 	
 	public static final String CLEAN_REGEX = "(?<![\\uD800-\\uDBFF])[\\uDC00-\\uDFFF]|[\\uD800-\\uDBFF](?![\\uDC00-\\uDFFF])|[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F\\x7F-\\x9F\\uFEFF\\uFFFE\\uFFFF]"; 
 	
@@ -23,35 +21,24 @@ public class XMLClean {
 	}
 	
 	public static void cleanStream( Reader r, Writer w ) throws Exception {
-		BufferedReader reader = new BufferedReader( r );
-		String line = reader.readLine();
-		StringWriter sw = new StringWriter();
-		PrintWriter writer = new PrintWriter( sw, false );
-		int count = 0;
-		while ( line != null ) {
-			writer.println( line );
-			line = reader.readLine();
-			count++;
-			if ( count>=100000 ) {
-				w.write( sw.toString() );
-				w.flush();
-				writer.close();
-				sw = new StringWriter();
-				writer = new PrintWriter( sw, false );
+		try ( BufferedReader reader = new BufferedReader( r );
+				StringWriter sw = new StringWriter();
+				PrintWriter writer = new PrintWriter( sw, false ) ) {
+			String line = reader.readLine();
+			while ( line != null ) {
+				writer.println( line );
+				line = reader.readLine();
 			}
+			w.write( sw.toString() );
+			w.flush();
 		}
-		w.write( sw.toString() );
-		writer.close();
-		w.flush();
-		w.close();
-		reader.close();
 	}
 	
 	public static void cleanFolder( File dir, String prefix ) throws Exception {
 		File[] list = dir.listFiles();
 		for ( int k = 0; k<list.length; k++ ) {
 			File current = list[k];
-			logger.info( "PROCESSING : {}", current.getCanonicalPath() );
+			log.info( "PROCESSING : {}", current.getCanonicalPath() );
 			if ( current.isDirectory() ) {
 				cleanFolder( current, prefix );
 			} else {
@@ -73,15 +60,15 @@ public class XMLClean {
 			String out = args[1];
 			File file = new File( in );
 			if ( file.isFile() ) {
-				FileReader fr = new FileReader( new File( in ) );
-				FileWriter fw = new FileWriter( new File( out ) );
-				cleanStream( fr , fw );				
+				try ( FileReader fr = new FileReader( new File( in ) );
+						FileWriter fw = new FileWriter( new File( out ) ) ) {
+					cleanStream( fr , fw );				
+				}
 			} else {
 				cleanFolder( file, out );
 			}
-			
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error( "Error : "+e, e );
 		}
 	}
 	

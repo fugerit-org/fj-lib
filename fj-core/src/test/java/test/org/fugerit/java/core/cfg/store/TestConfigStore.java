@@ -9,6 +9,7 @@ import org.fugerit.java.core.cfg.store.helper.ConfigStoreDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreMapDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreProps;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ public class TestConfigStore {
     
     @Test
     public void test1() {
+    	boolean ok = false;
         try (InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/util/collection/test_store_1.properties" );
         		FileOutputStream fos = new FileOutputStream( new File( "target/test_config_store_props.properties" ) )) {
             ConfigStoreDefault configStore = ConfigStoreProps.read( is );
@@ -41,9 +43,11 @@ public class TestConfigStore {
             }
             configStore.addConfigStoreMap(ADD_NAME, ADD_MAP);
             ConfigStoreProps.write(configStore, fos);
+            ok = true;
         } catch (Exception e) {
             throw new ConfigRuntimeException( e );
         }
+        Assert.assertTrue( ok );
     }
 
 }
