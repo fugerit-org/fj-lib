@@ -96,9 +96,9 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 	 */
 	private static final long serialVersionUID = 60670717619176336L;
 	
-	private Map<String, Collection<T>> dataMap;
+	private transient Map<String, Collection<T>> dataMap;
 	
-	private Set<String> orderedId;
+	private transient Set<String> orderedId;
 	
 	@Getter private Properties generalProps;
 	

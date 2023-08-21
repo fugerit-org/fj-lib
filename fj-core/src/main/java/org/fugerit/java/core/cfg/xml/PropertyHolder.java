@@ -115,6 +115,23 @@ public class PropertyHolder extends BasicIdConfigType {
 		}
 	}
 	
+	private static void handleException( String path, Exception e, String unsafe, String usafeMessage ) throws IOException {
+		if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) || UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
+			String unsafeMessage = " ";
+			if ( StringUtils.isNotEmpty( unsafeMessage ) ) {
+				unsafeMessage+= unsafeMessage+" ";
+			}
+			unsafeMessage = path + ", " + unsafe + ", " + e;
+			if ( UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
+				logger.warn( "Error loading unsafe property holder : "+unsafeMessage );	
+			} else {
+				logger.error( "WARNING! Error loading unsafe property holder : "+unsafeMessage, e );
+			}
+		} else {
+			throw new IOException( "Property holder load error : "+path, e );
+		}
+	}
+	
 	private static Properties load( String mode, String path, String xml, String unsafe, String usafeMessage, String encoding ) throws IOException {
 		Properties props = new Properties();
 		try {
@@ -130,20 +147,7 @@ public class PropertyHolder extends BasicIdConfigType {
 				}
 			}	
 		} catch ( Exception e ) {
-			if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) || UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
-				String unsafeMessage = " ";
-				if ( StringUtils.isNotEmpty( unsafeMessage ) ) {
-					unsafeMessage+= unsafeMessage+" ";
-				}
-				unsafeMessage = path + ", " + unsafe + ", " + e;
-				if ( UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
-					logger.warn( "Error loading unsafe property holder : "+unsafeMessage );	
-				} else {
-					logger.error( "WARNING! Error loading unsafe property holder : "+unsafeMessage, e );
-				}
-			} else {
-				throw new IOException( "Property holder load error : "+path, e );
-			}
+			handleException(path, e, unsafe, usafeMessage);
 		}
 		return props;
 	}

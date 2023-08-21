@@ -52,7 +52,7 @@ public class ConfigProviderFacade {
 		return configProvider;
 	}
 	
-	public void setDefaultProvider( ConfigProvider configProvider ) {
+	public static void setDefaultProvider( ConfigProvider configProvider ) {
 		defaultProvider = configProvider;
 	}
 	

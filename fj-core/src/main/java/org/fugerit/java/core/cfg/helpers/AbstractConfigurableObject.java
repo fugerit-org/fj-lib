@@ -93,7 +93,7 @@ public abstract class AbstractConfigurableObject implements ConfigurableObject, 
 
 	@Setter(AccessLevel.PROTECTED)
 	@Getter(AccessLevel.PROTECTED)
-	private ConfigProvider configProvider;
+	private transient ConfigProvider configProvider;
 	
 	public static void setConfigProvider( ConfigProvider provider, AbstractConfigurableObject config ) {
 		 config.setConfigProvider(provider) ;

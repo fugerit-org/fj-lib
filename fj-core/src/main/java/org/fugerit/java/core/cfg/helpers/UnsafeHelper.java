@@ -27,10 +27,9 @@ public class UnsafeHelper {
 		handleUnsafe(logger, e, unsafe, unsafeMode);
 	}
 	
-	public static void handleUnsafe( Logger l, Exception e, String unsafe, String unsafeMode ) throws ConfigException {
+	public static void handleUnsafe( Logger l, Exception e, boolean unsafeHandle, String unsafeMode ) throws ConfigException {
 		unsafeMode = StringUtils.valueWithDefault( unsafeMode , UNSAFE_MODE_DEFAULT );
-		boolean unsafeHandle = BooleanUtils.isTrue( unsafe );
-		String message = "Error handling unsafe seciont "+e;
+		String message = "Error handling unsafe section "+e;
 		if ( unsafeHandle ) {
 			if ( UNSAFE_MODE_LOG_TRACE.equalsIgnoreCase( unsafeMode ) ) {
 				l.warn( message, e );
@@ -46,6 +45,11 @@ public class UnsafeHelper {
 			}
 			throw cf;
 		}
+	}
+	
+	public static void handleUnsafe( Logger l, Exception e, String unsafe, String unsafeMode ) throws ConfigException {
+		boolean unsafeHandle = BooleanUtils.isTrue( unsafe );
+		handleUnsafe( l, e, unsafeHandle, unsafeMode );
 	}
 	
 }
