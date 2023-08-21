@@ -97,7 +97,7 @@ public class HelperDbJvfsFile extends BasicHelper implements ModelDbJvfsFile {
 		return this.fileSize;
 	}
 
-	private org.fugerit.java.core.db.daogen.ByteArrayDataHandler fileContent;
+	private transient org.fugerit.java.core.db.daogen.ByteArrayDataHandler fileContent;
 
 	@Override
 	public void setFileContent( org.fugerit.java.core.db.daogen.ByteArrayDataHandler value ) {

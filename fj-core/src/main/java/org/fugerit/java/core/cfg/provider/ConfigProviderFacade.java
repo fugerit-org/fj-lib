@@ -24,7 +24,7 @@ public class ConfigProviderFacade {
 	}
 	
 	public ConfigProvider getDefaultProvider() {
-		return defaultProvider;
+		return this.resolveProvider( "" );
 	}
 	
 	public ConfigProvider getProviderByName( String name ) {

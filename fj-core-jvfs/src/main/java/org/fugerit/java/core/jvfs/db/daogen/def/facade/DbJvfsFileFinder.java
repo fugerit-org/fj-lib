@@ -22,7 +22,7 @@ public class DbJvfsFileFinder extends BaseIdFinder {
 
 	private static final long serialVersionUID = 435404424982L;
 
-	private ModelDbJvfsFile model;
+	private transient ModelDbJvfsFile model;
 
 	public void setModel( ModelDbJvfsFile model ) {
 		this.model = model;

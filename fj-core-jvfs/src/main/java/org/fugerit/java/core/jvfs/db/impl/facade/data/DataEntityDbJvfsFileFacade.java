@@ -24,6 +24,27 @@ import org.fugerit.java.core.log.LogFacade;
  */
 public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper implements EntityDbJvfsFileFacade {
 
+	private int actualRename( Connection conn, PathDescriptor descriptor1, PathDescriptor descriptor2, String renameFileSql, JFile file, JFile newFile ) throws Exception {
+		int res = DAOUtilsNG.update( conn , renameFileSql , 
+				descriptor2.getName(), descriptor2.getParentPath(), TimeHelper.nowTimestamp(), descriptor1.getName(), descriptor1.getParentPath() );
+		if ( res > 0 ) {
+			String searchDirSql = StringUtils.concat( " " , 
+					"SELECT * FROM", this.getTableName(), "WHERE", COL_PARENT_PATH, "LIKE ?");
+			int resDir = 0;
+			try ( LoadResultNG<ModelDbJvfsFile> loader = DAOUtilsNG.extraAllFields( conn , searchDirSql, DbJvfsFileRSE.DEFAULT, file.getPath()+"%") ) {
+				while ( loader.hasNext() ) {
+					ModelDbJvfsFile currentKid = loader.next();
+					String newParentPath = currentKid.getParentPath().replaceFirst( file.getPath(), newFile.getPath() );
+					resDir+= DAOUtilsNG.update( conn , renameFileSql , 
+							currentKid.getFileName(), newParentPath, TimeHelper.nowTimestamp(), currentKid.getFileName(), currentKid.getParentPath() );
+				}
+			}
+			logger.debug( "result file {}, dir {}, found {}", res, resDir );
+			res+= resDir;
+		}
+		return res;
+	}
+	
 	@Override
 	public int rename( DAOContext context, DaogenJFileDB file, JFile newFile ) throws DAOException {
 		int res = 0;
@@ -49,23 +70,7 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 						resetAutocommit = true;
 					}
 					try {
-						res = DAOUtilsNG.update( context.getConnection() , renameFileSql , 
-								descriptor2.getName(), descriptor2.getParentPath(), TimeHelper.nowTimestamp(), descriptor1.getName(), descriptor1.getParentPath() );
-						if ( res > 0 ) {
-							String searchDirSql = StringUtils.concat( " " , 
-									"SELECT * FROM", this.getTableName(), "WHERE", COL_PARENT_PATH, "LIKE ?");
-							int resDir = 0;
-							try ( LoadResultNG<ModelDbJvfsFile> loader = DAOUtilsNG.extraAllFields( conn , searchDirSql, DbJvfsFileRSE.DEFAULT, file.getPath()+"%") ) {
-								while ( loader.hasNext() ) {
-									ModelDbJvfsFile currentKid = loader.next();
-									String newParentPath = currentKid.getParentPath().replaceFirst( file.getPath(), newFile.getPath() );
-									resDir+= DAOUtilsNG.update( context.getConnection() , renameFileSql , 
-											currentKid.getFileName(), newParentPath, TimeHelper.nowTimestamp(), currentKid.getFileName(), currentKid.getParentPath() );
-								}
-							}
-							logger.debug( "result file {}, dir {}, found {}", res, resDir );
-							res+= resDir;
-						}
+						res = this.actualRename(conn, descriptor1, descriptor2, renameFileSql, file, newFile);
 						conn.commit();
 					} catch (Exception e) {
 						conn.rollback();
