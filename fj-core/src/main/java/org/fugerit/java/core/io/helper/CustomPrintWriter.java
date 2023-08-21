@@ -67,7 +67,7 @@ public class CustomPrintWriter extends PrintWriter {
 		this( out, autoFlush, DEFAULT_LINE_SEPARATOR );
 	}
 
-	protected void ensureOpen() throws IOException {
+	private void ensureOpenCustom() throws IOException {
 		if (out == null)
 			throw new IOException("Stream closed");
 	}
@@ -76,7 +76,7 @@ public class CustomPrintWriter extends PrintWriter {
 	public void println() {
 		try {
 			synchronized (lock) {
-				ensureOpen();
+				this.ensureOpenCustom();
 				out.write( DEFAULT_LINE_SEPARATOR );
 				if (autoFlush) {
 					out.flush();
