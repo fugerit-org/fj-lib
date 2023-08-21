@@ -2,6 +2,7 @@ package org.fugerit.java.core.util.result;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.fugerit.java.core.log.BasicLogObject;
 
@@ -19,7 +20,7 @@ public class VirtualPageCache<T> extends BasicLogObject implements Serializable 
 	private HashMap<String, CacheWrapper<T>> cache;
 	
 	// 12 hours
-	private final static long DEFAULT_TTL = 12*60*60*1000L;
+	private final static long DEFAULT_TTL = TimeUnit.MILLISECONDS.convert( 12, TimeUnit.HOURS ); // was 12*60*60*1000L
 	
 	// <code>true</code> it the wrapper is still valid
 	private boolean checkTtl( CacheWrapper<T> wrapper ) {
@@ -91,7 +92,5 @@ class CacheWrapper<T> {
 	public void setCacheTime(long cacheTime) {
 		this.cacheTime = cacheTime;
 	}
-	
-	
 	
 }
