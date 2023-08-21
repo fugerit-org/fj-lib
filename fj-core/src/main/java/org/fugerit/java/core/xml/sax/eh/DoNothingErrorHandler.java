@@ -11,12 +11,12 @@ import org.xml.sax.SAXParseException;
  */
 public class DoNothingErrorHandler implements ErrorHandler {
 
-    /*
-     * <p>Crea un nuovo DoNothingErrorHandler</p>
-     * 
-     * 
-     */
-    public DoNothingErrorHandler() {
+	/**
+	 * As it is a do nothing implementation, it is safe to use a default (thread safe)
+	 */
+	public static final ErrorHandler DEFAULT = new DoNothingErrorHandler();
+	
+	public DoNothingErrorHandler() {
         super();
     }
 
@@ -25,7 +25,7 @@ public class DoNothingErrorHandler implements ErrorHandler {
      */
     @Override
     public void error(SAXParseException arg0) throws SAXException {
-
+    	// do nothing implementation
     }
 
     /* (non-Javadoc)
@@ -33,7 +33,7 @@ public class DoNothingErrorHandler implements ErrorHandler {
      */
     @Override
     public void fatalError(SAXParseException arg0) throws SAXException {
-
+    	// do nothing implementation
     }
 
     /* (non-Javadoc)
@@ -41,7 +41,7 @@ public class DoNothingErrorHandler implements ErrorHandler {
      */
     @Override
     public void warning(SAXParseException arg0) throws SAXException {
-
+    	// do nothing implementation
     }
 
 }

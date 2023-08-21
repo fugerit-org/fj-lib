@@ -46,7 +46,7 @@ public class Launcher {
 	}
 	
 	private static int handle( Properties params ) throws Exception {
-		int exit = ToolHandlerHelper.EXIT_OK;
+		int exit = ToolHandler.EXIT_OK;
 		String toolName = params.getProperty( ARG_TOOL );
 		String help = params.getProperty( ARG_HELP );
 		String verbose = params.getProperty( ARG_VERBOSE );
@@ -71,10 +71,10 @@ public class Launcher {
 	
 	private static void printHelp() {
 		logger.info( "fj-tool launcher v 0.0.1 [2017-05-04] quickstart : " );
-		logger.info( "		--tool tool name [run the named tool]" );
-		logger.info( "		--help [print this help]" );
-		logger.info( "		--verbose [verbose output]" );
-		logger.info( "	tool valid options : " );
+		logger.info( "\t\t--tool tool name [run the named tool]" );
+		logger.info( "\\t\\t--help [print this help]" );
+		logger.info( "\\t\\t--verbose [verbose output]" );
+		logger.info( "\\t\\ttool valid options : " );
 		Iterator<Object> toolIt = HANDLER_LIST.keySet().iterator();
 		while ( toolIt.hasNext() ) {
 			logger.info( "		"+toolIt.next() );	
@@ -86,7 +86,7 @@ public class Launcher {
 			Properties params = ArgUtils.getArgs( args );
 			int exit = handle( params );
 			logger.info( "EXIT -> "+exit );
-			if ( exit != ToolHandlerHelper.EXIT_OK ) {
+			if ( exit != ToolHandler.EXIT_OK ) {
 				System.exit( exit );	
 			}
 		} catch ( Exception e ) {
