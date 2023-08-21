@@ -24,8 +24,12 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	
 	private Map<String, Object> info;
 
-	protected AbstractPagedResult(int perPage, long elementCount, int currentPage, int pageCount, List<T> pageElements) {
+	protected AbstractPagedResult() {
 		super( RESULT_CODE_OK );
+	}
+	
+	protected AbstractPagedResult(int perPage, long elementCount, int currentPage, int pageCount, List<T> pageElements) {
+		this();
 		this.offset = perPage*(currentPage-1);
 		this.perPage = perPage;
 		this.elementCount = elementCount;

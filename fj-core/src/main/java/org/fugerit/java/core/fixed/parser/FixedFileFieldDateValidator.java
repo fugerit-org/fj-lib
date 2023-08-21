@@ -109,7 +109,7 @@ public class FixedFileFieldDateValidator extends FixedFileFieldBasicValidator im
 				try {
 					d = sdf.parse( value );
 				} catch (ParseException e) {
-					new ConfigRuntimeException( label+" should be valid for format date or 'sysdate' : "+value+" , "+format, e );
+					throw new ConfigRuntimeException( label+" should be valid for format date or 'sysdate' : "+value+" , "+format, e );
 				}
 			}
 		}
