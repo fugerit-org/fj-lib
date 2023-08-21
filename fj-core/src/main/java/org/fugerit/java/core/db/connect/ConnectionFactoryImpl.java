@@ -394,10 +394,8 @@ class DirectConnectionFactory extends ConnectionFactoryImpl {
 		try {
 			conn = this.driver.connect( this.url, this.info );
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw ( new DAOException(e) );
+			throw DAOException.convertExMethod( "getConnection", e );
 		}
-
 		return conn;
 	}
 	

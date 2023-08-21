@@ -24,12 +24,15 @@ import java.util.Properties;
 
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * <p>Helper class for wrapping a module version meta information.</p>
  * 
  * @author Fugerit
  *
  */
+@Slf4j
 public class VersionUtils {
 
 	public static Properties MODULES = new Properties();
@@ -70,10 +73,11 @@ public class VersionUtils {
 					versionString = vc.getName()+" "+vc.getVersion()+" "+vc.getDate();
 				} catch ( Throwable t2 ) {
 					versionString = "[03] Impossible to find module version";
+					log.warn( versionString, t2 );
 				}
 			} catch (Exception t1) {
 				versionString = "[02] Class module isn't loaded : ("+type+") - "+t1;
-				t1.printStackTrace();
+				log.warn( versionString, t1 );
 			}	
 		} else {
 			versionString = "[01] Module does not exist";

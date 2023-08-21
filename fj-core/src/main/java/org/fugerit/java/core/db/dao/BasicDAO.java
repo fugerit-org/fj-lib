@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.log.LogFacade;
@@ -172,28 +173,21 @@ public class BasicDAO<T> extends BasicLogObject {
 
 	protected BasicDAO(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
-        try {
-        	Connection conn = this.getConnection();
-        	try {
-        		String productName = conn.getMetaData().getDatabaseProductName().toLowerCase();
-        		if ( productName.indexOf( "mysql" ) != -1 || productName.indexOf( "maria" ) != -1 ) {
-        			this.queryWrapper = MysqlQueryWrapper.INSTANCE;
-        		} else if ( productName.indexOf( "postgres" ) != -1 ) {
-        			this.queryWrapper = PostgresQueryWrapper.INSTANCE;
-        		} else if ( productName.indexOf( "oracle" ) != -1 ) {
-        			this.queryWrapper = OracleQueryWrapper.INSTANCE;
-        		} else {
-        			this.queryWrapper = null;
-        		}
-        		this.getLogger().debug( "product name : "+productName+" query wrapper init : "+this.queryWrapper );
-        	} catch (Exception e1) {
-        		e1.printStackTrace();
-        	} finally {
-        		conn.close();
-        	}
-        } catch (Exception e) {
-        	this.getLogger().warn( "Error on query wrapper setup : "+e, e );
-        }
+        try ( Connection conn = this.getConnection() ) {
+    		String productName = conn.getMetaData().getDatabaseProductName().toLowerCase();
+    		if ( productName.indexOf( "mysql" ) != -1 || productName.indexOf( "maria" ) != -1 ) {
+    			this.queryWrapper = MysqlQueryWrapper.INSTANCE;
+    		} else if ( productName.indexOf( "postgres" ) != -1 ) {
+    			this.queryWrapper = PostgresQueryWrapper.INSTANCE;
+    		} else if ( productName.indexOf( "oracle" ) != -1 ) {
+    			this.queryWrapper = OracleQueryWrapper.INSTANCE;
+    		} else {
+    			this.queryWrapper = null;
+    		}
+    		this.getLogger().debug( "product name : "+productName+" query wrapper init : "+this.queryWrapper );
+    	} catch (Exception e1) {
+    		throw ConfigRuntimeException.convertExMethod( "init" , e1 );
+    	}
     }
     
     protected BasicDAO(ConnectionFactory connectionFactory) {

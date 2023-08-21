@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.db.dao.CloseDAOHelper;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.helpers.DAOID;
 import org.fugerit.java.core.xml.dom.DOMUtils;
@@ -56,11 +57,7 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 			throw ( new DAOException( e ) );
 		} finally {
 			if ( this.isAutoCloseConnection() ) {
-				try {
-					conn.close();	
-				} catch ( SQLException sqle ) {
-					sqle.printStackTrace();
-				}	
+				CloseDAOHelper.close( conn );
 			}
 		}
 		this.getLogger().debug( "generateId end : "+id );

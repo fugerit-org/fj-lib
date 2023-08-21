@@ -153,17 +153,4 @@ class BinaryNumber {
 		return this.getBinString();
 	}
 	
-	public static void main( String[] args ) {
-		try {
-			BinaryNumber n = new BinaryNumber();
-			n.setValue( 255 );
-			for ( int k=0; k<n.hextSize(); k++ ) {
-				System.out.println( "TEST "+n.getHex( k ) );
-			}
-			System.out.println( "A :"+n.getHexString() );
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 }

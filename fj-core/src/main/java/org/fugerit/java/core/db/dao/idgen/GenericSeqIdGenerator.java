@@ -1,9 +1,9 @@
 package org.fugerit.java.core.db.dao.idgen;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Properties;
 
+import org.fugerit.java.core.cfg.CloseHelper;
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.IdGenerator;
@@ -55,12 +55,8 @@ public class GenericSeqIdGenerator extends BasicSeqIdGenerator {
 			} catch (Exception e) {
 				throw ( new ConfigException( e ) );
 			} finally {
-				if ( conn != null ) {
-					try {
-						conn.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
+				if ( this.isAutoCloseConnection() ) {
+					CloseHelper.close( conn );
 				}
 			}
 		}

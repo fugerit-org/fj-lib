@@ -2,6 +2,8 @@ package org.fugerit.java.core.jvfs.file;
 
 import java.io.File;
 import java.io.IOException;
+
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JMount;
 import org.fugerit.java.core.jvfs.JVFS;
@@ -14,7 +16,7 @@ public class RealJMount implements JMount {
 		try {
 			jvfs = createJVFS(new File("/"));
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw ConfigRuntimeException.convertExMethod( "createDefaultJVFS", e );
 		}
 		return jvfs;
 	}

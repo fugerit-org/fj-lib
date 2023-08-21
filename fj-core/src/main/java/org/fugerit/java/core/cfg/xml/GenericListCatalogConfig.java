@@ -272,7 +272,6 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 					XmlBeanHelper.setFromElementSafe( c , current );	
 				}
 			} catch (Throwable e) {
-				e.printStackTrace();
 				throw new ConfigException( e );
 			}
 		} else  if ( typeSample instanceof KeyObject<?> ) {
