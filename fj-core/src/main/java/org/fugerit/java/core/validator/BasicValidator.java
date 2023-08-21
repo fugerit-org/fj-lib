@@ -63,7 +63,7 @@ public class BasicValidator extends BasicIdConfigType {
 	}
 	
 	public void checkConfig() throws ConfigException{
-		
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 	
 	public void configure( Element config ) throws ConfigException {

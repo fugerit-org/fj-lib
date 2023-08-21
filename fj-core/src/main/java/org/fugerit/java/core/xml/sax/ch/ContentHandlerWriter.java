@@ -40,6 +40,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void endDocument() throws SAXException {
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 
 	/* (non-Javadoc)
@@ -56,6 +57,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void endPrefixMapping(String arg0) throws SAXException {
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 
 	/* (non-Javadoc)
@@ -63,6 +65,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void ignorableWhitespace(char[] arg0, int arg1, int arg2) throws SAXException {
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 
 	/* (non-Javadoc)
@@ -70,6 +73,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void processingInstruction(String arg0, String arg1) throws SAXException {
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 
 	/* (non-Javadoc)
@@ -77,6 +81,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void setDocumentLocator(Locator arg0) {
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 
 	/* (non-Javadoc)
@@ -84,6 +89,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void skippedEntity(String arg0) throws SAXException {
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 
 	/* (non-Javadoc)
@@ -91,7 +97,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void startDocument() throws SAXException {
-		
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 
 	/* (non-Javadoc)
@@ -125,6 +131,7 @@ public class ContentHandlerWriter implements ContentHandler {
 	 */
 	@Override
 	public void startPrefixMapping(String arg0, String arg1) throws SAXException {
+		// do nothing implementation : subclasses should implement it, if needed
 	}
 
 }

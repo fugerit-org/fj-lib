@@ -8,11 +8,6 @@ import org.fugerit.java.core.util.collection.KeyString;
 
 public class PropertyEntry extends MapEntry<String, String> implements KeyString {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1251700890629892644L;
-
 	public PropertyEntry(String key, String value) {
 		super( key, value );
 	}

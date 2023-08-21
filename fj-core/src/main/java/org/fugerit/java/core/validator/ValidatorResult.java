@@ -17,9 +17,9 @@ public class ValidatorResult implements Serializable {
 
 	public static final String GENERIC_ID = ValidatorResult.class.getName()+"_GENERIC_ID";
 	
-	private List<PropertyEntry> errors;
+	private transient List<PropertyEntry> errors;
 	
-	private List<PropertyEntry> warnings;
+	private transient List<PropertyEntry> warnings;
 
 	public ValidatorResult() {
 		this.errors = new ArrayList<PropertyEntry>();

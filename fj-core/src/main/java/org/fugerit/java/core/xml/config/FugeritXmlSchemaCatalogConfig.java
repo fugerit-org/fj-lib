@@ -13,7 +13,7 @@ public class FugeritXmlSchemaCatalogConfig extends XMLSchemaCatalogConfig {
 	
 	public static FugeritXmlSchemaCatalogConfig init( FugeritXmlSchemaCatalogConfig config ) {
 		try {
-			FugeritXmlSchemaCatalogConfig.loadConfig( ClassHelper.loadFromDefaultClassLoader( PATH_CATALOG ) , config );
+			loadConfig( ClassHelper.loadFromDefaultClassLoader( PATH_CATALOG ) , config );
 		} catch (Exception e) {
 			throw new RuntimeException( e );
 		}
