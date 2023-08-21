@@ -26,8 +26,7 @@ public class DoNothingContentHandler implements ContentHandler {
      */
     @Override
     public void endDocument() throws SAXException {
-
-
+    	// do nothing implementation
     }
 
     /* (non-Javadoc)
@@ -35,8 +34,7 @@ public class DoNothingContentHandler implements ContentHandler {
      */
     @Override
     public void startDocument() throws SAXException {
-
-
+    	// do nothing implementation
     }
 
     /* (non-Javadoc)

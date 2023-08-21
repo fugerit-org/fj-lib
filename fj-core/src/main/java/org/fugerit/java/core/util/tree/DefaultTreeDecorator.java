@@ -16,10 +16,12 @@ public class DefaultTreeDecorator<T> implements Serializable, TreeDecorator<T> {
 
 	@Override
 	public void init(Properties generalProps, Element root) throws ConfigException {
+		// do nothing implementation, subclasses should override it, if needed
 	}
 	
 	@Override
 	public void setupData(T current, T parent, Element tag) throws Exception {
+		// do nothing implementation, subclasses should override it, if needed
 	}
 	
 }

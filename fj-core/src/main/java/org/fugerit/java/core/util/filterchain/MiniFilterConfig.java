@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import org.fugerit.java.core.cfg.ConfigException;
@@ -25,7 +24,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 	 */
 	private static final long serialVersionUID = 286844409632297876L;
 
-	private Map<String, MiniFilterChain> mapChain;
+	private HashMap<String, MiniFilterChain> mapChain;
 	
 	public static final String ATT_TAG_PROPERTIES = "properties";
 	

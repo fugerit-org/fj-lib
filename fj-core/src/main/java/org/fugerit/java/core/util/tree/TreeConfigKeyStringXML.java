@@ -2,7 +2,6 @@ package org.fugerit.java.core.util.tree;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import org.fugerit.java.core.util.collection.ListMapStringKey;
@@ -15,7 +14,7 @@ public class TreeConfigKeyStringXML<T extends NodeKeyString<T, L>, L extends Lis
 	 */
 	private static final long serialVersionUID = -3723689013500668456L;
 
-	private Map<String, T> map;
+	private HashMap<String, T> map;
 	
 	public TreeConfigKeyStringXML() {
 		this.map = new HashMap<String, T>();

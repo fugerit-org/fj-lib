@@ -77,7 +77,7 @@ public class Launcher {
 		logger.info( "\\t\\ttool valid options : " );
 		Iterator<Object> toolIt = HANDLER_LIST.keySet().iterator();
 		while ( toolIt.hasNext() ) {
-			logger.info( "		"+toolIt.next() );	
+			logger.info( "\t\t"+toolIt.next() );	
 		}
 	}
 	

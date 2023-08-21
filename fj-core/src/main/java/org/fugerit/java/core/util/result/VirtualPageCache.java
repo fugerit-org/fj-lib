@@ -17,7 +17,7 @@ public class VirtualPageCache<T> extends BasicLogObject implements Serializable 
 		this.cache = new HashMap<String, CacheWrapper<T>>();
 	}
 	
-	private HashMap<String, CacheWrapper<T>> cache;
+	private transient HashMap<String, CacheWrapper<T>> cache;
 	
 	// 12 hours
 	private final static long DEFAULT_TTL = TimeUnit.MILLISECONDS.convert( 12, TimeUnit.HOURS ); // was 12*60*60*1000L
