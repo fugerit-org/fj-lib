@@ -45,8 +45,8 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 					Connection conn = context.getConnection();
 					boolean resetAutocommit = false;
 					if ( conn.getAutoCommit() ) {
-						//conn.setAutoCommit( false );
-						//resetAutocommit = true;
+						conn.setAutoCommit( false );
+						resetAutocommit = true;
 					}
 					try {
 						res = DAOUtilsNG.update( context.getConnection() , renameFileSql , 

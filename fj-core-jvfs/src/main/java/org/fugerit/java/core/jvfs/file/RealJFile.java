@@ -13,6 +13,9 @@ import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.helpers.AbstractJFile;
 import org.fugerit.java.core.jvfs.helpers.JFileUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RealJFile extends AbstractJFile {
 	
 	@Override
@@ -110,15 +113,24 @@ public class RealJFile extends AbstractJFile {
     
     @Override
     public void setLastModified(long time) throws IOException {
-        this.file.setLastModified(time);
+        boolean res = this.file.setLastModified(time);
+        if ( !res ) {
+        	log.warn( "false result setLastModified {} on {}", time, this.file );
+        }
     }
     
     @Override
     public void setReadOnly( boolean readOnly ) throws IOException {
     	if ( readOnly ) {
-    		this.file.setReadOnly();	
+    		boolean res = this.file.setReadOnly();	
+    		if ( !res ) {
+    			log.warn( "false result setReadOnly on {}", this.file );
+    	    }
     	} else {
-    		this.file.setWritable( true );
+    		boolean res = this.file.setWritable( true );
+    		if ( !res ) {
+    			log.warn( "false result setWritable(true) on {}", this.file );
+    	    }
     	}
     }
 
