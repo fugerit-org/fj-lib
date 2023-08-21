@@ -1,5 +1,6 @@
 ﻿8.2.0 (next)
 ------------------
++ [enhancement [fj-core] added utilities to close Closeable and AutoCloseable [8.2.0-rc.4]
 + [enhancement [fj-core] conversion utilities for ConfigException and ConfigRuntimeException [8.2.0-rc.3]
 + [enhancement [to reduce hierarchy depth, if the correct interfaces have been used, this should have no impact] :
 + [enhancement][fj-core] Changed hierarchy of GenericListCatalogConfig to directly extends AbstractConfigurableObject [8.2.0-rc.1]
