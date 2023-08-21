@@ -13,7 +13,7 @@ public class AttributeHolderDefault implements Serializable, AttributesHolder {
 	 */
 	private static final long serialVersionUID = -230640776936395216L;
 
-	private Map<String, Object> map;
+	private HashMap<String, Object> map;
 	
 	public AttributeHolderDefault() {
 		this.map = new HashMap<String, Object>();

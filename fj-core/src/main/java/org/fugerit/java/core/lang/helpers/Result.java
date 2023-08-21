@@ -1,6 +1,7 @@
 package org.fugerit.java.core.lang.helpers;
 
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,9 +13,14 @@ import java.util.List;
  * @author Fugerit
  *
  */
-public class Result {
+public class Result implements Serializable {
 
-	   private void printList( List<Exception> v, PrintStream stream) {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5022803261949916909L;
+
+	private void printList( List<Exception> v, PrintStream stream) {
 	        for (int k=0; k<v.size(); k++) {
 	            stream.println(""+(k+1)+" - "+v.get(k));
 	        }

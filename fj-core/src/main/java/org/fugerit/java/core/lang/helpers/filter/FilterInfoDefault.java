@@ -1,13 +1,6 @@
 package org.fugerit.java.core.lang.helpers.filter;
 
-import java.io.Serializable;
-
-public class FilterInfoDefault implements FilterInfo, Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1551567465871705421L;
+public class FilterInfoDefault implements FilterInfo {
 
 	public static FilterInfo newFilter( Object value, String evaluate ) {
 		return newFilter(value, evaluate, null);

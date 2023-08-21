@@ -99,7 +99,7 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 
 	@Override
 	public void configure(Element tag) throws ConfigException {
-		
+		// do nothing implementation : sub classes should change it if needed
 	}
 
 	private String id;

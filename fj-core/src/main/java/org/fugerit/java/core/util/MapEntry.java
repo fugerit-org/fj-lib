@@ -1,42 +1,34 @@
 package org.fugerit.java.core.util;
 
-import java.io.Serializable;
+import java.util.AbstractMap;
 import java.util.Map;
 
 import org.fugerit.java.core.util.collection.KeyObject;
 
-public class MapEntry<K, V> implements Serializable, KeyObject<K> {
+public class MapEntry<K, V> implements KeyObject<K> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3192113156465029159L;
-
-	private K key;
-	
-	private V value;
+	private AbstractMap.SimpleEntry<K, V> entry;
 
 	@Override
 	public K getKey() {
-		return key;
+		return this.entry.getKey();
 	}
 
 	public void setKey(K key) {
-		this.key = key;
+		this.entry = new AbstractMap.SimpleEntry<K, V>( key, this.getValue() );
 	}
 
 	public V getValue() {
-		return value;
+		return this.entry.getValue();
 	}
 
 	public void setValue(V value) {
-		this.value = value;
+		this.entry.setValue( value );
 	}
 
 	public MapEntry(K key, V value) {
 		super();
-		this.key = key;
-		this.value = value;
+		this.entry = new AbstractMap.SimpleEntry<K, V>( key, value );
 	}
 
 	public MapEntry() {
@@ -44,7 +36,7 @@ public class MapEntry<K, V> implements Serializable, KeyObject<K> {
 	}
 
 	public <M extends Map<K, V>> V put( M map ) {
-		return map.put( key , value );
+		return map.put( this.getKey(), this.getValue() );
 	}
 		
 	@Override
