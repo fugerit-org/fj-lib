@@ -56,28 +56,29 @@ public class LoadResult<T> extends BasicLogObject {
 	
 	private ResultSet rs;
 	
+	private String getSelectCount() {
+		return "SELECT count(*) FROM ( "+this.query+" ) tmp";
+	}
+	
     public long startCount() throws DAOException {
     	long count = 0;
 	    this.getLogger().debug("start START");
-		query = this.basicDAO.queryFormat( query, "LoadResult.startCount" );
-        this.getLogger().debug("start fields        : '"+fields.size()+"'");
+	    this.query = this.basicDAO.queryFormat( query, "LoadResult.startCount" );
+	    this.getLogger().debug("start fields        : '"+fields.size()+"'");
         this.getLogger().debug("start RSExtractor   : '"+re+"'");
-        Connection conn = this.basicDAO.getConnection();
-        try {
-            PreparedStatement ps = conn.prepareStatement( "SELECT count(*) FROM ( "+query+" ) tmp" );
-            this.basicDAO.setAll(ps, fields);
-            ResultSet rs = ps.executeQuery();
-            if ( rs.next() ) {
-            	count = rs.getLong( 1 );
-            }
-            rs.close();
-            ps.close();
-            conn.close();
+        try ( Connection conn = this.basicDAO.getConnection();
+        		PreparedStatement ps = conn.prepareStatement( this.getSelectCount() )) {
+        	this.basicDAO.setAll(ps, fields);
+        	try ( ResultSet rs = ps.executeQuery() ) {
+        		if ( rs.next() ) {
+                	count = rs.getLong( 1 );
+                }		
+        	}
         } catch (SQLException e) {
-            throw (new DAOException(e));
+            throw DAOException.convertEx( e );
         }
+        this.start();
         this.getLogger().debug("start END" );
-        start();
         return count;
     } 
 	
