@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.w3c.dom.Element;
@@ -108,7 +109,7 @@ public class FixedFileFieldDateValidator extends FixedFileFieldBasicValidator im
 				try {
 					d = sdf.parse( value );
 				} catch (ParseException e) {
-					new RuntimeException( label+" should be valid for format date or 'sysdate' : "+value+" , "+format, e );
+					new ConfigRuntimeException( label+" should be valid for format date or 'sysdate' : "+value+" , "+format, e );
 				}
 			}
 		}
