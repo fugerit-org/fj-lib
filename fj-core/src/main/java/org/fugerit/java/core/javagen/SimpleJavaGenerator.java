@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.Properties;
@@ -168,7 +169,8 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 			}
 		}
 		if ( fullData == null ) {
-			fullData = baseData + (long)(Math.random()*1000000000000L)+"L;";
+			SecureRandom random = new SecureRandom();
+			fullData = baseData + (long)(random.nextDouble()*1000000000000L)+"L;";
 		}
 		this.getWriter().println( fullData );
 		this.getWriter().println();
