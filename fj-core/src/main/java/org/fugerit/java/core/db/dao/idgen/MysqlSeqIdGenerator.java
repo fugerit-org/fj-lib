@@ -21,6 +21,10 @@ public class MysqlSeqIdGenerator extends BasicSeqIdGenerator {
 		return createSequenceQuery( this.getSequenceName() ); 
 	}
 
+	private String createUpdateQuery() {
+		return "UPDATE "+this.getSequenceName()+" SET id=LAST_INSERT_ID(id+1);";
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#generateId()
 	 */
@@ -30,7 +34,7 @@ public class MysqlSeqIdGenerator extends BasicSeqIdGenerator {
 		DAOID id = null;
 		try (  Connection conn = this.getConnectionFactory().getConnection();
 				Statement stm = conn.createStatement() ) {
-			stm.executeUpdate( "UPDATE "+this.getSequenceName()+" SET id=LAST_INSERT_ID(id+1);" );
+			stm.executeUpdate( this.createUpdateQuery() );
 			try ( ResultSet rs = stm.executeQuery( " SELECT LAST_INSERT_ID(); " ) ) {
 				if ( rs.next() ) {
 					id = new DAOID( rs.getLong( 1 ) );	

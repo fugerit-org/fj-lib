@@ -97,6 +97,10 @@ public class MetaDataUtils {
 	
 	private static final int MODE_STRICT = 2;
 	
+	private static String createDescribeQuery( TableId tableId ) {
+		return "SELECT * FROM "+tableId.toIdString()+" WHERE 1=0";
+	}
+	
 	private static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, JdbcAdaptor jdbcAdaptor, List<String> tableNameList, String[] types ) throws Exception { 
 		
 		DataBaseModel dataBaseModel = new DataBaseModel();
@@ -188,7 +192,7 @@ public class MetaDataUtils {
 				}
 				columnsRS.close();
 				
-				String sql = "SELECT * FROM "+tableId.toIdString()+" WHERE 1=0";
+				String sql = createDescribeQuery( tableId );
 				try ( Statement stm = conn.createStatement(); 
 						ResultSet rsJavaType = stm.executeQuery( sql )  ) {
 					ResultSetMetaData rsmd = rsJavaType.getMetaData();

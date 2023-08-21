@@ -140,9 +140,13 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 		return res;
 	}
 	
+	private String createSequenceQuery( String sequence ) {
+		return " SELECT "+sequence+".NEXTVAL FROM DUAL";
+	}
+	
 	public BigDecimal newSequenceValue( String sequence ) throws DAOException {
 		BigDecimal id = null;
-		String sql = " SELECT "+sequence+".NEXTVAL FROM DUAL";
+		String sql = this.createSequenceQuery(sequence);
 		log.info( "newSequenceValue() sql > "+sql );
 		try ( Statement stm = this.daoContext.getConnection().createStatement();
 				ResultSet rs = stm.executeQuery( sql ) ) {
