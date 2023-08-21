@@ -53,24 +53,30 @@ public class CloseHelper {
 		}
 	}
 	
-	public static void closeSilent( AutoCloseable ac ) {
+	public static boolean closeSilent( AutoCloseable ac ) {
+		boolean closed = true;
 		if ( ac != null ) {
 			try {
 				ac.close();
 			} catch (Exception e) {
+				closed = false;
 				log.warn( BASIC_CLOSE_MESSAGE_SILENT+ac , e );
 			}
 		}
+		return closed;
 	}
 	
-	public static void closeSilent( Closeable ac ) {
+	public static boolean closeSilent( Closeable ac ) {
+		boolean closed = true;
 		if ( ac != null ) {
 			try {
 				ac.close();
 			} catch (Exception e) {
+				closed = false;
 				log.warn( BASIC_CLOSE_MESSAGE_SILENT+ac , e );
 			}
 		}
+		return closed;
 	}
 	
 }

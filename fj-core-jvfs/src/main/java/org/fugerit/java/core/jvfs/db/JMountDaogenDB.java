@@ -160,7 +160,7 @@ public class JMountDaogenDB implements JMount {
 		return props;
 	}
 	
-	public OutputStream streamOut( DaogenJFileDB file ) throws IOException {
+	public OutputStream streamOut( DaogenJFileDB file ) {
 		return new OutputStream() {
 			private ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			@Override

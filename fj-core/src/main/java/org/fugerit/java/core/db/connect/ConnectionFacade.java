@@ -26,7 +26,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.fugerit.java.core.log.LogFacade;
+import org.fugerit.java.core.cfg.CloseHelper;
 
 /**
  * Helper class for handling ConnectionFactory
@@ -92,18 +92,7 @@ public class ConnectionFacade {
 	 * @return		true if everything was closed with no errors
 	 */
 	public static boolean closeLoose( ResultSet rs ) {
-		boolean close = true;
-		if ( rs != null ) {
-			try {
-				rs.close();
-			} catch (Exception e) {
-				LogFacade.getLog().warn( "ConnectionFacade.closeLoose(java.sql.Connection) : failed to close connetion : "+rs );
-				close = false;
-			}
-		} else {
-			close = false;
-		}
-		return close;
+		return CloseHelper.closeSilent( rs );
 	}		
 	
 	/**
@@ -113,18 +102,7 @@ public class ConnectionFacade {
 	 * @return		true if everything was closed with no errors
 	 */
 	public static boolean closeLoose( Statement stm ) {
-		boolean close = true;
-		if ( stm != null ) {
-			try {
-				stm.close();
-			} catch (Exception e) {
-				LogFacade.getLog().warn( "ConnectionFacade.closeLoose(java.sql.Connection) : failed to close connetion : "+stm );
-				close = false;
-			}
-		} else {
-			close = false;
-		}
-		return close;
+		return CloseHelper.closeSilent( stm );
 	}	
 	
 	/**
@@ -134,18 +112,7 @@ public class ConnectionFacade {
 	 * @return		true if everything was closed with no errors
 	 */
 	public static boolean closeLoose( Connection conn ) {
-		boolean close = true;
-		if ( conn != null ) {
-			try {
-				conn.close();
-			} catch (Exception e) {
-				LogFacade.getLog().warn( "ConnectionFacade.closeLoose(java.sql.Connection) : failed to close connetion : "+conn );
-				close = false;
-			}
-		} else {
-			close = false;
-		}
-		return close;
+		return CloseHelper.closeSilent( conn );
 	}
 	
 }
