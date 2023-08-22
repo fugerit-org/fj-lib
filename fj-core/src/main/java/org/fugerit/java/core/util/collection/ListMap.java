@@ -225,7 +225,7 @@ public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 		this.map.remove( this.getKey( element ) );
 	}
 	
-	private SerialHelper<ListMap<K, T>> HELPER = new SerialHelper<ListMap<K, T>>();
+	private SerialHelper<ListMap<K, T>> HELPER = new SerialHelper<>();
 	
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 		// this class is conditionally serializable, depending on contained object

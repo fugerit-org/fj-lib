@@ -1,5 +1,6 @@
 package org.fugerit.java.core.util.filterchain;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import java.util.Set;
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
 import org.fugerit.java.core.cfg.xml.ListMapConfig;
+import org.fugerit.java.core.io.SerialHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.xml.dom.DOMIO;
@@ -24,7 +26,23 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 	 */
 	private static final long serialVersionUID = 286844409632297876L;
 
-	private transient HashMap<String, MiniFilterChain> mapChain;
+	// code added to setup a basic conditional serialization
+	
+	private SerialHelper<MiniFilterConfig> HELPER = new SerialHelper<>();
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		HELPER.writeObject( this, out );
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		HELPER.readObject( this , in );
+	}
+	
+	private HashMap<String, MiniFilterChain> mapChain;
 	
 	public static final String ATT_TAG_PROPERTIES = "properties";
 	
