@@ -76,6 +76,25 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 		return obj;
 	}
 	
+	private void configureCurrent( T root, Element current ) throws ConfigException {
+		if ( TAG_NODE.equals( current.getTagName() ) ) {
+			if ( root == null ) {
+				NodeList currentKids = current.getChildNodes();
+				try {
+					root = this.setupData( current );
+					this.setupData( root, null, current );
+					this.addKids( currentKids, root );
+					this.tree = root;
+				} catch (Exception e) {
+					throw ConfigException.convertEx( e );
+				}
+				
+			} else {
+				throw new ConfigException( "Multiple root noode not allowed" );
+			}
+		}
+	}
+	
 	@Override
 	public void configure(Element tag) throws ConfigException {
 		DOMUtils.attributesToProperties( tag , this.getGeneralProps() );
@@ -87,22 +106,7 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 		for ( int k=0; k<childs.getLength(); k++ ) {
 			if ( childs.item( k ).getNodeType() == Element.ELEMENT_NODE ) {
 				Element current = (Element)childs.item( k );
-				if ( TAG_NODE.equals( current.getTagName() ) ) {
-					if ( root == null ) {
-						NodeList currentKids = current.getChildNodes();
-						try {
-							root = this.setupData( current );
-							this.setupData( root, null, current );
-							this.addKids( currentKids, root );
-							this.tree = root;
-						} catch (Exception e) {
-							throw new ConfigException( e );
-						}
-						
-					} else {
-						throw new ConfigException( "Multiple root noode not allowed" );
-					}
-				}
+				this.configureCurrent(root, current);
 			}
 		}
 	}

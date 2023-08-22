@@ -1,9 +1,8 @@
 package org.fugerit.java.core.db.daogen;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
-public abstract class CloseableDAOContextAbstract implements CloseableDAOContext, Serializable {
+public abstract class CloseableDAOContextAbstract implements CloseableDAOContext {
 	
 	private HashMap<String, Object> attributes;
 	
@@ -11,9 +10,7 @@ public abstract class CloseableDAOContextAbstract implements CloseableDAOContext
 		super();
 		this.attributes = new HashMap<>();
 	}
-
-	private static final long serialVersionUID = 4166164994631000182L;
-
+	
 	@Override
 	public Object getAttribute(String key) {
 		return this.attributes.get( key );
