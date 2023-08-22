@@ -11,6 +11,24 @@ import org.w3c.dom.Element;
 
 public class TreeConfigKeyStringXML<T extends NodeKeyString<T, L>, L extends ListMapStringKey<T>> extends TreeConfigXML<T, L> {
 
+	// code added to setup a basic conditional serialization - START
+	
+	private SerialHelper<TreeConfigXML<T, L>> HELPER = new SerialHelper<>();
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		HELPER.writeObject( this, out );
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		HELPER.readObject( this , in );
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	/**
 	 * 
 	 */
@@ -41,20 +59,6 @@ public class TreeConfigKeyStringXML<T extends NodeKeyString<T, L>, L extends Lis
 	
 	public Collection<T> values() {
 		return this.map.values();
-	}
-	
-	private SerialHelper<TreeConfigXML<T, L>> HELPER = new SerialHelper<>();
-	
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-		// this class is conditionally serializable, depending on contained object
-		// you are encouraged to handle special situation using this method
-		HELPER.writeObject( this, out );
-	}
-
-	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-		// this class is conditionally serializable, depending on contained object
-		// you are encouraged to handle special situation using this method
-		HELPER.readObject( this , in );
 	}
 	
 }

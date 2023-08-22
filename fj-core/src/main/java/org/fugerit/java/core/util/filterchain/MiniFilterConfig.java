@@ -26,7 +26,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 	 */
 	private static final long serialVersionUID = 286844409632297876L;
 
-	// code added to setup a basic conditional serialization
+	// code added to setup a basic conditional serialization - START
 	
 	private SerialHelper<MiniFilterConfig> HELPER = new SerialHelper<>();
 	
@@ -41,6 +41,8 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 		// you are encouraged to handle special situation using this method
 		HELPER.readObject( this , in );
 	}
+	
+	// code added to setup a basic conditional serialization - END
 	
 	private HashMap<String, MiniFilterChain> mapChain;
 	

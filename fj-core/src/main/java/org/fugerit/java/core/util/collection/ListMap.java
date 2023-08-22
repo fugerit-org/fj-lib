@@ -57,6 +57,24 @@ public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 	 */
 	public static final int ADD_MODE_DEFAULT = ADD_MODE_LOOSE;
 	
+	// code added to setup a basic conditional serialization - START
+	
+	private SerialHelper<ListMap<K, T>> HELPER = new SerialHelper<>();
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		HELPER.writeObject( this, out );
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		HELPER.readObject( this , in );
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	/*
 	 * 
 	 */
@@ -223,20 +241,6 @@ public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 	
 	private void removeWorker( T element ) {
 		this.map.remove( this.getKey( element ) );
-	}
-	
-	private SerialHelper<ListMap<K, T>> HELPER = new SerialHelper<>();
-	
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-		// this class is conditionally serializable, depending on contained object
-		// you are encouraged to handle special situation using this method
-		HELPER.writeObject( this, out );
-	}
-
-	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
-		// this class is conditionally serializable, depending on contained object
-		// you are encouraged to handle special situation using this method
-		HELPER.readObject( this , in );
 	}
 	
 }
