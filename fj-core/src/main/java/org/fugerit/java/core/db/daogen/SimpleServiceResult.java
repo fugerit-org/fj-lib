@@ -1,19 +1,15 @@
 package org.fugerit.java.core.db.daogen;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimpleServiceResult<T> implements Serializable {
+import org.fugerit.java.core.util.result.Result;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3770076676911041800L;
-	
-	public final static int DEFAULT_OK = BasicDaoResult.RESULT_CODE_OK;
-	public final static int DEFAULT_KO = BasicDaoResult.RESULT_CODE_KO;
+public class SimpleServiceResult<T> {
+
+	public final static int DEFAULT_OK = Result.RESULT_CODE_OK;
+	public final static int DEFAULT_KO = Result.RESULT_CODE_KO;
 	
 	public final static String INFO_RESULT = "result";
 	public final static String INFO_RESULT_MESSAGE = "resultMessage";

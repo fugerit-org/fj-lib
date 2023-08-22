@@ -1,13 +1,6 @@
 package org.fugerit.java.core.db.daogen;
 
-import java.io.Serializable;
-
-public class GenericIdFinder<T> implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8034233326089217L;
+public class GenericIdFinder<T> {
 	
 	private T id;
 
