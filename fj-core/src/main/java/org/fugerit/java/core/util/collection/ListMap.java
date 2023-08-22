@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.util.collection;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.fugerit.java.core.io.SerialHelper;
 
 /**
  * <p>A implementation of java.util.List interface able to save a collections in a Map too.</p>
@@ -222,6 +225,19 @@ public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 		this.map.remove( this.getKey( element ) );
 	}
 	
+	private SerialHelper<ListMap<K, T>> HELPER = new SerialHelper<ListMap<K, T>>();
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		HELPER.writeObject( this, out );
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		HELPER.readObject( this , in );
+	}
 	
 }
 

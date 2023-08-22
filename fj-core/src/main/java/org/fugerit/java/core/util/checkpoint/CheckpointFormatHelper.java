@@ -1,12 +1,10 @@
 package org.fugerit.java.core.util.checkpoint;
 
-import java.io.Serializable;
-
 import org.fugerit.java.core.util.fun.StringFormat;
 import org.fugerit.java.core.util.fun.helper.FormatTime;
 import org.fugerit.java.core.util.fun.helper.MillisToSecondsFormat;
 
-public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
+public class CheckpointFormatHelper implements CheckpointFormat {
 	
 	public static final StringFormat<Number> FORMAT_TIME_DEFAULT = new StringFormat<Number>() {
 		@Override
@@ -33,11 +31,6 @@ public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
 	public final static String TOKEN_START_DEF = "[";
 	public final static String TOKEN_END_DEF = "]";
 	public final static String TOKEN_SEPARATOR_DEF = ",";
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 134289656334324324L;
 
 	public void formatDataHelperDefault( StringBuilder builder, CheckpointData data ) {
 		builder.append( this.tokenStart() );
