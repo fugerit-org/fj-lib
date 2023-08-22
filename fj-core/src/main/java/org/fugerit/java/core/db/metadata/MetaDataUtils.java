@@ -62,6 +62,8 @@ public class MetaDataUtils {
 	
 	public static final String[] TYPES_ALL = { TYPE_TABLE, TYPE_VIEW };
 	
+	private static final String S_COLUMN_NAME = "COLUMN_NAME";
+	
 	public static String insertQueryBuilder( TableModel tableModel ) {
 		List<ColumnModel> columnList = tableModel.getColumnList();
 		StringBuilder insertSQL = new StringBuilder();
@@ -132,7 +134,7 @@ public class MetaDataUtils {
 		try ( ResultSet columnsRS = dbmd.getColumns( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), null ) ) {
 			while ( columnsRS.next() ) {
 				ColumnModel columnModel = new ColumnModel();
-				columnModel.setName( columnsRS.getString( "COLUMN_NAME" ) );
+				columnModel.setName( columnsRS.getString( S_COLUMN_NAME ) );
 				columnModel.setTypeSql( columnsRS.getInt( "DATA_TYPE" ) );
 				columnModel.setTypeName( columnsRS.getString( "TYPE_NAME" ) );
 				String isNullable = columnsRS.getString( "IS_NULLABLE" );
@@ -174,7 +176,7 @@ public class MetaDataUtils {
 				IndexModel primaryKey = new IndexModel();
 				while ( pkRS.next() ) {
 					primaryKey.setName( pkRS.getString( "PK_NAME" ) );
-					ColumnModel column = tableModel.getColumn( pkRS.getString( "COLUMN_NAME" ) );
+					ColumnModel column = tableModel.getColumn( pkRS.getString( S_COLUMN_NAME ) );
 					primaryKey.addColumn( column );
 				}
 				if ( !primaryKey.getColumnList().isEmpty() ) {
@@ -195,7 +197,7 @@ public class MetaDataUtils {
 					indexModel.setName( indexName );
 					tableModel.addIndex( indexModel );
 				}
-				String columnName = indexRS.getString( "COLUMN_NAME" );
+				String columnName = indexRS.getString( S_COLUMN_NAME );
 				if ( columnName != null ) {
 					indexModel.addColumn( (ColumnModel)tableModel.getColumnMap().get( columnName ) );	
 				}

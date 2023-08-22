@@ -21,6 +21,45 @@ import org.w3c.dom.NodeList;
  */
 public class FixedFieldFileConfig {
 
+	private static void handleValidatorList( FixedFieldFileDescriptor fileDescriptor, Element currentFileTag ) throws Exception {
+		NodeList validatorListTagList = currentFileTag.getElementsByTagName( "validator-list" );
+		for ( int k=0; k<validatorListTagList.getLength(); k++ ) {
+			Element currentValidatorListTag = (Element) validatorListTagList.item( k );
+			NodeList validatorTagList = currentValidatorListTag.getElementsByTagName( "validator" );
+			for ( int j=0; j<validatorTagList.getLength(); j++ ) {
+				Element currentValidatorTag = (Element) validatorTagList.item( j );
+				String id = currentValidatorTag.getAttribute( "id" );
+				String type = currentValidatorTag.getAttribute( "type" );
+				FixedFileFieldValidator validator = (FixedFileFieldValidator)ClassHelper.newInstance( type );
+				validator.configure( currentValidatorTag );
+				fileDescriptor.getValidators().put( id , validator );
+			}
+		}
+	}
+	
+	private static void handleFiledList( FixedFieldFileDescriptor fileDescriptor, Element currentFileTag ) {
+		NodeList fieldListTagList = currentFileTag.getElementsByTagName( "field-list" );
+		for ( int k=0; k<fieldListTagList.getLength(); k++ ) {
+			Element currentFieldListTag = (Element) fieldListTagList.item( k );
+			NodeList fieldTagList = currentFieldListTag.getElementsByTagName( "field" );
+			for ( int j=0; j<fieldTagList.getLength(); j++ ) {
+				Element currentFieldTag = (Element) fieldTagList.item( j );
+				String id = currentFieldTag.getAttribute( "id" );
+				String description = currentFieldTag.getAttribute( "description" );
+				String start = currentFieldTag.getAttribute( "start" );
+				String length = currentFieldTag.getAttribute( "length" );
+				String validator = currentFieldTag.getAttribute( "validator" );
+				FixedFieldDescriptor currentField = new FixedFieldDescriptor( id, description, Integer.parseInt( start ), Integer.parseInt( length ) );
+				//totalLength+= currentField.getLength();
+				if ( StringUtils.isNotEmpty( validator ) ) {
+					FixedFileFieldValidator fieldValidator = fileDescriptor.getValidators().get( validator );
+					currentField.setValidator( fieldValidator );
+				}
+				fileDescriptor.getListFields().add( currentField );
+			}
+		}
+	}
+	
 	public static FixedFieldFileConfig parseConfig( InputStream is ) throws Exception {
 		FixedFieldFileConfig config = new FixedFieldFileConfig();
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -47,47 +86,15 @@ public class FixedFieldFileConfig {
 			}
 			
 			// validator list
-			NodeList validatorListTagList = currentFileTag.getElementsByTagName( "validator-list" );
-			for ( int k=0; k<validatorListTagList.getLength(); k++ ) {
-				Element currentValidatorListTag = (Element) validatorListTagList.item( k );
-				NodeList validatorTagList = currentValidatorListTag.getElementsByTagName( "validator" );
-				for ( int j=0; j<validatorTagList.getLength(); j++ ) {
-					Element currentValidatorTag = (Element) validatorTagList.item( j );
-					String id = currentValidatorTag.getAttribute( "id" );
-					String type = currentValidatorTag.getAttribute( "type" );
-					FixedFileFieldValidator validator = (FixedFileFieldValidator)ClassHelper.newInstance( type );
-					validator.configure( currentValidatorTag );
-					fileDescriptor.getValidators().put( id , validator );
-				}
-			}
+			handleValidatorList(fileDescriptor, currentFileTag);
 			
 			//int totalLength = 0;
 			
 			// field list
-			NodeList fieldListTagList = currentFileTag.getElementsByTagName( "field-list" );
-			for ( int k=0; k<fieldListTagList.getLength(); k++ ) {
-				Element currentFieldListTag = (Element) fieldListTagList.item( k );
-				NodeList fieldTagList = currentFieldListTag.getElementsByTagName( "field" );
-				for ( int j=0; j<fieldTagList.getLength(); j++ ) {
-					Element currentFieldTag = (Element) fieldTagList.item( j );
-					String id = currentFieldTag.getAttribute( "id" );
-					String description = currentFieldTag.getAttribute( "description" );
-					String start = currentFieldTag.getAttribute( "start" );
-					String length = currentFieldTag.getAttribute( "length" );
-					String validator = currentFieldTag.getAttribute( "validator" );
-					FixedFieldDescriptor currentField = new FixedFieldDescriptor( id, description, Integer.parseInt( start ), Integer.parseInt( length ) );
-					//totalLength+= currentField.getLength();
-					if ( StringUtils.isNotEmpty( validator ) ) {
-						FixedFileFieldValidator fieldValidator = fileDescriptor.getValidators().get( validator );
-						currentField.setValidator( fieldValidator );
-					}
-					fileDescriptor.getListFields().add( currentField );
-				}
-			}
+			handleFiledList(fileDescriptor, currentFileTag);
 			
 			// TODO: review
 			//fileDescriptor.setCheckLengh( totalLength );
-			
 			config.addFileDescriptor( idFile , fileDescriptor );
 		}
 		is.close();
