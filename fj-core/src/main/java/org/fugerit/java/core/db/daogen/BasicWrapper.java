@@ -1,16 +1,10 @@
 package org.fugerit.java.core.db.daogen;
 
-import java.io.Serializable;
-
 import org.fugerit.java.core.lang.helpers.Wrapper;
 import org.fugerit.java.core.lang.helpers.WrapperHelper;
 
-public class BasicWrapper<T extends Serializable> extends BasicHelper implements Wrapper<T> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2800606962171545339L;
-	
+public class BasicWrapper<T> implements Wrapper<T> {
+
 	private T wrapped;
 
 	@Override

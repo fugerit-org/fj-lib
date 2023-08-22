@@ -303,6 +303,28 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 		String confgiProviderName = this.getGeneralProps().getProperty( ATT_CONFIG_PROVIDER_NAME );
 		this.setConfigProvider( ConfigProviderFacade.getInstance().getProviderWithDefault( confgiProviderName , this ) );
 		
+		// try validation if feature active
+		this.tryValidation(tag);
+		
+		String checkDuplicateId = this.getGeneralProps().getProperty( CONFIG_CHECK_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
+		String checkDuplicateUniversalId = this.getGeneralProps().getProperty( CONFIG_CHECK_ENTRY_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
+		String dataListElementName = this.attTagDataList;
+		String dataElementName = this.attTagData;
+		NodeList dataCatalogConfig = tag.getElementsByTagName( ATT_DATA_CATALOG_CONFIG );
+		if ( dataCatalogConfig.getLength() > 0 ) {
+			Element dataCatalogConfigTag = (Element)dataCatalogConfig.item( 0 );
+			dataListElementName = StringUtils.valueWithDefault( dataCatalogConfigTag.getAttribute( "list-tag" ) , this.attTagDataList );
+			dataElementName = StringUtils.valueWithDefault( dataCatalogConfigTag.getAttribute( "data-tag" ) , this.attTagData );
+		}
+		
+		this.mainConfig(tag, checkDuplicateId, checkDuplicateUniversalId, dataListElementName, dataElementName);
+		
+		// handle additional modules (mutually recursive with this.configure( tag )
+		this.handleModules(tag);
+		
+	}
+	
+	private void tryValidation(Element tag) throws ConfigException {
 		String tryXsdValidation = this.getGeneralProps().getProperty( ATT_TRY_XSD_VALIDATION, ATT_TRY_XSD_VALIDATION_DEFAULT );
 		if ( BooleanUtils.isTrue( tryXsdValidation ) ) {
 			if ( this.hasDefinition() ) {
@@ -327,40 +349,9 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 		} else {
 			this.getLogger().info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
 		}
-		
-		String checkDuplicateId = this.getGeneralProps().getProperty( CONFIG_CHECK_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
-		String checkDuplicateUniversalId = this.getGeneralProps().getProperty( CONFIG_CHECK_ENTRY_DUPLICATE_ID , CONFIG_CHECK_DUPLICATE_ID_DEFAULT );
-		String dataListElementName = this.attTagDataList;
-		String dataElementName = this.attTagData;
-		NodeList dataCatalogConfig = tag.getElementsByTagName( ATT_DATA_CATALOG_CONFIG );
-		if ( dataCatalogConfig.getLength() > 0 ) {
-			Element dataCatalogConfigTag = (Element)dataCatalogConfig.item( 0 );
-			dataListElementName = StringUtils.valueWithDefault( dataCatalogConfigTag.getAttribute( "list-tag" ) , this.attTagDataList );
-			dataElementName = StringUtils.valueWithDefault( dataCatalogConfigTag.getAttribute( "data-tag" ) , this.attTagData );
-		}
-		
-		this.mainConfig(tag, checkDuplicateId, checkDuplicateUniversalId, dataListElementName, dataElementName);
-		
-		// handle additional modules (mutually recursive with this.configure( tag )
-		this.handleModules(tag);
-		
 	}
 	
-	private void mainConfigElement( Collection<T> listCurrent, String checkDuplicateId, String checkDuplicateUniversalId, String type, String beanMode, Element currentSchemaTag, String idList  ) throws ConfigException {
-		String idSchema = currentSchemaTag.getAttribute( "id" );
-		if ( StringUtils.isNotEmpty( idSchema ) && CONFIG_CHECK_DUPLICATE_ID_FAIL.equalsIgnoreCase( checkDuplicateUniversalId ) ) {
-			if ( !this.getEntryIdCheck().add( idSchema ) ) {
-				throw new ConfigException( "Duplicate entry id found : "+idSchema );
-			}
-		} else if ( StringUtils.isNotEmpty( idSchema ) && CONFIG_CHECK_DUPLICATE_ID_FAIL_ON_SET.equalsIgnoreCase( checkDuplicateUniversalId ) ) {
-			if ( listCurrent instanceof ListMapStringKey ) {
-				ListMapStringKey<?> listCheck = ((ListMapStringKey<?>)listCurrent);
-				if ( listCheck.getMap().containsKey( idSchema ) ) {
-					throw new ConfigException( "Duplicate entry id on set found : "+idSchema );
-				}	
-			}
-			
-		}
+	private void mainConfigElemenType( Collection<T> listCurrent, String type, String beanMode, Element currentSchemaTag, String idList, String idSchema ) throws ConfigException {
 		if ( ATT_TAG_TYPE_STRING.equals( type ) ) {
 			if ( StringUtils.isEmpty( idSchema ) ) {
 				throw new ConfigException( "No schema id definied" );
@@ -376,7 +367,40 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 				t = this.customEntryHandling( idList, t, currentSchemaTag );
 				listCurrent.add( t );
 			} catch (Exception e) {
-				throw new ConfigException( "Error configuring type : "+e, e );
+				throw ConfigException.convertEx( "Error configuring typ", e );
+			}
+		}
+	}
+	
+	private void mainConfigElement( Collection<T> listCurrent, String checkDuplicateId, String checkDuplicateUniversalId, String type, String beanMode, Element currentSchemaTag, String idList  ) throws ConfigException {
+		String idSchema = currentSchemaTag.getAttribute( "id" );
+		if ( StringUtils.isNotEmpty( idSchema ) && CONFIG_CHECK_DUPLICATE_ID_FAIL.equalsIgnoreCase( checkDuplicateUniversalId ) ) {
+			if ( !this.getEntryIdCheck().add( idSchema ) ) {
+				throw new ConfigException( "Duplicate entry id found : "+idSchema );
+			}
+		} else if ( StringUtils.isNotEmpty( idSchema ) && CONFIG_CHECK_DUPLICATE_ID_FAIL_ON_SET.equalsIgnoreCase( checkDuplicateUniversalId ) ) {
+			if ( listCurrent instanceof ListMapStringKey ) {
+				ListMapStringKey<?> listCheck = ((ListMapStringKey<?>)listCurrent);
+				if ( listCheck.getMap().containsKey( idSchema ) ) {
+					throw new ConfigException( "Duplicate entry id on set found : "+idSchema );
+				}	
+			}
+		}
+		this.mainConfigElemenType(listCurrent, type, beanMode, currentSchemaTag, idList, idSchema);
+	}
+	
+	private void mainConfigExtends( Element currentListTag, Collection<T> listCurrent ) throws ConfigException {
+		String extendsAtt = currentListTag.getAttribute( "extends" );
+		if ( StringUtils.isNotEmpty( extendsAtt ) ) {
+			String[] extendsAttList = extendsAtt.split( "," );
+			for ( int j=0; j<extendsAttList.length; j++ ) {
+				String currentExtend = extendsAttList[j].trim();
+				Collection<T> parent = this.getDataList( currentExtend );
+				if ( parent == null ) {
+					throw new ConfigException( "Parent schema list not found "+currentExtend );
+				} else {
+					listCurrent.addAll( parent );
+				}	
 			}
 		}
 	}
@@ -412,19 +436,7 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 			this.getLogger().info( "add "+idList+" -> "+listCurrent );
 			this.dataMap.put( idList , listCurrent );
 			this.orderedId.add( idList );
-			String extendsAtt = currentListTag.getAttribute( "extends" );
-			if ( StringUtils.isNotEmpty( extendsAtt ) ) {
-				String[] extendsAttList = extendsAtt.split( "," );
-				for ( int j=0; j<extendsAttList.length; j++ ) {
-					String currentExtend = extendsAttList[j].trim();
-					Collection<T> parent = this.getDataList( currentExtend );
-					if ( parent == null ) {
-						throw new ConfigException( "Parent schema list not found "+currentExtend );
-					} else {
-						listCurrent.addAll( parent );
-					}	
-				}
-			}
+			this.mainConfigExtends(currentListTag, listCurrent);
 			for ( int i=0; i<schemaIt.getLength(); i++ ) {
 				Element currentSchemaTag = (Element) schemaIt.item( i );
 				this.mainConfigElement(listCurrent, checkDuplicateId, checkDuplicateUniversalId, type, beanMode, currentSchemaTag, idList);
