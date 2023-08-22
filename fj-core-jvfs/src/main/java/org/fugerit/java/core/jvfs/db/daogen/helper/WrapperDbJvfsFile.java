@@ -20,15 +20,13 @@ public class WrapperDbJvfsFile extends BasicWrapper<ModelDbJvfsFile> implements 
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
-	private static final long serialVersionUID = 214575715631L;
-
 	public WrapperDbJvfsFile( ModelDbJvfsFile wrapped ) {
 		super( wrapped );
 	}
 
 	public ModelDbJvfsFile unwrap( WrapperDbJvfsFile wrapper ) {
 		ModelDbJvfsFile res = wrapper;
-		while ( res != null && res instanceof WrapperDbJvfsFile ) { 
+		while ( res instanceof WrapperDbJvfsFile ) { 
 			res = ((WrapperDbJvfsFile)res).unwrapModel();
 		}
 		return res;

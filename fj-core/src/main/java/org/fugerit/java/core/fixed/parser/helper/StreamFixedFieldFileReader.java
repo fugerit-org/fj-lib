@@ -23,6 +23,26 @@ public class StreamFixedFieldFileReader extends FixedFieldFileReaderAbstract {
 		this.br = new BufferedReader( new InputStreamReader( is ) );
 	}
 
+	private void handleRead( byte[] buffer ) {
+		byte[] currentendline = Arrays.copyOfRange( buffer , buffer.length-this.getEndline().length(), buffer.length );
+		//logger.info( "row number "+this.rowNumber+" read : "+read+" line length : "+this.linebuffer.length+" current end length "+currentendline.length+" line : "+new String( buffer, 0, read ) );
+		if ( this.getDescriptor().isCustomEndlineActive() ) {
+			if ( this.linebuffer.length != this.getDescriptor().getCheckLengh() ) {
+				this.addRecordLenthError( this.linebuffer.length );
+			}
+			boolean found = false;
+			for ( int k=0; k<currentendline.length && !found; k++ ) {
+				if ( currentendline[k] != this.getEndline().getBytes()[k] ) {
+					this.addEndlineError( new String( currentendline ) );
+					found = true;
+				} 	
+			}
+			if ( this.getGenericValidationErrors().size() > 0 ) {
+				this.linebuffer = null;
+			}
+		}
+	}
+	
 	@Override
 	public boolean hasNext() throws IOException {
 		if ( this.getDescriptor().isCustomEndlineActive() ) {
@@ -30,23 +50,7 @@ public class StreamFixedFieldFileReader extends FixedFieldFileReaderAbstract {
 			int read = this.is.read( buffer );
 			if ( read > 0 ) {
 				this.linebuffer = Arrays.copyOfRange( buffer , 0, buffer.length-this.getEndline().length() );
-				byte[] currentendline = Arrays.copyOfRange( buffer , buffer.length-this.getEndline().length(), buffer.length );
-				//logger.info( "row number "+this.rowNumber+" read : "+read+" line length : "+this.linebuffer.length+" current end length "+currentendline.length+" line : "+new String( buffer, 0, read ) );
-				if ( this.getDescriptor().isCustomEndlineActive() ) {
-					if ( this.linebuffer.length != this.getDescriptor().getCheckLengh() ) {
-						this.addRecordLenthError( this.linebuffer.length );
-					}
-					boolean found = false;
-					for ( int k=0; k<currentendline.length && !found; k++ ) {
-						if ( currentendline[k] != this.getEndline().getBytes()[k] ) {
-							this.addEndlineError( new String( currentendline ) );
-							found = true;
-						} 	
-					}
-					if ( this.getGenericValidationErrors().size() > 0 ) {
-						this.linebuffer = null;
-					}
-				}
+				this.handleRead(buffer);
 			} else {
 				this.linebuffer = null;
 			}

@@ -54,6 +54,27 @@ public class FixedFileFieldDateValidator extends FixedFileFieldBasicValidator im
 		return sdf;
 	}
 	
+	private String handleDateValidation( String fieldLabel, String fieldValue, int rowNumber, int colNumber ) {
+		SimpleDateFormat sdf = newDateFormat();
+		String message = null;
+		try {
+			Date d = sdf.parse( fieldValue );
+			if ( this.min != null ) {
+				if ( d.before( this.min ) ) {
+					message = super.defaultFormatMessage( "error.date.min", fieldLabel, fieldValue, rowNumber, colNumber, sdf.format( this.min ) );
+				}
+			}
+			if ( this.max != null ) {
+				if ( d.after( this.max ) ) {
+					message = super.defaultFormatMessage( "error.date.max", fieldLabel, fieldValue, rowNumber, colNumber, sdf.format( this.max ) );
+				}
+			}
+		} catch (ParseException e) {
+			message = super.defaultFormatMessage( "error.date", fieldLabel, fieldValue, rowNumber, colNumber, this.getFormat() );
+		}
+		return message;
+	}
+	
 	@Override
 	public FixedFileFieldValidationResult checkField(String fieldLabel, String fieldValue, int rowNumber, int colNumber ) {
 		FixedFileFieldValidationResult result = null;
@@ -66,23 +87,9 @@ public class FixedFileFieldDateValidator extends FixedFileFieldBasicValidator im
 		try {
 			FixedFileFieldValidationResult checkRequired = super.checkRequired(fieldLabel, fieldValue, rowNumber, colNumber);
 			if ( checkRequired.isValid() && StringUtils.isNotEmpty( fieldValue ) ) {
-				SimpleDateFormat sdf = newDateFormat();
-				try {
-					Date d = sdf.parse( fieldValue );
-					if ( this.min != null ) {
-						if ( d.before( this.min ) ) {
-							message = super.defaultFormatMessage( "error.date.min", fieldLabel, fieldValue, rowNumber, colNumber, sdf.format( this.min ) );
-							valid = false;
-						}
-					}
-					if ( this.max != null ) {
-						if ( d.after( this.max ) ) {
-							message = super.defaultFormatMessage( "error.date.max", fieldLabel, fieldValue, rowNumber, colNumber, sdf.format( this.max ) );
-							valid = false;
-						}
-					}
-				} catch (ParseException e) {
-					message = super.defaultFormatMessage( "error.date", fieldLabel, fieldValue, rowNumber, colNumber, this.getFormat() );
+				String dateValidationMessage = this.handleDateValidation(fieldLabel, fieldValue, rowNumber, colNumber);
+				if ( dateValidationMessage != null ) {
+					message = dateValidationMessage;
 					valid = false;
 				}
 			} else {
@@ -134,6 +141,4 @@ public class FixedFileFieldDateValidator extends FixedFileFieldBasicValidator im
 		super.configure( tag, "core.fixed.parser.validator" );
 	}
 	
-	
-
 }

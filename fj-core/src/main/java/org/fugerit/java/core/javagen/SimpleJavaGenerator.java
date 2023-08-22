@@ -141,7 +141,7 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 		this.beforeClass();
 		this.getWriter().println( "public "+this.getJavaStyle()+" "+this.getJavaName()+impl+" {" );
 		this.getWriter().println();
-		this.customPartWorker( CUSTOM_CODE_START , CUSTOM_CODE_END, "	" );
+		this.customPartWorker( CUSTOM_CODE_START , CUSTOM_CODE_END, "\t" );
 		this.generateBody();
 		this.getWriter().println( "}" );
 	}
@@ -155,7 +155,7 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	}
 	
 	protected void addSerialVerUID() throws IOException {
-		String baseData = "	private static final long serialVersionUID = ";
+		String baseData = "\tprivate static final long serialVersionUID = ";
 		String fullData = null;
 		if ( this.getJavaFile().exists() ) {
 			try ( BufferedReader reader = new BufferedReader( new FileReader( this.getJavaFile() ) ) ) {

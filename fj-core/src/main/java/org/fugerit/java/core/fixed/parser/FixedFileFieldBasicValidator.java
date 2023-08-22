@@ -49,7 +49,7 @@ public abstract class FixedFileFieldBasicValidator extends XMLConfigurableObject
 	public static final String ATT_NAME_LOCALE = "locale";
 	public static final String ATT_NAME_REQUIRED = "required";
 
-	private ResourceBundle bundle;
+	private transient ResourceBundle bundle;
 	
 	/**
 	 * 

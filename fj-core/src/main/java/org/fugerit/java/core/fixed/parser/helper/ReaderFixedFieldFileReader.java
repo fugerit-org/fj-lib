@@ -23,6 +23,20 @@ public class ReaderFixedFieldFileReader extends FixedFieldFileReaderAbstract {
 		}
 	}
  	
+	private void handleRead() {
+		if ( this.getDescriptor().isCustomEndlineActive() ) {
+			if ( this.currentLine.length() != this.getDescriptor().getCheckLengh() ) {
+				this.addRecordLenthError( this.currentLine.length() );
+			}
+			if ( !this.getEndline().equals( this.currentEndline ) ) {
+				this.addEndlineError( this.currentEndline );
+			} 
+			if ( this.getGenericValidationErrors().size() > 0 ) {
+				this.currentLine = null;
+			}
+		}
+	}
+	
 	@Override
 	public boolean hasNext() throws IOException {
 		if ( this.getDescriptor().isCustomEndlineActive() ) {
@@ -31,18 +45,7 @@ public class ReaderFixedFieldFileReader extends FixedFieldFileReaderAbstract {
 			if ( read >= 0 ) {
 				this.currentLine = new String( buffer, 0, buffer.length-this.getEndline().length() );
 				this.currentEndline = new String( buffer, buffer.length-this.getEndline().length(), this.getEndline().length() );
-				if ( this.getDescriptor().isCustomEndlineActive() ) {
-					if ( this.currentLine.length() != this.getDescriptor().getCheckLengh() ) {
-						this.addRecordLenthError( this.currentLine.length() );
-					}
-					if ( !this.getEndline().equals( this.currentEndline ) ) {
-						this.addEndlineError( this.currentEndline );
-					} 
-					if ( this.getGenericValidationErrors().size() > 0 ) {
-						this.currentLine = null;
-					}
-				}
-				
+				this.handleRead();
 			} else {
 				this.currentLine = null;
 				this.currentEndline = null;
