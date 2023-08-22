@@ -1,9 +1,11 @@
 package org.fugerit.java.core.db.daogen;
 
+import java.io.Serializable;
+
 import org.fugerit.java.core.lang.helpers.Wrapper;
 import org.fugerit.java.core.lang.helpers.WrapperHelper;
 
-public class BasicWrapper<T> extends BasicHelper implements Wrapper<T> {
+public class BasicWrapper<T extends Serializable> extends BasicHelper implements Wrapper<T> {
 	/**
 	 * 
 	 */

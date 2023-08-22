@@ -44,7 +44,7 @@ public class FieldList implements Serializable {
 
 	private FieldFactory fieldFactory;
 	
-    private List<Field> list;
+    private transient List<Field> list;
     
     public Field getField(int index) {
         return (Field)this.list.get(index);
@@ -59,7 +59,7 @@ public class FieldList implements Serializable {
     }
 
     public FieldList() {
-        this( new FieldFactory() );
+        this( FieldFactory.DEFAULT );
     }
 
     public FieldList( FieldFactory fieldFactory ) {

@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.db.dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -34,9 +35,13 @@ import org.fugerit.java.core.db.helpers.DAOID;
  *
  * Fugerit
  */
-public class FieldFactory {
+public class FieldFactory implements Serializable {
 
-    /*
+    private static final long serialVersionUID = 5728095010620830481L;
+    
+    public static final FieldFactory DEFAULT = new FieldFactory();
+
+	/*
      * <p>Crea una nuova istanza di FieldFactory.</p>
      *
      * 

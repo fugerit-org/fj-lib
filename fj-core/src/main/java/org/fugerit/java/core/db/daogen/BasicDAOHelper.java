@@ -57,7 +57,7 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 		return buffer.toString();
 	}
 	
-	private DAOContext daoContext;
+	private transient DAOContext daoContext;
 
 	public BasicDAOHelper( DAOContext daoContext) {
 		this.daoContext =daoContext;
