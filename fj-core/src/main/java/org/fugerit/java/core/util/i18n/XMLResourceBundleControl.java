@@ -22,19 +22,11 @@ public class XMLResourceBundleControl extends ResourceBundle.Control {
         return Arrays.asList("xml");
     }
 
-    @Override
-    public ResourceBundle newBundle(String baseName, Locale locale,
-                                    String format,
-                                    ClassLoader loader,
-                                    boolean reload)
-        throws IllegalAccessException,
-               InstantiationException, IOException {
-        if (baseName == null || locale == null
-            || format == null || loader == null) {
-        	throw new IllegalArgumentException( "incomplete configuration (baseName, locale, format and loader must be provided)" );
-        }
-        ResourceBundle bundle = null;
-        if (format.equals("xml")) {
+    private ResourceBundle handleFormatXML( String baseName, Locale locale,
+            String format,
+            ClassLoader loader, boolean reload ) throws IOException {
+    	ResourceBundle bundle = null;
+    	if (format.equals("xml")) {
             String bundleName = toBundleName(baseName, locale);
             String resourceName = toResourceName(bundleName, format);
             URL url = loader.getResource(resourceName);
@@ -55,7 +47,21 @@ public class XMLResourceBundleControl extends ResourceBundle.Control {
                 }
             }
         }
-        return bundle;
+    	return bundle;
+    }
+    
+    @Override
+    public ResourceBundle newBundle(String baseName, Locale locale,
+                                    String format,
+                                    ClassLoader loader,
+                                    boolean reload)
+        throws IllegalAccessException,
+               InstantiationException, IOException {
+        if (baseName == null || locale == null
+            || format == null || loader == null) {
+        	throw new IllegalArgumentException( "incomplete configuration (baseName, locale, format and loader must be provided)" );
+        }
+        return this.handleFormatXML(baseName, locale, format, loader, reload);
     }
 
     private static class XMLResourceBundle extends ResourceBundle {
