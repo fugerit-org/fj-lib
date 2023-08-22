@@ -24,7 +24,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 	 */
 	private static final long serialVersionUID = 286844409632297876L;
 
-	private HashMap<String, MiniFilterChain> mapChain;
+	private transient HashMap<String, MiniFilterChain> mapChain;
 	
 	public static final String ATT_TAG_PROPERTIES = "properties";
 	
@@ -65,7 +65,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 	}
 
 	protected void customFilterConfig( MiniFilter filter, MiniFilterConfigEntry entry ) {
-		
+		// do nothing implementation : subclasses should override it if needed
 	}
 	
 	@Override
