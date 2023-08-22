@@ -42,7 +42,9 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 	
 	public static final String XSD_VALIDATION_SCHEMA_ID = "binding-config-current";
 	
-	private FacadeImplFinder facadeImplFinder;
+	private transient FacadeImplFinder facadeImplFinder;
+	
+	private transient ListMapStringKey<BindingHelper> helperCatalog;
 	
 	public FacadeImplFinder getFacadeImplFinder() {
 		return facadeImplFinder;
@@ -117,8 +119,6 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 		this.getLogger().info( "helperCatalog {}", this.helperCatalog );
 		this.getLogger().info( "helperCatalog.size() {}", this.helperCatalog.size() );
 	}
-	
-	private ListMapStringKey<BindingHelper> helperCatalog;
 	
 	public BindingContext newContext() {
 		BindingContext context = new BindingContext();
