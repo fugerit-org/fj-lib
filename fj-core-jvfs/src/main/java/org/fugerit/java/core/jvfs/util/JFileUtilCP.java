@@ -44,6 +44,22 @@ public class JFileUtilCP {
 		return copyFile( from, to, recurse, force, verbose, ( f ) -> true );
 	}
 
+	private static int copyFileRecurse( JFile from, JFile to, boolean recurse, boolean force, boolean verbose, Predicate<JFile> filter, int res ) throws IOException {
+		if ( recurse ) {
+			if ( !to.exists() ) {
+				to.mkdir();
+			}
+			for ( JFile kidFrom : from.lsFiles() ) {
+				if ( filter.test( kidFrom ) ) {
+					res+= copyFile(kidFrom, to.getChild( kidFrom.getName() ), recurse, force, verbose, filter);
+				}
+			}
+		} else {
+			throw new IOException( "Directories can only be copied recursively, from:("+from+") to:("+to+")" );
+		}
+		return res;
+	}
+	
 	public static int copyFile(JFile from, JFile to, boolean recurse, boolean force, boolean verbose, Predicate<JFile> filter) throws IOException {
 		int res = 1;
 		if ( verbose ) {
@@ -54,18 +70,7 @@ public class JFileUtilCP {
 			throw new IOException( "You can overwrite existing files only with the 'force' flag" );
 		} else {
 			if ( from.isDirectory() && to.isDirectory() )  {
-				if ( recurse ) {
-					if ( !to.exists() ) {
-						to.mkdir();
-					}
-					for ( JFile kidFrom : from.lsFiles() ) {
-						if ( filter.test( kidFrom ) ) {
-							res+= copyFile(kidFrom, to.getChild( kidFrom.getName() ), recurse, force, verbose, filter);
-						}
-					}
-				} else {
-					throw new IOException( "Directories can only be copied recursively, from:("+from+") to:("+to+")" );
-				}
+				res = copyFileRecurse(from, to, recurse, force, verbose, filter, res);
 			} else {
 				// We want to create a blank file if the from input stream is null
 				StreamIO.pipeStream(

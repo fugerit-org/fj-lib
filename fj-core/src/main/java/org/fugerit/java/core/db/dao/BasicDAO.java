@@ -158,7 +158,7 @@ public class BasicDAO<T> extends BasicLogObject {
 	}
 
     public void init(DAOFactory daoFactory ) {
-        
+        // do nothing implementation, subclasses may override it if needed
     }
     
     public static final FieldList NO_FIELDS = new FieldList( null );

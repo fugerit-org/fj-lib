@@ -10,7 +10,12 @@ import org.xml.sax.SAXParseException;
  */
 public class SAXParseResult extends Result {
 
-    /*
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -48185225120198807L;
+
+	/*
      * <p>Crea un nuovo SAXParseResult</p>
      * 
      * 

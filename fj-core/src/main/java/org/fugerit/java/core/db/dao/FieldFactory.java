@@ -48,7 +48,7 @@ public class FieldFactory {
 	public Field newField(String value, int type) {
 		Field field = null;
 		if ( value!=null ) {
-			field = (new StringField(value));
+			return (new GenericField<String>(value, type));
 		} else {
 			field = this.nullField( type );
 		}
@@ -56,17 +56,17 @@ public class FieldFactory {
 	}
 
 	public Field newField(long value, int type) {
-		return (new LongField(value));
+		return (new GenericField<Long>(value, type));
 	}
     
 	public Field newField(int value, int type) {
-		return (new IntField(value));
+		return (new GenericField<Integer>(value, type));
 	}
 
 	public Field newField(DAOID value) {
 		Field field = null;
 		if ( value!=null ) {
-			field = this.newField( value.longValue() );
+			field = new GenericField<Long>( value.longValue() );
 		} else {
 			field = this.nullField( Types.BIGINT );
 		}
@@ -80,7 +80,7 @@ public class FieldFactory {
 		} else if (value instanceof DAOID) {
 			field = this.newField( (DAOID)value );
 		} else if ( value!=null ) {
-			field = (new ObjectField(value));
+			field = new GenericField<Object>(value);
 		} else {
 			field = this.nullField( type );
 		}
@@ -88,15 +88,15 @@ public class FieldFactory {
 	}
 
     public Field newField(String value) {
-        return (new StringField(value));
+        return new GenericField<String>(value);
     }
 
     public Field newField(long value) {
-        return (new LongField(value));
+        return new GenericField<Long>(value);
     }
     
     public Field newField(int value) {
-        return (new IntField(value));
+        return new GenericField<Integer>(value);
     }
     
     public Field newField(ByteArrayDataHandler value) {
@@ -118,7 +118,7 @@ public class FieldFactory {
     	} else if (value instanceof DAOID) {
     		field = this.newField( (DAOID)value );
     	} else {
-			field = (new ObjectField(value));
+			field = (new GenericField<Object>(value));
     	}
         return field;
     }
@@ -126,12 +126,8 @@ public class FieldFactory {
     public Field nullField(int type) {
         return (new NullField(type));
     }    
-    
-}
 
-////////////////////////////////////////////////////////////////
-//        Classi implementano i Field di vari tipo            //
-////////////////////////////////////////////////////////////////
+}
 
 class NullField extends Field {
     
@@ -153,40 +149,6 @@ class NullField extends Field {
     }
     
     private int value;
-    
-}
-
-
-class ObjectField extends Field {
-    
-    @Override
-    public String toString() {
-        return this.getClass().getName()+"[value:"+this.value+", class:"+this.value.getClass().getName()+"]";
-    }    
-    
-    public ObjectField(Object value) {
-        this.value = value;
-    }
-    
-    /* (non-Javadoc)
-     * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
-     */
-    @Override
-    public void setField(PreparedStatement ps, int index) throws SQLException {
-    	if ( this.value == null ) {
-    		ps.setObject(index, this.value);	
-    	} else if ( this.value instanceof java.sql.Date ) {
-    		ps.setDate(index, ((java.sql.Date)this.value));
-    	} else if ( this.value instanceof java.sql.Timestamp ) {
-    		ps.setTimestamp(index, ((java.sql.Timestamp)this.value));
-    	} else if ( this.value instanceof java.util.Date ) {
-    		ps.setTimestamp(index, new java.sql.Timestamp( ((java.util.Date)this.value).getTime() ) );    		
-    	} else {
-    		ps.setObject(index, this.value);
-    	}
-    }
-    
-    private Object value;
     
 }
 
@@ -236,71 +198,51 @@ class ClobDataField extends Field {
     
 }
 
-class StringField extends Field {
-    
-    @Override
-    public String toString() {
-        return this.getClass().getName()+"[value:"+this.value+"]";
-    }   
-    
-    public StringField(String value) {
-        this.value = value;
-    }
-    
-    /* (non-Javadoc)
-     * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
-     */
-    @Override
-    public void setField(PreparedStatement ps, int index) throws SQLException {
-        ps.setString(index, this.value);
-    }
-    
-    private String value;
-    
-}
+class GenericField<T> extends Field {
 
-class LongField extends Field {
-    
-    @Override
-    public String toString() {
-        return this.getClass().getName()+"[value:"+this.value+"]";
-    }    
-    
-    public LongField(long value) {
-        this.value = value;
-    }
-    
-    /* (non-Javadoc)
-     * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
-     */
-    @Override
-    public void setField(PreparedStatement ps, int index) throws SQLException {
-        ps.setLong(index, this.value);
-    }
-    
-    private long value;
-    
-}
+	public GenericField(T value) {
+		this( value, null );
+	}
+	
+	public GenericField(T value, Integer type) {
+		super();
+		this.value = value;
+		this.type = type;
+	}
 
-class IntField extends Field {
-    
+	private T value;
+	
+	private Integer type;
+	
     @Override
     public String toString() {
-        return this.getClass().getName()+"[value:"+this.value+"]";
-    }
-    
-    public IntField(int value) {
-        this.value = value;
-    }
-    
-    /* (non-Javadoc)
-     * @see it.finanze.secin.shared.dao.Field#setField(java.sql.PreparedStatement, int)
-     */
-    @Override
-    public void setField(PreparedStatement ps, int index) throws SQLException {
-        ps.setInt(index, this.value);
-    }
-    
-    private int value;
-    
+        return this.getClass().getName()+"[value:"+this.value+"type:"+this.type+"]";
+    }  
+	
+	@Override
+	public void setField(PreparedStatement ps, int index) throws SQLException {
+		if ( value == null ) {
+			if ( type == null ) {
+				ps.setObject(index, this.value);	
+			} else {
+				ps.setNull( index, this.type );	
+			}
+		} else if ( value instanceof String ) {
+			ps.setString(index, (String)this.value);
+		} else if ( value instanceof Long ) {
+			ps.setLong(index, (Long)this.value);
+		} else if ( value instanceof Integer ) {
+			ps.setInt(index, (Integer)this.value);
+    	} else if ( this.value instanceof java.sql.Date ) {
+    		ps.setDate(index, ((java.sql.Date)this.value));
+    	} else if ( this.value instanceof java.sql.Timestamp ) {
+    		ps.setTimestamp(index, ((java.sql.Timestamp)this.value));
+    	} else if ( this.value instanceof java.util.Date ) {
+    		ps.setTimestamp(index, new java.sql.Timestamp( ((java.util.Date)this.value).getTime() ) );  
+		} else {
+			ps.setObject( index, this.value );
+		}
+	}
+	
+	
 }
