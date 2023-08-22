@@ -324,25 +324,29 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 		
 	}
 	
+	private void actualValidation(Element tag) throws ConfigException {
+		try {
+			SAXErrorHandlerStore eh = this.validate( new DOMSource( tag ) );
+			for ( SAXException se : eh.getFatals() ) {
+				this.getLogger().error( "xsd validation fatal : {}", se );
+			}
+			for ( SAXException se : eh.getErrors() ) {
+				this.getLogger().error( "xsd validation error : {}", se );
+			}
+			for ( SAXException se : eh.getWarnings() ) {
+				this.getLogger().warn( "xsd validation warning : {}", se );
+			}
+		} catch (Exception e) {
+			throw ConfigException.convertEx( "Xsd Validation Error", e );
+		}
+	}
+	
 	private void tryValidation(Element tag) throws ConfigException {
 		String tryXsdValidation = this.getGeneralProps().getProperty( ATT_TRY_XSD_VALIDATION, ATT_TRY_XSD_VALIDATION_DEFAULT );
 		if ( BooleanUtils.isTrue( tryXsdValidation ) ) {
 			if ( this.hasDefinition() ) {
 				this.getLogger().info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
-				try {
-					SAXErrorHandlerStore eh = this.validate( new DOMSource( tag ) );
-					for ( SAXException se : eh.getFatals() ) {
-						this.getLogger().error( "xsd validation fatal : {}", se );
-					}
-					for ( SAXException se : eh.getErrors() ) {
-						this.getLogger().error( "xsd validation error : {}", se );
-					}
-					for ( SAXException se : eh.getWarnings() ) {
-						this.getLogger().warn( "xsd validation warning : {}", se );
-					}
-				} catch (Exception e) {
-					throw new ConfigException( "Xsd Validation Error "+e, e );
-				}
+				this.actualValidation(tag);
 			} else {
 				this.getLogger().info( "No xsd definition set, skip xsd validation" );
 			}
