@@ -1,5 +1,6 @@
 package org.fugerit.java.core.db.daogen;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.db.dao.FieldList;
 
 public class DeleteHelper extends QueryHelper {
@@ -34,7 +35,7 @@ public class DeleteHelper extends QueryHelper {
 	public String getQueryContent() {
 		String content = super.getQueryContent();
 		if ( !content.toUpperCase().contains( "WHERE" ) ) {
-			throw new RuntimeException( "At least one condition must be set! "+content );
+			throw new ConfigRuntimeException( "At least one condition must be set! "+content );
 		}
 		return content;
 	}

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 public class LobHelper {
 
+	private LobHelper() {}
+	
 	public static Clob createClob( Connection conn, CharArrayDataHandler dh ) throws SQLException {
 		Clob c = null;
 		if ( dh != null ) {

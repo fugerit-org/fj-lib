@@ -6,7 +6,7 @@ public abstract class CloseableDAOContextAbstract implements CloseableDAOContext
 	
 	private HashMap<String, Object> attributes;
 	
-	public CloseableDAOContextAbstract() {
+	protected CloseableDAOContextAbstract() {
 		super();
 		this.attributes = new HashMap<>();
 	}

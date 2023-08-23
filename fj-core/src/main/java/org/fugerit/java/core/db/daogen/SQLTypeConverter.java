@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 
 public class SQLTypeConverter {
 
+	private SQLTypeConverter() {}
+	
 	public static Timestamp utilDateToSqlTimestamp(java.util.Date s) {
 		Timestamp r = null;
 		if ( s != null ) {

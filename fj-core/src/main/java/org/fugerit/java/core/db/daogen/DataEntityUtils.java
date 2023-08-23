@@ -5,6 +5,8 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 
 public class DataEntityUtils {
 
+	private DataEntityUtils() {}
+	
 	public static DataEntityInfo unwrap( Object facade ) throws DAOException {
 		DataEntityInfo res = null;
 		if ( facade instanceof DataEntityInfo ) {
