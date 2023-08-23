@@ -78,35 +78,31 @@ public class BasicDAOHelper<T> implements LogObject {
 	
 
 	public void loadAllHelper( List<T> l, String query, FieldList fields, RSExtractor<T> re ) throws DAOException {
-		try {
-			long startTime = System.currentTimeMillis();
-			String queryId = DAOUtilsNG.createQueryId(startTime);
-			log.debug( "queryId:'{}', loadAll START list    : '{}'", queryId, l.size() );
-			log.debug( "queryId:'{}', loadAll sql           : '{}'", queryId, query );
-			log.debug( "queryId:'{}', loadAll fields        : '{}'", queryId, fields.size() );
-			log.debug( "queryId:'{}', loadAll RSExtractor   : '{}'", queryId, re);
-			Connection conn = this.daoContext.getConnection();
-			int i=0;
-			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
-				DAOHelper.setAll( queryId, ps, fields , log );
-				long executeStart = System.currentTimeMillis();
-				try ( ResultSet rs = ps.executeQuery() ) {
-					long executeEnd = System.currentTimeMillis();
-					log.debug("queryId:'{}', loadAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(executeStart, executeEnd ) );
-					while (rs.next()) {
-						l.add( re.extractNext( rs ) );
-						i++;
-					}
-					log.debug("queryId:'{}', loadAll query result set end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis( executeEnd, System.currentTimeMillis()) );
-					log.debug("queryId:'{}', loadAll query total end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis( startTime, System.currentTimeMillis()) );
+		long startTime = System.currentTimeMillis();
+		String queryId = DAOUtilsNG.createQueryId(startTime);
+		log.debug( "queryId:'{}', loadAll START list    : '{}'", queryId, l.size() );
+		log.debug( "queryId:'{}', loadAll sql           : '{}'", queryId, query );
+		log.debug( "queryId:'{}', loadAll fields        : '{}'", queryId, fields.size() );
+		log.debug( "queryId:'{}', loadAll RSExtractor   : '{}'", queryId, re);
+		Connection conn = this.daoContext.getConnection();
+		int i=0;
+		try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
+			DAOHelper.setAll( queryId, ps, fields , log );
+			long executeStart = System.currentTimeMillis();
+			try ( ResultSet rs = ps.executeQuery() ) {
+				long executeEnd = System.currentTimeMillis();
+				log.debug("queryId:'{}', loadAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(executeStart, executeEnd ) );
+				while (rs.next()) {
+					l.add( re.extractNext( rs ) );
+					i++;
 				}
-			} catch (SQLException e) {
-				throw (new DAOException( e.getMessage()+"[query:"+query+",queryId:"+queryId+",record:"+i+"]", e ));
+				log.debug("queryId:'{}', loadAll query result set end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis( executeEnd, System.currentTimeMillis()) );
+				log.debug("queryId:'{}', loadAll query total end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis( startTime, System.currentTimeMillis()) );
 			}
-			log.debug("queryId:{}, loadAll END list : '{}'", queryId, l.size());
-		} catch (DAOException e) {
-			throw new DAOException( e );
+		} catch (SQLException e) {
+			throw DAOException.convertEx( "Exception[query:"+query+",queryId:"+queryId+",record:"+i+"]", e );
 		}
+		log.debug("queryId:{}, loadAll END list : '{}'", queryId, l.size());
 	}
 	
 	public int update( QueryHelper queryHelper ) throws DAOException {

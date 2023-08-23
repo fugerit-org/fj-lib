@@ -23,6 +23,7 @@ package org.fugerit.java.core.db.dao.rse;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.db.dao.RSExtractor;
 
 /**
@@ -50,15 +51,15 @@ public abstract class SingleColumnRSE<K> implements RSExtractor<K> {
 		this.columnName = name;
 	}
 	
-	public SingleColumnRSE( int index ) {
+	protected SingleColumnRSE( int index ) {
 		this( index, null );
 	}
 	
-	public SingleColumnRSE( String name ) {
+	protected SingleColumnRSE( String name ) {
 		this( USE_NAME_INDEX, name );
 	}
 
-	public SingleColumnRSE() {
+	protected SingleColumnRSE() {
 		this( DEFAULT_COLUMN_INDEX, null );
 	}
 	
@@ -93,7 +94,7 @@ public abstract class SingleColumnRSE<K> implements RSExtractor<K> {
 			value = this.convert( result );
 			// at this point the value should not be null.
 			if ( value == null ) {
-				throw new RuntimeException( "Failed object conversion : "+result );
+				throw new ConfigRuntimeException( "Failed object conversion : "+result );
 			}
 		}
 		return value;

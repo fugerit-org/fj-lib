@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.db.dao.rse;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -37,8 +38,13 @@ import org.fugerit.java.core.db.dao.RSExtractor;
  * @author Fugerit
  *
  */
-public abstract class PropertyRSE implements RSExtractor<Properties> {
+public abstract class PropertyRSE implements RSExtractor<Properties>, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2284313730808746483L;
+
 	/**
 	 * Creates a new reusable PropertyRSE
 	 * 
@@ -46,6 +52,10 @@ public abstract class PropertyRSE implements RSExtractor<Properties> {
 	 */
 	public static PropertyRSE newReusableRSE() {
 		return new PropertyRSE() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3337897227412811466L;
 			@Override
 			public Properties extractNext(ResultSet rs) throws SQLException {
 				Properties props = new Properties();
@@ -74,9 +84,17 @@ public abstract class PropertyRSE implements RSExtractor<Properties> {
 		return new PropertyRSECached( configRS );
 	}
 
+	@Override
+	public abstract Properties extractNext(ResultSet rs) throws SQLException;
+	
 }
 
 class PropertyRSECached extends PropertyRSE {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5770000113315587928L;
 	
 	private List<String> columnNames;
 
@@ -102,8 +120,5 @@ class PropertyRSECached extends PropertyRSE {
 		}
 		return props;
 	}
-	
-	
-	
 	
 }
