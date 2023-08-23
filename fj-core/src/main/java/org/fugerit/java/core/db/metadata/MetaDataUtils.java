@@ -34,11 +34,10 @@ import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.log.LogFacade;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -46,9 +45,10 @@ import lombok.Data;
  * @author Fugerit
  *
  */
+@Slf4j
 public class MetaDataUtils {
 
-	private static Logger logger = LoggerFactory.getLogger( MetaDataUtils.class );
+	private MetaDataUtils() {}
 	
 	public static final String TYPE_TABLE = "TABLE";
 	
@@ -80,17 +80,17 @@ public class MetaDataUtils {
 		return insertSQL.toString();
 	}
 	
-	public static DataBaseModel createModel( ConnectionFactory cf ) throws Exception {
+	public static DataBaseModel createModel( ConnectionFactory cf ) throws DAOException {
 		return createModel( cf , null, null);
 	}
 	
-	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema ) throws Exception {
+	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema ) throws DAOException {
 		List<String> tableNameList = new ArrayList<String>();
 		tableNameList.add( "*" );
 		return createModel(cf, catalog, schema, tableNameList);
 	}
 	
-	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList ) throws Exception {
+	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList ) throws DAOException {
 		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList, TYPES_DEFAULT );	 
 	}
 	
@@ -128,7 +128,7 @@ public class MetaDataUtils {
 		return createModel( new MetaDataUtilsContext(cf, catalog, schema, jdbcAdaptor, tableNameList, types) );
 	}	
 	
-	private static void handleCurrentTableColumns( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws Exception {
+	private static void handleCurrentTableColumns( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException {
 		JdbcAdaptor jdbcAdaptor = context.getJdbcAdaptor();
 		TableId tableId = tableModel.getTableId();
 		try ( ResultSet columnsRS = dbmd.getColumns( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), null ) ) {
@@ -170,7 +170,7 @@ public class MetaDataUtils {
 		}
 	}
 
-	private static void handleCurrentTableIndex( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws Exception {
+	private static void handleCurrentTableIndex( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException{
 		if ( mode == MODE_STRICT ) {
 			try ( ResultSet pkRS = dbmd.getPrimaryKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() ) ) {
 				IndexModel primaryKey = new IndexModel();
@@ -205,7 +205,7 @@ public class MetaDataUtils {
 		}
 	}
 	
-	private static void handleCurrentTableStrict( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws Exception {
+	private static void handleCurrentTableStrict( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException {
 		if ( mode == MODE_STRICT ) {
 			// estrazione chiavi esterne
 			ResultSet foreignRS = dbmd.getImportedKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
@@ -232,7 +232,7 @@ public class MetaDataUtils {
 		}
 	}
 		
-	private static void handleCurrentTableWorker( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws Exception {
+	private static void handleCurrentTableWorker( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException {
 		JdbcAdaptor jdbcAdaptor = context.getJdbcAdaptor();
 		TableId tableId = tableModel.getTableId();
 		
@@ -243,14 +243,14 @@ public class MetaDataUtils {
 		}
 		tableModel.setComment( tableComment );
 		handleCurrentTableColumns(context, tableModel, tableRS, dbmd, mode, conn);
-		logger.info( "Current table : "+tableId );
+		log.info( "Current table : "+tableId );
 		
 		handleCurrentTableIndex(context, tableModel, tableRS, dbmd, mode, conn);
 		
 		handleCurrentTableStrict(context, tableModel, tableRS, dbmd, mode, conn);
 	}
 	
-	private static void handleCurrentTable( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws Exception {
+	private static void handleCurrentTable( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException {
 		TableId tableId = new TableId();
 		tableId.setTableCatalog( tableRS.getString( "TABLE_CAT" ) );
 		tableId.setTableName( tableRS.getString( "TABLE_NAME" ) );
