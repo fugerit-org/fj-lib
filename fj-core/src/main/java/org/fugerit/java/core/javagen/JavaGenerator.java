@@ -4,7 +4,9 @@ import java.io.IOException;
 
 public interface JavaGenerator {
 
-	public void generate() throws Exception;
+	default void generate() throws Exception {
+		throw new UnsupportedOperationException( "This method should be implemented" );
+	}
 	
 	public String getContent();
 	
