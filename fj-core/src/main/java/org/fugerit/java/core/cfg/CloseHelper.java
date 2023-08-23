@@ -78,5 +78,42 @@ public class CloseHelper {
 		}
 		return closed;
 	}
+
+	private static Exception handle( Object obj, Exception e ) {
+		log.warn( "Exception closing : "+obj, e );
+		return e;
+	}
+	
+	public static Exception closeAll( Closeable... c ) {
+		Exception res = null;
+		if ( c != null ) {
+			for ( Closeable current : c ) {
+				try {
+					if ( current != null ) {
+						current.close();
+					}
+				} catch (Exception e) {
+					res = handle(c, e);
+				}
+			}
+		}
+		return res;
+	}
+	
+	public static Exception closeAll( AutoCloseable... c ) {
+		Exception res = null;
+		if ( c != null ) {
+			for ( AutoCloseable current : c ) {
+				try {
+					if ( current != null ) {
+						current.close();
+					}
+				} catch (Exception e) {
+					res = handle(c, e);
+				}
+			}
+		}
+		return res;
+	}
 	
 }

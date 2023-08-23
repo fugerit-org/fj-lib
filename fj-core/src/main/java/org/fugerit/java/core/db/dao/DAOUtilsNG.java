@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DAOUtilsNG {
 	
+	private DAOUtilsNG() {}
+	
 	public static String createQueryId( long startTime ) {
 		return String.format( "%s_%s", Thread.currentThread().getId(), startTime );
 	}
@@ -105,10 +107,10 @@ public class DAOUtilsNG {
 		extractAll( conn, result, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
 	}
 
-	public static <T> int update( Connection conn, String sql, Object... fields ) throws Exception {
+	public static int update( Connection conn, String sql, Object... fields ) throws Exception {
 		return update(conn, OpDAO.newUpdateOp(sql, FieldList.newFieldList( fields ) ) );
 	}
-	public static <T> int updateFields( Connection conn, String sql, Field... fields ) throws Exception {
+	public static int updateFields( Connection conn, String sql, Field... fields ) throws Exception {
 		return update(conn, OpDAO.newUpdateOp(sql, FieldList.newFieldList( fields ) ) );
 	}
 	

@@ -33,6 +33,8 @@ import org.slf4j.Logger;
 
 public class DAOHelper {
 	
+	private DAOHelper() {}
+	
 	public static void setAll( String queryId, PreparedStatement ps, FieldList fields, Logger log ) throws SQLException {
 		log.debug( "queryId:'{}', setAll() Total Param Number : '{}'", queryId, fields.size() );
     	int np = 0;
@@ -42,7 +44,8 @@ public class DAOHelper {
 			int param = (k+1);
 			Field f = fields.getField(k);
 			long startTime = System.currentTimeMillis();
-			log.debug( "queryId:'{}', setAll() Setting param (ng1) : '{}'", queryId, "n. "+param+", value: "+String.valueOf( f )+" (set time : '"+CheckpointUtils.formatTimeDiffMillis( startTime, System.currentTimeMillis() )+"')" );
+			String message = "n. "+param+", value: "+String.valueOf( f )+" (set time : '"+CheckpointUtils.formatTimeDiffMillis( startTime, System.currentTimeMillis() )+"')";
+			log.debug( "queryId:'{}', setAll() Setting param (ng1) : '{}'", queryId, message );
 			f.setField(ps, param);
 			k++;
 		}    	
@@ -58,10 +61,10 @@ public class DAOHelper {
     }
 
 	public static String queryFormat( String sql, String method, LogObject log, DAOFactory bdf ) {
-		log.getLogger().debug( "input  query : "+sql );
+		log.getLogger().debug( "input  query : {}", sql );
 		MessageFormat f = new MessageFormat( sql );
 		sql = f.format( bdf.getSqlArgs() );
-		log.getLogger().debug( "output query : "+sql );
+		log.getLogger().debug( "output query : {}", sql );
 		return sql;
 	}
 	
@@ -74,10 +77,10 @@ public class DAOHelper {
     }
     
 	public static <T> void loadAll(List<T> l, String query, FieldList fields, RSExtractor<T> re,  DAOFactory bdf, LogObject log ) throws DAOException {
-		log.getLogger().debug("loadAll START list : '"+l.size()+"'");
+		log.getLogger().debug("loadAll START list : {}", l.size());
 		query = DAOHelper.queryFormat( query, "loadAll", log, bdf );
-		log.getLogger().debug("loadAll fields        : '"+fields.size()+"'");
-		log.getLogger().debug("loadAll RSExtractor   : '"+re+"'");
+		log.getLogger().debug("loadAll fields        : '{}'", fields.size() );
+		log.getLogger().debug("loadAll RSExtractor   : {}'", re );
 		Connection conn = bdf.getConnection();
 		int i=0;
 		try {
@@ -95,14 +98,14 @@ public class DAOHelper {
 		} finally {
 			DAOHelper.close( conn );
 		}
-		log.getLogger().debug("loadAll END list : '"+l.size()+"'");
+		log.getLogger().debug("loadAll END list : '{}'", l.size() );
 	}
     
     public static <T> T loadOne(String query, FieldList fields, RSExtractor<T> re, DAOFactory bdf, LogObject log ) throws DAOException {
 	    log.getLogger().debug("loadOne START ");
 		query = DAOHelper.queryFormat( query, "loadOne", log, bdf );
-        log.getLogger().debug("loadOne fields        : '"+fields.size()+"'");
-        log.getLogger().debug("loadOne RSExtractor   : '"+re+"'");    	
+        log.getLogger().debug("loadOne fields        : '{}'", fields.size() );
+        log.getLogger().debug("loadOne RSExtractor   : '{}'", re );    	
         T result = null;
         Connection conn = bdf.getConnection();
         try {
@@ -119,7 +122,7 @@ public class DAOHelper {
         } finally {
             DAOHelper.close( conn );
         }
-        log.getLogger().debug("loadOne END : "+result );
+        log.getLogger().debug("loadOne END : {}", result );
         return result;
     }
 	
