@@ -8,7 +8,7 @@ public class BindingContext extends AttributeHolderDefault {
 	 * 
 	 */
 	private static final long serialVersionUID = -3049180509498668152L;
-
+	
 	private BindingCatalogConfig catalog;
 
 	public BindingCatalogConfig getCatalog() {

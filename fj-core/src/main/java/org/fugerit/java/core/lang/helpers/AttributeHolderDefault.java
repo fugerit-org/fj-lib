@@ -1,5 +1,6 @@
 package org.fugerit.java.core.lang.helpers;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +12,22 @@ public class AttributeHolderDefault implements AttributesHolder, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3304679466443785878L;
+	
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
 	
 	private HashMap<String, Object> map;
 	
