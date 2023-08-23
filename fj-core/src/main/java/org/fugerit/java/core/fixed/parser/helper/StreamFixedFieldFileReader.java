@@ -25,7 +25,6 @@ public class StreamFixedFieldFileReader extends FixedFieldFileReaderAbstract {
 
 	private void handleRead( byte[] buffer ) {
 		byte[] currentendline = Arrays.copyOfRange( buffer , buffer.length-this.getEndline().length(), buffer.length );
-		//logger.info( "row number "+this.rowNumber+" read : "+read+" line length : "+this.linebuffer.length+" current end length "+currentendline.length+" line : "+new String( buffer, 0, read ) );
 		if ( this.getDescriptor().isCustomEndlineActive() ) {
 			if ( this.linebuffer.length != this.getDescriptor().getCheckLengh() ) {
 				this.addRecordLenthError( this.linebuffer.length );

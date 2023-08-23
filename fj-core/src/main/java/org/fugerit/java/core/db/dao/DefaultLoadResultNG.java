@@ -68,27 +68,37 @@ public class DefaultLoadResultNG<T> implements LoadResultNG<T> {
 		return this.count;
 	}
 
-	public static <T> LoadResultNG<T> newLoadResult( RSExtractor<T> rse, Statement stm, ResultSet rs ) throws DAOException {
+	public static <T> LoadResultNG<T> newLoadResult( RSExtractor<T> rse, Statement stm, ResultSet rs ) {
 		return new DefaultLoadResultNG<T>( rse, stm, rs );
 	}
 	
-	public static <T> LoadResultNG<T> newLoadResult( Connection conn, RSExtractor<T> rse, Statement stm, ResultSet rs ) throws DAOException {
+	public static <T> LoadResultNG<T> newLoadResult( Connection conn, RSExtractor<T> rse, Statement stm, ResultSet rs ) {
 		return new CloseConnectionLoadResultNG<T>( rse, stm, rs, conn );
 	}
 	
-	public static <T> LoadResultNG<T> newLoadResult( Connection conn, OpDAO<T> opDAO ) throws SQLException {
-		PreparedStatement pstm = conn.prepareStatement( opDAO.getSql() );
-		DAOHelper.setAll( pstm , opDAO.getFieldList(), logger );
-		ResultSet rs = pstm.executeQuery();
-		LoadResultNG<T> lr = new DefaultLoadResultNG<T>( opDAO.getRsExtractor(), pstm, rs );
+	public static <T> LoadResultNG<T> newLoadResult( Connection conn, OpDAO<T> opDAO ) {
+		LoadResultNG<T> lr = null;
+		try {
+			PreparedStatement pstm = conn.prepareStatement( opDAO.getSql() );
+			DAOHelper.setAll( pstm , opDAO.getFieldList(), logger );
+			ResultSet rs = pstm.executeQuery();
+			lr = new DefaultLoadResultNG<T>( opDAO.getRsExtractor(), pstm, rs );	
+		} catch (Exception e) {
+			throw DAORuntimeException.convertExMethod( "init" , e );
+		}
 		return lr;
 	}
 	
-	public static <T> LoadResultNG<T> newLoadResultCloseConnection( Connection conn, OpDAO<T> opDAO ) throws SQLException {
-		PreparedStatement pstm = conn.prepareStatement( opDAO.getSql() );
-		DAOHelper.setAll( pstm , opDAO.getFieldList(), logger );
-		ResultSet rs = pstm.executeQuery();
-		LoadResultNG<T> lr = new CloseConnectionLoadResultNG<T>( opDAO.getRsExtractor(), pstm, rs, conn );
+	public static <T> LoadResultNG<T> newLoadResultCloseConnection( Connection conn, OpDAO<T> opDAO ) {
+		LoadResultNG<T> lr = null;
+		try {
+			PreparedStatement pstm = conn.prepareStatement( opDAO.getSql() );
+			DAOHelper.setAll( pstm , opDAO.getFieldList(), logger );
+			ResultSet rs = pstm.executeQuery();
+			lr = new CloseConnectionLoadResultNG<T>( opDAO.getRsExtractor(), pstm, rs, conn );			
+		} catch (Exception e) {
+			throw DAORuntimeException.convertExMethod( "init" , e );
+		}
 		return lr;
 	}
 	

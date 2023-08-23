@@ -18,11 +18,11 @@ public class DAOUtilsNG {
 		return String.format( "%s_%s", Thread.currentThread().getId(), startTime );
 	}
 	
-	public static <T> LoadResultNG<T> extractAll( Connection conn, OpDAO<T> op ) throws Exception {
+	public static <T> LoadResultNG<T> extractAll( Connection conn, OpDAO<T> op ) {
 		return DefaultLoadResultNG.newLoadResult( conn, op );
 	}
 	
-	public static <T> void extractAll( Connection conn, Collection<T> result, OpDAO<T> op ) throws Exception {
+	public static <T> void extractAll( Connection conn, Collection<T> result, OpDAO<T> op ) {
 		long startTime = System.currentTimeMillis();
 		String queryId = createQueryId( startTime );
 		log.debug( "queryId:'{}', extractAll sql           : '{}'", queryId, op.getSql() );
@@ -40,10 +40,12 @@ public class DAOUtilsNG {
 				}
 				log.debug("queryId:'{}', extractAll query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
 			}
+		} catch (Exception e) {
+			throw DAORuntimeException.convertExMethod( "extractAll" , e );
 		}
 	}
 	
-	public static <T> T extractOne( Connection conn, OpDAO<T> op ) throws Exception {
+	public static <T> T extractOne( Connection conn, OpDAO<T> op ) {
 		long startTime = System.currentTimeMillis();
 		String queryId = createQueryId( startTime );
 		log.debug( "queryId:'{}', extractOne sql           : '{}'", queryId, op.getSql() );
@@ -61,11 +63,13 @@ public class DAOUtilsNG {
 				}
 				log.debug("queryId:'{}', extractOne query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
 			}
+		} catch (Exception e) {
+			throw DAORuntimeException.convertExMethod( "extractOne" , e );
 		}
 		return res;
 	}
 	
-	public static <T> int update( Connection conn, OpDAO<T> op ) throws Exception {
+	public static <T> int update( Connection conn, OpDAO<T> op ) {
 		long startTime = System.currentTimeMillis();
 		String queryId = createQueryId( startTime );
 		log.debug( "queryId:'{}', update sql           : '{}'", queryId, op.getSql() );
@@ -78,6 +82,8 @@ public class DAOUtilsNG {
 			DAOHelper.setAll( queryId, pstm , op.getFieldList(), log );
 			res = pstm.executeUpdate(); 
 			log.debug("queryId:'{}', update query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+		} catch (Exception e) {
+			throw DAORuntimeException.convertExMethod( "update" , e );
 		}
 		return res;
 	}

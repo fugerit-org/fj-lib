@@ -309,7 +309,7 @@ public class FileIO {
      * @return					The number of char effectively written.
      * @throws IOException		If something goes wrong during elaboration.
      */
-    public static long writeStringBuffer(StringBuffer data, String file ) throws IOException {
+    public static long writeStringBuffer(CharSequence data, String file ) throws IOException {
         return writeStringBuffer(data, new File(file));
     }    
     
@@ -365,7 +365,7 @@ public class FileIO {
      * @return					The number of char effectively written.
      * @throws IOException		If something goes wrong during elaboration.
      */   
-    public static long writeStringBuffer(StringBuffer data, File file ) throws IOException {
+    public static long writeStringBuffer(CharSequence data, File file ) throws IOException {
         return writeString(data.toString(), file);
     }    
     

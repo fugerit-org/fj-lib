@@ -61,7 +61,7 @@ public class DAOHelper {
     }
 
 	public static String queryFormat( String sql, String method, LogObject log, DAOFactory bdf ) {
-		log.getLogger().debug( "input  query : {}", sql );
+		log.getLogger().debug( "input  query : {}, method : {}", sql, method );
 		MessageFormat f = new MessageFormat( sql );
 		sql = f.format( bdf.getSqlArgs() );
 		log.getLogger().debug( "output query : {}", sql );
