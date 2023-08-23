@@ -29,8 +29,11 @@ import java.util.List;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.db.connect.ConnectionFactory;
-import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.log.LogFacade;
+import org.fugerit.java.core.log.LogObject;
+import org.slf4j.Logger;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -38,8 +41,14 @@ import org.fugerit.java.core.log.LogFacade;
  *
  * @author Fugerit
  */
-public class BasicDAO<T> extends BasicLogObject {
+@Slf4j
+public class BasicDAO<T> implements LogObject {
 	
+	@Override
+	public Logger getLogger() {
+		return log;
+	}
+
 	protected void extractAll( ResultSet rs, List<T> list, RSExtractor<T> rse ) throws DAOException {
 		try {
 			while ( rs.next() ) {
@@ -81,7 +90,7 @@ public class BasicDAO<T> extends BasicLogObject {
 			try {
 				for (int k=0; k<opList.size(); k++) {
 					OpDAO<T> currentOp = (OpDAO<T>)opList.get( k );
-					this.getLogger().debug( "updateBatch : "+currentOp.getSql()+" , params : "+currentOp.getFieldList().size() );
+					this.getLogger().debug( "updateBatch : {} , params : {}", currentOp.getSql(), currentOp.getFieldList().size() );
 					if ( pstm == null ) {
 						String query = this.queryFormat( currentOp.getSql(), "update(opdao)" );
 						pstm = conn.prepareStatement( query );
@@ -89,7 +98,7 @@ public class BasicDAO<T> extends BasicLogObject {
 					this.setAll( pstm, currentOp.getFieldList() );
 					pstm.addBatch();
 				}
-				this.getLogger().debug( "updateBatch result : "+tmp+" / "+opList.size() );
+				this.getLogger().debug( "updateBatch result : {} / {}", tmp, opList.size() );
 				conn.commit();
 			} finally {
 				this.closeSafe( pstm );
@@ -98,14 +107,14 @@ public class BasicDAO<T> extends BasicLogObject {
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
-				this.getLogger().error( "Errore durante il rollback : ", e );
+				this.getLogger().error( "Errore durante il rollback : "+e1, e1 );
 			}
 			throw (new DAOException(e));
 		} finally {
 			try {
 				conn.setAutoCommit( true );
 			} catch (SQLException e) {
-				this.getLogger().error( "Errore durante deallocazione connessione [conn.setAutoCommit( true )]", e );
+				this.getLogger().error( "Errore durante deallocazione connessione [conn.setAutoCommit( true )] "+e, e );
 			} finally {
 				this.close( conn );
 			}
@@ -120,29 +129,20 @@ public class BasicDAO<T> extends BasicLogObject {
 		try {
 			conn.setAutoCommit( false );
 			int tmp = 0;
-//			String query = null;
-//			PreparedStatement pstm = null;
 			for (int k=0; k<opList.size(); k++) {
 				OpDAO<T> currentOp = opList.get( k );
 				this.getLogger().debug( "updateTransaction : "+currentOp.getSql()+" , params : "+currentOp.getFieldList().size() );
 				if (currentOp.getType()==OpDAO.TYPE_UPDATE) {
-//					tmp+= this.update( currentOp, conn );
-//					String tmpQuery = this.queryFormat( currentOp.getSql(), "update(opdao)" );
-//					if ( !tmpQuery.equals( query ) ) {
-//						pstm = conn.prepareStatement( tmpQuery );
-//					}
-//					this.setAll( pstm, currentOp.getFieldList() );
-//					tmp+= pstm.executeUpdate();
 					tmp+= this.update( currentOp, conn ); // old, non caching mode
 				}
 			}
-			this.getLogger().debug( "updateTransaction result : "+tmp+" / "+opList.size() );
+			this.getLogger().debug( "updateTransaction result : {} / {}", tmp, opList.size() );
 			conn.commit();
 		} catch (SQLException e) {
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
-				this.getLogger().error( "Errore durante il rollback : ", e );
+				this.getLogger().error( "Errore durante il rollback : "+e1, e1 );
 			}
 			throw (new DAOException(e));
 		} finally {
@@ -269,7 +269,7 @@ public class BasicDAO<T> extends BasicLogObject {
         } finally {
             this.close( conn );
         }
-        this.getLogger().debug( "update: result '"+result+"'" );
+        this.getLogger().debug( "update: result '{}'", result );
         return result;
     }
 
