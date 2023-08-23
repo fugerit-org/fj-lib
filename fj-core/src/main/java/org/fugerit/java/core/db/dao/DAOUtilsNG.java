@@ -89,34 +89,34 @@ public class DAOUtilsNG {
 	}
 	
 	
-	public static <T> T extraOne( Connection conn, String sql, RSExtractor<T> rse, Object... fields ) throws Exception {
+	public static <T> T extraOne( Connection conn, String sql, RSExtractor<T> rse, Object... fields ) {
 		return extractOne( conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
 	}
 	
-	public static <T> T extraOneFields( Connection conn, String sql, RSExtractor<T> rse, Field... fields ) throws Exception {
+	public static <T> T extraOneFields( Connection conn, String sql, RSExtractor<T> rse, Field... fields ) {
 		return extractOne( conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
 	}
 	
-	public static <T> LoadResultNG<T> extraAll( Connection conn,  String sql, RSExtractor<T> rse, Field... fields ) throws Exception {
+	public static <T> LoadResultNG<T> extraAll( Connection conn,  String sql, RSExtractor<T> rse, Field... fields ) {
 		return extractAll( conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
 	}
 	
-	public static <T> LoadResultNG<T> extraAllFields( Connection conn,  String sql, RSExtractor<T> rse, Object... fields ) throws Exception {
+	public static <T> LoadResultNG<T> extraAllFields( Connection conn,  String sql, RSExtractor<T> rse, Object... fields ) {
 		return extractAll( conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
 	}
 	
-	public static <T> void extraAll( Connection conn, Collection<T> result, String sql, RSExtractor<T> rse, Field... fields ) throws Exception {
+	public static <T> void extraAll( Connection conn, Collection<T> result, String sql, RSExtractor<T> rse, Field... fields ) {
 		extractAll( conn, result, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
 	}
 	
-	public static <T> void extraAllFields( Connection conn, Collection<T> result, String sql, RSExtractor<T> rse, Object... fields ) throws Exception {
+	public static <T> void extraAllFields( Connection conn, Collection<T> result, String sql, RSExtractor<T> rse, Object... fields ) {
 		extractAll( conn, result, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
 	}
 
-	public static int update( Connection conn, String sql, Object... fields ) throws Exception {
+	public static int update( Connection conn, String sql, Object... fields ) {
 		return update(conn, OpDAO.newUpdateOp(sql, FieldList.newFieldList( fields ) ) );
 	}
-	public static int updateFields( Connection conn, String sql, Field... fields ) throws Exception {
+	public static int updateFields( Connection conn, String sql, Field... fields ) {
 		return update(conn, OpDAO.newUpdateOp(sql, FieldList.newFieldList( fields ) ) );
 	}
 	

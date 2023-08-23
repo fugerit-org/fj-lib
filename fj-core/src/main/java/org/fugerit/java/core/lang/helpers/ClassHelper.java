@@ -22,8 +22,9 @@ package org.fugerit.java.core.lang.helpers;
 
 import java.io.InputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>This class provides API for instantiating new classes.</p>
@@ -31,9 +32,10 @@ import org.slf4j.LoggerFactory;
  * @author Fugerit
  *
  */
+@Slf4j
 public class ClassHelper {
 
-	private static final Logger logger = LoggerFactory.getLogger(ClassHelper.class);
+	private ClassHelper() {}
 	
 	/**
 	 * <p>Return default class loader to instantiate a new class.</p>
@@ -42,10 +44,12 @@ public class ClassHelper {
 	 * http://svn.apache.org/repos/asf/struts/struts1/trunk/org.fugerit.java.core/src/main/java/org/apache/struts/util/RequestUtils.java
 	 * </p>
 	 * 
+	 * <p>NOTE : As of 8.2.0 removed throw Exception declaration (now in case a {@link ConfigRuntimeException} will be thrown.</p>
+	 * 
 	 * @return				the Default ClassLoader.
-	 * @throws Exception	in case of troubles during the operation
+	 * 
 	 */
-	public static ClassLoader getDefaultClassLoader() throws Exception {
+	public static ClassLoader getDefaultClassLoader() {
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		if ( classLoader == null ) {
 			classLoader = ClassHelper.class.getClassLoader();
@@ -56,24 +60,29 @@ public class ClassHelper {
 	/**
 	 * <p>Create a new instance of the given type.</p>
 	 * 
+	 * <p>NOTE : As of 8.2.0 removed throw Exception declaration (now in case a {@link ConfigRuntimeException} will be thrown.</p>
+	 * 
 	 * @param type			fully qualified name fo the class for which the new instance will be created
 	 * @return				the new istance
-	 * @throws Exception	in case of troubles during the operation
 	 */
-	public static Object newInstance( String type ) throws Exception {
+	public static Object newInstance( String type ) {
 		Object result = null;
-		ClassLoader classLoader = getDefaultClassLoader();
-		Class<?> c = classLoader.loadClass( type );
-		result = c.getDeclaredConstructor().newInstance();
+		try {
+			ClassLoader classLoader = getDefaultClassLoader();
+			Class<?> c = classLoader.loadClass( type );
+			result = c.getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			throw ConfigRuntimeException.convertExMethod( "newInstance" , e );
+		}
 		return result;
 	}
 
-	public static InputStream loadFromClassLoader( Object caller, String path ) throws Exception {
+	public static InputStream loadFromClassLoader( Object caller, String path ) {
 		InputStream is = null;
 		try {
 			is = getDefaultClassLoader().getResourceAsStream( path );
 		} catch (Exception e) {
-			logger.warn( "Failed to load from default class loader, trying caller loader ("+e+")" );
+			log.warn( "Failed to load from default class loader, trying caller loader ("+e+")" );
 			is = caller.getClass().getResourceAsStream( path );
 		}
 		return is;
