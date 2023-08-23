@@ -133,13 +133,13 @@ public class CharsetCorrect extends ToolHandlerHelper {
 		boolean verbose = ( params.getProperty( Launcher.ARG_VERBOSE ) != null );
 		log.info( PARAM_TARGET_CHARSET+" -> "+targetCharset );
 		if ( folderRecurse != null ) {
-			log.info( "{} -> {}", PARAM_FOLDER_RECURSE, folderRecurse );
-			log.info( "{} -> {}", PARAM_FOLDER_FILTER, folderFilter );
+			log.info( LOG_PARAM_LITERAL, PARAM_FOLDER_RECURSE, folderRecurse );
+			log.info( LOG_PARAM_LITERAL, PARAM_FOLDER_FILTER, folderFilter );
 			File baseFolder = new File( folderRecurse );
 			recurse( baseFolder, new RecurseFilter( folderFilter ), sourceCharset, targetCharset, infoComment, verbose );
 		} else {
-			log.info( "{} -> {}", PARAM_INPUT_FILE, inputFile );
-			log.info( "{} -> {}", PARAM_OUTPUT_FILE, outputFile );
+			log.info( LOG_PARAM_LITERAL, PARAM_INPUT_FILE, inputFile );
+			log.info( LOG_PARAM_LITERAL, PARAM_OUTPUT_FILE, outputFile );
 			File input = new File( inputFile );
 			File output = new File( outputFile );
 			handleFile( input , output, sourceCharset, targetCharset, infoComment, verbose );	
@@ -151,6 +151,7 @@ public class CharsetCorrect extends ToolHandlerHelper {
 		correct( params );
 		return EXIT_OK;
 	}
+	
 		
 }
 

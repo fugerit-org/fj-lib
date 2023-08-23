@@ -116,7 +116,7 @@ public class MethodHelper {
 		try {
 			Method method = obj.getClass().getMethod( methodName, paramTypes );
 			if ( method == null ) {
-				throw new Exception( "Method not found "+methodName+" on class "+obj.getClass().getName() );
+				throw new ConfigRuntimeException( "Method not found "+methodName+" on class "+obj.getClass().getName() );
 			}
 			result = method.invoke( obj, paramValues );
 		} catch (Exception e) {

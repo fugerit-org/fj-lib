@@ -22,6 +22,8 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 
 	protected static final Logger logger = LoggerFactory.getLogger(ToolHandlerHelper.class);
 	
+	protected static final String LOG_PARAM_LITERAL = "{} -> {}";
+	
 	public static final String ARG_EXTRA_JAR = "extra-jar";
 	
 	public static final int EXIT_KO_DEFAULT = 1;

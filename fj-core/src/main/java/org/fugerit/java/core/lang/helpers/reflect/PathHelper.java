@@ -2,6 +2,8 @@ package org.fugerit.java.core.lang.helpers.reflect;
 
 import java.beans.PropertyDescriptor;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
+
 /**
  * Simple class to look up a property path in a java object
  * 
@@ -24,7 +26,7 @@ public class PathHelper {
 	 */
 	public static final boolean EXIT_ON_NULL = false;
 	
-	public static Object initEmptyField( String property, Object target ) throws Exception {
+	public static Object initEmptyField( String property, Object target ) {
 		return initEmptyField(property, target, FACADE_IMPL_FINDER);
 	}
 	
@@ -37,12 +39,17 @@ public class PathHelper {
 	 * @return	the object used to initialized the empty field
 	 * @throws Exception	in case of problems
 	 */
-	public static Object initEmptyField( String property, Object target, FacadeImplFinder facadeImplFinder ) throws Exception {
-		PropertyDescriptor pd = new PropertyDescriptor( property, target.getClass() );
-		Class<?> propertyClass = pd.getReadMethod().getReturnType();
-		Class<?> implClass = facadeImplFinder.findImpl( propertyClass );
-		Object temp = implClass.getConstructor().newInstance();
-		pd.getWriteMethod().invoke(target, temp);
+	public static Object initEmptyField( String property, Object target, FacadeImplFinder facadeImplFinder ) {
+		Object temp = null;
+		try {
+			PropertyDescriptor pd = new PropertyDescriptor( property, target.getClass() );
+			Class<?> propertyClass = pd.getReadMethod().getReturnType();
+			Class<?> implClass = facadeImplFinder.findImpl( propertyClass );
+			temp = implClass.getConstructor().newInstance();
+			pd.getWriteMethod().invoke(target, temp);
+		} catch (Exception e ) {
+			throw ConfigRuntimeException.convertEx( e );
+		}
 		return temp;
 	}
 	
@@ -54,7 +61,7 @@ public class PathHelper {
 	 * @return			the last created object
 	 * @throws Exception	in case of problems
 	 */
-	public static Object bindInit( String path, Object target ) throws Exception {
+	public static Object bindInit( String path, Object target ){
 		String[] nodes = path.split( "\\." );
 		for ( int k=0; k<nodes.length; k++ ) {
 			Object temp = MethodHelper.invokeGetter( target, nodes[k] );
@@ -77,7 +84,7 @@ public class PathHelper {
 	 * @return		if the binding is successful
 	 * @throws Exception	in case of problems
 	 */
-	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit ) throws Exception {
+	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit ){
 		return bind(path, target, value, paramType, tryInit, FACADE_IMPL_FINDER);
 	}
 	
@@ -93,7 +100,7 @@ public class PathHelper {
 	 * @return		if the binding is successful
 	 * @throws Exception	in case of problems
 	 */
-	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit, FacadeImplFinder facadeImplFinder ) throws Exception {
+	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit, FacadeImplFinder facadeImplFinder ){
 		boolean bind = false;
 		if ( value != null ) {
 			if ( paramType == null ) {
@@ -123,7 +130,7 @@ public class PathHelper {
 	 * @return		if the binding is successful
 	 * @throws Exception	in case of problems
 	 */
-	public static boolean bind( String path, Object target, Object value ) throws Exception {
+	public static boolean bind( String path, Object target, Object value ){
 		return bind(path, target, value, null, EXIT_ON_NULL);
 	}
 	
@@ -138,7 +145,7 @@ public class PathHelper {
 	 * @return		the value found in the path
 	 * @throws Exception	in case of exception
 	 */
-	public static Object lookupMethod( String path, Object target, boolean continueOnNull ) throws Exception {
+	public static Object lookupMethod( String path, Object target, boolean continueOnNull ){
 		String[] nodes = path.split( "\\." );
 		Object result = target;
 		for ( int k=0; k<nodes.length && (continueOnNull || result != null); k++ ) {
@@ -158,7 +165,7 @@ public class PathHelper {
 	 * @return		the value found in the path
 	 * @throws Exception	in case of exception
 	 */
-	public static Object lookupMethod( String path, Object target ) throws Exception {
+	public static Object lookupMethod( String path, Object target ){
 		return lookupMethod(path, target, EXIT_ON_NULL);
 	}
 	
@@ -171,7 +178,7 @@ public class PathHelper {
 	 * @return		the value found in the path
 	 * @throws Exception	in case of exception
 	 */
-	public static Object lookup( String path, Object target, boolean continueOnNull ) throws Exception {
+	public static Object lookup( String path, Object target, boolean continueOnNull ){
 		String[] nodes = path.split( "\\." );
 		Object result = target;
 		for ( int k=0; k<nodes.length && (continueOnNull || result != null); k++ ) {
@@ -190,7 +197,7 @@ public class PathHelper {
 	 * @return		the value found in the path
 	 * @throws Exception	in case of exception
 	 */
-	public static Object lookup( String path, Object target ) throws Exception {
+	public static Object lookup( String path, Object target ){
 		return lookup(path, target, EXIT_ON_NULL);
 	}
 	
@@ -205,7 +212,7 @@ public class PathHelper {
 	 * @return		the value found in the path
 	 * @throws Exception	in case of exception
 	 */
-	public static Object lookupContinueOnNull( String path, Object target ) throws Exception {
+	public static Object lookupContinueOnNull( String path, Object target ){
 		return lookup(path, target, CONTINUE_ON_NULL);
 	}
 
