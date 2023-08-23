@@ -43,11 +43,11 @@ public interface XMLValidator {
     
     public boolean isValidaXML(InputStream source) throws XMLException;
     
-    public boolean validateXML(StringBuffer source, SAXParseResult result) throws XMLException;
+    public boolean validateXML(CharSequence source, SAXParseResult result) throws XMLException;
     
-    public SAXParseResult validateXML(StringBuffer source) throws XMLException;
+    public SAXParseResult validateXML(CharSequence source) throws XMLException;
     
-    public boolean isValidaXML(StringBuffer source) throws XMLException;
+    public boolean isValidaXML(CharSequence source) throws XMLException;
     
     public boolean validateXML(String source, SAXParseResult result) throws XMLException;
     

@@ -84,9 +84,9 @@ public class ValidatorDate extends BasicValidator {
 
 	@Override
 	public boolean validate(ValidatorContext context) throws Exception {
-		String minDate = this.checkOverride( context, this.getMinDate(), KEY_MINDATE );
-		String maxDate = this.checkOverride( context, this.getMaxDate(), KEY_MAXDATE );
-		return super.validate( context ) && this.validate( context, minDate, maxDate );
+		String minDateLocal = this.checkOverride( context, this.getMinDate(), KEY_MINDATE );
+		String maxDateLocal = this.checkOverride( context, this.getMaxDate(), KEY_MAXDATE );
+		return super.validate( context ) && this.validate( context, minDateLocal, maxDateLocal );
 	}
 	
 	protected boolean validate( ValidatorContext context, String minDate, String maxDate ) throws ConfigException  {

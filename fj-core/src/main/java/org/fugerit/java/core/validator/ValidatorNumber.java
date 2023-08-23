@@ -132,9 +132,9 @@ public class ValidatorNumber extends BasicValidator {
 
 	@Override
 	public boolean validate(ValidatorContext context) throws Exception {
-		String minValue = this.checkOverride( context, this.getMinValue(), KEY_MINVALUE );
-		String maxValue = this.checkOverride( context, this.getMaxValue(), KEY_MAXVALUE );
-		return super.validate( context ) && this.validate( context, minValue, maxValue );
+		String minValueLocal = this.checkOverride( context, this.getMinValue(), KEY_MINVALUE );
+		String maxValueLocal = this.checkOverride( context, this.getMaxValue(), KEY_MAXVALUE );
+		return super.validate( context ) && this.validate( context, minValueLocal, maxValueLocal );
 	}
 	
 	protected NumberFormat newFormat( ValidatorContext context ) {
