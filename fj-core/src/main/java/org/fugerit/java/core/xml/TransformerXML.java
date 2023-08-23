@@ -13,6 +13,8 @@ import javax.xml.transform.TransformerFactory;
  */
 public class TransformerXML {
 
+	private TransformerXML() {}
+	
     public static Transformer newTransformer(Source source) throws XMLException {
         Transformer transformer = null;
         try {
