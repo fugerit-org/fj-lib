@@ -55,5 +55,10 @@ public class PropertyEntry extends MapEntry<String, String> implements KeyString
 		printAll( builder, this );
 		return builder.toString();
 	}
+	
+	@Override
+	public String toString() {
+		return this.toSimpleString();
+	}
 		
 }

@@ -4,15 +4,16 @@ import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.util.PropertyEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class DOMProperty {
 
-	private static Logger logger = LoggerFactory.getLogger( DOMProperty.class );
+	private DOMProperty() {}
 	
 	public static final String TAG_ENTRY = "entry";
 	
@@ -28,7 +29,7 @@ public class DOMProperty {
 			PropertyEntry entry = createNtry( propertyTag );
 			String oldValue = entry.setProperty( props );
 			if ( oldValue != null ) {
-				logger.debug( "override value '{}' for entry {}", oldValue, entry.toSimpleString() );
+				log.debug( "override value '{}' for entry {}", oldValue, entry );
 			}
 		}
 	}

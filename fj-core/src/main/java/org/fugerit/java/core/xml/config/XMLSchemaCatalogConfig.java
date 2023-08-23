@@ -18,6 +18,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.xml.DataListCatalogConfig;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
@@ -60,8 +61,8 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 		super.configure(tag);
 		this.pathMode = StringUtils.valueWithDefault( tag.getAttribute( CONFIG_PATH_MODE ), CONFIG_PATH_MODE_DEFAULT );
 		this.pathBase = tag.getAttribute( CONFIG_PATH_BASE );
-		this.getLogger().info( "configure() "+CONFIG_PATH_MODE+"="+this.pathMode );
-		this.getLogger().info( "configure() "+CONFIG_PATH_BASE+"="+this.pathBase );
+		this.getLogger().info( "configure() {}={}", CONFIG_PATH_MODE, this.pathMode );
+		this.getLogger().info( "configure() {}={}", CONFIG_PATH_BASE, this.pathBase );
 	}
 
 	public Source[] getXsds( String setId ) {
@@ -86,7 +87,7 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 				xsds[k] = new StreamSource( is );
 				k++;
 			} catch (Exception e) {
-				throw new RuntimeException( e );	
+				throw ConfigRuntimeException.convertEx( e );	
 			}
 		}
 		return xsds;
