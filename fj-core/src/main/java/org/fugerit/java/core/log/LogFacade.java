@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class LogFacade {
+	
+	private LogFacade() {}
 
     private static Logger logger = LoggerFactory.getLogger( LogFacade.class ); 
     

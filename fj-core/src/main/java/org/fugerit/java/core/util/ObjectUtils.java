@@ -2,6 +2,8 @@ package org.fugerit.java.core.util;
 
 public class ObjectUtils {
 
+	private ObjectUtils() {}
+	
 	public static <T> T objectWithDefault( T value, T def ) {
 		T res = def;
 		if ( value != null ) {

@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class BinaryCalc {
 	
+	private BinaryCalc() {}
+	
 	public static long hexToLong( String hexString ) {
 		long result = 0;
 		hexString = hexString.toUpperCase();
