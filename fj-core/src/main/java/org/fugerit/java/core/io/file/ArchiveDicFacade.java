@@ -3,6 +3,7 @@ package org.fugerit.java.core.io.file;
 import java.io.File;
 import java.util.Properties;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.io.FileIO;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 
@@ -24,24 +25,32 @@ public class ArchiveDicFacade {
 		}
 	}
 	
-	public BaseArchiveDirFileFun newHandlerFromExtension( File rootDir, File output ) throws Exception {
+	public BaseArchiveDirFileFun newHandlerFromExtension( File rootDir, File output ) {
 		BaseArchiveDirFileFun handler = null;
 		String fileName = output.getName();
 		String extension = fileName.substring( fileName.lastIndexOf( '.' )+1 );
 		String type = mapHandlers.getProperty( extension );
-		if ( type == null  ) {
-			throw new Exception( "Cannot handle file type "+extension+" , "+output.getCanonicalPath() );
-		} else {
-			handler = (BaseArchiveDirFileFun)ClassHelper.newInstance( type );
-			handler.init(rootDir, output);
+		try {
+			if ( type == null  ) {
+				throw new ConfigRuntimeException( "Cannot handle file type "+extension+" , "+output.getCanonicalPath() );
+			} else {
+				handler = (BaseArchiveDirFileFun)ClassHelper.newInstance( type );
+				handler.init(rootDir, output);
+			}	
+		} catch ( Exception e ) {
+			throw ConfigRuntimeException.convertExMethod( "newHandlerFromExtension", e );
 		}
 		return handler;
 	}
 	
-	public void compressByExtension( File rootDir, File output, boolean deleteSourceOnExit ) throws Exception {
-		compressByExtension(rootDir, output);
-		if ( deleteSourceOnExit ) {
-			FileIO.recurseDir( rootDir , DeleteRecurseFileFun.INSTANCE, true );
+	public void compressByExtension( File rootDir, File output, boolean deleteSourceOnExit ) {
+		try {
+			compressByExtension(rootDir, output);
+			if ( deleteSourceOnExit ) {
+				FileIO.recurseDir( rootDir , DeleteRecurseFileFun.INSTANCE, true );
+			}
+		} catch ( Exception e ) {
+			throw ConfigRuntimeException.convertExMethod( "newHandlerFromExtension", e );
 		}
 	}
 	

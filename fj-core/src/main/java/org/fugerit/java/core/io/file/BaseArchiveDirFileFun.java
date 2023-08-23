@@ -13,7 +13,7 @@ public abstract class BaseArchiveDirFileFun extends AbstractFileFun {
 	
 	public abstract String[] getFormatList();
 	
-	public BaseArchiveDirFileFun() {
+	protected BaseArchiveDirFileFun() {
 		super();
 	}
 
