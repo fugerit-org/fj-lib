@@ -1,5 +1,6 @@
 ﻿8.2.0 (next)
 ------------------
++ [enhancement [fj-core] fixed all major sonar cloud issues [8.2.0-rc.6]
 + [enhancement [fj-core] loadConfigSafe() method introduced for property catalog [8.2.0-rc.6]
 + [enhancement [fj-core] JavaGenerator generate() throw chaanged from Exception to IOException [8.2.0-rc.6]
 + [enhancement [fj-core] update fj-test-helper8 version to 0.3.1 (serialization support) (support for serialization test) [8.2.0-rc.6]
