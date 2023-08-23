@@ -53,7 +53,7 @@ public class FixedFileFieldRegexValidator extends FixedFileFieldBasicValidator i
 	@Override
 	public void configure( Element tag ) throws ConfigException {
 		String config = tag.getAttribute( ATT_NAME_REGEX );
-		logger.info( "config "+ATT_NAME_REGEX+" -> '"+config+"'" );
+		logger.info( "config {} -> '{}'", ATT_NAME_REGEX, config );
 		if ( StringUtils.isEmpty( config ) ) {
 			throw new ConfigException( ATT_NAME_REGEX+" is mandatory attribute" );
 		} else {

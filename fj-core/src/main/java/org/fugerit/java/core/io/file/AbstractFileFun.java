@@ -13,10 +13,6 @@ import org.fugerit.java.core.io.FileFun;
  */
 public abstract class AbstractFileFun implements FileFun {
 
-    public AbstractFileFun() {
-        super();
-    }
-    
     /* (non-Javadoc)
      * @see org.fugerit.java.core.io.FileFun#handleFile(java.io.File, java.lang.String)
      */

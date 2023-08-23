@@ -36,6 +36,8 @@ import org.fugerit.java.core.io.helper.StreamHelper;
  */
 public class StreamIO {
 
+	private StreamIO() {}
+	
 	/**
 	 * Don't invoke close() method on source and destination at the end of operation.
 	 */

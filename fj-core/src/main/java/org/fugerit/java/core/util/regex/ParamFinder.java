@@ -19,19 +19,19 @@ public class ParamFinder extends BasicLogObject {
 	public static final String ALT1_PRE = "\\{";
 	public static final String ALT1_POST = "\\}";
 
-	/*
+	/**
 	 * Creates a ParamFinder with default substitution ${param}
 	 * 
-	 * @return
+	 * @return the new ParamFinder
 	 */
 	public static ParamFinder newFinder() {
 		return new ParamFinder( DEFAULT_PRE, DEFAULT_POST, 2, 1 );
 	}
 	
-	/*
+	/**
 	 * Creates a ParamFinder with alternative substitution {param}
 	 * 
-	 * @return
+	 * @return  the new ParamFinder
 	 */
 	public static ParamFinder newFinderAlt1() {
 		return new ParamFinder( ALT1_PRE, ALT1_POST, 1, 1 );
@@ -71,7 +71,6 @@ public class ParamFinder extends BasicLogObject {
 			String paramName = found.substring( this.preL, found.length()-this.postL );
 			paramList.add( paramName );
 		}
-		//this.getLog().debug( "PARAM_LIST "+paramList );
 		return paramList;
 	}
 
