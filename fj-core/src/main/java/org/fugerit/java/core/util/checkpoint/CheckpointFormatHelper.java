@@ -1,5 +1,6 @@
 package org.fugerit.java.core.util.checkpoint;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import org.fugerit.java.core.util.fun.StringFormat;
@@ -10,6 +11,22 @@ public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
 	
 	private static final long serialVersionUID = -3532044603092080930L;
 
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	public static final StringFormat<Number> FORMAT_TIME_DEFAULT = new StringFormat<Number>() {
 		@Override
 		public String convert(Number input) {

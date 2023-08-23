@@ -282,6 +282,7 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 	@SuppressWarnings("unchecked")
 	protected Collection<T> newCollection( Object typeSample, String listType, Element tag, Element current ) throws ConfigException {
 		Collection<T> c = null;
+		log.trace( "tag is null? : {}", tag==null );
 		if ( listType != null ) {
 			try {
 				c = (Collection<T>)ClassHelper.newInstance( listType );
@@ -304,10 +305,12 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 	
 	protected T customEntryHandling( String dataListId, T current, Element element ) throws ConfigException {
 		T result = this.customEntryHandling(current, element);
+		log.trace( "dataListId : {}", dataListId );
 		return result;
 	}
 	
 	protected T customEntryHandling( T current, Element element ) throws ConfigException {
+		log.trace( "element is null? : {}", element );
 		return current;
 	}
 	
@@ -393,19 +396,19 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 		}
 	}
 	
-	private void mainConfigElement( Collection<T> listCurrent, String checkDuplicateId, String checkDuplicateUniversalId, String type, String beanMode, Element currentSchemaTag, String idList  ) throws ConfigException {
+	private void mainConfigElement( Collection<T> listCurrent, String checkDuplicateUniversalId, String type, String beanMode, Element currentSchemaTag, String idList  ) throws ConfigException {
 		String idSchema = currentSchemaTag.getAttribute( "id" );
 		if ( StringUtils.isNotEmpty( idSchema ) && CONFIG_CHECK_DUPLICATE_ID_FAIL.equalsIgnoreCase( checkDuplicateUniversalId ) ) {
 			if ( !this.getEntryIdCheck().add( idSchema ) ) {
 				throw new ConfigException( "Duplicate entry id found : "+idSchema );
 			}
-		} else if ( StringUtils.isNotEmpty( idSchema ) && CONFIG_CHECK_DUPLICATE_ID_FAIL_ON_SET.equalsIgnoreCase( checkDuplicateUniversalId ) ) {
-			if ( listCurrent instanceof ListMapStringKey ) {
-				ListMapStringKey<?> listCheck = ((ListMapStringKey<?>)listCurrent);
-				if ( listCheck.getMap().containsKey( idSchema ) ) {
-					throw new ConfigException( "Duplicate entry id on set found : "+idSchema );
-				}	
-			}
+		} else if ( StringUtils.isNotEmpty( idSchema ) 
+				&& CONFIG_CHECK_DUPLICATE_ID_FAIL_ON_SET.equalsIgnoreCase( checkDuplicateUniversalId ) 
+				&& (listCurrent instanceof ListMapStringKey) ) {
+			ListMapStringKey<?> listCheck = ((ListMapStringKey<?>)listCurrent);
+			if ( listCheck.getMap().containsKey( idSchema ) ) {
+				throw new ConfigException( "Duplicate entry id on set found : "+idSchema );
+			}	
 		}
 		this.mainConfigElemenType(listCurrent, type, beanMode, currentSchemaTag, idList, idSchema);
 	}
@@ -441,6 +444,8 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 		}
 		
 		NodeList schemaListTag = tag.getElementsByTagName( dataListElementName );
+		int count = 0;
+		int countId = 0;
 		for ( int k=0; k<schemaListTag.getLength(); k++ ) {
 			Element currentListTag = (Element) schemaListTag.item( k );
 			Collection<T> listCurrent = this.newCollection( typeSample, listType, tag, currentListTag );
@@ -454,15 +459,18 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 					this.getLogger().warn( "["+this.getClass().getSimpleName()+"]"+message );
 				}
 			}
-			this.getLogger().info( "add "+idList+" -> "+listCurrent );
+			this.getLogger().debug( "add {} -> {}", idList, listCurrent );
 			this.dataMap.put( idList , listCurrent );
 			this.orderedId.add( idList );
 			this.mainConfigExtends(currentListTag, listCurrent);
 			for ( int i=0; i<schemaIt.getLength(); i++ ) {
 				Element currentSchemaTag = (Element) schemaIt.item( i );
-				this.mainConfigElement(listCurrent, checkDuplicateId, checkDuplicateUniversalId, type, beanMode, currentSchemaTag, idList);
+				this.mainConfigElement(listCurrent, checkDuplicateUniversalId, type, beanMode, currentSchemaTag, idList);
+				countId++;
 			}
+			count++;
 		}
+		this.getLogger().info( "Total elements added, catalog : {}, item : {}", count, countId );
 	}
 
 	private void handleModules( Element tag ) throws ConfigException {

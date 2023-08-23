@@ -18,13 +18,15 @@ public class FactoryTypeHelper<T> implements Serializable {
 	
 	private static Logger logger = LoggerFactory.getLogger( FactoryTypeHelper.class );
 	
-	private FactoryTypeHelper() {
-		
+	private Class<?> returnType;
+	
+	private FactoryTypeHelper( Class<?> returnType ) {
+		this.returnType = returnType;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public T createHelper( FactoryType factoryType ) throws ConfigException {
-		logger.info( "factoryType : {} , resultType : {}" );
+		logger.info( "factoryType : {} , resultType : {}", factoryType, this.returnType );
 		T res = null;
 		try {
 			res = (T)ClassHelper.newInstance( factoryType.getType() );
@@ -39,7 +41,7 @@ public class FactoryTypeHelper<T> implements Serializable {
 	}
 	
 	public static <T> FactoryTypeHelper<T> newInstance( Class<? extends T> ct ) {
-		return new FactoryTypeHelper<T>();
+		return new FactoryTypeHelper<T>( ct );
 	}
 	
 }

@@ -7,6 +7,8 @@ import org.fugerit.java.core.util.collection.SortedProperties;
 
 public class ConfigStoreUtils {
 
+	private ConfigStoreUtils() {}
+	
     public static ConfigStoreMap fromProperties( Properties props ) {
         ConfigStoreMapDefault map = new ConfigStoreMapDefault();
         for ( Object k : props.keySet() ) {
