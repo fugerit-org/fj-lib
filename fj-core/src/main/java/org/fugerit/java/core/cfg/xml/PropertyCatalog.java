@@ -93,7 +93,7 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 		if ( this.pathParamProvider == null ) {
 			String pathParamProviderType = this.getGeneralProps().getProperty( PROP_PATH_PARAM_PROVIDER );
 			if ( pathParamProviderType != null ) {
-				this.getLogger().info( PROP_PATH_PARAM_PROVIDER+" -> "+pathParamProviderType );
+				this.getLogger().info( "{} -> {}", PROP_PATH_PARAM_PROVIDER, pathParamProviderType );
 				try {
 					this.pathParamProvider = (ParamProvider) ClassHelper.newInstance( pathParamProviderType );
 				} catch (Exception e) {

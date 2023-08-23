@@ -15,13 +15,12 @@ import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class PropertyHolder extends BasicIdConfigType {
 
-	private final static Logger logger = LoggerFactory.getLogger( PropertyHolder.class );
-	
 	public static final String UNSAFE_TRUE = "true";
 	public static final String UNSAFE_FALSE = "false";
 	public static final String UNSAFE_WARN = "warn";
@@ -123,29 +122,33 @@ public class PropertyHolder extends BasicIdConfigType {
 			}
 			unsafeMessage = path + ", " + unsafe + ", " + e;
 			if ( UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
-				logger.warn( "Error loading unsafe property holder : "+unsafeMessage );	
+				log.warn( "Error loading unsafe property holder : {}", unsafeMessage );	
 			} else {
-				logger.error( "WARNING! Error loading unsafe property holder : "+unsafeMessage, e );
+				log.error( "WARNING! Error loading unsafe property holder :{}", unsafeMessage, e );
 			}
 		} else {
 			throw new IOException( "Property holder load error : "+path, e );
 		}
 	}
 	
+	private static void loadInner( Properties props, String mode, String path, String xml, String unsafe, String usafeMessage, String encoding ) throws IOException {
+		if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
+			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( path ) ) {
+				loadWorker( is , props, BooleanUtils.isTrue( xml ), encoding );
+			} catch (Exception e) {
+				throw new IOException( e );
+			}
+		} else {
+			try ( InputStream is = new FileInputStream( new File( path ) ) ) {
+				loadWorker( is , props, BooleanUtils.isTrue( xml ), encoding );
+			}
+		}
+	}
+	
 	private static Properties load( String mode, String path, String xml, String unsafe, String usafeMessage, String encoding ) throws IOException {
 		Properties props = new Properties();
 		try {
-			if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
-				try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( path ) ) {
-					loadWorker( is , props, BooleanUtils.isTrue( xml ), encoding );
-				} catch (Exception e) {
-					throw new IOException( e );
-				}
-			} else {
-				try ( InputStream is = new FileInputStream( new File( path ) ) ) {
-					loadWorker( is , props, BooleanUtils.isTrue( xml ), encoding );
-				}
-			}	
+			loadInner(props, mode, path, xml, unsafe, usafeMessage, encoding);
 		} catch ( Exception e ) {
 			handleException(path, e, unsafe, usafeMessage);
 		}
@@ -165,7 +168,7 @@ public class PropertyHolder extends BasicIdConfigType {
 					String oldValue = multi.getProperty( k );
 					String newValue = currentProps.getProperty( k );
 					if ( oldValue != null ) {
-						logger.info( "Override property '{}' from '{}' to '{}'", k, oldValue, newValue );
+						log.info( "Override property '{}' from '{}' to '{}'", k, oldValue, newValue );
 					}
 					multi.setProperty( k , newValue );
 				}
