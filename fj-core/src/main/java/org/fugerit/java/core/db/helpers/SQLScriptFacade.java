@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 
 public class SQLScriptFacade {
 	
+	private SQLScriptFacade() {}
+	
 	public static String[] parseScript( String script ) throws IOException {
 		return parseSqlCommands(removeSqlComments(script));
 	}

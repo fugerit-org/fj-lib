@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 public class TimeHelper {
 
+	private TimeHelper() {}
+	
 	public static Date nowDate() {
 		return new Date( System.currentTimeMillis() );
 	}

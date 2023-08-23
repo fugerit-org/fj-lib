@@ -94,7 +94,7 @@ public class MetaDataUtils {
 		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList, TYPES_DEFAULT );	 
 	}
 	
-	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList, String[] types ) throws Exception {
+	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList, String[] types ) throws DAOException {
 		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList, types );	 
 	}
 	
@@ -128,7 +128,7 @@ public class MetaDataUtils {
 		return createModel( new MetaDataUtilsContext(cf, catalog, schema, jdbcAdaptor, tableNameList, types) );
 	}	
 	
-	private static void handleCurrentTableColumns( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException {
+	private static void handleCurrentTableColumns( MetaDataUtilsContext context, TableModel tableModel, DatabaseMetaData dbmd, Connection conn ) throws SQLException, DAOException {
 		JdbcAdaptor jdbcAdaptor = context.getJdbcAdaptor();
 		TableId tableId = tableModel.getTableId();
 		try ( ResultSet columnsRS = dbmd.getColumns( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), null ) ) {
@@ -170,7 +170,7 @@ public class MetaDataUtils {
 		}
 	}
 
-	private static void handleCurrentTableIndex( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException{
+	private static void handleCurrentTableIndex( TableModel tableModel, DatabaseMetaData dbmd, int mode ) throws SQLException, DAOException{
 		if ( mode == MODE_STRICT ) {
 			try ( ResultSet pkRS = dbmd.getPrimaryKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() ) ) {
 				IndexModel primaryKey = new IndexModel();
@@ -236,16 +236,16 @@ public class MetaDataUtils {
 		JdbcAdaptor jdbcAdaptor = context.getJdbcAdaptor();
 		TableId tableId = tableModel.getTableId();
 		
-		LogFacade.getLog().debug( "TABLE EX : "+tableId);
+		log.debug( "TABLE EX : {}", tableId);
 		String tableComment = tableRS.getString( "REMARKS" );
 		if ( tableComment == null || tableComment.length() == 0 ) {
 			tableComment = jdbcAdaptor.getTableComment( tableId );
 		}
 		tableModel.setComment( tableComment );
-		handleCurrentTableColumns(context, tableModel, tableRS, dbmd, mode, conn);
-		log.info( "Current table : "+tableId );
+		handleCurrentTableColumns(context, tableModel, dbmd, conn);
+		log.info( "Current table : {}", tableId );
 		
-		handleCurrentTableIndex(context, tableModel, tableRS, dbmd, mode, conn);
+		handleCurrentTableIndex( tableModel, dbmd, mode );
 		
 		handleCurrentTableStrict(context, tableModel, tableRS, dbmd, mode, conn);
 	}
@@ -362,8 +362,7 @@ class DefaulJdbcdaptor extends BasicLogObject implements JdbcAdaptor {
 
 	@Override
 	public String getColumnExtraInfo(TableId tableId, String columnName) throws DAOException {
-		this.getLogger().debug( "getColumnExtraInfo tableId    : "+tableId );
-		this.getLogger().debug( "getColumnExtraInfo columnName : "+columnName );
+		this.getLogger().debug( "getColumnExtraInfo tableId    : {}, columnName : {}", tableId, columnName );
 		return "";
 	}
 	
@@ -380,8 +379,7 @@ class MysqlJdbcAdatapor extends DefaulJdbcdaptor {
 	@Override
 	public String getColumnExtraInfo(TableId tableId, String columnName) throws DAOException {
 		String info = "";
-		this.getLogger().debug( "getColumnExtraInfo tableId    : "+tableId );
-		this.getLogger().debug( "getColumnExtraInfo columnName : "+columnName );
+		this.getLogger().debug( "getColumnExtraInfo tableId    : {}, columnName : {}", tableId, columnName );
 		
 		try ( Connection conn = this.getConnectionFactory().getConnection();
 				PreparedStatement pstm = conn.prepareStatement( SQL ) ) {

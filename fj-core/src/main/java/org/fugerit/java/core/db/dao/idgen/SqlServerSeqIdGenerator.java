@@ -37,7 +37,7 @@ public class SqlServerSeqIdGenerator extends BasicSeqIdGenerator {
 		} catch (Exception e) {
 			throw ( new DAOException( e ) );
 		}
-		this.getLogger().debug( "generateId end : "+id );
+		this.getLogger().debug( "generateId end : {}", id );
 		return id;
 	}
 
