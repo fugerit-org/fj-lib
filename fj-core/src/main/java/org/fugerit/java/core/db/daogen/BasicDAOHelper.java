@@ -1,6 +1,5 @@
 package org.fugerit.java.core.db.daogen;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,24 +23,20 @@ import org.slf4j.Logger;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 
+ * <p>BasicDAOHelper for database operation.</p>
  * 
  * @author	fugerit
  *
  * @param <T>	the type returned by this DAOHelper
+ * 
  */
 @Slf4j
-public class BasicDAOHelper<T> implements Serializable, LogObject {
+public class BasicDAOHelper<T> implements LogObject {
 	
 	@Override
 	public Logger getLogger() {
 		return log;
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2430439741412903230L;
 
 	public static String fieldListToString( FieldList fl ) {
 		StringBuilder buffer = new StringBuilder();
@@ -57,7 +52,7 @@ public class BasicDAOHelper<T> implements Serializable, LogObject {
 		return buffer.toString();
 	}
 	
-	private transient DAOContext daoContext;
+	private DAOContext daoContext; 
 
 	public BasicDAOHelper( DAOContext daoContext) {
 		this.daoContext =daoContext;

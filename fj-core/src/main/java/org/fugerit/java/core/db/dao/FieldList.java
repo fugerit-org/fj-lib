@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.db.dao;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +43,25 @@ public class FieldList implements Serializable {
 	 */
 	private static final long serialVersionUID = 2575285768771302903L;
 
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	private FieldFactory fieldFactory;
 	
-    private transient List<Field> list;
+    private List<Field> list;
     
     public Field getField(int index) {
         return (Field)this.list.get(index);

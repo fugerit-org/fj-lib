@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.cfg.helpers;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Properties;
@@ -53,6 +54,22 @@ public abstract class AbstractConfigurableObject implements ConfigurableObject, 
 	 */
 	private static final long serialVersionUID = -5893401779153563982L;
 
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	protected static Logger logger = log; 	// for backward compatibility
 	
 	/* (non-Javadoc)
@@ -93,7 +110,7 @@ public abstract class AbstractConfigurableObject implements ConfigurableObject, 
 
 	@Setter(AccessLevel.PROTECTED)
 	@Getter(AccessLevel.PROTECTED)
-	private transient ConfigProvider configProvider;
+	private ConfigProvider configProvider;
 	
 	public static void setConfigProvider( ConfigProvider provider, AbstractConfigurableObject config ) {
 		 config.setConfigProvider(provider) ;

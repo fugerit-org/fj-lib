@@ -31,6 +31,22 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 	 * 
 	 */
 	private static final long serialVersionUID = -8955747963894569155L;
+	
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
 
 	public static PropertyCatalog loadConfigSafe( String path ) {
 		PropertyCatalog result = new PropertyCatalog();
@@ -71,7 +87,7 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 	
 	private static ParamFinder PARAM_FINDER = ParamFinder.newFinder();
 	
-	private transient ParamProvider pathParamProvider;
+	private ParamProvider pathParamProvider;
 	
 	private ParamProvider getParamProvider() throws ConfigException {
 		if ( this.pathParamProvider == null ) {

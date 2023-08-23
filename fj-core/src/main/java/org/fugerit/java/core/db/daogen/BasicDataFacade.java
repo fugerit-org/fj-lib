@@ -1,5 +1,6 @@
 package org.fugerit.java.core.db.daogen;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 
 import org.fugerit.java.core.db.dao.DAOException;
@@ -25,13 +26,29 @@ public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 	 */
 	private static final long serialVersionUID = 5321073652254215522L;
 
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	private String tableName;
 	
 	private String queryView;
 
-	private transient RSExtractor<T> rse;
+	private RSExtractor<T> rse;
 	
-	private transient BasicSeqIdGenerator idGenerator;
+	private BasicSeqIdGenerator idGenerator;
 	
 	public BigDecimal generateId( DAOContext context ) throws DAOException {
 		BigDecimal id = null;
