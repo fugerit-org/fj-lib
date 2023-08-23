@@ -44,6 +44,8 @@ public class EncodingCheck {
 	 */
 	public static final int READ_BUFFER_SIZE = 1024 * 1024;
 	
+	private EncodingCheck() {}
+	
 	/**
 	 * <p>Check encoding from an input stream.
 	 * Reading is buffered.

@@ -36,6 +36,8 @@ import org.fugerit.java.core.cfg.CloseHelper;
  */
 public class ConnectionFacade {
 
+	private ConnectionFacade() {}
+	
 	private static Map<String, ConnectionFactory> cfMap = new HashMap<String, ConnectionFactory>();
 	
 	/**

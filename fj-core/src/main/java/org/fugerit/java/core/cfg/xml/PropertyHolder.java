@@ -116,22 +116,22 @@ public class PropertyHolder extends BasicIdConfigType {
 	
 	private static void handleException( String path, Exception e, String unsafe, String usafeMessage ) throws IOException {
 		if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) || UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
-			String unsafeMessage = " ";
-			if ( StringUtils.isNotEmpty( unsafeMessage ) ) {
-				unsafeMessage+= unsafeMessage+" ";
+			String unsafeMessafeWork = usafeMessage+" ";
+			if ( StringUtils.isNotEmpty( unsafeMessafeWork ) ) {
+				unsafeMessafeWork+= unsafeMessafeWork+" ";
 			}
-			unsafeMessage = path + ", " + unsafe + ", " + e;
+			unsafeMessafeWork = path + ", " + unsafe + ", " + e;
 			if ( UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
-				log.warn( "Error loading unsafe property holder : {}", unsafeMessage );	
+				log.warn( "Error loading unsafe property holder : {}", unsafeMessafeWork );	
 			} else {
-				log.error( "WARNING! Error loading unsafe property holder :{}", unsafeMessage, e );
+				log.error( "WARNING! Error loading unsafe property holder :{}", unsafeMessafeWork, e );
 			}
 		} else {
 			throw new IOException( "Property holder load error : "+path, e );
 		}
 	}
 	
-	private static void loadInner( Properties props, String mode, String path, String xml, String unsafe, String usafeMessage, String encoding ) throws IOException {
+	private static void loadInner( Properties props, String mode, String path, String xml, String encoding ) throws IOException {
 		if ( MODE_CLASS_LOADER.equalsIgnoreCase( mode ) || MODE_CL.equalsIgnoreCase( mode ) ) {
 			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( path ) ) {
 				loadWorker( is , props, BooleanUtils.isTrue( xml ), encoding );
@@ -148,7 +148,7 @@ public class PropertyHolder extends BasicIdConfigType {
 	private static Properties load( String mode, String path, String xml, String unsafe, String usafeMessage, String encoding ) throws IOException {
 		Properties props = new Properties();
 		try {
-			loadInner(props, mode, path, xml, unsafe, usafeMessage, encoding);
+			loadInner(props, mode, path, xml, encoding);
 		} catch ( Exception e ) {
 			handleException(path, e, unsafe, usafeMessage);
 		}

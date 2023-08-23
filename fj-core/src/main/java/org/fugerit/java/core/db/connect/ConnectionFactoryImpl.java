@@ -33,13 +33,15 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.metadata.DataBaseInfo;
 import org.fugerit.java.core.log.BasicLogObject;
-import org.fugerit.java.core.log.LogFacade;
 import org.fugerit.java.core.xml.dom.DOMUtils;
 import org.fugerit.java.core.xml.dom.SearchDOM;
 import org.w3c.dom.Element;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -47,6 +49,7 @@ import org.w3c.dom.Element;
  * 
  * @author Fugerit
  */
+@Slf4j
 public abstract class ConnectionFactoryImpl extends BasicLogObject implements ConnectionFactory {
 	
 	protected void init() throws DAOException {
@@ -166,9 +169,9 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 			Properties props = DOMUtils.attributesToProperties( currentEntryTag );
 			String id = props.getProperty( "id" );
 			if ( id == null || id.trim().length() == 0 ) {
-				throw new Exception( "Connection factory id must be defined." );
+				throw new ConfigRuntimeException( "Connection factory id must be defined." );
 			} else if ( config.getCfMap().containsKey( id ) ) {
-				throw new Exception( "Connection factory id already used : '"+id+"'" );
+				throw new ConfigRuntimeException( "Connection factory id already used : '"+id+"'" );
 			} else {
 				config.getCfMap().put( id , newInstance( props ) );
 			}
@@ -181,14 +184,17 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * 
 	 * @param cf		the ConnectionFactory
 	 * @return			a string describing the driver
-	 * @throws Exception	in case of issues
+	 * @throws DAOException	in case of issues
 	 */
-	public static String getDriverInfo( ConnectionFactory cf ) throws Exception {
+	public static String getDriverInfo( ConnectionFactory cf ) throws DAOException {
 		String result = "";
-		Connection conn = cf.getConnection();
-		DatabaseMetaData databaseMetaData = conn.getMetaData();
-		result = databaseMetaData.getDriverName()+" "+databaseMetaData.getDriverVersion();
-		conn.close();
+		try (Connection conn = cf.getConnection()) {
+			DatabaseMetaData databaseMetaData = conn.getMetaData();
+			result = databaseMetaData.getDriverName()+" "+databaseMetaData.getDriverVersion();
+		} catch (Exception e) {
+			throw DAOException.convertExMethod( "getDriverInfo", e );
+		}
+		
 		return result;
 	}
 	
@@ -234,7 +240,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		ConnectionFactory cf = null;
 		String prefix = props.getProperty( PROP_CF_MODE_DC_PREFIX, propsPrefix );
 		String mode = props.getProperty( getParamName( prefix, PROP_CF_MODE ) );
-		LogFacade.getLog().info( "ConnectionFactory.newInstance() mode : "+mode );
+		log.info( "ConnectionFactory.newInstance() mode : {}", mode );
 		if ( PROP_CF_MODE_DC.equalsIgnoreCase( mode ) ) {
 			if ( "true".equalsIgnoreCase( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED ) ) ) ) {
 				int sc = Integer.parseInt( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED_SC ), "3" ) );
@@ -309,10 +315,10 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	public static ConnectionFactory newInstance(String drv, String url, String usr, String pwd, ClassLoader cl) throws DAOException {
 		ConnectionFactory connectionFactory = null;
 		try {
-			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection driver   : "+drv );
-			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection url      : "+url );
-			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection username : "+usr );
-			LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() direct connection password : ******" );
+			log.info( "ConnectionFactoryImpl.newInstance() direct connection driver   : {}", drv );
+			log.info( "ConnectionFactoryImpl.newInstance() direct connection url      : {}", url );
+			log.info( "ConnectionFactoryImpl.newInstance() direct connection username : {}", usr );
+			log.info( "ConnectionFactoryImpl.newInstance() direct connection password : ******" );
 			Driver driver = null;
 			if ( cl != null ) {
 				driver = (Driver)cl.loadClass( drv ).getDeclaredConstructor().newInstance();
@@ -334,7 +340,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * @throws DAOException		in case of issues
 	 */
 	public static ConnectionFactoryImpl newInstance(String dsName) throws DAOException {
-		LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() data source name : "+dsName );
+		log.info( "ConnectionFactoryImpl.newInstance() data source name : {}", dsName );
 		return (new DSConnectionFactory(dsName));
 	}
 
@@ -346,7 +352,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * @throws DAOException		in case of issues
 	 */
 	public static ConnectionFactoryImpl newInstance(DataSource ds) throws DAOException {
-		LogFacade.getLog().info( "ConnectionFactoryImpl.newInstance() data source : "+ds );
+		log.info( "ConnectionFactoryImpl.newInstance() data source : {}", ds );
 		return (new DS2ConnectionFactory(ds));
 	}	
 	
@@ -407,6 +413,7 @@ class DirectConnectionFactory extends ConnectionFactoryImpl {
  * @author Fugerit
  *
  */
+@Slf4j
 class DSConnectionFactory extends ConnectionFactoryImpl {
 	
 	@Override
@@ -430,7 +437,7 @@ class DSConnectionFactory extends ConnectionFactoryImpl {
 	private DataSource source;	
 	
 	public DSConnectionFactory(String dsName) throws DAOException  {
-		this.getLogger().info( "INIT START, dsName="+dsName );
+		log.info( "INIT START, dsName={}", dsName );
 		this.dsName = dsName;
 		try {
 			Context ctx = new InitialContext();
@@ -440,7 +447,7 @@ class DSConnectionFactory extends ConnectionFactoryImpl {
 		} catch (Exception e) {
             throw (new DAOException("Fatal Error", e));
         }
-		this.getLogger().info( "INIT END, source="+source );
+		log.info( "INIT END, source={}", source );
 	}	
 	
 }
