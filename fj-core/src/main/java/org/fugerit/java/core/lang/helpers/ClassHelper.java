@@ -88,7 +88,7 @@ public class ClassHelper {
 		return is;
 	}
 	
-	public static InputStream loadFromDefaultClassLoader( String path ) throws Exception {
+	public static InputStream loadFromDefaultClassLoader( String path ) {
 		return getDefaultClassLoader().getResourceAsStream( path ); 
 	}
 	

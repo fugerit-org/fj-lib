@@ -4,6 +4,8 @@ import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public class CheckEmptyHelper {
 
+	private CheckEmptyHelper() {}
+	
 	/**
 	 * Check if a object is empty.
 	 * 

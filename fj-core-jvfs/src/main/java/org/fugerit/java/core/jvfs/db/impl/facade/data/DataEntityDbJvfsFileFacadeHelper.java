@@ -33,7 +33,7 @@ public class DataEntityDbJvfsFileFacadeHelper extends BasicDataFacade<ModelDbJvf
 
 	private static final long serialVersionUID = 436376053777L;
 
-	private final static String TABLE_NAME = "DB_JVFS_FILE";
+	private static final String TABLE_NAME = "DB_JVFS_FILE";
 
 	public DataEntityDbJvfsFileFacadeHelper() {
 		super( TABLE_NAME, DbJvfsFileRSE.DEFAULT, null );
@@ -43,13 +43,13 @@ public class DataEntityDbJvfsFileFacadeHelper extends BasicDataFacade<ModelDbJvf
 		super( tableName, DbJvfsFileRSE.DEFAULT, queryView );
 	}
 
- 	public final static String COL_FILE_NAME = "FILE_NAME";
- 	public final static String COL_PARENT_PATH = "PARENT_PATH";
- 	public final static String COL_FILE_PROPS = "FILE_PROPS";
- 	public final static String COL_CREATION_TIME = "CREATION_TIME";
- 	public final static String COL_UPDATE_TIME = "UPDATE_TIME";
- 	public final static String COL_FILE_SIZE = "FILE_SIZE";
- 	public final static String COL_FILE_CONTENT = "FILE_CONTENT";
+ 	public static final String COL_FILE_NAME = "FILE_NAME";
+ 	public static final String COL_PARENT_PATH = "PARENT_PATH";
+ 	public static final String COL_FILE_PROPS = "FILE_PROPS";
+ 	public static final String COL_CREATION_TIME = "CREATION_TIME";
+ 	public static final String COL_UPDATE_TIME = "UPDATE_TIME";
+ 	public static final String COL_FILE_SIZE = "FILE_SIZE";
+ 	public static final String COL_FILE_CONTENT = "FILE_CONTENT";
 
 	/* loadAll( context ) is inherited from BasicDataFacade */
 

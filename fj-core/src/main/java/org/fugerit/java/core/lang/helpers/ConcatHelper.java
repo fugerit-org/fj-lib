@@ -22,6 +22,8 @@ package org.fugerit.java.core.lang.helpers;
 
 public class ConcatHelper {
 
+	private ConcatHelper() {}
+	
 	public static final String CONCAT_SEPARATOR_DEFAULT = "/";
 	
 	public static String convertNullToBlank( String v ) {

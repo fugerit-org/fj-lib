@@ -26,6 +26,8 @@ package org.fugerit.java.core.lang.compare;
  */
 public class ComparePrimitiveFacade {
 
+	private ComparePrimitiveFacade() {}
+	
 	/**
 	 * <p>Check if a target value is among one or more values.</p>
 	 * 

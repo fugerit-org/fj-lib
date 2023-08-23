@@ -8,6 +8,8 @@ package org.fugerit.java.core.lang.helpers;
  */
 public class BooleanUtils {
 
+	private BooleanUtils() {}
+	
 	/**
 	 * Constant for "true" String
 	 */

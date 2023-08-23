@@ -4,6 +4,8 @@ import java.util.Collection;
 
 public class CollectionUtils {
 
+	private CollectionUtils() {}
+	
 	/**
 	 * Check if a collection is <code>null</code> or empty.
 	 * 
