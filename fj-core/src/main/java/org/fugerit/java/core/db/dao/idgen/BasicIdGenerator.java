@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 
 public abstract class BasicIdGenerator extends BasicLogObject implements IdGenerator {
 	
-	public BasicIdGenerator() {
+	protected BasicIdGenerator() {
 		this.autoCloseConnection = false;
 	}
 	

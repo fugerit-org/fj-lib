@@ -46,7 +46,7 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 		DAOID id = null;
 		try {
 			String sql = this.createSequenceQuery();
-			this.getLogger().debug( "generateId query : '"+sql+"'" );
+			this.getLogger().debug( "generateId query : '{}'", sql );
 			try ( Statement stm = conn.createStatement();
 					ResultSet rs = stm.executeQuery( sql ) ) {
 				if ( rs.next() ) {
@@ -60,7 +60,7 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 				CloseDAOHelper.close( conn );
 			}
 		}
-		this.getLogger().debug( "generateId end : "+id );
+		this.getLogger().debug( "generateId end : {}", id );
 		return id;
 	}
 

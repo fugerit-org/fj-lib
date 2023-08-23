@@ -64,8 +64,8 @@ public class LoadResult<T> extends BasicLogObject {
     	long count = 0;
 	    this.getLogger().debug("start START");
 	    this.query = this.basicDAO.queryFormat( query, "LoadResult.startCount" );
-	    this.getLogger().debug("start fields        : '"+fields.size()+"'");
-        this.getLogger().debug("start RSExtractor   : '"+re+"'");
+	    this.getLogger().debug("start fields        : '{}'", fields.size());
+        this.getLogger().debug("start RSExtractor   : '{}'", re);
         try ( Connection conn = this.basicDAO.getConnection();
         		PreparedStatement ps = conn.prepareStatement( this.getSelectCount() )) {
         	this.basicDAO.setAll(ps, fields);
@@ -85,8 +85,8 @@ public class LoadResult<T> extends BasicLogObject {
     public void start() throws DAOException {
 	    this.getLogger().debug("start START");
 		query = this.basicDAO.queryFormat( query, "LoadResult.start" );
-        this.getLogger().debug("start fields        : '"+fields.size()+"'");
-        this.getLogger().debug("start RSExtractor   : '"+re+"'");
+        this.getLogger().debug("start fields        : '{}'", fields.size());
+        this.getLogger().debug("start RSExtractor   : '{}'", re);
         this.conn = this.basicDAO.getConnection();
         try {
             this.ps = conn.prepareStatement( query );
