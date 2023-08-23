@@ -2,17 +2,18 @@ package org.fugerit.java.core.cfg.xml;
 
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.reflect.MethodHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class XmlBeanHelper {
 
-	private static final Logger logger = LoggerFactory.getLogger( XmlBeanHelper.class );
+	private XmlBeanHelper() {}
 	
 	public static final String MODE_XML_ATTRIBUTES = "bean-xml-attributes";
 	
@@ -56,7 +57,7 @@ public class XmlBeanHelper {
 		try {
 			setFromElement( bean , config, mode );
 		} catch (Exception e) {
-			logger.warn( "Cannot set all parameters from bean, usually safe to ignore : "+e );
+			log.warn( "Cannot set all parameters from bean, usually safe to ignore : {}", e );
 		}
 	}
 	

@@ -25,6 +25,8 @@ import java.io.FileInputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
+
 /**
  * <p>Simple arg parsing utility.</p>
  * 
@@ -33,6 +35,8 @@ import java.util.Properties;
  */
 public class ArgUtils {
 
+	private ArgUtils() {}
+	
 	/**
 	 * Prefix for all arguments
 	 */
@@ -132,7 +136,7 @@ public class ArgUtils {
 				}
 				fis.close();	
 			} catch (Exception e) {
-				throw new RuntimeException( e );
+				throw ConfigRuntimeException.convertEx( e );
 			}
 		}
 	}

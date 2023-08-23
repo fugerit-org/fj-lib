@@ -28,8 +28,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>Library to check if and encoding is respected.</p>
@@ -37,10 +36,9 @@ import org.slf4j.LoggerFactory;
  * @author Fugerit
  *
  */
+@Slf4j
 public class EncodingCheck {
 
-	private static final Logger logger = LoggerFactory.getLogger(EncodingCheck.class);
-	
 	/**
 	 * Buffer size for reading the input
 	 */
@@ -73,7 +71,7 @@ public class EncodingCheck {
 			result = checkEncoding( checkData , encoding );
 			read = is.read( buffer );
 		}
-		logger.debug( "totalSize : "+totalSize );
+		log.debug( "totalSize : {}", totalSize );
         return result;
 	}
 	
@@ -94,7 +92,7 @@ public class EncodingCheck {
             decoder.decode(buffer);
             result = true;
         } catch (final CharacterCodingException e) {
-        	logger.debug( "Wrong encoding : "+e );
+        	log.debug( "Wrong encoding : {}", e.toString() );
         	result = false;
         }
         return result;
