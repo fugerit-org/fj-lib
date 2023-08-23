@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 public class JavaVersionHelper {
 
+	private JavaVersionHelper() {}
+	
 	public static final int MAJOR_VERSION_JAVA_8 = 8;
 	
 	public static final int MAJOR_VERSION_JAVA_9 = 9;
@@ -13,6 +15,8 @@ public class JavaVersionHelper {
 	public static final int MAJOR_VERSION_JAVA_10 = 10;
 	
 	public static final int MAJOR_VERSION_JAVA_11 = 11;
+	
+	public static final int MAJOR_VERSION_JAVA_17 = 17;
 	
 	public static final int MAJOR_VERSION_FJ_CORE_REF = MAJOR_VERSION_JAVA_8;	// current reference version for fj-core library!
 	

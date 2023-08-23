@@ -17,7 +17,7 @@ public class ExHandlerDefault implements ExHandler, Serializable {
 	public static final ExHandler INSTANCCE = new ExHandlerDefault();
 	
 	protected void worker( String method, Exception e ) {
-		logger.error( "method:{}, exception:{}", method, String.valueOf( e ) );
+		logger.error( "method:{}, exception:{}", method, (e!=null) ? e.toString() : null );
 	}
 	
 	@Override
