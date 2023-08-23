@@ -105,6 +105,21 @@ public class BasicDAOHelper<T> implements LogObject {
 		log.debug("queryId:{}, loadAll END list : '{}'", queryId, l.size());
 	}
 	
+	private int updateWorker( String queryId, FieldList fields, String query , long startTime) throws DAOException {
+		int res = 0;
+		Connection conn = this.daoContext.getConnection();
+		try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
+			DAOHelper.setAll( queryId, ps, fields , log );
+			long executeStart = System.currentTimeMillis();
+			res = ps.executeUpdate();
+			log.debug("queryId:'{}', update query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(executeStart, System.currentTimeMillis()) );
+			log.debug("queryId:'{}', update total time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(startTime, System.currentTimeMillis()) );
+		} catch (SQLException e) {
+			throw (new DAOException( e.getMessage()+"[query:"+query+",queryId:"+queryId+"]", e ));
+		}
+		return res;
+	}
+	
 	public int update( QueryHelper queryHelper ) throws DAOException {
 		int res = 0;
 		try {
@@ -114,16 +129,7 @@ public class BasicDAOHelper<T> implements LogObject {
 			String queryId = DAOUtilsNG.createQueryId(startTime);
 			log.debug( "queryId:'{}', update sql           : '{}'", queryId, query );
 			log.debug( "queryId:'{}', update fields        : '{}'", queryId, fields.size() );
-			Connection conn = this.daoContext.getConnection();
-			try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
-				DAOHelper.setAll( queryId, ps, fields , log );
-				long executeStart = System.currentTimeMillis();
-				res = ps.executeUpdate();
-				log.debug("queryId:'{}', update query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(executeStart, System.currentTimeMillis()) );
-				log.debug("queryId:'{}', update total time : '{}'", queryId, CheckpointUtils.formatTimeDiffMillis(startTime, System.currentTimeMillis()) );
-			} catch (SQLException e) {
-				throw (new DAOException( e.getMessage()+"[query:"+query+",queryId:"+queryId+"]", e ));
-			}
+			this.updateWorker(queryId, fields, queryId, startTime);
 			log.debug("update END res : '{}'", res );
 		} catch (DAOException e) {
 			throw new DAOException( e );

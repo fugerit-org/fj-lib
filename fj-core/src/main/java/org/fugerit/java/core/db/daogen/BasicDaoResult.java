@@ -3,6 +3,7 @@ package org.fugerit.java.core.db.daogen;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.util.result.BasicResult;
 
 public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
@@ -88,7 +89,7 @@ public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
 		if ( this.getList().size() == 1 ) {
 			res = this.getList().get( 0 );
 		} else if ( this.getList().size() > 1 ) {
-			throw new RuntimeException( "Multiple results : "+this.getList().size() );
+			throw new DAORuntimeException( "Multiple results : "+this.getList().size() );
 		}
 		return res;
 	}

@@ -1,6 +1,7 @@
 package org.fugerit.java.core.jvfs.db.impl.facade.data;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.DAOUtilsNG;
@@ -24,7 +25,7 @@ import org.fugerit.java.core.log.LogFacade;
  */
 public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper implements EntityDbJvfsFileFacade {
 
-	private int actualRename( boolean resetAutocommit, Connection conn, PathDescriptor descriptor1, PathDescriptor descriptor2, String renameFileSql, JFile file, JFile newFile ) throws Exception {
+	private int actualRename( boolean resetAutocommit, Connection conn, PathDescriptor descriptor1, PathDescriptor descriptor2, String renameFileSql, JFile file, JFile newFile ) throws DAOException, SQLException {
 		int res = 0;
 		try {
 			res = DAOUtilsNG.update( conn , renameFileSql , 
@@ -47,7 +48,7 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 			conn.commit();
 		} catch (Exception e) {
 			conn.rollback();
-			throw e;
+			throw DAOException.convertEx( "actualRename" , e );
 		} finally {
 			if ( resetAutocommit ) {
 				conn.setAutoCommit( true );
@@ -87,7 +88,7 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 				}	
 			}
 		} catch (Exception e) {
-			throw new DAOException( e ); 
+			throw DAOException.convertEx( e ); 
 		}
 		return res;
 	}

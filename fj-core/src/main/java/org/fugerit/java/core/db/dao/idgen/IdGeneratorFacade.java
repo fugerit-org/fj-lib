@@ -14,6 +14,8 @@ import org.fugerit.java.core.util.PropsIO;
 
 public class IdGeneratorFacade {
 
+	private IdGeneratorFacade() {}
+	
 	private final static Properties SEQ_TYPES = PropsIO.loadFromClassLoaderSafe( "core/dao/idgen/seq_generator.properties" );
 	
 	public static BasicSeqIdGenerator sequenceGenerator( DAOContext context, String sequenceName ) throws DAOException {

@@ -66,12 +66,11 @@ public class LoadResult<T> extends BasicLogObject {
 	    this.query = this.basicDAO.queryFormat( query, "LoadResult.startCount" );
 	    this.getLogger().debug("start fields        : '{}'", fields.size());
         this.getLogger().debug("start RSExtractor   : '{}'", re);
-        try ( Connection conn = this.basicDAO.getConnection();
-        		PreparedStatement ps = conn.prepareStatement( this.getSelectCount() )) {
-        	this.basicDAO.setAll(ps, fields);
-        	try ( ResultSet rs = ps.executeQuery() ) {
-        		if ( rs.next() ) {
-                	count = rs.getLong( 1 );
+        try ( PreparedStatement psCount = this.conn.prepareStatement( this.getSelectCount() )) {
+        	this.basicDAO.setAll(psCount, fields);
+        	try ( ResultSet rsCount = psCount.executeQuery() ) {
+        		if ( rsCount.next() ) {
+                	count = rsCount.getLong( 1 );
                 }		
         	}
         } catch (SQLException e) {
