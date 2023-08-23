@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 public class MavenProps {
 
+	private MavenProps() {}
+	
 	private static final Logger logger= LoggerFactory.getLogger(MavenProps.class);
 	
 	public static final String VERSION = "version";
@@ -25,7 +27,7 @@ public class MavenProps {
 		try {
 			String path = "META-INF/maven/"+groupId+"/"+artifactId+"/pom.properties";
 			props = PropsIO.loadFromClassLoader( path );
-			logger.debug( "Maven Properties : "+props );
+			logger.debug( "Maven Properties : {}", props );
 		} catch (Throwable e) {
 			logger.warn( "Failed to load props : "+e, e );
 			props = new Properties();

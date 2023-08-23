@@ -6,9 +6,13 @@ import java.util.List;
 
 import org.fugerit.java.core.util.ObjectUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class HelperI18N {
 		
 	protected HelperI18N( String baseName, String defaultLanguge,  String... altLocale ) {
+		log.trace( "baseName:{}, defaultLanguage:{}", baseName, defaultLanguge );
 		this.defaultLanguage = defaultLanguge;
 		this.altLocale = altLocale;
 		if ( this.altLocale == null ) {

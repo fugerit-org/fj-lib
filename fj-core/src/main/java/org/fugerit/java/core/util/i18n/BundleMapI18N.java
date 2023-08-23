@@ -65,7 +65,7 @@ public class BundleMapI18N extends HelperI18N {
 				message = bundle.getString( key );
 			}
 		} catch (MissingResourceException mre) {
-			logger.warn( "Property not found : "+key+" (lang:"+lang+")" );
+			logger.warn( "Property not found : {} (lang:{})", key, lang );
 		}
 		return message;
 	}
