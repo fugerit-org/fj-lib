@@ -389,7 +389,7 @@ class MysqlJdbcAdatapor extends DefaulJdbcdaptor {
 			try ( ResultSet rs = pstm.executeQuery() ) {
 				if ( rs.next() ) {
 					info = rs.getString( "extra" );
-					this.getLogger().debug( "getColumnExtraInfo extra : "+info );
+					this.getLogger().debug( "getColumnExtraInfo extra : {}", info );
 				}	
 			}
 		} catch (SQLException e) {

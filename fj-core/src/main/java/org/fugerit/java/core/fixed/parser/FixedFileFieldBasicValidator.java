@@ -105,10 +105,10 @@ public abstract class FixedFileFieldBasicValidator extends XMLConfigurableObject
 	public abstract FixedFileFieldValidationResult checkField(String fieldLabel, String fieldValue, int rowNumber, int colNumber );
 
 	protected void configure( Element tag, String bundlePath ) throws ConfigException {
-		String id = tag.getAttribute( ATT_NAME_ID );
-		logger.info( "id "+ATT_NAME_ID+" -> '"+id+"'" );
+		String idLocal = tag.getAttribute( ATT_NAME_ID );
+		logger.info( "id {} -> '{}'", ATT_NAME_ID, idLocal );
 		String locale = tag.getAttribute( ATT_NAME_LOCALE );
-		logger.info( "locale "+ATT_NAME_LOCALE+" -> '"+locale+"'" );
+		logger.info( "locale {} -> '{}", ATT_NAME_LOCALE, locale );
 		String req = tag.getAttribute( ATT_NAME_REQUIRED );
 		this.required = BooleanUtils.isTrue( req );
 		this.bundle = newBundle(bundlePath, locale);
