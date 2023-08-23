@@ -2,7 +2,7 @@ package org.fugerit.java.core.util.result;
 
 public abstract class AbstractVirtualFinder implements VirtualFinder {
 
-	public AbstractVirtualFinder(int perPage, int currentPage) {
+	protected AbstractVirtualFinder(int perPage, int currentPage) {
 		super();
 		this.perPage = perPage;
 		this.currentPage = currentPage;

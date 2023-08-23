@@ -67,7 +67,10 @@ public class ParamFinder extends BasicLogObject {
 		Matcher m = p.matcher( text );
 		while ( m.find() ) {
 			String found = m.group();
-			this.getLogger().debug( "FOUND : "+found+" : "+this.pre.length()+" : "+this.post.length() );
+			if ( this.getLogger().isDebugEnabled() ) {
+				String message = "FOUND : "+found+" : "+this.pre.length()+" : "+this.post.length();
+				this.getLogger().debug( message );	
+			}
 			String paramName = found.substring( this.preL, found.length()-this.postL );
 			paramList.add( paramName );
 		}

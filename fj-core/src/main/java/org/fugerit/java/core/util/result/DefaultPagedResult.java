@@ -16,43 +16,18 @@ public class DefaultPagedResult<T> extends AbstractPagedResult<T>  implements Se
 	
 	private String virtualKey;
 	
-	/*
-	 * <p>Creates a new paged result</p>
-	 * 
-	 * @param perPage			maximum number of elements in a page
-	 * @param elementCount		total number of elements in all pages
-	 * @param currentPage		current page ( range 1 - n )
-	 * @param pageElements		elements in the current page
-	 * @return					a new paged result
-	 */
 	public static <T> PagedResult<T>  newPagedResult( int perPage, long elementCount, int currentPage, List<T> pageElements ) {
 		int pageCount = calcPageCount( elementCount, perPage );
 		AbstractPagedResult<T> result = new DefaultPagedResult<T>( perPage, elementCount, currentPage, pageCount, pageElements, perPage, currentPage, null );
 		return result;
 	}
 	
-	/*
-	 * <p>Creates a new paged result</p>
-	 * 
-	 * @param perPage			maximum number of elements in a page
-	 * @param elementCount		total number of elements in all pages
-	 * @param currentPage		current page ( range 1 - n )
-	 * @param pageElements		elements in the current page
-	 * @return					a new paged result
-	 */
 	public static <T> PagedResult<T>  newPagedResult( int perPage, long elementCount, int currentPage, List<T> pageElements, int realPerPage, int realCurrentPage, String virtualKey ) {
 		int pageCount = calcPageCount( elementCount, perPage );
 		AbstractPagedResult<T> result = new DefaultPagedResult<T>( perPage, elementCount, currentPage, pageCount, pageElements, realPerPage, realCurrentPage, virtualKey );
 		return result;
 	}
 	
-	/*
-	 * PagedResult per esisti negativi.
-	 * 
-	 * @param &lt;T&gt;
-	 * @param resultCode
-	 * @return
-	 */
 	protected static <T>  PagedResult<T>  newPagedResult( int resultCode ) {
 		DefaultPagedResult<T> result = new DefaultPagedResult<T>( -1, -1, -1, -1, null, -1, -1, null );
 		result.setResultCode( resultCode );
