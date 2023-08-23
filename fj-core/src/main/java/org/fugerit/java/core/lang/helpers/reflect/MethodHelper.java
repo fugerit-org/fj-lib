@@ -2,6 +2,8 @@ package org.fugerit.java.core.lang.helpers.reflect;
 
 import java.lang.reflect.Method;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
+
 
 /*
  * <p>Helper class for invoiking methods by reflection</p> 
@@ -12,6 +14,8 @@ import java.lang.reflect.Method;
  */
 public class MethodHelper {
 
+	private MethodHelper() {}
+	
 	/*
 	 * Constant for empty argument values on invoking
 	 */
@@ -63,7 +67,7 @@ public class MethodHelper {
 	 * @param paramValue		property value
 	 * @throws Exception		in case something goes wrong
 	 */
-	public static void invokeSetter( Object obj, String propertyName, Class<?> paramType, Object paramValue ) throws Exception {
+	public static void invokeSetter( Object obj, String propertyName, Class<?> paramType, Object paramValue ) {
 		invoke(obj, getSetterNameForProperty(propertyName), paramType, paramValue);
 	}
 
@@ -77,7 +81,7 @@ public class MethodHelper {
 	 * @return					the object returned by the method
 	 * @throws Exception		in case something goes wrong
 	 */
-	public static Object invokeGetter( Object obj, String propertyName ) throws Exception {
+	public static Object invokeGetter( Object obj, String propertyName ) {
 		return invoke(obj, getGetterNameForProperty( propertyName ), NO_PARAM_TYPES, NO_PARAM_VALUES );
 	}
 	
@@ -91,7 +95,7 @@ public class MethodHelper {
 	 * @return				the result of invokation
 	 * @throws Exception	in case something goes wrong
 	 */
-	public static Object invoke( Object obj, String methodName, Class<?> paramType, Object paramValue ) throws Exception {
+	public static Object invoke( Object obj, String methodName, Class<?> paramType, Object paramValue ) {
 		Class<?>[] paramTypes = { paramType };
 		Object[] paramValues = { paramValue };
 		return invoke(obj, methodName, paramTypes, paramValues);
@@ -107,13 +111,17 @@ public class MethodHelper {
 	 * @return				the result of invokation
 	 * @throws Exception	in case something goes wrong
 	 */	
-	public static Object invoke( Object obj, String methodName, Class<?>[] paramTypes, Object[] paramValues ) throws Exception {
-		//LogFacade.getLog().info( "MethodHelper.invoice() methodName = "+methodName+" obj : "+obj );
-		Method method = obj.getClass().getMethod( methodName, paramTypes );
-		if ( method == null ) {
-			throw new Exception( "Method not found "+methodName+" on class "+obj.getClass().getName() );
+	public static Object invoke( Object obj, String methodName, Class<?>[] paramTypes, Object[] paramValues ) {
+		Object result = null;
+		try {
+			Method method = obj.getClass().getMethod( methodName, paramTypes );
+			if ( method == null ) {
+				throw new Exception( "Method not found "+methodName+" on class "+obj.getClass().getName() );
+			}
+			result = method.invoke( obj, paramValues );
+		} catch (Exception e) {
+			throw ConfigRuntimeException.convertExMethod( "invoke" , e );
 		}
-		Object result = method.invoke( obj, paramValues );
 		return result;
 	}
 	
