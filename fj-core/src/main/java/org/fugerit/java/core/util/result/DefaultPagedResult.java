@@ -74,7 +74,10 @@ public class DefaultPagedResult<T> extends AbstractPagedResult<T>  implements Se
 		int offset =  ((this.getRealCurrentPage()-1)*this.getRealPerPage());
 		int virtualStart = (currentPage-1)*this.getPerPage()-offset;
 		int virtualEnd = virtualStart+this.getPerPage();
-		this.getLogger().debug( "current page : "+currentPage+" size : "+this.getCurrentPageSize()+" vs : "+virtualStart+" ve : "+virtualEnd+" rps:"+this.getRealPerPage()+" , rp:"+this.getRealCurrentPage() );
+		if ( this.getLogger().isDebugEnabled() ) {
+			String message = "current page : "+currentPage+" size : "+this.getCurrentPageSize()+" vs : "+virtualStart+" ve : "+virtualEnd+" rps:"+this.getRealPerPage()+" , rp:"+this.getRealCurrentPage();
+			this.getLogger().debug( message );
+		}
 		List<T> elements = this.getPageElementsList().subList( virtualStart , virtualEnd );
 		return newPagedResult( this.getPerPage(), this.getElementCount(), currentPage, elements );
 	}

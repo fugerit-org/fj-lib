@@ -9,7 +9,6 @@ import java.util.Map;
  * 
  * @author fugerit
  *
- * @param &lt;E&gt;
  */
 public interface PagedResult<T> extends Result {
 
@@ -123,7 +122,7 @@ public interface PagedResult<T> extends Result {
 	// *******************************************************************************************
 	// *******************************************************************************************
 	
-	/*
+	/**
 	 * Virtual search key
 	 * 
 	 * @return	the virtual search key

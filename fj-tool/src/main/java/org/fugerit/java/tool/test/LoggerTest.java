@@ -18,12 +18,10 @@ public class LoggerTest extends ToolHandlerHelper {
 
 	@Override
 	public int handleWorker(Properties params) throws Exception {
-		System.out.println( "System.out TEST START" );
 		logger.error( "TEST LOG ERROR" );
 		logger.warn( "TEST LOG WARN" );
 		logger.info( "TEST LOG INFO" );
 		logger.debug( "TEST LOG DEBUG" );
-		System.out.println( "System.out TEST END" );
 		return EXIT_OK;
 	}
 		
