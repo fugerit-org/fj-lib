@@ -12,8 +12,8 @@ import org.fugerit.java.core.charset.EncodingCheck;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.tool.Launcher;
 import org.fugerit.java.tool.ToolHandlerHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>Tool to correct character encoding.</p>
@@ -21,10 +21,11 @@ import org.slf4j.LoggerFactory;
  * @author Fugerit
  *
  */
+@Slf4j
 public class CharsetCorrect extends ToolHandlerHelper {
 
-	private static final Logger logger = LoggerFactory.getLogger(CharsetCorrect.class);
-
+	private CharsetCorrect() {}
+	
 	private static void handleFile( File input, File output, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) throws Exception {
 		FileInputStream is = new FileInputStream( input );
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -50,16 +51,16 @@ public class CharsetCorrect extends ToolHandlerHelper {
 				String comment = "# "+infoCommentBuffer.toString();
 				StreamIO.pipeStream( new ByteArrayInputStream( comment.getBytes( targetCharset ) ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
 			}
-			logger.info( "input : " + input.getAbsolutePath()+ " , output : " +output.getAbsolutePath() + " , comment : " + infoCommentBuffer+"" );
+			log.info( "input : {} , output : {} , comment : {}" + input.getAbsolutePath(), output.getAbsolutePath(), infoCommentBuffer );
 			fos.close();
-			logger.debug( "written file -> "+output.getAbsolutePath() );
+			log.debug( "written file -> {}", output.getAbsolutePath() );
 		} else if ( verbose ) {
-			logger.info( "correct encoding, skipping : " + input.getAbsolutePath() );
+			log.info( "correct encoding, skipping : {}", input.getAbsolutePath() );
 		}
 	}
 	
 	private static void recurse( File current, FileFilter filter, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) throws Exception {
-		logger.debug( "recurse "+current.getAbsolutePath() );
+		log.debug( "recurse "+current.getAbsolutePath() );
 		if ( current.isFile() ) {
 			handleFile( current , current, sourceCharset, targetCharset, infoComment, verbose );
 		} else {
@@ -130,15 +131,15 @@ public class CharsetCorrect extends ToolHandlerHelper {
 		String sourceCharset = params.getProperty( PARAM_SOURCE_CHARSET, PARAM_SOURCE_CHARSET_DEFAULT );
 		boolean infoComment = ( params.getProperty( PARAM_APPEND_INFO_AS_COMMENT ) != null );
 		boolean verbose = ( params.getProperty( Launcher.ARG_VERBOSE ) != null );
-		logger.info( PARAM_TARGET_CHARSET+" -> "+targetCharset );
+		log.info( PARAM_TARGET_CHARSET+" -> "+targetCharset );
 		if ( folderRecurse != null ) {
-			logger.info( PARAM_FOLDER_RECURSE+" -> "+folderRecurse );
-			logger.info( PARAM_FOLDER_FILTER+" -> "+folderFilter );
+			log.info( "{} -> {}", PARAM_FOLDER_RECURSE, folderRecurse );
+			log.info( "{} -> {}", PARAM_FOLDER_FILTER, folderFilter );
 			File baseFolder = new File( folderRecurse );
 			recurse( baseFolder, new RecurseFilter( folderFilter ), sourceCharset, targetCharset, infoComment, verbose );
 		} else {
-			logger.info( PARAM_INPUT_FILE+" -> "+inputFile );
-			logger.info( PARAM_OUTPUT_FILE+" -> "+outputFile );
+			log.info( "{} -> {}", PARAM_INPUT_FILE, inputFile );
+			log.info( "{} -> {}", PARAM_OUTPUT_FILE, outputFile );
 			File input = new File( inputFile );
 			File output = new File( outputFile );
 			handleFile( input , output, sourceCharset, targetCharset, infoComment, verbose );	
