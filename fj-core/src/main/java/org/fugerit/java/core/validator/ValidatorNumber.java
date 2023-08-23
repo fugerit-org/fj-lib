@@ -109,9 +109,9 @@ public class ValidatorNumber extends BasicValidator {
 			if ( StringUtils.isNotEmpty( maxFractionDigits ) ) {
 				this.maximumFractionDigits = Integer.parseInt( maxFractionDigits );
 			}
-			String groupingUsed = atts.getProperty( KEY_GROUPING_USED ); 
-			if ( StringUtils.isNotEmpty( groupingUsed ) ) {
-				this.groupingUsed = BooleanUtils.isTrue( groupingUsed );
+			String groupingUsedLocal = atts.getProperty( KEY_GROUPING_USED ); 
+			if ( StringUtils.isNotEmpty( groupingUsedLocal ) ) {
+				this.groupingUsed = BooleanUtils.isTrue( groupingUsedLocal );
 			}
 			String currency = atts.getProperty( KEY_CURRENCY ); 
 			if ( StringUtils.isNotEmpty( currency ) ) {
@@ -153,7 +153,7 @@ public class ValidatorNumber extends BasicValidator {
 		return nf;
 	}
 	
-	protected boolean validate( ValidatorContext context, String minValue, String maxValue ) throws Exception {
+	protected boolean validate( ValidatorContext context, String minValue, String maxValue ) throws ConfigException {
 		boolean valid = true;
 		NumberFormat nf = this.newFormat(context);
 		try {

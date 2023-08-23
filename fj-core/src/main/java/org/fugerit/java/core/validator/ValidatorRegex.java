@@ -34,21 +34,20 @@ public class ValidatorRegex extends BasicValidator {
 	@Override
 	public void configure( Properties atts ) throws ConfigException {
 		super.configure(atts);
-		String regex = atts.getProperty( KEY_REGEX );
-		if (  StringUtils.isNotEmpty( regex ) ) {
-			this.regex = regex;
+		String regexLocal = atts.getProperty( KEY_REGEX );
+		if (  StringUtils.isNotEmpty( regexLocal ) ) {
+			this.regex = regexLocal;
 		}
 	}
 
 	@Override
 	public boolean validate(ValidatorContext context) throws Exception {
 		boolean valid = super.validate(context);
-		if ( this.isRequired() || StringUtils.isNotEmpty( context.getValue() )  ) {
-			if ( !Pattern.matches( this.getRegex() , context.getValue() ) ) {
-				valid = false;
-				String message = this.formatMessage( context.getBundle() , ERROR_KEY_REGEX, context.getLabel(), context.getValue(), StringUtils.valueWithDefault( this.getInfo(), this.getRegex() ) );
-				context.getResult().addError( context.getFieldId(), message );
-			}	
+		if ( this.isRequired() || StringUtils.isNotEmpty( context.getValue() ) 
+				&& !Pattern.matches( this.getRegex() , context.getValue() ) ) {
+			valid = false;
+			String message = this.formatMessage( context.getBundle() , ERROR_KEY_REGEX, context.getLabel(), context.getValue(), StringUtils.valueWithDefault( this.getInfo(), this.getRegex() ) );
+			context.getResult().addError( context.getFieldId(), message );	
 		}
 		return valid;
 	}
