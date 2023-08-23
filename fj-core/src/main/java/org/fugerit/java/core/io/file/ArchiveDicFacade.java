@@ -50,13 +50,17 @@ public class ArchiveDicFacade {
 				FileIO.recurseDir( rootDir , DeleteRecurseFileFun.INSTANCE, true );
 			}
 		} catch ( Exception e ) {
-			throw ConfigRuntimeException.convertExMethod( "newHandlerFromExtension", e );
+			throw ConfigRuntimeException.convertExMethod( "compressByExtension", e );
 		}
 	}
 	
-	public void compressByExtension( File rootDir, File output ) throws Exception {
-		BaseArchiveDirFileFun handler = newHandlerFromExtension(rootDir, output);
-		FileIO.recurseDirClose( rootDir , handler );
+	public void compressByExtension( File rootDir, File output ) {
+		try {
+			BaseArchiveDirFileFun handler = newHandlerFromExtension(rootDir, output);
+			FileIO.recurseDirClose( rootDir , handler );
+		} catch ( Exception e ) {
+			throw ConfigRuntimeException.convertExMethod( "compressByExtension", e );
+		}
 	}
 
 	public static ArchiveDicFacade getInstance() {

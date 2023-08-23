@@ -2,6 +2,8 @@ package org.fugerit.java.core.javagen;
 
 public class GeneratorNameHelper {
 
+	private GeneratorNameHelper() {}
+	
 	public static String toPropertyName( String name ) {
 		String res = toClassName( name );
 		res = res.substring( 0, 1 ).toLowerCase()+res.substring( 1 );

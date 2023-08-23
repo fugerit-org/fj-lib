@@ -87,10 +87,10 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 	@Override
 	public void write() throws IOException {
 		if ( !this.getJavaFile().getParentFile().exists() ) {
-			logger.info( "Created dir : "+this.getJavaFile().getParentFile().getCanonicalPath()+" -> "+this.getJavaFile().getParentFile().mkdirs() );
+			logger.info( "Created dir : {} -> {}", this.getJavaFile().getParentFile().getCanonicalPath(), this.getJavaFile().getParentFile().mkdirs() );
 		}
 		FileIO.writeString( this.getContent() , this.getJavaFile() );
-		logger.info( "Content written to : "+this.getJavaFile().getCanonicalPath() );
+		logger.info( "Content written to : {}", this.getJavaFile().getCanonicalPath() );
 	}
 	
 	@Override
