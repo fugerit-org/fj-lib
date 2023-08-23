@@ -4,12 +4,10 @@ import java.io.IOException;
 
 public interface JavaGenerator {
 
-	default void generate() throws Exception {
-		throw new UnsupportedOperationException( "This method should be implemented" );
-	}
+	void generate() throws Exception;
 	
-	public String getContent();
+	String getContent();
 	
-	public void write() throws IOException;
+	void write() throws IOException;
 	
 }
