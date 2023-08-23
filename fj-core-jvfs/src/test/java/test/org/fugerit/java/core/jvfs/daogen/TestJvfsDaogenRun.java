@@ -6,9 +6,9 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.daogen.base.config.DaogenFacade;
 import org.junit.Test;
 
-import test.org.fugerit.java.BasicTest;
+import test.org.fugerit.java.core.jvfs.TestJVFSHelper;
 
-public class JvfsDaogenRun extends BasicTest {
+public class TestJvfsDaogenRun extends TestJVFSHelper {
 	
 	public static final String DAOGEN_CONFIG = "core-jvfs/db/daogen/daogen-config-jvfs.xml";
 	

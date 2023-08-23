@@ -10,10 +10,10 @@ import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.daogen.base.config.DaogenConfigDump;
 import org.junit.Test;
 
-import test.org.fugerit.java.BasicTest;
+import test.org.fugerit.java.core.jvfs.TestJVFSHelper;
 import test.org.fugerit.java.core.jvfs.db.helper.MemJvfsDBHelper;
 
-public class JvfsDaogenDump extends BasicTest {
+public class TestJvfsDaogenDump extends TestJVFSHelper {
 	
 	public static final String OUTPUT_DUMP = "target/daogen-dump-jvfs.xml";
 	
