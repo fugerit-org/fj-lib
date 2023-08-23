@@ -35,7 +35,7 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 	 * @return					exit code (0 is all ok)
 	 * @throws Exception		issues if problems arise
 	 */
-	abstract public int handleWorker( Properties params ) throws Exception;
+	abstract public int handleWorker( Properties params ) throws RunToolException;
 	
 	@Override
 	public int handle( Properties params ) throws Exception {
@@ -49,13 +49,17 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 		return exit;
 	}
 	
-	protected ClassLoader getClassLoader( Properties params ) throws Exception {
+	protected ClassLoader getClassLoader( Properties params ) throws RunToolException {
 		ClassLoader cl = ClassHelper.getDefaultClassLoader();
-		String extraJar = params.getProperty( ARG_EXTRA_JAR );
-		if ( extraJar != null ) {
-			File jarFile = new File( extraJar );
-			URL[] u = { jarFile.toURI().toURL() };
-			cl = new URLClassLoader( u , cl );
+		try {
+			String extraJar = params.getProperty( ARG_EXTRA_JAR );
+			if ( extraJar != null ) {
+				File jarFile = new File( extraJar );
+				URL[] u = { jarFile.toURI().toURL() };
+				cl = new URLClassLoader( u , cl );
+			}
+		} catch (Exception e) {
+			throw RunToolException.convertEx( e );
 		}
 		return cl;
 	}

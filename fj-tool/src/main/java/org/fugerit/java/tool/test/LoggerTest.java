@@ -2,6 +2,7 @@ package org.fugerit.java.tool.test;
 
 import java.util.Properties;
 
+import org.fugerit.java.tool.RunToolException;
 import org.fugerit.java.tool.ToolHandlerHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ public class LoggerTest extends ToolHandlerHelper {
 	private static final Logger logger = LoggerFactory.getLogger(LoggerTest.class);
 
 	@Override
-	public int handleWorker(Properties params) throws Exception {
+	public int handleWorker(Properties params) throws RunToolException {
 		logger.error( "TEST LOG ERROR" );
 		logger.warn( "TEST LOG WARN" );
 		logger.info( "TEST LOG INFO" );

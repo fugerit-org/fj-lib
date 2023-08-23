@@ -61,7 +61,7 @@ public class Launcher {
 		if ( toolName == null || help != null ) {
 			printHelp();
 			if ( handler instanceof ToolHandlerHelper ) {
-				logger.info( "Handler help : \n"+((ToolHandlerHelper)handler).getHelp() );		
+				logger.info( "Handler help : \n{}", ((ToolHandlerHelper)handler).getHelp() );		
 			}
 		} else {
 			exit = handler.handle( params );
@@ -77,7 +77,7 @@ public class Launcher {
 		logger.info( "\\t\\ttool valid options : " );
 		Iterator<Object> toolIt = HANDLER_LIST.keySet().iterator();
 		while ( toolIt.hasNext() ) {
-			logger.info( "\t\t"+toolIt.next() );	
+			logger.info( "\t\t{}", toolIt.next() );	
 		}
 	}
 	
@@ -85,7 +85,7 @@ public class Launcher {
 		try {
 			Properties params = ArgUtils.getArgs( args );
 			int exit = handle( params );
-			logger.info( "EXIT -> "+exit );
+			logger.info( "EXIT -> {}", exit );
 			if ( exit != ToolHandler.EXIT_OK ) {
 				System.exit( exit );	
 			}

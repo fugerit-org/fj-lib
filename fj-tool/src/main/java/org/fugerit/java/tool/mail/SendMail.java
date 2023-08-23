@@ -13,6 +13,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.fugerit.java.tool.RunToolException;
 import org.fugerit.java.tool.ToolHandlerHelper;
 
 /**
@@ -29,34 +30,37 @@ public class SendMail extends ToolHandlerHelper {
 	public final static String ARG_BODY_TYPE = "type";
 	
 	@Override
-	public int handleWorker(Properties params) throws Exception {
+	public int handleWorker(Properties params) throws RunToolException {
 		int exit = EXIT_OK;
-		Properties props = new Properties();
-		props.setProperty( ARG_SMTP_HOST , params.getProperty( ARG_SMTP_HOST ) );
-		
-		String from = params.getProperty( ARG_MAIL_FROM );
-		String to = params.getProperty( ARG_MAIL_TO );
-		String subject = params.getProperty( ARG_MAIL_SUBJECT );
-		String body = params.getProperty( ARG_MAIL_BODY );
-		String type = params.getProperty( ARG_BODY_TYPE, "text/plain" );
-		
-		Session session = Session.getDefaultInstance( props );
-		MimeMessage message = new MimeMessage( session );
-		message.setFrom( new InternetAddress( from ) );
-		String[] splitTo = to.split( ";" );
-		for ( int k=0; k<splitTo.length; k++ ) {
-			message.addRecipient( Message.RecipientType.TO, new InternetAddress( splitTo[k] ) );	
+		try {
+			Properties props = new Properties();
+			props.setProperty( ARG_SMTP_HOST , params.getProperty( ARG_SMTP_HOST ) );
+			
+			String from = params.getProperty( ARG_MAIL_FROM );
+			String to = params.getProperty( ARG_MAIL_TO );
+			String subject = params.getProperty( ARG_MAIL_SUBJECT );
+			String body = params.getProperty( ARG_MAIL_BODY );
+			String type = params.getProperty( ARG_BODY_TYPE, "text/plain" );
+			
+			Session session = Session.getDefaultInstance( props );
+			MimeMessage message = new MimeMessage( session );
+			message.setFrom( new InternetAddress( from ) );
+			String[] splitTo = to.split( ";" );
+			for ( int k=0; k<splitTo.length; k++ ) {
+				message.addRecipient( Message.RecipientType.TO, new InternetAddress( splitTo[k] ) );	
+			}
+			
+			final MimeBodyPart textPart = new MimeBodyPart();
+	        textPart.setContent( body, type ); 
+			
+	        Multipart multipart = new MimeMultipart( "alternative" );
+	        multipart.addBodyPart( textPart );
+	        
+			message.setSubject( subject );
+			message.setContent( multipart );
+		} catch (Exception e) {
+			throw RunToolException.convertEx( e );
 		}
-		
-		final MimeBodyPart textPart = new MimeBodyPart();
-        textPart.setContent( body, type ); 
-		
-        Multipart multipart = new MimeMultipart( "alternative" );
-        multipart.addBodyPart( textPart );
-        
-		message.setSubject( subject );
-		message.setContent( multipart );
-		
 		return exit;
 	}
 

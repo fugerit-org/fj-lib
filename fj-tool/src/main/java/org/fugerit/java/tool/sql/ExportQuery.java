@@ -14,7 +14,9 @@ import java.util.Properties;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
+import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.lang.helpers.StringUtils;
+import org.fugerit.java.tool.RunToolException;
 import org.fugerit.java.tool.ToolHandlerHelper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -64,15 +66,24 @@ public class ExportQuery extends ToolHandlerHelper {
 		pw.println( "</tr>" );
 	}
 	
+	private ConnectionFactory getCf( Properties params, ClassLoader cl ) throws RunToolException {
+		ConnectionFactory cf = null;
+		try {
+			cf = ConnectionFactoryImpl.newInstance( params, null, cl );
+		} catch (DAOException e) {
+			throw RunToolException.convertEx( e );
+		}
+		return cf;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.tool.ToolHandlerHelper#handleWorker(java.util.Properties)
 	 */
 	@Override
-	public int handleWorker(Properties params) throws Exception {
+	public int handleWorker(Properties params) throws RunToolException {
 		int exit = EXIT_KO_DEFAULT;
 		ClassLoader cl = this.getClassLoader( params );
-		ConnectionFactory cf = ConnectionFactoryImpl.newInstance( params, null, cl );
-		
+		ConnectionFactory cf = this.getCf(params, cl);
 		String output = params.getProperty( ARG_OUTPUT );
 		try (
 			PrintWriter pw = new PrintWriter( new OutputStreamWriter( new FileOutputStream( output ) ) );

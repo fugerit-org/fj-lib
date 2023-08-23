@@ -11,6 +11,7 @@ import java.util.Properties;
 import org.fugerit.java.core.charset.EncodingCheck;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.tool.Launcher;
+import org.fugerit.java.tool.RunToolException;
 import org.fugerit.java.tool.ToolHandlerHelper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,40 +27,44 @@ public class CharsetCorrect extends ToolHandlerHelper {
 
 	private CharsetCorrect() {}
 	
-	private static void handleFile( File input, File output, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) throws Exception {
-		FileInputStream is = new FileInputStream( input );
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		StreamIO.pipeStream( is , os , StreamIO.MODE_CLOSE_BOTH );
-		byte[] sourceData = os.toByteArray();
-		boolean hasErrors = ! EncodingCheck.checkEncoding( sourceData , targetCharset );
-		if ( hasErrors ) {
-			StringBuilder infoCommentBuffer = new StringBuilder();
-			infoCommentBuffer.append( "/* " );
-			infoCommentBuffer.append( CharsetCorrect.class.getSimpleName() );
-			infoCommentBuffer.append( " found non " );
-			infoCommentBuffer.append( targetCharset );
-			infoCommentBuffer.append( " characters on " );
-			infoCommentBuffer.append( new java.sql.Timestamp( System.currentTimeMillis() ) );
-			infoCommentBuffer.append( " */" );
-			String source = new String( sourceData , sourceCharset );
-			byte[] destData = source.getBytes( targetCharset );
-			FileOutputStream fos = new FileOutputStream( output );
-			StreamIO.pipeStream( new ByteArrayInputStream( destData ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
-			if ( infoComment && input.getName().endsWith( "java" ) ) {
-				StreamIO.pipeStream( new ByteArrayInputStream( infoCommentBuffer.toString().getBytes( targetCharset ) ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
-			} else if ( infoComment && input.getName().endsWith( "properties" ) ) {
-				String comment = "# "+infoCommentBuffer.toString();
-				StreamIO.pipeStream( new ByteArrayInputStream( comment.getBytes( targetCharset ) ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
+	private static void handleFile( File input, File output, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) throws RunToolException {
+		try {
+			FileInputStream is = new FileInputStream( input );
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			StreamIO.pipeStream( is , os , StreamIO.MODE_CLOSE_BOTH );
+			byte[] sourceData = os.toByteArray();
+			boolean hasErrors = ! EncodingCheck.checkEncoding( sourceData , targetCharset );
+			if ( hasErrors ) {
+				StringBuilder infoCommentBuffer = new StringBuilder();
+				infoCommentBuffer.append( "/* " );
+				infoCommentBuffer.append( CharsetCorrect.class.getSimpleName() );
+				infoCommentBuffer.append( " found non " );
+				infoCommentBuffer.append( targetCharset );
+				infoCommentBuffer.append( " characters on " );
+				infoCommentBuffer.append( new java.sql.Timestamp( System.currentTimeMillis() ) );
+				infoCommentBuffer.append( " */" );
+				String source = new String( sourceData , sourceCharset );
+				byte[] destData = source.getBytes( targetCharset );
+				FileOutputStream fos = new FileOutputStream( output );
+				StreamIO.pipeStream( new ByteArrayInputStream( destData ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
+				if ( infoComment && input.getName().endsWith( "java" ) ) {
+					StreamIO.pipeStream( new ByteArrayInputStream( infoCommentBuffer.toString().getBytes( targetCharset ) ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
+				} else if ( infoComment && input.getName().endsWith( "properties" ) ) {
+					String comment = "# "+infoCommentBuffer.toString();
+					StreamIO.pipeStream( new ByteArrayInputStream( comment.getBytes( targetCharset ) ) , fos, StreamIO.MODE_CLOSE_IN_ONLY );
+				}
+				log.info( "input : {} , output : {} , comment : {}" + input.getAbsolutePath(), output.getAbsolutePath(), infoCommentBuffer );
+				fos.close();
+				log.debug( "written file -> {}", output.getAbsolutePath() );
+			} else if ( verbose ) {
+				log.info( "correct encoding, skipping : {}", input.getAbsolutePath() );
 			}
-			log.info( "input : {} , output : {} , comment : {}" + input.getAbsolutePath(), output.getAbsolutePath(), infoCommentBuffer );
-			fos.close();
-			log.debug( "written file -> {}", output.getAbsolutePath() );
-		} else if ( verbose ) {
-			log.info( "correct encoding, skipping : {}", input.getAbsolutePath() );
+		} catch ( Exception e ) {
+			throw RunToolException.convertEx( e );
 		}
 	}
 	
-	private static void recurse( File current, FileFilter filter, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) throws Exception {
+	private static void recurse( File current, FileFilter filter, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) throws RunToolException {
 		log.debug( "recurse "+current.getAbsolutePath() );
 		if ( current.isFile() ) {
 			handleFile( current , current, sourceCharset, targetCharset, infoComment, verbose );
@@ -122,7 +127,7 @@ public class CharsetCorrect extends ToolHandlerHelper {
 	 * @param params		the arguments
 	 * @throws Exception	if issues arise.
 	 */
-	public static void correct( Properties params ) throws Exception {
+	public static void correct( Properties params ) throws RunToolException {
 		String inputFile = params.getProperty( PARAM_INPUT_FILE );
 		String outputFile = params.getProperty( PARAM_OUTPUT_FILE, inputFile );
 		String folderRecurse = params.getProperty( PARAM_FOLDER_RECURSE );
@@ -147,7 +152,7 @@ public class CharsetCorrect extends ToolHandlerHelper {
 	}
 
 	@Override
-	public int handleWorker(Properties params) throws Exception {
+	public int handleWorker(Properties params) throws RunToolException {
 		correct( params );
 		return EXIT_OK;
 	}
