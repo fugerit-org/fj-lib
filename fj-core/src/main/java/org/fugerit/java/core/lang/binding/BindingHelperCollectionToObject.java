@@ -60,11 +60,9 @@ public class BindingHelperCollectionToObject extends BindingHelperDefault {
 	public Object convertValue(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
 		Object res = super.convertValue(context, binding, field, value);
 		String multiValueMode = StringUtils.valueWithDefault( this.getParam01() , MULTI_VALUE_MODE_DEFAULT );
-		if ( res != null ) {
-			if ( value instanceof Collection<?> ) {
-				Collection<?> c = (Collection<?>)value;
-				res = this.convertWorker(c, res, multiValueMode);
-			}
+		if ( res != null && ( value instanceof Collection<?>  ) ) {
+			Collection<?> c = (Collection<?>)value;
+			res = this.convertWorker(c, res, multiValueMode);
 		}
 		return res;
 	}

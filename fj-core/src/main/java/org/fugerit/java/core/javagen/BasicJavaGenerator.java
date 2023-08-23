@@ -94,7 +94,7 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 	}
 	
 	@Override
-	public abstract void generate() throws Exception;
+	public abstract void generate() throws IOException;
 	
 	public static void customPartWorker( File file, PrintWriter writer, String startTag, String endTag, String indent ) throws FileNotFoundException, IOException {
 		customPartWorker(file, writer, startTag, endTag, indent, "" );

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public interface JavaGenerator {
 
-	void generate() throws Exception;
+	void generate() throws IOException;
 	
 	String getContent();
 	

@@ -1,10 +1,21 @@
 package org.fugerit.java.core.lang.binding;
 
-import org.fugerit.java.core.cfg.xml.ListMapConfig;
+import java.util.Properties;
 
-public class BindingConfig extends ListMapConfig<BindingFieldConfig> {
+import org.fugerit.java.core.cfg.xml.IdConfigType;
+import org.fugerit.java.core.util.collection.KeyObject;
+import org.fugerit.java.core.util.collection.ListMapConfigurable;
+import org.fugerit.java.core.util.collection.ListMapStringKey;
+import org.fugerit.java.core.xml.dom.DOMUtils;
+import org.w3c.dom.Element;
+
+public class BindingConfig extends ListMapStringKey<BindingFieldConfig> implements IdConfigType, KeyObject<String>, ListMapConfigurable {
 
 	private BindingCatalogConfig catalog;
+	
+	private Properties config = new Properties();
+
+	private String id;
 
 	public BindingCatalogConfig getCatalog() {
 		return catalog;
@@ -22,6 +33,31 @@ public class BindingConfig extends ListMapConfig<BindingFieldConfig> {
 
 	public void setTryInit(String tryInit) {
 		this.tryInit = tryInit;
+	}
+	
+	@Override
+	public Properties getConfig() {
+		return config;
+	}
+	
+	@Override
+	public void initFromElementAttributes( Element tag ) {
+		DOMUtils.attributesToProperties( tag , this.getConfig() );
+	}
+	
+	@Override
+	public String getKey() {
+		return this.getId();
+	}
+
+	@Override
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public String getId() {
+		return this.id;
 	}
 
 	/**

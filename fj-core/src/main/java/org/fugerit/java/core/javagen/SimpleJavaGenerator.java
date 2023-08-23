@@ -95,7 +95,7 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	}
 	
 	@Override
-	public void generate() throws Exception {
+	public void generate() throws IOException {
 		this.getWriter().println( "package "+this.getPackageName()+";" );
 		this.getWriter().println();
 		if ( !this.getImportList().isEmpty() ) {
@@ -146,7 +146,7 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 		this.getWriter().println( "}" );
 	}
 	
-	public abstract void generateBody() throws Exception;
+	public abstract void generateBody() throws IOException;
 	
 	protected void customPartWorker( String startTag, String endTag, String indent ) throws FileNotFoundException, IOException {
 		if ( !this.isNoCustomComment() ) {

@@ -5,11 +5,12 @@ import java.util.Properties;
 
 import org.fugerit.java.core.util.collection.KeyMapper;
 import org.fugerit.java.core.util.collection.KeyObject;
+import org.fugerit.java.core.util.collection.ListMapConfigurable;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.xml.dom.DOMUtils;
 import org.w3c.dom.Element;
 
-public class ListMapConfig<T> extends ListMapStringKey<T> implements IdConfigType, KeyObject<String> {
+public class ListMapConfig<T> extends ListMapStringKey<T> implements IdConfigType, KeyObject<String>, ListMapConfigurable {
 
 	/**
 	 * 
@@ -38,10 +39,12 @@ public class ListMapConfig<T> extends ListMapStringKey<T> implements IdConfigTyp
 		super(keyMapper);
 	}
 
+	@Override
 	public Properties getConfig() {
 		return config;
 	}
-
+	
+	@Override
 	public void initFromElementAttributes( Element tag ) {
 		DOMUtils.attributesToProperties( tag , this.getConfig() );
 	}
