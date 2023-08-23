@@ -17,10 +17,13 @@ import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.tool.ToolHandlerHelper;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author mttfranci
  *
  */
+@Slf4j
 public class ExportQuery extends ToolHandlerHelper {
 
 	public static final String ARG_QUERY = "query";
@@ -31,15 +34,17 @@ public class ExportQuery extends ToolHandlerHelper {
 	public static final String ARG_FORMAT = "format";
 	public static final String ARG_FORMAT_DEFAULT = "html";
 	
-	private void openFile( PrintWriter pw, String format ) throws Exception {
+	private void openFile( PrintWriter pw, String format ) {
+		log.trace( "format : {}", format );
 		pw.println( "<table>" );
 	}
 	
-	private void closeFile( PrintWriter pw, String format ) throws Exception {
+	private void closeFile( PrintWriter pw, String format ) {
+		log.trace( "format : {}", format );
 		pw.println( "</table>" );
 	}
 	
-	private void addRecord( PrintWriter pw, String[] record, boolean header ) throws Exception {
+	private void addRecord( PrintWriter pw, String[] record, boolean header ) {
 		pw.println( "<tr>" );
 		String openTag = "<td>";
 		String closeTag = "</td>";

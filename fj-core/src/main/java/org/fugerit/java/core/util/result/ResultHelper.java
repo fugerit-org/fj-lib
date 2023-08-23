@@ -5,6 +5,8 @@ import java.util.List;
 
 public class ResultHelper {
 
+	private ResultHelper() {}
+	
 	public static <T> List<T> createList( T obj ) {
 		List<T> list = new ArrayList<>();
 		if ( obj != null ) {

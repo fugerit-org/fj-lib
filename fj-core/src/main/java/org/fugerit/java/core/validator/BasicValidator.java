@@ -92,9 +92,9 @@ public class BasicValidator extends BasicIdConfigType {
 		if ( StringUtils.isNotEmpty( max ) ) {
 			this.maxLength = Integer.parseInt( max );
 		}
-		String info = atts.getProperty( KEY_INFO );
-		if ( StringUtils.isNotEmpty( info ) ) {
-			this.info = info;
+		String infoLocal = atts.getProperty( KEY_INFO );
+		if ( StringUtils.isNotEmpty( infoLocal ) ) {
+			this.info = infoLocal;
 		}		
 		this.getParams().putAll( atts );
 	}

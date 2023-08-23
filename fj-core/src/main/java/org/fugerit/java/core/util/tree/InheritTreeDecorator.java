@@ -16,7 +16,7 @@ public class InheritTreeDecorator<T> implements Serializable, TreeDecorator<T> {
 
 	public static final String ATT_INHERIT_PROPERTY = "inherit-property";
 
-	public static <T> void  inherit( Set<String> inheritProperties, T current, T parent ) throws Exception {
+	public static <T> void  inherit( Set<String> inheritProperties, T current, T parent ) {
 		if ( parent != null && current != null ) {
 			for ( String currentProperty : inheritProperties ) {
 				Object currentValue = MethodHelper.invokeGetter( current , currentProperty );
@@ -50,7 +50,7 @@ public class InheritTreeDecorator<T> implements Serializable, TreeDecorator<T> {
 	private static final long serialVersionUID = 145354442344L;
 
 	@Override
-	public void setupData(T current, T parent, Element tag) throws Exception {
+	public void setupData(T current, T parent, Element tag) {
 		inherit( this.inheritAtt, current, parent );
 	}
 	
