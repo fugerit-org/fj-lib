@@ -456,7 +456,7 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 				if ( CONFIG_CHECK_DUPLICATE_ID_FAIL.equalsIgnoreCase( checkDuplicateId ) ) {
 					throw new ConfigException( message );
 				} else {
-					this.getLogger().warn( "["+this.getClass().getSimpleName()+"]"+message );
+					this.getLogger().warn( "[{}]{}", this.getClass().getSimpleName(), message );
 				}
 			}
 			this.getLogger().debug( "add {} -> {}", idList, listCurrent );
@@ -484,14 +484,15 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 				String mode = currentModule.getAttribute( ATT_TAG_MODULE_CONF_MODE );
 				String path = currentModule.getAttribute( ATT_TAG_MODULE_CONF_PATH );
 				String unsafe = currentModule.getAttribute( ATT_TAG_MODULE_CONF_UNSAFE );
-				this.getLogger().info( "Loading module id="+id+" mode="+mode+" path="+path );
+				String moduleConf = mode+" - "+path;
+				this.getLogger().info( "Loading module id={}, conf={}", id, moduleConf );
 				try ( InputStream is = this.getConfigProvider().readConfiguration( mode, path) )   {
 					Document currentModuleDoc = DOMIO.loadDOMDoc( is );
 					Element rootTag = currentModuleDoc.getDocumentElement();
 					this.configure( rootTag );
 				} catch (Exception e) {
 					if ( "true".equalsIgnoreCase( unsafe ) ) {
-						this.getLogger().warn( "Module "+id+" load failed, exception suppressed as it's marked 'unsafe'" );
+						this.getLogger().warn( "Module {} load failed, exception suppressed as it's marked 'unsafe'", id );
 					} else {
 						throw ConfigException.convertEx( "Error loading module : "+id, e );
 					}
