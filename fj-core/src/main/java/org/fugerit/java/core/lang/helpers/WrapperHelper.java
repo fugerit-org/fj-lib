@@ -11,6 +11,8 @@ package org.fugerit.java.core.lang.helpers;
  */
 public class WrapperHelper {
 
+	private WrapperHelper() {}
+	
 	/**
 	 * Recursively unwrap one object as long as it's implementing Wrapper interface
 	 * 

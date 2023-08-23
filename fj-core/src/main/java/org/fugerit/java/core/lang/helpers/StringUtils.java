@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class StringUtils {
 
+	private StringUtils() {}
+	
 	public static final String[] EMPTY_ARRAY = new String[0];
 	
 	public static boolean isEmpty( String s ) {

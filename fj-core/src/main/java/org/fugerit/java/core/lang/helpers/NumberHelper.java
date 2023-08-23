@@ -2,6 +2,8 @@ package org.fugerit.java.core.lang.helpers;
 
 public class NumberHelper {
 
+	private NumberHelper() {}
+	
 	public static boolean isNull( Number n ) {
 		return n == null;
 	}

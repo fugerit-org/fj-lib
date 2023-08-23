@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 public class FilterFacade {
 
+	private FilterFacade() {}
+	
 	public static final FilterApply DEFAULT_APPLY = new FilterApplyDefault();
 	
 	public static <T extends FilterInfo> boolean  accept( Object target, Collection<T> filters ) throws Exception {
@@ -16,7 +18,7 @@ public class FilterFacade {
 		boolean accept = true;
 		Iterator<T> it = filters.iterator();
 		while ( accept && it.hasNext() ) {
-			accept = accept && apply.accept( target , it.next() );
+			accept = apply.accept( target , it.next() );
 		}
 		return accept;
 	}
