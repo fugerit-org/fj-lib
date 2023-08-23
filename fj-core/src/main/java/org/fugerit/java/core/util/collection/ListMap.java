@@ -30,6 +30,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
+
 /**
  * <p>A implementation of java.util.List interface able to save a collections in a Map too.</p>
  * 
@@ -132,7 +134,7 @@ public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 			Object currentKey = ((KeyObject<?>) element).getKey();
 			key = ((K)currentKey);	
 		} else {
-			throw new RuntimeException( "No key rule for object : "+element );
+			throw new ConfigRuntimeException( "No key rule for object : "+element );
 		}
 		return key;
 	}
@@ -140,7 +142,7 @@ public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 	@Override
 	public void add(int index, T element) {
 		if ( this.getAddMode() == ADD_MODE_STRICT && this.map.containsKey( this.getKey( element ) ) ) {
-			throw new RuntimeException( "Key already exists for element : "+element );
+			throw new ConfigRuntimeException( "Key already exists for element : "+element );
 		} else {
 			this.putWorker( element );
 			this.list.add(index, element);

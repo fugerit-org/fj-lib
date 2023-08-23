@@ -8,6 +8,8 @@ package org.fugerit.java.core.util;
  */
 public class CheckUtils {
 
+	private CheckUtils() {}
+	
 	public static final boolean isTrue( Object obj ) {
 		String value = String.valueOf( obj );
 		return "1".equalsIgnoreCase( value ) || "true".equalsIgnoreCase( value );

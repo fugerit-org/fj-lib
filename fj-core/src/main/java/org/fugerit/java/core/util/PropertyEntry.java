@@ -38,13 +38,11 @@ public class PropertyEntry extends MapEntry<String, String> implements KeyString
 	
 	public static void printAll( StringBuilder builder, PropertyEntry ...entries ) {
 		builder.append( "[" );
-		if ( entries != null ) {
-			if ( entries.length > 0 ) {
-				printOne( builder, entries[0] );
-				for ( int k=1; k<entries.length; k++ ) {
-					builder.append( "," );
-					printOne( builder, entries[k] );
-				}
+		if ( entries != null && entries.length > 0 ) {
+			printOne( builder, entries[0] );
+			for ( int k=1; k<entries.length; k++ ) {
+				builder.append( "," );
+				printOne( builder, entries[k] );
 			}
 		}
 		builder.append( "]" );

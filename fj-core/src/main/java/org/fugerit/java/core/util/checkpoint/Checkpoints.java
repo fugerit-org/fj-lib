@@ -90,11 +90,13 @@ public class Checkpoints implements Serializable {
 	}
 	
 	public void printInfo() {
-		logger.info( this.toStringHelper( false ) );
+		String info = this.toStringHelper( false );
+		logger.info( info );
 	}
 	
 	public void prettyPrintInfo() {
-		logger.info( this.toStringHelper( true ) );
+		String info = this.toStringHelper( true );
+		logger.info( info );
 	}
 	
 	public static Checkpoints newInstance( CheckpointFormat format ) {

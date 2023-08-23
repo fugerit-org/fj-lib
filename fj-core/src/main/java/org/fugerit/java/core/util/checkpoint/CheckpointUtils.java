@@ -2,6 +2,8 @@ package org.fugerit.java.core.util.checkpoint;
 
 public class CheckpointUtils {
 
+	private CheckpointUtils() {}
+	
 	public static String formatTimeDiff( long elapsedTime ) {
 		return String.valueOf( elapsedTime/1000+"."+elapsedTime%1000+"s" );
 	}

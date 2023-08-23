@@ -4,6 +4,8 @@ import java.util.Properties;
 
 public class SubPropsUtils {
 
+	private SubPropsUtils() {}
+	
 	/**
 	 * Return a new <code>java.util.Properties</code> object containing only
 	 * the properties with given prefix.
