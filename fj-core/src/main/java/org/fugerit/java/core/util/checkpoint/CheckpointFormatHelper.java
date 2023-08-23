@@ -1,11 +1,15 @@
 package org.fugerit.java.core.util.checkpoint;
 
+import java.io.Serializable;
+
 import org.fugerit.java.core.util.fun.StringFormat;
 import org.fugerit.java.core.util.fun.helper.FormatTime;
 import org.fugerit.java.core.util.fun.helper.MillisToSecondsFormat;
 
-public class CheckpointFormatHelper implements CheckpointFormat {
+public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
 	
+	private static final long serialVersionUID = -3532044603092080930L;
+
 	public static final StringFormat<Number> FORMAT_TIME_DEFAULT = new StringFormat<Number>() {
 		@Override
 		public String convert(Number input) {

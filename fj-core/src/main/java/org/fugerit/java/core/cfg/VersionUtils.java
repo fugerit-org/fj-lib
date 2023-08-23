@@ -34,6 +34,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class VersionUtils {
+	
+	private VersionUtils() {}
 
 	public static Properties MODULES = new Properties();
 
@@ -68,19 +70,25 @@ public class VersionUtils {
 		if ( type != null ) {
 			try {
 				Object o = ClassHelper.newInstance( type );
-				try {
-					ModuleVersion vc = (ModuleVersion) o;
-					versionString = vc.getName()+" "+vc.getVersion()+" "+vc.getDate();
-				} catch ( Throwable t2 ) {
-					versionString = "[03] Impossible to find module version";
-					log.warn( versionString, t2 );
-				}
+				versionString = findVersionString(o);
 			} catch (Exception t1) {
 				versionString = "[02] Class module isn't loaded : ("+type+") - "+t1;
 				log.warn( versionString, t1 );
 			}	
 		} else {
 			versionString = "[01] Module does not exist";
+		}
+		return versionString;
+	}
+	
+	private static String findVersionString( Object o ) {
+		String versionString = null;
+		try {
+			ModuleVersion vc = (ModuleVersion) o;
+			versionString = vc.getName()+" "+vc.getVersion()+" "+vc.getDate();
+		} catch ( Throwable t2 ) {
+			versionString = "[03] Impossible to find module version";
+			log.warn( versionString, t2 );
 		}
 		return versionString;
 	}

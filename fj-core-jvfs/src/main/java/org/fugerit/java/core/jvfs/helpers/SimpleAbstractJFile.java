@@ -12,11 +12,11 @@ public abstract class SimpleAbstractJFile extends AbstractJFile {
     
     private boolean canWrite;
     
-    public SimpleAbstractJFile(String path, JVFS jvfs) {
+    protected SimpleAbstractJFile(String path, JVFS jvfs) {
         this(path, jvfs, System.currentTimeMillis(), true, true);
     }
     
-    public SimpleAbstractJFile(String path, JVFS jvfs, long lastModified, boolean canRead, boolean canWrite) {
+    protected SimpleAbstractJFile(String path, JVFS jvfs, long lastModified, boolean canRead, boolean canWrite) {
         super(path, jvfs);
         this.lastModified = lastModified;
         this.canRead = canRead;

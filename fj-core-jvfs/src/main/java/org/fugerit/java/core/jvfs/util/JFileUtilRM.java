@@ -3,12 +3,13 @@ package org.fugerit.java.core.jvfs.util;
 import java.io.IOException;
 
 import org.fugerit.java.core.jvfs.JFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JFileUtilRM {
 	
-	private static final Logger logger = LoggerFactory.getLogger( JFileUtilRM.class );
+	private JFileUtilRM() {}
 	
 	public static int deleteRecurse( JFile file ) throws IOException {
 		return delete(file, true);
@@ -43,7 +44,7 @@ public class JFileUtilRM {
 		}
 		boolean res = file.delete();
 		if ( verbose ) {
-			logger.info( "delete file:{} result:{}", file, res );
+			log.info( "delete file:{} result:{}", file, res );
 		}
 		if ( force && file.exists() && !res ) {
 			throw new IOException( "Failed to delete file : "+file );

@@ -34,7 +34,7 @@ public class UnsafeHelper {
 			if ( UNSAFE_MODE_LOG_TRACE.equalsIgnoreCase( unsafeMode ) ) {
 				l.warn( message, e );
 			} else {
-				l.warn( message+" [trace suppressed, set unsafe-mode='log-trace' to show]" );
+				l.warn( "{} [trace suppressed, set unsafe-mode='log-trace' to show]", message );
 			}
 		} else {
 			ConfigException cf = null;
