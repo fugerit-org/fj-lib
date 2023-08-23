@@ -1,9 +1,12 @@
 package org.fugerit.java.core.cfg.xml;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
@@ -29,6 +32,16 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 	 */
 	private static final long serialVersionUID = -8955747963894569155L;
 
+	public static PropertyCatalog loadConfigSafe( String path ) {
+		PropertyCatalog result = new PropertyCatalog();
+		try ( InputStream is = StreamHelper.resolveStream( path ) ) {
+			load( is , result );
+		} catch (Exception e) {
+			throw ConfigRuntimeException.convertExMethod( "loadConfigSafe" , e );
+		}
+		return result;
+	}
+	
 	@Override
 	protected PropertyHolder customEntryHandling(String dataListId, PropertyHolder current, Element element) throws ConfigException {
 		PropertyHolder holder = super.customEntryHandling(dataListId, current, element);

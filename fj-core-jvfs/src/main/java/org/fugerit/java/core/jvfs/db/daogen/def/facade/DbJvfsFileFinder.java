@@ -1,5 +1,7 @@
 package org.fugerit.java.core.jvfs.db.daogen.def.facade;
 
+import java.io.IOException;
+
 import org.fugerit.java.core.db.daogen.BaseIdFinder;
 import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
 
@@ -20,6 +22,27 @@ public class DbJvfsFileFinder extends BaseIdFinder {
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4317877389001250786L;
+	
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	private ModelDbJvfsFile model;
 
 	public void setModel( ModelDbJvfsFile model ) {

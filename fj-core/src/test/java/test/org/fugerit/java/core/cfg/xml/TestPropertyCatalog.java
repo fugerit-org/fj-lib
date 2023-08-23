@@ -2,18 +2,16 @@ package test.org.fugerit.java.core.cfg.xml;
 
 import static org.junit.Assert.fail;
 
-import java.io.InputStream;
-
 import org.fugerit.java.core.cfg.xml.PropertyCatalog;
 import org.fugerit.java.core.cfg.xml.PropertyHolder;
-import org.fugerit.java.core.lang.helpers.ClassHelper;
+import org.junit.Assert;
 import org.junit.Test;
 
 import test.org.fugerit.java.BasicTest;
 
 public class TestPropertyCatalog extends BasicTest {
 
-	private final static String CONFIG_PATH = "core/cfg/xml/property-catalog-test.xml";
+	private static final PropertyCatalog CATALOG = PropertyCatalog.loadConfigSafe( "cl://core/cfg/xml/property-catalog-test.xml" );
 	
 	private void checkSize( PropertyHolder holder, int size ) {
 		if ( holder.getInnerProps().size() != size ) {
@@ -36,12 +34,8 @@ public class TestPropertyCatalog extends BasicTest {
 		}
 	}
 	
-	@Test
-	public void testinit() throws Exception {
-		PropertyCatalog catalog = new PropertyCatalog();
-		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( CONFIG_PATH ) ) {
-			PropertyCatalog.load( is , catalog );	
-		}
+	private boolean testWorker( PropertyCatalog catalog ) {
+		boolean ok = false;
 		PropertyHolder props01 = catalog.getDefaultCatalog().get( "props-01"  );
 		PropertyHolder props02 = catalog.getDefaultCatalog().get( "props-02" );
 		PropertyHolder multi = catalog.getDefaultCatalog().get( "props-multi" );
@@ -57,7 +51,27 @@ public class TestPropertyCatalog extends BasicTest {
 		checkSize( props01 , 5 );
 		checkSize( props02 , 5 );
 		checkSize( multi , 9 );	// 4 unique to props01 + 4 unique to props02 + 1 common prop
-		logger.info( "property catalog testo OK!" );
+		logger.info( "property catalog test OK!" );
+		ok = true;
+		return ok;
+	}
+	
+	@Test
+	public void testinit() throws Exception {
+		boolean ok = this.testWorker(CATALOG);
+		Assert.assertTrue( ok );
+	}
+	
+	@Test
+	public void testSerialization() {
+		try {
+			PropertyCatalog deserializedValue = (PropertyCatalog) this.fullSerializationTest(CATALOG);
+			boolean ok = this.testWorker(deserializedValue);
+			Assert.assertTrue( ok );
+		} catch (Exception e) {
+			this.failEx(e);
+		}
+		
 	}
 	
 }

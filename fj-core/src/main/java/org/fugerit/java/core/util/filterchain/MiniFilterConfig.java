@@ -8,8 +8,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
 import org.fugerit.java.core.cfg.xml.ListMapConfig;
+import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.xml.dom.DOMIO;
@@ -142,14 +144,34 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 		this.mapChain.put( id, chain );
 	}
 	
-	public static MiniFilterConfig initFromClassLoaderWithRuntimeException( String path ) {
+	/** 
+	 * <p>Init a new MiniFilterConfig using a path resolved by {@link StreamHelper}.</p>
+	 * 
+	 * <p>A {@link ConfigRuntimeException} is thrown if the initialization fail).</p>
+	 * 
+	 * @param path	the path to be resolved
+	 * @return		the initialized object
+	 */
+	public static MiniFilterConfig loadConfigSafe( String path ) {
 		MiniFilterConfig config = new MiniFilterConfig();
-		try {
-			MiniFilterConfig.loadConfig( ClassHelper.loadFromDefaultClassLoader( path ) , config );
+		try ( InputStream is = StreamHelper.resolveStream( path ) ) {
+			MiniFilterConfig.loadConfig( StreamHelper.resolveStream( path ) , config );
 		} catch (Exception e) {
-			throw new RuntimeException( e );
+			throw ConfigRuntimeException.convertExMethod( "loadConfigSafe",  e );
 		}
 		return config;
+	}
+	
+	/** 
+	 * <p>Init a new MiniFilterConfig using a path resolved from class loader.</p>
+	 * 
+	 * <p>A {@link ConfigRuntimeException} is thrown if the initialization fail).</p>
+	 * 
+	 * @param path	the path to be resolved
+	 * @return		the initialized object
+	 */
+	public static MiniFilterConfig initFromClassLoaderWithRuntimeException( String path ) {
+		return loadConfigSafe( StreamHelper.PATH_CLASSLOADER+path );
 	}
 	
 }

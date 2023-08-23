@@ -3,6 +3,7 @@ package test.org.fugerit.java.core.util.filterchain;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import org.fugerit.java.core.util.filterchain.MiniFilterChain;
@@ -14,7 +15,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestMiniFilter {
+import test.org.fugerit.java.BasicTest;
+
+public class TestMiniFilter extends BasicTest {
 
 	private final static Logger logger = LoggerFactory.getLogger( TestMiniFilter.class );
 	
@@ -29,11 +32,15 @@ public class TestMiniFilter {
 	}
 	
 	public void testWorker( String chainId, boolean okOnException ) {
+		this.testWorker(CONFIG, chainId, okOnException);
+	}
+	
+	public void testWorker( MiniFilterConfig config, String chainId, boolean okOnException ) {
 		boolean success = false;
 		String message = "OK";
 		try {
 			logger.info(  "TEST START >>> "+chainId );
-			MiniFilterChain chain = CONFIG.getChainCache( chainId );
+			MiniFilterChain chain = config.getChainCache( chainId );
 			MiniFilterContext context = new MiniFilterContext();
 			MiniFilterData data = new MiniFilterData() {};
 			int res = chain.apply( context , data );
@@ -89,6 +96,16 @@ public class TestMiniFilter {
 	@Test
 	public void testChainModule02() {
 		this.testWorker( "chain-module02-test-01" );
+	}	
+	
+	@Test
+	public void testSerialization() {
+		try {
+			MiniFilterConfig deserializedValue = (MiniFilterConfig) this.fullSerializationTest(CONFIG);
+			this.testWorker( deserializedValue, "chain-module01-test-01", false );
+		} catch (IOException e) {
+			this.failEx(e);
+		}
 	}	
 	
 	@Test
