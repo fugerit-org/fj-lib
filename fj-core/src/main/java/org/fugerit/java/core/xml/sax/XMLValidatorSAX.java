@@ -29,13 +29,6 @@ public class XMLValidatorSAX extends AbstractXMLValidator {
     
     public static XMLValidatorSAX newInstance(EntityResolver er, boolean nsa) throws XMLException {
         SAXParser parser = XMLFactorySAX.makeSAXParser(true, nsa);
-        try {
-
-
-            
-        } catch (Exception e) {
-            throw (new XMLException(e));
-        }
         return (new XMLValidatorSAX(parser, er));
     }    
 
