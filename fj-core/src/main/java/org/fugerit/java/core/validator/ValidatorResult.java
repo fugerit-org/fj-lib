@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.util.PropertyEntry;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ValidatorResult implements Serializable {
 
 	/**
@@ -31,6 +34,7 @@ public class ValidatorResult implements Serializable {
 	}
 	
 	public void addGenericWarning( String fieldId, String message ) throws ConfigException {
+		log.trace( "addGenericWarning {}, message : {}", fieldId, message );
 		this.addWarning( GENERIC_ID , message );
 	}
 	

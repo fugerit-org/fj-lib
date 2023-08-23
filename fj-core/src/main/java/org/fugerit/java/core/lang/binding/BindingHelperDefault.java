@@ -81,7 +81,8 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 				bind = PathHelper.bind( bindTo , to, valueFrom, paramType, BooleanUtils.isTrue( tryInit ), binding.getCatalog().getFacadeImplFinder() );
 			}	
 		}
-		logger.debug( "bindFrom {} to {} "+bind, bindFrom, bindTo );
+		String messageTo = bindTo+" - "+bind;
+		logger.debug( "bindFrom {} to {}", bindFrom, messageTo );
 	}
 	
 	@Override
