@@ -3,12 +3,13 @@ package org.fugerit.java.core.jvfs.helpers;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.lang.helpers.Wrapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JFileUtils {
-
-	private static final Logger logger = LoggerFactory.getLogger( JFileUtils.class );
+	
+	private JFileUtils() {}
 	
 	public static boolean isRoot( String path ) {
 		return JFile.SEPARATOR.equals( path );
@@ -41,7 +42,7 @@ public class JFileUtils {
 		String name = "";
 		String normalizedPath = normalizePath( path );
 		int index = normalizedPath.lastIndexOf( JFile.SEPARATOR );
-		logger.debug( "path:'{}', normalized path:'{}'", path, normalizedPath );
+		log.debug( "path:'{}', normalized path:'{}'", path, normalizedPath );
 		if ( index >= 0 ) {
 			int sepIndex = index+JFile.SEPARATOR.length();
 			name = normalizedPath.substring( sepIndex );

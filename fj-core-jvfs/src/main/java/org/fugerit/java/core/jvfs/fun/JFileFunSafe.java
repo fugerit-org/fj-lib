@@ -15,6 +15,7 @@ public class JFileFunSafe extends JFileFunWrapper {
         this.handler = handler;
     }
     
+    @Override
     public void handle(JFile file) throws IOException {
         try {
             super.handle(file);

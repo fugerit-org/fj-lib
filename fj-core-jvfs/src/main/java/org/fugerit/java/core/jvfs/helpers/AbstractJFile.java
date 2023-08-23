@@ -33,7 +33,7 @@ public abstract class AbstractJFile implements JFile {
     
     private JVFS jvfs;			// the jvfs of the file
     
-    public AbstractJFile(String path, JVFS jvfs) {
+    protected AbstractJFile(String path, JVFS jvfs) {
         this.path = path;
         this.jvfs = jvfs;
     }
@@ -106,9 +106,9 @@ public abstract class AbstractJFile implements JFile {
 	public JFile getParent() throws IOException {
 		JFile parent = null;
 		if ( !this.isRoot() ) {
-			String path = this.getPath();
+			String newPath = this.getPath();
 			String name = this.getName();
-			String parentPath = path.substring( 0, path.length()-name.length() );
+			String parentPath = path.substring( 0, newPath.length()-name.length() );
 			parent = this.getJVFS().getJFile( parentPath );
 		}
 		return parent;
