@@ -13,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class FixedFileFieldBasicValidator extends XMLConfigurableObject implements FixedFileFieldValidator {
 
 	public static final String DEFAULT_BUNDLE_PATH = "core.fixed.parser.validator";
@@ -30,7 +33,9 @@ public abstract class FixedFileFieldBasicValidator extends XMLConfigurableObject
 		};
 		String baseError = bundle.getString( errorKey );
 		MessageFormat mf = new MessageFormat( baseError );
-		return mf.format( args );
+		String message = mf.format( args );
+		log.trace( "message colNumber:{} -> {}", colNumber, message );
+		return message;
 }
 	
 	public static ResourceBundle newBundle( String bundlePath, String locale ) {

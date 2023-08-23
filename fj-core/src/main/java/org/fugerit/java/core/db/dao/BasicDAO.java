@@ -131,7 +131,7 @@ public class BasicDAO<T> implements LogObject {
 			int tmp = 0;
 			for (int k=0; k<opList.size(); k++) {
 				OpDAO<T> currentOp = opList.get( k );
-				this.getLogger().debug( "updateTransaction : "+currentOp.getSql()+" , params : "+currentOp.getFieldList().size() );
+				this.getLogger().debug( "updateTransaction : {} , params : {}", currentOp.getSql(), currentOp.getFieldList().size() );
 				if (currentOp.getType()==OpDAO.TYPE_UPDATE) {
 					tmp+= this.update( currentOp, conn ); // old, non caching mode
 				}
@@ -184,7 +184,7 @@ public class BasicDAO<T> implements LogObject {
     		} else {
     			this.queryWrapper = null;
     		}
-    		this.getLogger().debug( "product name : "+productName+" query wrapper init : "+this.queryWrapper );
+    		this.getLogger().debug( "product name : {} query wrapper init : {}", productName, this.queryWrapper );
     	} catch (Exception e1) {
     		throw ConfigRuntimeException.convertExMethod( "init" , e1 );
     	}

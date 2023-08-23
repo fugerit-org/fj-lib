@@ -59,15 +59,11 @@ public class FixedFileFieldDateValidator extends FixedFileFieldBasicValidator im
 		String message = null;
 		try {
 			Date d = sdf.parse( fieldValue );
-			if ( this.min != null ) {
-				if ( d.before( this.min ) ) {
-					message = super.defaultFormatMessage( "error.date.min", fieldLabel, fieldValue, rowNumber, colNumber, sdf.format( this.min ) );
-				}
+			if ( this.min != null  && d.before( this.min ) ) {
+				message = super.defaultFormatMessage( "error.date.min", fieldLabel, fieldValue, rowNumber, colNumber, sdf.format( this.min ) );
 			}
-			if ( this.max != null ) {
-				if ( d.after( this.max ) ) {
-					message = super.defaultFormatMessage( "error.date.max", fieldLabel, fieldValue, rowNumber, colNumber, sdf.format( this.max ) );
-				}
+			if ( this.max != null && d.after( this.max ) ) {
+				message = super.defaultFormatMessage( "error.date.max", fieldLabel, fieldValue, rowNumber, colNumber, sdf.format( this.max ) );
 			}
 		} catch (ParseException e) {
 			message = super.defaultFormatMessage( "error.date", fieldLabel, fieldValue, rowNumber, colNumber, this.getFormat() );
@@ -126,18 +122,19 @@ public class FixedFileFieldDateValidator extends FixedFileFieldBasicValidator im
 	@Override
 	public void configure( Element tag ) throws ConfigException {
 		String config = tag.getAttribute( ATT_NAME_FORMAT );
-		String strict = tag.getAttribute( ATT_NAME_STRICT );
-		String max = tag.getAttribute( ATT_NAME_MAX );
-		String min = tag.getAttribute( ATT_NAME_MIN );
-		logger.info( "config "+ATT_NAME_FORMAT+" -> '"+config+"' "+ATT_NAME_STRICT+" -> "+strict );
-		this.strict = BooleanUtils.isTrue( StringUtils.valueWithDefault( strict , ATT_NAME_STRICT_DEFAULT ) );
+		String strictLocal = tag.getAttribute( ATT_NAME_STRICT );
+		String maxLocal = tag.getAttribute( ATT_NAME_MAX );
+		String minLocal = tag.getAttribute( ATT_NAME_MIN );
+		logger.info( "config {} -> '{}'", ATT_NAME_FORMAT, config );
+		logger.info( "config {} -> '{}'", ATT_NAME_STRICT, strictLocal );
+		this.strict = BooleanUtils.isTrue( StringUtils.valueWithDefault( strictLocal , ATT_NAME_STRICT_DEFAULT ) );
 		if ( StringUtils.isEmpty( config ) ) {
 			throw new ConfigException( ATT_NAME_FORMAT+" is mandatory attribute" );
 		} else {
 			this.format = config;
 		}
-		this.min = getDate( ATT_NAME_MIN , min , this.getFormat() );
-		this.max = getDate( ATT_NAME_MAX ,max , this.getFormat() );
+		this.min = getDate( ATT_NAME_MIN , minLocal , this.getFormat() );
+		this.max = getDate( ATT_NAME_MAX ,maxLocal , this.getFormat() );
 		super.configure( tag, "core.fixed.parser.validator" );
 	}
 	
