@@ -1,11 +1,17 @@
 package org.fugerit.java.core.lang.helpers;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class AttributeHolderDefault implements AttributesHolder {
-
+public class AttributeHolderDefault implements AttributesHolder, Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3304679466443785878L;
+	
 	private HashMap<String, Object> map;
 	
 	public AttributeHolderDefault() {

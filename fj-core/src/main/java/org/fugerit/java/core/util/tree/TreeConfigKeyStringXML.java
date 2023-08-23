@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-import org.fugerit.java.core.io.SerialHelper;
 import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.w3c.dom.Element;
 
@@ -13,18 +12,16 @@ public class TreeConfigKeyStringXML<T extends NodeKeyString<T, L>, L extends Lis
 
 	// code added to setup a basic conditional serialization - START
 	
-	private SerialHelper<TreeConfigXML<T, L>> HELPER = new SerialHelper<>();
-	
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 		// this class is conditionally serializable, depending on contained object
 		// you are encouraged to handle special situation using this method
-		HELPER.writeObject( this, out );
+		out.defaultWriteObject();
 	}
 
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 		// this class is conditionally serializable, depending on contained object
 		// you are encouraged to handle special situation using this method
-		HELPER.readObject( this , in );
+		in.defaultReadObject();
 	}
 	
 	// code added to setup a basic conditional serialization - END

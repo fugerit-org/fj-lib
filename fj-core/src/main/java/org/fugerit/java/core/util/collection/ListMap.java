@@ -30,8 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.fugerit.java.core.io.SerialHelper;
-
 /**
  * <p>A implementation of java.util.List interface able to save a collections in a Map too.</p>
  * 
@@ -59,18 +57,16 @@ public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 	
 	// code added to setup a basic conditional serialization - START
 	
-	private SerialHelper<ListMap<K, T>> HELPER = new SerialHelper<>();
-	
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 		// this class is conditionally serializable, depending on contained object
 		// you are encouraged to handle special situation using this method
-		HELPER.writeObject( this, out );
+		out.defaultWriteObject();
 	}
 
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 		// this class is conditionally serializable, depending on contained object
 		// you are encouraged to handle special situation using this method
-		HELPER.readObject( this , in );
+		in.defaultReadObject();
 	}
 	
 	// code added to setup a basic conditional serialization - END

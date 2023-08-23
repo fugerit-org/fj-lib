@@ -10,7 +10,6 @@ import java.util.Set;
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
 import org.fugerit.java.core.cfg.xml.ListMapConfig;
-import org.fugerit.java.core.io.SerialHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.xml.dom.DOMIO;
@@ -28,18 +27,16 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 
 	// code added to setup a basic conditional serialization - START
 	
-	private SerialHelper<MiniFilterConfig> HELPER = new SerialHelper<>();
-	
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 		// this class is conditionally serializable, depending on contained object
 		// you are encouraged to handle special situation using this method
-		HELPER.writeObject( this, out );
+		out.defaultWriteObject();
 	}
 
 	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
 		// this class is conditionally serializable, depending on contained object
 		// you are encouraged to handle special situation using this method
-		HELPER.readObject( this , in );
+		in.defaultReadObject();
 	}
 	
 	// code added to setup a basic conditional serialization - END
