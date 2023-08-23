@@ -111,7 +111,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 				filter.setCustomConfig( entry.getProps() );
 				this.customFilterConfig(filter, entry);
 				chain.getFilterChain().add( filter );
-				this.getLogger().info( "adding filter to chain : "+filter );
+				this.getLogger().info( "adding filter to chain : {}", filter );
 			} 	
 		} else {
 			chain = this.mapChain.get( id );

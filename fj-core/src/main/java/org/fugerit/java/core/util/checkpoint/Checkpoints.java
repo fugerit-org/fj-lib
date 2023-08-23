@@ -16,7 +16,7 @@ public class Checkpoints implements Serializable {
 	 */
 	private static final long serialVersionUID = 5332421233105774144L;
 	
-	private ArrayList<CheckpointData> checkpoints;
+	private ArrayList<CheckpointData> checkpointsList;
 
 	private Serializable format;
 	
@@ -25,7 +25,7 @@ public class Checkpoints implements Serializable {
 	private long lastCheckpoint;
 	
 	private Checkpoints( CheckpointFormat format ) {
-		this.checkpoints = new ArrayList<>();
+		this.checkpointsList = new ArrayList<>();
 		this.startTime = System.currentTimeMillis();
 		this.lastCheckpoint = this.startTime;
 		this.format = (Serializable)format;
@@ -45,7 +45,7 @@ public class Checkpoints implements Serializable {
 	
 	public void addCheckpointFromTotalTime( String id, long time ) {
 		logger.info( "addCheckpoint id:{},time:{}", id, time );
-		this.checkpoints.add( new CheckpointData( id , time ) );
+		this.checkpointsList.add( new CheckpointData( id , time ) );
 		this.lastCheckpoint = System.currentTimeMillis();
 	}
 	
@@ -54,7 +54,7 @@ public class Checkpoints implements Serializable {
 	}
 	
 	public Iterator<CheckpointData> checkpointIterator() {
-		return this.checkpoints.iterator();
+		return this.checkpointsList.iterator();
 	}
 
 	private String toStringHelper( boolean pretty ) {
@@ -65,7 +65,7 @@ public class Checkpoints implements Serializable {
 			builder.append( " prettyPrintinfo : " );
 			builder.append( '\n' );
 		}
-		for ( CheckpointData current : this.checkpoints ) {
+		for ( CheckpointData current : this.checkpointsList ) {
 			builder.append( this.getFormat().formatData( current ) );
 			previousTime = current.getCreationTime();
 			if ( pretty ) {

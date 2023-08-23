@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 public class MiniFilterDebug {
 
+	private MiniFilterDebug() {}
+	
 	public static void dumpConfig( PrintWriter writer, InputStream is ) throws Exception {
 		MiniFilterConfig config = new MiniFilterConfig();
 		MiniFilterConfig.loadConfig( is , config );	

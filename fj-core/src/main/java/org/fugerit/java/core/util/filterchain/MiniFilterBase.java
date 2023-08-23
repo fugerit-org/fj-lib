@@ -14,21 +14,21 @@ public abstract class MiniFilterBase implements MiniFilter {
 	
 	protected static Logger logger = LoggerFactory.getLogger( MiniFilter.class );
 
-	public MiniFilterBase( String key, String description, int defaultBehaviour ) {
+	protected MiniFilterBase( String key, String description, int defaultBehaviour ) {
 		this.key = key;
 		this.description = description;
 		this.defaultBehaviour = defaultBehaviour;
 	}
 	
-	public MiniFilterBase( String key, int defaultBehaviour ) {
+	protected MiniFilterBase( String key, int defaultBehaviour ) {
 		this( key, key, defaultBehaviour );
 	}
 	
-	public MiniFilterBase( int defaultBehaviour ) {
+	protected MiniFilterBase( int defaultBehaviour ) {
 		this( genKey(), defaultBehaviour );
 	}
 	
-	public MiniFilterBase() {
+	protected MiniFilterBase() {
 		this.defaultBehaviour = MiniFilter.CONTINUE;
 	}
 	

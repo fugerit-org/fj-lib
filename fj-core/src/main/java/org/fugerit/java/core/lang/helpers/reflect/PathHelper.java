@@ -37,7 +37,6 @@ public class PathHelper {
 	 * @param target	the target object
 	 * @param facadeImplFinder	facade for finding target property type
 	 * @return	the object used to initialized the empty field
-	 * @throws Exception	in case of problems
 	 */
 	public static Object initEmptyField( String property, Object target, FacadeImplFinder facadeImplFinder ) {
 		Object temp = null;
@@ -59,7 +58,6 @@ public class PathHelper {
 	 * @param path		the path in the object
 	 * @param target	the target object
 	 * @return			the last created object
-	 * @throws Exception	in case of problems
 	 */
 	public static Object bindInit( String path, Object target ){
 		String[] nodes = path.split( "\\." );
@@ -82,7 +80,6 @@ public class PathHelper {
 	 * @param paramType	the property class type
 	 * @param tryInit	if <code>true</code> will try to init any null object in path
 	 * @return		if the binding is successful
-	 * @throws Exception	in case of problems
 	 */
 	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit ){
 		return bind(path, target, value, paramType, tryInit, FACADE_IMPL_FINDER);
@@ -98,7 +95,6 @@ public class PathHelper {
 	 * @param tryInit	if <code>true</code> will try to init any null object in path
 	 * @param facadeImplFinder		facade for finding implementing class
 	 * @return		if the binding is successful
-	 * @throws Exception	in case of problems
 	 */
 	public static boolean bind( String path, Object target, Object value, Class<?> paramType, boolean tryInit, FacadeImplFinder facadeImplFinder ){
 		boolean bind = false;
@@ -128,7 +124,6 @@ public class PathHelper {
 	 * @param target	the target object
 	 * @param value		the value to set
 	 * @return		if the binding is successful
-	 * @throws Exception	in case of problems
 	 */
 	public static boolean bind( String path, Object target, Object value ){
 		return bind(path, target, value, null, EXIT_ON_NULL);
@@ -143,7 +138,6 @@ public class PathHelper {
 	 * @param target	the target object
 	 * @param continueOnNull	<code>true</code> to continue on null value and eventually raise an exception, <code>false</code> to return null when a null is encountered
 	 * @return		the value found in the path
-	 * @throws Exception	in case of exception
 	 */
 	public static Object lookupMethod( String path, Object target, boolean continueOnNull ){
 		String[] nodes = path.split( "\\." );
@@ -163,7 +157,6 @@ public class PathHelper {
 	 * @param path		the path in the object (ex. prop1.prop2)
 	 * @param target	the target object
 	 * @return		the value found in the path
-	 * @throws Exception	in case of exception
 	 */
 	public static Object lookupMethod( String path, Object target ){
 		return lookupMethod(path, target, EXIT_ON_NULL);
@@ -176,7 +169,6 @@ public class PathHelper {
 	 * @param target	the target object
 	 * @param continueOnNull	<code>true</code> to continue on null value and eventually raise an exception, <code>false</code> to return null when a null is encountered
 	 * @return		the value found in the path
-	 * @throws Exception	in case of exception
 	 */
 	public static Object lookup( String path, Object target, boolean continueOnNull ){
 		String[] nodes = path.split( "\\." );
@@ -195,7 +187,6 @@ public class PathHelper {
 	 * @param path		the path in the object (ex. prop1.prop2)
 	 * @param target	the target object 
 	 * @return		the value found in the path
-	 * @throws Exception	in case of exception
 	 */
 	public static Object lookup( String path, Object target ){
 		return lookup(path, target, EXIT_ON_NULL);
@@ -210,7 +201,6 @@ public class PathHelper {
 	 * @param path		the path in the object (ex. prop1.prop2)
 	 * @param target	the target object
 	 * @return		the value found in the path
-	 * @throws Exception	in case of exception
 	 */
 	public static Object lookupContinueOnNull( String path, Object target ){
 		return lookup(path, target, CONTINUE_ON_NULL);
