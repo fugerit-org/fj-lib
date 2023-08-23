@@ -2,7 +2,9 @@ package test.org.fugerit.java.core.util.checkpoint;
 
 import static org.junit.Assert.assertTrue;
 
-import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import java.time.Duration;
+
+import org.awaitility.Awaitility;
 import org.fugerit.java.core.util.checkpoint.Checkpoints;
 import org.junit.Test;
 
@@ -13,11 +15,7 @@ public class TestCheckpoints extends BasicTest {
 	private Checkpoints generate( int size ) {
 		Checkpoints cp = Checkpoints.newInstance();
 		for ( int k=0; k<size; k++ ) {
-			try {
-				Thread.sleep( 10+(int)(Math.random()*10) );
-			} catch (InterruptedException e) {
-				throw new ConfigRuntimeException( e );
-			}
+			Awaitility.await().atMost( Duration.ofMillis( 500 ) );
 			cp.addCheckpoint( "step_"+(k+1) );
 		}
 		return cp;

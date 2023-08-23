@@ -27,6 +27,7 @@
 	    <fj-test-helper-version>0.3.1</fj-test-helper-version>    	
 	    <javax-rs-api-version>2.1.1</javax-rs-api-version>
 	    <fj-version>${project.version}</fj-version>
+	    <awaitility-version>4.2.0</awaitility-version>
 	</properties>
 
 	<licenses>
@@ -144,6 +145,13 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.awaitility</groupId>
+		    <artifactId>awaitility</artifactId>
+		    <version>${awaitility-version}</version>
+		    <scope>test</scope>
 		</dependency>
 
 	</dependencies>
