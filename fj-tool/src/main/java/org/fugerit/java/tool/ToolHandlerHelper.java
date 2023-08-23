@@ -79,7 +79,7 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 			StreamIO.pipeStream( is , os , StreamIO.MODE_CLOSE_BOTH );
 			help = os.toString();
 		} catch (Exception e) {
-			logger.info( "Failed to load help : "+resName );
+			logger.info( "Failed to load help : {}", resName );
 		}
 		return help;
 	}

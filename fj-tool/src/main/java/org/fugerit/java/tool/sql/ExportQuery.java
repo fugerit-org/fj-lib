@@ -46,7 +46,7 @@ public class ExportQuery extends ToolHandlerHelper {
 		pw.println( "</table>" );
 	}
 	
-	private void addRecord( PrintWriter pw, String[] record, boolean header ) {
+	private void addRecord( PrintWriter pw, String[] currentRecord, boolean header ) {
 		pw.println( "<tr>" );
 		String openTag = "<td>";
 		String closeTag = "</td>";
@@ -54,12 +54,12 @@ public class ExportQuery extends ToolHandlerHelper {
 			openTag = "<th>";
 			closeTag = "</th>";
 		}
-		for ( int k=0; k<record.length; k++ ) {
+		for ( int k=0; k<currentRecord.length; k++ ) {
 			pw.print( openTag );
-			if ( StringUtils.isEmpty( record[k] ) ) {
+			if ( StringUtils.isEmpty( currentRecord[k] ) ) {
 				pw.print( "&nbsp;" );	
 			} else {
-				pw.print( record[k] );
+				pw.print( currentRecord[k] );
 			}
 			pw.println( closeTag );
 		}
@@ -100,15 +100,15 @@ public class ExportQuery extends ToolHandlerHelper {
 				}
 				addRecord( pw , head , true );
 				while ( rs.next() ) {
-					String record[] = new String[rsmd.getColumnCount()];
+					String localRecord[] = new String[rsmd.getColumnCount()];
 					for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
 						Object obj = rs.getObject( k+1 );
 						if ( obj == null ) {
 							obj = "";
 						}
-						record[k] = String.valueOf( obj );
+						localRecord[k] = String.valueOf( obj );
 					}
-					addRecord( pw , record , false );				
+					addRecord( pw , localRecord , false );				
 				}
 				closeFile( pw, format );
 			}

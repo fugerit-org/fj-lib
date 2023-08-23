@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public class CompressUtils {
 
+	private CompressUtils() {}
+	
 	public static void compress7Zipfile( File sourceDir, File  outputFile) throws IOException, FileNotFoundException {
 		compressZipfile(sourceDir, outputFile);
 	}

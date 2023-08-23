@@ -82,7 +82,7 @@ public class FixedToExcel extends ToolHandlerHelper {
 					}
 					currentRow++;
 					if ( currentRow%1000 == 0 ) {
-						System.out.println( "CURRENT ROW "+currentRow );
+						logger.debug( "CURRENT ROW {}", currentRow );
 					}
 				}			
 				workbook.close();

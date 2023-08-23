@@ -41,6 +41,19 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 	 */
 	public static final String PARAM_OUTPUT_BEAN = "output-bean";
 	
+	private int handleRow( int start, String length, String name, List<FixedFieldDescriptor> listFields, int rowCount ) {
+		try {
+			Integer len = Integer.valueOf( length );
+			FixedFieldDescriptor ffd = new FixedFieldDescriptor( name, start, len );
+			logger.info( String.valueOf( ffd ) );
+			listFields.add( ffd );
+			start+= len;
+		} catch (Exception e) {
+			logger.warn( "Failed parsing of length for row : {} name : {}", rowCount, name );
+		}
+		return start;
+	}
+	
 	@Override
 	public int handleWorker(Properties params) throws RunToolException {
 		int exit = EXIT_OK;
@@ -56,15 +69,7 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 				Row row = rows.next();
 				String name = row.getCell( 0 ).getStringCellValue();
 				String length = row.getCell( 1 ).getStringCellValue();
-				try {
-					Integer len = Integer.valueOf( length );
-					FixedFieldDescriptor ffd = new FixedFieldDescriptor( name, start, len );
-					logger.info( String.valueOf( ffd ) );
-					listFields.add( ffd );
-					start+= len;
-				} catch (Exception e) {
-					logger.warn( "Failed parsing of length for row : "+rowCount+" name "+name );
-				}
+				start = this.handleRow(start, length, name, listFields, rowCount);
 				rowCount++;
 			}
 			// generating xml output
