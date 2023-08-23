@@ -1,5 +1,4 @@
 <daogen-config
-	base-src-folder="."
 	database-type="generic"
 	gen-version="1.0.0"
 	gen-author="fugerit"

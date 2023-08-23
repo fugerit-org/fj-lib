@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -21,7 +22,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
 
 	<organization>
 		<url>https://www.fugerit.org</url>
@@ -29,44 +30,90 @@
 	</organization>
 
 	<properties>
-		<fj-daogen-version>1.1.0-rc.4</fj-daogen-version>
+		<fj-daogen-version>1.1.0-rc.5</fj-daogen-version>
+		<gen.base.dir>${project.basedir}</gen.base.dir>
+		<generated.source.daogen>target/generated-sources/daogen</generated.source.daogen>
 	</properties>
-	
+
 	<build>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.fugerit.java</groupId>
+				<artifactId>fj-daogen-maven-plugin</artifactId>
+				<version>${fj-daogen-version}</version>
+				<executions>
+					<execution>
+						<id>daogen</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<daogenConfig>${project.basedir}/src/test/resources/core-jvfs/db/daogen/daogen-config-jvfs.xml</daogenConfig>
+					<genBaseDir>${gen.base.dir}</genBaseDir>
+					<generatedSourceHelper>${generated.source.daogen}</generatedSourceHelper>
+				</configuration>
+			</plugin>
+
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+		                    <sources>
+		                    	<source>${gen.base.dir}/${generated.source.daogen}</source>
+		                    </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+		</plugins>
 
 	</build>
 
 	<dependencies>
 
-		<dependency> 
-		  <groupId>org.slf4j</groupId>
-		  <artifactId>slf4j-api</artifactId>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
 		</dependency>
 
 		<dependency>
-		    <groupId>org.fugerit.java</groupId>
-		    <artifactId>fj-core</artifactId>
+			<groupId>org.fugerit.java</groupId>
+			<artifactId>fj-core</artifactId>
 		</dependency>
 
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-dbcp2</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-api</artifactId>
-		    <scope>test</scope>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-core</artifactId>
-		    <scope>test</scope>
+			<artifactId>log4j-api</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-slf4j2-impl</artifactId>
-		    <scope>test</scope>
+			<artifactId>log4j-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j2-impl</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -80,12 +127,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.fugerit.java</groupId>
-		    <artifactId>fj-daogen-base</artifactId>
-		    <version>${fj-daogen-version}</version>
-		    <scope>test</scope>
+			<groupId>org.fugerit.java</groupId>
+			<artifactId>fj-daogen-base</artifactId>
+			<version>${fj-daogen-version}</version>
+			<scope>test</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>*</groupId>
@@ -95,11 +142,10 @@
 		</dependency>
 
 	</dependencies>
-	
-	<profiles>
-	
 
-	
+	<profiles>
+
+
 	</profiles>
-	
+
 </project>
