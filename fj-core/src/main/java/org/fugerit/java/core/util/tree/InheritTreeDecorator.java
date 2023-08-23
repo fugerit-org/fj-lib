@@ -33,9 +33,9 @@ public class InheritTreeDecorator<T> implements Serializable, TreeDecorator<T> {
 	@Override
 	public void init(Properties generalProps, Element root) throws ConfigException {
 		this.inheritAtt = new HashSet<>();
-		String inheritAtt = generalProps.getProperty( ATT_INHERIT_PROPERTY );
-		if ( StringUtils.isNotEmpty( inheritAtt ) ) {
-			String[] split = inheritAtt.split( "," );
+		String inheritAttLocal = generalProps.getProperty( ATT_INHERIT_PROPERTY );
+		if ( StringUtils.isNotEmpty( inheritAttLocal ) ) {
+			String[] split = inheritAttLocal.split( "," );
 			for ( String current : split ) {
 				if ( StringUtils.isNotEmpty( current ) ) {
 					this.inheritAtt.add( current );	

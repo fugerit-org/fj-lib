@@ -118,27 +118,27 @@ public class ValidatorCatalog implements Serializable {
 	}
 
 	public Properties getBundle(Locale l) {
-		Properties bundle = this.bundleMap.get(l);
-		if (bundle == null) {
-			ResourceBundle temp = FixedFileFieldBasicValidator
-					.newBundle(StringUtils.valueWithDefault(this.bundlePath, DEFAULT_BUNDLE_PATH), l.getLanguage());
-			bundle = new Properties();
-			for (String key : temp.keySet()) {
-				bundle.setProperty(key, temp.getString(key));
-			}
-			Properties customMessages = this.customMessageMap.get(l.toString());
-			if (customMessages == null) {
-				customMessages = this.customMessageMap.get(l.getLanguage());
-			}
-			if (customMessages == null) {
-				customMessages = this.customMessageMap.get(DEFAULT_CUSTOM_MESSAGE_LOCALE);
-			}
-			if (customMessages != null) {
-				bundle.putAll(customMessages);
-			}
-			this.bundleMap.put(l, bundle);
-		}
-		return bundle;
+		return this.bundleMap.computeIfAbsent( l, 
+				( k ) -> {  
+					Properties bundle = new Properties();
+					ResourceBundle temp = FixedFileFieldBasicValidator
+							.newBundle(StringUtils.valueWithDefault(this.bundlePath, DEFAULT_BUNDLE_PATH), l.getLanguage());
+					for (String key : temp.keySet()) {
+						bundle.setProperty(key, temp.getString(key));
+					}
+					Properties customMessages = this.customMessageMap.get(l.toString());
+					if (customMessages == null) {
+						customMessages = this.customMessageMap.get(l.getLanguage());
+					}
+					if (customMessages == null) {
+						customMessages = this.customMessageMap.get(DEFAULT_CUSTOM_MESSAGE_LOCALE);
+					}
+					if (customMessages != null) {
+						bundle.putAll(customMessages);
+					}
+					return bundle;
+				}
+		);
 	}
 
 	public boolean validate(String validatorId, ValidatorResult result, Locale l, String fieldId, String value,
