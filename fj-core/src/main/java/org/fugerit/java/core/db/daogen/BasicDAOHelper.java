@@ -129,7 +129,7 @@ public class BasicDAOHelper<T> implements LogObject {
 			String queryId = DAOUtilsNG.createQueryId(startTime);
 			log.debug( "queryId:'{}', update sql           : '{}'", queryId, query );
 			log.debug( "queryId:'{}', update fields        : '{}'", queryId, fields.size() );
-			this.updateWorker(queryId, fields, query, startTime);
+			res = this.updateWorker(queryId, fields, query, startTime);
 			log.debug("update END res : '{}'", res );
 		} catch (DAOException e) {
 			throw new DAOException( e );

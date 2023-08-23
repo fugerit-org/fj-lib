@@ -50,7 +50,6 @@ public class FixedFieldFileConfig {
 				String length = currentFieldTag.getAttribute( "length" );
 				String validator = currentFieldTag.getAttribute( "validator" );
 				FixedFieldDescriptor currentField = new FixedFieldDescriptor( id, description, Integer.parseInt( start ), Integer.parseInt( length ) );
-				//totalLength+= currentField.getLength();
 				if ( StringUtils.isNotEmpty( validator ) ) {
 					FixedFileFieldValidator fieldValidator = fileDescriptor.getValidators().get( validator );
 					currentField.setValidator( fieldValidator );
@@ -88,13 +87,10 @@ public class FixedFieldFileConfig {
 			// validator list
 			handleValidatorList(fileDescriptor, currentFileTag);
 			
-			//int totalLength = 0;
-			
 			// field list
 			handleFiledList(fileDescriptor, currentFileTag);
 			
-			// TODO: review
-			//fileDescriptor.setCheckLengh( totalLength );
+			// TODO: review this code
 			config.addFileDescriptor( idFile , fileDescriptor );
 		}
 		is.close();

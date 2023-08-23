@@ -201,14 +201,16 @@ public class JMountDaogenDB implements JMount {
 			}
 			// create or update?
 			BasicDaoResult<ModelDbJvfsFile> updateResult = null;
+			String mode = "create";
 			if ( create ) {
 				updateResult = this.facade.create(context, model);
 			} else {
+				mode = "updateById";
 				updateResult = this.facade.updateById(context, model);
 			}
 			updated = updateResult.isResultOk();
 			if ( !updated ) {
-				throw new DAOException( "Fail:"+updateResult );
+				throw new DAOException( "Fail mode:"+mode+", result:"+updateResult );
 			}
 		} catch (Exception e) {
 			throw new IOException( "Write error "+file+"["+e+"]", e );

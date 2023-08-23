@@ -205,7 +205,7 @@ public class MetaDataUtils {
 		}
 	}
 	
-	private static void handleCurrentTableStrict( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException {
+	private static void handleCurrentTableStrict( TableModel tableModel, DatabaseMetaData dbmd, int mode ) throws SQLException, DAOException {
 		if ( mode == MODE_STRICT ) {
 			// estrazione chiavi esterne
 			ResultSet foreignRS = dbmd.getImportedKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
@@ -247,7 +247,7 @@ public class MetaDataUtils {
 		
 		handleCurrentTableIndex( tableModel, dbmd, mode );
 		
-		handleCurrentTableStrict(context, tableModel, tableRS, dbmd, mode, conn);
+		handleCurrentTableStrict( tableModel, dbmd, mode );
 	}
 	
 	private static void handleCurrentTable( MetaDataUtilsContext context, TableModel tableModel, ResultSet tableRS, DatabaseMetaData dbmd, int mode, Connection conn ) throws SQLException, DAOException {
@@ -267,7 +267,7 @@ public class MetaDataUtils {
 				doTable = true;
 			}
 		}
-		LogFacade.getLog().info( "DataBaseModel.DataBaseModel() tableId  : "+tableId+" doTable : "+doTable );
+		LogFacade.getLog().info( "DataBaseModel.DataBaseModel() tableId  : {} doTable : {}", tableId, doTable );
 		if ( doTable ) {
 			tableModel.setTableId( tableId );
 			handleCurrentTableWorker(context, tableModel, tableRS, dbmd, mode, conn);
