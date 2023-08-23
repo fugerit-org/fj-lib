@@ -18,6 +18,23 @@ import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
 public class HelperDbJvfsFile extends BasicHelper implements ModelDbJvfsFile {
 
 	// custom code start ( code above here will be overwritten )
+	
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// you are encouraged to handle special situation using this method
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	// custom code end ( code below here will be overwritten )
 
 	private static final long serialVersionUID = 405195931944L;
@@ -97,7 +114,7 @@ public class HelperDbJvfsFile extends BasicHelper implements ModelDbJvfsFile {
 		return this.fileSize;
 	}
 
-	private transient org.fugerit.java.core.db.daogen.ByteArrayDataHandler fileContent;
+	private org.fugerit.java.core.db.daogen.ByteArrayDataHandler fileContent;
 
 	@Override
 	public void setFileContent( org.fugerit.java.core.db.daogen.ByteArrayDataHandler value ) {
