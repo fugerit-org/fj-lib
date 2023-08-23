@@ -125,7 +125,7 @@ public class CharsetCorrect extends ToolHandlerHelper {
 	 * 
 	 * 
 	 * @param params		the arguments
-	 * @throws Exception	if issues arise.
+	 * @throws RunToolException	if issues arise.
 	 */
 	public static void correct( Properties params ) throws RunToolException {
 		String inputFile = params.getProperty( PARAM_INPUT_FILE );

@@ -45,7 +45,7 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 		try {
 			Integer len = Integer.valueOf( length );
 			FixedFieldDescriptor ffd = new FixedFieldDescriptor( name, start, len );
-			logger.info( String.valueOf( ffd ) );
+			logger.info( "field descriptor : {}", ffd );
 			listFields.add( ffd );
 			start+= len;
 		} catch (Exception e) {

@@ -33,7 +33,7 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 	 * 
 	 * @param params			ths params for the tool
 	 * @return					exit code (0 is all ok)
-	 * @throws Exception		issues if problems arise
+	 * @throws RunToolException		issues if problems arise
 	 */
 	abstract public int handleWorker( Properties params ) throws RunToolException;
 	
