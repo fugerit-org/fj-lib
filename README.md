@@ -2,6 +2,8 @@
 
 Provides helper libraries for other java projects (io, configuration, etc.)
 
+[![Maven Central](https://img.shields.io/maven-central/v/org.fugerit.java/fj-core.svg)](https://mvnrepository.com/artifact/org.fugerit.java/fj-core)
+
 **Note : Starting from version 0.7+, minimum required java version changed to 1.8**
 
 Useful resources : 
