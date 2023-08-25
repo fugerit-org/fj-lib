@@ -31,6 +31,7 @@ import java.io.Writer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
@@ -38,6 +39,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.xml.TransformerXML;
 import org.fugerit.java.core.xml.XMLException;
 import org.w3c.dom.Document;
@@ -53,6 +55,17 @@ import org.xml.sax.InputSource;
  */
 public class DOMIO {
 
+	public static DocumentBuilderFactory newSafeDocumentBuilderFactory() {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		try {
+			factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		} catch (ParserConfigurationException e) {
+			throw ConfigRuntimeException.convertExMethod( "newSafeDocumentBuilderFactory", e );
+		}
+		return factory;
+	}
+	
 	public static final int DEFAULT_INDENT = 2;
 	
     /**
@@ -77,7 +90,7 @@ public class DOMIO {
     public static Document loadDOMDoc(InputSource source, EntityResolver er ) throws XMLException {
         Document result = null;
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = newSafeDocumentBuilderFactory();
             DocumentBuilder parser = factory.newDocumentBuilder();
             parser.setEntityResolver( er );
             result = parser.parse(source);
@@ -90,7 +103,7 @@ public class DOMIO {
     public static Document loadDOMDoc(InputSource source, EntityResolver er, boolean nsa) throws XMLException {
         Document result = null;
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = newSafeDocumentBuilderFactory();
             factory.setNamespaceAware( nsa );
             DocumentBuilder parser = factory.newDocumentBuilder();
             parser.setEntityResolver( er );
@@ -111,7 +124,7 @@ public class DOMIO {
     public static Document loadDOMDoc(InputSource source) throws XMLException {
        Document result = null;
        try {
-           DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); 
+           DocumentBuilderFactory factory = newSafeDocumentBuilderFactory(); 
            DocumentBuilder parser = factory.newDocumentBuilder();
            result = parser.parse(source);
        } catch (Exception e) {
@@ -123,7 +136,7 @@ public class DOMIO {
     public static Document loadDOMDoc(InputSource source, boolean nsa) throws XMLException {
         Document result = null;
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = newSafeDocumentBuilderFactory();
             factory.setNamespaceAware( nsa );
             DocumentBuilder parser = factory.newDocumentBuilder();
             result = parser.parse(source);

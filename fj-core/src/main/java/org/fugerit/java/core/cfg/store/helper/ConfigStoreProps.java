@@ -64,7 +64,7 @@ public class ConfigStoreProps extends ConfigStoreDefault {
 	@Override
 	public ConfigStoreMap remove(String name) {
 		ConfigStoreMap res = super.remove(name);
-		this.remove(name);
+		this.configProps.remove(name);
 		return res;
 	}
 

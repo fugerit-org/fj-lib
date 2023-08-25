@@ -5,6 +5,8 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
+
 /*
  * 
  *
@@ -15,11 +17,21 @@ public class TransformerXML {
 
 	private TransformerXML() {}
 	
+	public static TransformerFactory newSafeTransformerFactory() {
+		TransformerFactory factory = TransformerFactory.newInstance();
+		try {
+			factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+		} catch (Exception e) {
+			throw ConfigRuntimeException.convertExMethod( "newSafeTransformerFactory", e );
+		}
+		return factory;
+	}
+	
     public static Transformer newTransformer(Source source) throws XMLException {
         Transformer transformer = null;
         try {
-            transformer = 
-                TransformerFactory.newInstance().newTransformer(source);
+            transformer = newSafeTransformerFactory().newTransformer(source);
         } catch (TransformerConfigurationException tce) {
             throw new XMLException(tce);
         }
@@ -29,8 +41,7 @@ public class TransformerXML {
     public static Transformer newTransformer() throws XMLException {
         Transformer transformer = null;
         try {
-            transformer = 
-                TransformerFactory.newInstance().newTransformer();
+            transformer = newSafeTransformerFactory().newTransformer();
         } catch (TransformerConfigurationException tce) {
             throw new XMLException(tce);
         }

@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
+import org.fugerit.java.core.xml.dom.DOMIO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -61,7 +62,7 @@ public class FixedFieldFileConfig {
 	
 	public static FixedFieldFileConfig parseConfig( InputStream is ) throws Exception {
 		FixedFieldFileConfig config = new FixedFieldFileConfig();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilderFactory dbf = DOMIO.newSafeDocumentBuilderFactory();
 		DocumentBuilder parser = dbf.newDocumentBuilder();
 		Document doc = parser.parse( is );
 		Element root = doc.getDocumentElement();

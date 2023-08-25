@@ -19,6 +19,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.fugerit.java.core.fixed.parser.FixedFieldDescriptor;
+import org.fugerit.java.core.xml.TransformerXML;
 import org.fugerit.java.tool.RunToolException;
 import org.fugerit.java.tool.ToolHandlerHelper;
 import org.w3c.dom.Document;
@@ -90,7 +91,7 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 					fieldTag.setAttribute( "description" , ffd.getName() );
 					root.appendChild( fieldTag );
 				}
-				TransformerFactory tFactory = TransformerFactory.newInstance();
+				TransformerFactory tFactory = TransformerXML.newSafeTransformerFactory();
 				Transformer transformer = tFactory.newTransformer();
 				transformer.setOutputProperty( OutputKeys.INDENT, "yes" );
 				transformer.setOutputProperty( OutputKeys.OMIT_XML_DECLARATION, "yes" );
