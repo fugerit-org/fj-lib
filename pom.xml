@@ -27,11 +27,12 @@
 	    <fj-test-helper-version>0.3.1</fj-test-helper-version>    	
 	    <javax-rs-api-version>2.1.1</javax-rs-api-version>
 	    <fj-version>${project.version}</fj-version>
-	    <awaitility-version>4.2.0</awaitility-version>
+	    <awaitility-version>4.2.0</awaitility-version>		
 	    <!-- sonar cloud configuration -->
 	    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	    <sonar.organization>fugerit-org</sonar.organization>
-	    <sonar.projectKey>fugerit-org_fj-lib</sonar.projectKey>				
+	    <sonar.projectKey>fugerit-org_fj-lib</sonar.projectKey>	
+    	<sonar.moduleKey>${project.artifactId}</sonar.moduleKey>	
 	</properties>
 
 	<licenses>
