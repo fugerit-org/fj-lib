@@ -19,8 +19,8 @@
 	<url>https://www.fugerit.org/perm/jupiter/</url>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java-version-compliance>8</java-version-compliance>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <java-version-compliance>8</java-version-compliance>
 	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
 	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>	
 	    <maven.compiler.release>${java-version-compliance}</maven.compiler.release>
@@ -28,6 +28,10 @@
 	    <javax-rs-api-version>2.1.1</javax-rs-api-version>
 	    <fj-version>${project.version}</fj-version>
 	    <awaitility-version>4.2.0</awaitility-version>
+	    <!-- sonar cloud configuration -->
+	    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+	    <sonar.organization>fugerit-org</sonar.organization>
+	    <sonar.projectKey>fugerit-org_fj-lib</sonar.projectKey>				
 	</properties>
 
 	<licenses>
