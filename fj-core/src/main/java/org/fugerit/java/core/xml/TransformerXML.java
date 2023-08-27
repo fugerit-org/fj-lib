@@ -1,5 +1,6 @@
 package org.fugerit.java.core.xml;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -20,6 +21,9 @@ public class TransformerXML {
 	public static TransformerFactory newSafeTransformerFactory() {
 		TransformerFactory factory = TransformerFactory.newInstance();
 		try {
+			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 			factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
 			factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		} catch (Exception e) {
