@@ -38,7 +38,7 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Build and analyze
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar # -Pcoverage disable coverage
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Pcoverage,test,full
         env:
           # Needed to get some information about the pull request, if any
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
