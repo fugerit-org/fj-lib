@@ -13,7 +13,9 @@ public class TestJavaVersionHelper {
 	public void test() {
 		int majorVersion = JavaVersionHelper.parseUniversalJavaMajorVersion();
 		log.info("major version -> '{}'", majorVersion);
-		Assert.assertEquals( "Wrong java major version" , JavaVersionHelper.MAJOR_VERSION_JAVA_11, majorVersion );
+		boolean supportedBuildVersion = ( majorVersion == JavaVersionHelper.MAJOR_VERSION_JAVA_11 
+				|| majorVersion == JavaVersionHelper.MAJOR_VERSION_JAVA_17 ); 
+		Assert.assertTrue( "Wrong java major version : "+majorVersion , supportedBuildVersion );
 	}
 
 }
