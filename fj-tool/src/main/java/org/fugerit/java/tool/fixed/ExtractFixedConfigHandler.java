@@ -1,7 +1,9 @@
 package org.fugerit.java.tool.fixed;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -60,7 +62,8 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 		int exit = EXIT_OK;
 		String inputFilePath = params.getProperty( PARAM_INPUT_FILE );
 		File inputFile = new File( inputFilePath );
-		try ( XSSFWorkbook workbook = new XSSFWorkbook( inputFile ) ) {
+		try ( InputStream is = new FileInputStream( inputFile );
+				XSSFWorkbook workbook = new XSSFWorkbook( is ) ) {
 			Sheet sheet = workbook.getSheetAt( 0 );
 			Iterator<Row> rows = sheet.rowIterator();
 			List<FixedFieldDescriptor> listFields = new ArrayList<FixedFieldDescriptor>();
