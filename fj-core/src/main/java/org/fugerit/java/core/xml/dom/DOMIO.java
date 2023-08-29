@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,6 +41,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.xml.TransformerXML;
 import org.fugerit.java.core.xml.XMLException;
 import org.w3c.dom.Document;
@@ -54,16 +56,36 @@ import org.xml.sax.InputSource;
  *
  */
 public class DOMIO {
-
-	public static DocumentBuilderFactory newSafeDocumentBuilderFactory() {
+	
+	private static final Properties NO_FEATURES = new Properties();
+	
+	public static DocumentBuilderFactory newSafeDocumentBuilderFactory( Properties features ) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
-			factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
-			factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+			factory.setFeature( "http://xml.org/sax/features/external-general-entities", false );
+			factory.setFeature( "http://xml.org/sax/features/external-parameter-entities", false );
+			if ( features != null ) {
+				for ( Object k : features.keySet() ) {
+					String key = String.valueOf( k );
+					boolean value = BooleanUtils.isTrue( features.getProperty( key ) );
+					factory.setFeature( key, value );
+				}
+			}
 		} catch (ParserConfigurationException e) {
 			throw ConfigRuntimeException.convertExMethod( "newSafeDocumentBuilderFactory", e );
 		}
 		return factory;
+	}
+	
+	public static DocumentBuilderFactory newDocumentBuilderFactory( boolean allowExternaEntities ) {
+		Properties features = new Properties();
+		features.setProperty( "http://xml.org/sax/features/external-general-entities" , String.valueOf( allowExternaEntities ) );
+		features.setProperty( "http://xml.org/sax/features/external-parameter-entities" , String.valueOf( allowExternaEntities ) );
+		return newSafeDocumentBuilderFactory( features );
+	}
+	
+	public static DocumentBuilderFactory newSafeDocumentBuilderFactory() {
+		return newSafeDocumentBuilderFactory( NO_FEATURES );
 	}
 	
 	public static final int DEFAULT_INDENT = 2;
@@ -185,8 +207,8 @@ public class DOMIO {
      */
     public static Document loadDOMDoc(File source) throws XMLException {
         Document result = null;
-        try {
-            result = loadDOMDoc(new FileInputStream(source));
+        try (InputStream is = new FileInputStream(source)) {
+            result = loadDOMDoc(is);
         } catch (IOException ioe) {
             throw (new XMLException(ioe));
         }
@@ -195,8 +217,8 @@ public class DOMIO {
     
     public static Document loadDOMDoc(File source, boolean nsa) throws XMLException {
         Document result = null;
-        try {
-            result = loadDOMDoc(new FileInputStream(source), nsa);
+        try (InputStream is = new FileInputStream(source)) {
+            result = loadDOMDoc(is, nsa);
         } catch (IOException ioe) {
             throw (new XMLException(ioe));
         }

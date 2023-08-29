@@ -15,6 +15,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -25,6 +27,9 @@ import org.fugerit.java.tool.ToolHandlerHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 
 	/**
@@ -43,16 +48,11 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 	public static final String PARAM_OUTPUT_BEAN = "output-bean";
 	
 	private int handleRow( int start, String length, String name, List<FixedFieldDescriptor> listFields, int rowCount ) {
-		try {
-			Integer len = Integer.valueOf( length );
-			FixedFieldDescriptor ffd = new FixedFieldDescriptor( name, start, len );
-			logger.info( "field descriptor : {}", ffd );
-			listFields.add( ffd );
-			start+= len;
-		} catch (Exception e) {
-			logger.warn( "Failed parsing of length for row : {} name : {}", rowCount, name );
-		}
-		return start;
+		Integer len = Integer.valueOf( length );
+		FixedFieldDescriptor ffd = new FixedFieldDescriptor( name, start, len );
+		logger.info( "field descriptor : {}", ffd );
+		listFields.add( ffd );
+		return (start+= len);
 	}
 	
 	@Override
@@ -69,7 +69,15 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 			while ( rows.hasNext() ) {
 				Row row = rows.next();
 				String name = row.getCell( 0 ).getStringCellValue();
-				String length = row.getCell( 1 ).getStringCellValue();
+				Cell lengthCell = row.getCell( 1 );
+				String length = null;
+				CellType lengthCellType = lengthCell.getCellType();
+				if ( CellType.STRING.equals(lengthCellType  ) ) {
+					length = lengthCell.getStringCellValue();
+				} else if ( CellType.NUMERIC.equals(lengthCellType  ) ) {
+					length = String.valueOf( (long)lengthCell.getNumericCellValue() );
+				} 
+				log.debug( "Check length : {}", Integer.parseInt( length ) );
 				start = this.handleRow(start, length, name, listFields, rowCount);
 				rowCount++;
 			}

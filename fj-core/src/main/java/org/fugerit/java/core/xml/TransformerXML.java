@@ -1,5 +1,7 @@
 package org.fugerit.java.core.xml;
 
+import java.util.Properties;
+
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -7,6 +9,7 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerFactory;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.lang.helpers.BooleanUtils;
 
 /*
  * 
@@ -18,24 +21,39 @@ public class TransformerXML {
 
 	private TransformerXML() {}
 	
-	public static TransformerFactory newSafeTransformerFactory() {
+	private static final Properties NO_FEATURES = new Properties();
+	
+	public static TransformerFactory newSafeTransformerFactory( Properties features ) {
 		TransformerFactory factory = TransformerFactory.newInstance();
 		try {
-			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			factory.setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
 			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
-			factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
-			factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-		} catch (Exception e) {
+			if ( features != null ) {
+				for ( Object k : features.keySet() ) {
+					String key = String.valueOf( k );
+					boolean value = BooleanUtils.isTrue( features.getProperty( key ) );
+					factory.setFeature( key, value );
+				}
+			}
+		} catch (TransformerConfigurationException e) {
 			throw ConfigRuntimeException.convertExMethod( "newSafeTransformerFactory", e );
 		}
 		return factory;
 	}
 	
+	public static TransformerFactory newSafeTransformerFactory() {
+		return newSafeTransformerFactory( NO_FEATURES );
+	}
+	
     public static Transformer newTransformer(Source source) throws XMLException {
         Transformer transformer = null;
         try {
-            transformer = newSafeTransformerFactory().newTransformer(source);
+        	if ( source == null ) {
+        		transformer = newSafeTransformerFactory().newTransformer();	
+        	} else {
+        		transformer = newSafeTransformerFactory().newTransformer(source);	
+        	}
         } catch (TransformerConfigurationException tce) {
             throw new XMLException(tce);
         }
@@ -43,13 +61,7 @@ public class TransformerXML {
     }
 
     public static Transformer newTransformer() throws XMLException {
-        Transformer transformer = null;
-        try {
-            transformer = newSafeTransformerFactory().newTransformer();
-        } catch (TransformerConfigurationException tce) {
-            throw new XMLException(tce);
-        }
-        return transformer;
+       return newTransformer(null);
     }	
 	
 }

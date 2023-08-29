@@ -1,0 +1,17 @@
+<fixed-field-file-config>
+
+	<fixed-field-file  id="testFixedValidator" mode="map" check-length="726" endline="\r\n" base-locale="en_UK">
+		<validator-list>
+            <validator id="stringValidator" type="org.fugerit.java.core.fixed.parser.FixedFileFieldRegexValidator" regex="[^/]*" locale="en_UK"/>
+            <validator id="numberValidator" type="org.fugerit.java.core.fixed.parser.FixedFileFieldRegexValidator" regex="^[0-9]*$" locale="en_UK"/>
+			<validator id="optionalDateValidatorMaxSysdate" max="sysdate" format="yyyyMMdd" locale="en_UK" strict="true" required="false" type="org.fugerit.java.core.fixed.parser.FixedFileFieldDateValidator"/>
+		</validator-list>	
+		<field-list>
+			<field id="name" description="name of the user" start="1" end="11" length="10" validator="stringValidator"/>
+			<field id="surname" description="surname of the user" start="11" end="21" length="10" validator="stringValidator"/>
+			<field id="age" description="age of the user" start="21" end="24" length="3" validator="numberValidator"/>
+			<field id="birthDate" description="birth date of the user" start="24" end="33" length="8" validator="optionalDateValidatorMaxSysdate"/>
+		</field-list>
+	</fixed-field-file>
+
+</fixed-field-file-config>
