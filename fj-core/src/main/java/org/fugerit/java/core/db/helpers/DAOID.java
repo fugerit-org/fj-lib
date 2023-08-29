@@ -108,5 +108,10 @@ public class DAOID extends Number {
 		}
 		return eq;
 	}
+	
+	@Override
+	public int hashCode() {
+		return this.id.hashCode();
+	}
 
 }
