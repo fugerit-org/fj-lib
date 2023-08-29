@@ -1,17 +1,20 @@
-﻿8.2.1 (next)
+﻿8.2.1 (2023-08-29)
 ------------------
-+ [enhancement [fj-lib] updated fj-bom version to 1.2.5 [8.2.1-rc.1]
++ [fix][fj-core] fix TransformerXML.newSafeTransformerFactory() bug [8.2.1-rc.1]
++ [fix][fj-tool] fixed fixed-config-extract parsing [8.2.1-rc.1]
++ [enhancement][fj-lib] updated fj-bom version to 1.2.5 [8.2.1-rc.1]
++ [enhancement][fj-core][fj-tool] Added test coverage [8.2.1-rc.1]
 
 8.2.0 (2023-08-24)
 ------------------
-+ [enhancement [fj-core-jvfs] db classes generated with the fj-daogen-maven-plugin [8.2.0-rc.7]
-+ [enhancement [fj-core] fixed all major sonar cloud issues [8.2.0-rc.7]
-+ [enhancement [fj-core] loadConfigSafe() method introduced for property catalog [8.2.0-rc.6]
-+ [enhancement [fj-core] JavaGenerator generate() throw chaanged from Exception to IOException [8.2.0-rc.6]
-+ [enhancement [fj-core] update fj-test-helper8 version to 0.3.1 (serialization support) (support for serialization test) [8.2.0-rc.6]
-+ [enhancement [fj-core] added utilities to close Closeable and AutoCloseable [8.2.0-rc.5]
-+ [enhancement [fj-core] conversion utilities for ConfigException and ConfigRuntimeException [8.2.0-rc.3]
-+ [enhancement [to reduce hierarchy depth, if the correct interfaces have been used, this should have no impact] :
++ [enhancement][fj-core-jvfs] db classes generated with the fj-daogen-maven-plugin [8.2.0-rc.7]
++ [enhancement][fj-core] fixed all major sonar cloud issues [8.2.0-rc.7]
++ [enhancement][fj-core] loadConfigSafe() method introduced for property catalog [8.2.0-rc.6]
++ [enhancement][fj-core] JavaGenerator generate() throw chaanged from Exception to IOException [8.2.0-rc.6]
++ [enhancement][fj-core] update fj-test-helper8 version to 0.3.1 (serialization support) (support for serialization test) [8.2.0-rc.6]
++ [enhancement][fj-core] added utilities to close Closeable and AutoCloseable [8.2.0-rc.5]
++ [enhancement][fj-core] conversion utilities for ConfigException and ConfigRuntimeException [8.2.0-rc.3]
++ [enhancement][to reduce hierarchy depth, if the correct interfaces have been used, this should have no impact] :
 + [enhancement][fj-core] Changed hierarchy of GenericListCatalogConfig to directly extends AbstractConfigurableObject [8.2.0-rc.1]
 + [enhancement][fj-core] Changed hierarchy of AbstractConfigurableObject to directly extends Object [8.2.0-rc.1]
 
