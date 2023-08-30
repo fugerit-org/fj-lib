@@ -3,6 +3,8 @@
 Provides helper libraries for other java projects (io, configuration, etc.)
 
 [![Maven Central](https://img.shields.io/maven-central/v/org.fugerit.java/fj-core.svg)](https://mvnrepository.com/artifact/org.fugerit.java/fj-core)
+[![license](https://img.shields.io/badge/License-Apache%20License%202.0-teal.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fugerit-org_fj-lib&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fugerit-org_fj-lib)
 
 **Note : Starting from version 0.7+, minimum required java version changed to 1.8**
 
@@ -16,5 +18,3 @@ Quick start :
 Maven profiles :
 - full (create javadoc and sources package too)
 - test (run tests, by default tests are excluded) 
-
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=fugerit-org_fj-lib)](https://sonarcloud.io/summary/new_code?id=fugerit-org_fj-lib)
