@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.2.2] - 2023-08-31
+
 ### Fixed
 
 - ClassHelper.newInstance(String) no longer throws exception (#23).
