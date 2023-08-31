@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- fj-bom version set to 1.3.1
+- Sonar Cloud Maven Build set to use maven profile sonarfugerit and github environmental variable for sonarKey
+
 ## [8.2.2] - 2023-08-31
 
 ### Fixed
