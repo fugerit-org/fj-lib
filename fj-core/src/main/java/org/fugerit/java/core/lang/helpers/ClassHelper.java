@@ -21,8 +21,11 @@
 package org.fugerit.java.core.lang.helpers;
 
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 
+import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.util.ObjectUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,11 +53,7 @@ public class ClassHelper {
 	 * 
 	 */
 	public static ClassLoader getDefaultClassLoader() {
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		if ( classLoader == null ) {
-			classLoader = ClassHelper.class.getClassLoader();
-		}
-		return classLoader;
+		return ObjectUtils.objectWithDefault( Thread.currentThread().getContextClassLoader() , ClassHelper.class.getClassLoader() );
 	}
 	
 	/**
@@ -64,28 +63,52 @@ public class ClassHelper {
 	 * 
 	 * @param type			fully qualified name fo the class for which the new instance will be created
 	 * @return				the new istance
+	 * @throws ClassNotFoundException 
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public static Object newInstance( String type ) {
+	public static Object newInstance( String type ) throws ClassNotFoundException, NoSuchMethodException, ConfigException {
 		Object result = null;
 		try {
 			ClassLoader classLoader = getDefaultClassLoader();
 			Class<?> c = classLoader.loadClass( type );
-			result = c.getDeclaredConstructor().newInstance();
+			result = c.getDeclaredConstructor().newInstance();	
 		} catch (Exception e) {
-			throw ConfigRuntimeException.convertExMethod( "newInstance" , e );
+			if ( e instanceof ClassNotFoundException ) {
+				throw (ClassNotFoundException)e;
+			} else if ( e instanceof NoSuchMethodException ) {
+				throw (NoSuchMethodException)e;
+			} else {
+				throw ConfigException.convertExMethod( "newInstance" , e );
+			}
 		}
 		return result;
 	}
 
-	public static InputStream loadFromClassLoader( Object caller, String path ) {
+	public static InputStream loadFromClassLoader( String path, ClassLoader... cl ) {
 		InputStream is = null;
-		try {
-			is = getDefaultClassLoader().getResourceAsStream( path );
-		} catch (Exception e) {
-			log.warn( "Failed to load from default class loader, trying caller loader ("+e+")" );
-			is = caller.getClass().getResourceAsStream( path );
+		if ( cl != null ) {
+			for ( int k=0; k<cl.length && is == null; k++ ) {
+				if ( cl[k] != null ) {
+					is = cl[k].getResourceAsStream( path );
+					if ( is == null ) {
+						log.trace( "Not found on class loader {}, path {}", k, path );
+					}
+				}
+			}
+		}
+		if ( is == null ) {
+			is = loadFromDefaultClassLoader(path);	
 		}
 		return is;
+	}
+	
+	public static InputStream loadFromClassLoader( Object caller, String path ) {
+		return loadFromClassLoader( path, getDefaultClassLoader(), (caller != null) ? caller.getClass().getClassLoader() : null );
 	}
 	
 	public static InputStream loadFromDefaultClassLoader( String path ) {
