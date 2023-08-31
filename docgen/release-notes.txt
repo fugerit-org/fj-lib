@@ -1,9 +1,4 @@
-﻿(next)
-------------------
-+ [fix][fj-tool] fixed-config-extract used to update the source xlsx
-+ [enhancement][fj-core-jvfs] fj-daogen-maven-plugin 1.1.5 linked
-
-8.2.1 (2023-08-29)
+﻿8.2.1 (2023-08-29)
 ------------------
 + [fix][fj-core] fix TransformerXML.newSafeTransformerFactory() bug [8.2.1-rc.1]
 + [fix][fj-tool] fixed fixed-config-extract parsing [8.2.1-rc.1]
