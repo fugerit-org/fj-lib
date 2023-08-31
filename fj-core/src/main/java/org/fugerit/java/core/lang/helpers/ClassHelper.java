@@ -1,27 +1,6 @@
-/*
- *
-		Fugerit Java Library is distributed under the terms of :
-
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
-
-
-	Full license :
-		http://www.apache.org/licenses/LICENSE-2.0
-		
-	Project site: 
-		https://www.fugerit.org/
-	
-	SCM site :
-		https://github.com/fugerit79/fj-lib
-	
- *
- */
 package org.fugerit.java.core.lang.helpers;
 
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
@@ -63,13 +42,9 @@ public class ClassHelper {
 	 * 
 	 * @param type			fully qualified name fo the class for which the new instance will be created
 	 * @return				the new istance
-	 * @throws ClassNotFoundException 
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException if the class is not found 
+	 * @throws NoSuchMethodException  if the method (default constructor) is not found
+	 * @throws ConfigException   in any other case
 	 */
 	public static Object newInstance( String type ) throws ClassNotFoundException, NoSuchMethodException, ConfigException {
 		Object result = null;
