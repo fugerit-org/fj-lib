@@ -2,39 +2,61 @@ package test.org.fugerit.java.core.util.tree;
 
 import static org.junit.Assert.fail;
 
+import org.fugerit.java.core.cfg.ConfigException;
+import org.junit.Assert;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class TestTreeConfigKeyStringXML {
+import lombok.extern.slf4j.Slf4j;
+import test.org.fugerit.java.BasicTest;
 
-	private final static Logger logger = LoggerFactory.getLogger( TestTreeConfigKeyStringXML.class );
-	
+@Slf4j
+public class TestTreeConfigKeyStringXML extends BasicTest {
+
 	private static final String CONF_PATH = "core/util/tree/tree-test.xml";
 	
+	private static final String CONF_PATH_KO = "core/util/tree/tree-test_ko.xml";
+	
+	private static final String CONF_PATH_MULTIPLE_ROOT = "core/util/tree/tree-test_multiple_root.xml";
+
 	private void findWorker( TestTreeConfig config, String key ) {
 		TestNode node = config.findNodeByKey( key );
-		logger.info( "get by key "+key+" : "+node );
+		log.info( "get by key "+key+" : "+node );
 		if ( node == null ) {
 			fail( "Node not fould for key "+key );
 		}
 	}
 	
 	@Test
-	public void testConfig() throws Exception {
-		logger.info(  "**********************************************" );
-		logger.info(  "**********************************************" );
-		logger.info(  "*          TEST CONFIG                       *" );
+	public void testConfig() {
 		try {
 			TestTreeConfig config = TestTreeConfig.load( CONF_PATH );	
 			this.findWorker( config, "1" );
 			this.findWorker( config, "3" );
+			log.info( "tree -> {}", config.getTree() );
+			Assert.assertNotNull( config.getTree() );
 		} catch (Exception e) {
-			logger.error( "Config error : "+e, e );
-			throw e;
+			this.failEx(e);
 		}
-		logger.info(  "**********************************************" );
-		logger.info(  "**********************************************" );
+	}	
+	
+	@Test
+	public void testConfigKo() throws Exception {
+		try {
+			TestTreeConfig config = TestTreeConfig.load( CONF_PATH_KO );	
+			fail( "This code should not be reached : "+config );
+		} catch (Exception e) {
+			Assert.assertTrue( e instanceof ConfigException );
+		}
+	}	
+	
+	@Test
+	public void testConfigMultipleRoot() throws Exception {
+		try {
+			TestTreeConfig config = TestTreeConfig.load( CONF_PATH_MULTIPLE_ROOT );
+			fail( "This code should not be reached : "+config );
+		} catch (Exception e) {
+			Assert.assertTrue( e instanceof ConfigException );
+		}
 	}	
 	
 }

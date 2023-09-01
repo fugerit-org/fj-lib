@@ -47,7 +47,7 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 	@SuppressWarnings("unchecked")
 	protected void addKids( NodeList childs, T parent ) throws Exception {
 		for ( int k=0; k<childs.getLength(); k++ ) {
-			if ( childs.item( k ).getNodeType() == Element.ELEMENT_NODE ) {
+			if ( childs.item( k ).getNodeType() == org.w3c.dom.Node.ELEMENT_NODE ) {
 				Element current = (Element)childs.item( k );
 				if ( TAG_NODE.equals( current.getTagName() ) ) {
 					if ( parent.accessChildren() == null ) {
@@ -76,7 +76,7 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 		return obj;
 	}
 	
-	private void configureCurrent( T root, Element current ) throws ConfigException {
+	private T configureCurrent( T root, Element current ) throws ConfigException {
 		if ( TAG_NODE.equals( current.getTagName() ) ) {
 			if ( root == null ) {
 				NodeList currentKids = current.getChildNodes();
@@ -88,11 +88,11 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 				} catch (Exception e) {
 					throw ConfigException.convertEx( e );
 				}
-				
 			} else {
 				throw new ConfigException( "Multiple root noode not allowed" );
 			}
 		}
+		return root;
 	}
 	
 	@Override
@@ -104,9 +104,9 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 		NodeList childs = tag.getChildNodes();
 		T root = null;
 		for ( int k=0; k<childs.getLength(); k++ ) {
-			if ( childs.item( k ).getNodeType() == Element.ELEMENT_NODE ) {
+			if ( childs.item( k ).getNodeType() == org.w3c.dom.Node.ELEMENT_NODE ) {
 				Element current = (Element)childs.item( k );
-				this.configureCurrent(root, current);
+				root = this.configureCurrent(root, current);
 			}
 		}
 	}
