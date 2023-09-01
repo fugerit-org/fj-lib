@@ -50,9 +50,7 @@ public class TestValidatorCatalog extends BasicTest {
 				fail( "Expected:"+expected+" != Result:"+valid );
 			}
 		} catch (Exception e) {
-			String message = "Error : "+e;
-			logger.error( message, e );
-			fail( message );
+			this.failEx(e);
 		}
 	}
 	
