@@ -1,5 +1,6 @@
 package org.fugerit.java.core.validator;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Properties;
 
@@ -9,13 +10,36 @@ import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.xml.dom.DOMProperty;
 import org.fugerit.java.core.xml.dom.DOMUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
+@ToString
+@Slf4j
 public class BasicValidator extends BasicIdConfigType {
 
-	protected static Logger logger = LoggerFactory.getLogger( BasicValidator.class );
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4497759166570383192L;
+	
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END	
 	
 	public static final String KEY_REQUIRED = "required";
 	
@@ -30,32 +54,31 @@ public class BasicValidator extends BasicIdConfigType {
 	public static final String ERROR_KEY_LENGTH_MIN = "error.length.min";
 	public static final String ERROR_KEY_LENGTH_MAX = "error.length.max";
 	
-	private boolean required = true;
+	@Getter private boolean required = true;
 	
-	private int minLength = NO_LENGTH_CONSTRAINT;
+	@Getter private int minLength = NO_LENGTH_CONSTRAINT;
 	
-	private int maxLength = NO_LENGTH_CONSTRAINT;
+	@Getter private int maxLength = NO_LENGTH_CONSTRAINT;
 	
-	private String info;
+	@Getter private String info;
 	
-	private Element config;
+	@Getter private Element config;
 	
-	private Properties params;
+	@Getter private Properties params;
 	
-	private BasicValidator parent;
-	
+	@Getter private BasicValidator parent;
+
+	public boolean isOptional() {
+		return !this.isRequired();
+	}
+		
 	public BasicValidator() {
 		this.params = new Properties();
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4497759166570383192L;
-	
 	public void configure( Element config, BasicValidator parent ) throws ConfigException {
 		if ( parent != null ) {
-			logger.info( "Extends : {}", parent );
+			log.info( "Extends : {}", parent );
 			this.parent = parent;
 			this.configure( parent.getConfig() );
 		}
@@ -127,43 +150,6 @@ public class BasicValidator extends BasicIdConfigType {
 			}
 		}
 		return valid;
-	}
-
-	public boolean isRequired() {
-		return required;
-	}
-
-	public boolean isOptional() {
-		return !this.isRequired();
-	}
-	
-	public int getMinLength() {
-		return minLength;
-	}
-
-	public int getMaxLength() {
-		return maxLength;
-	}
-	
-	public String getInfo() {
-		return info;
-	}
-	
-	protected Element getConfig() {
-		return config;
-	}
-
-	protected BasicValidator getParent() {
-		return parent;
-	}
-
-	public Properties getParams() {
-		return params;
-	}
-
-	@Override
-	public String toString() {
-		return "Validator[id:"+this.getId()+",type:"+this.getClass().getName()+"]";
 	}
 	
 	public String formatMessage( Properties bundle, String key, String... params ) {
