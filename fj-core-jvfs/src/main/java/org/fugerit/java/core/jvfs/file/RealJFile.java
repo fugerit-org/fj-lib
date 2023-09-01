@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.jvfs.JFile;
@@ -49,7 +50,7 @@ public class RealJFile extends AbstractJFile {
 
     @Override
     public boolean delete() throws IOException {
-        return this.file.delete();
+        return Files.deleteIfExists( this.file.toPath() );
     }
 
     @Override
