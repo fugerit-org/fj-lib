@@ -116,4 +116,16 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 		}
 	}
 	
+	@Test
+	public void testSerialization() {
+		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
+			XMLSchemaCatalogConfig loadedCatalog = (XMLSchemaCatalogConfig)this.fullSerializationTest( catalog );
+			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
+			loadedCatalog.validate(result, new StreamSource( is ), SCHEMA_ID_DEFAULT );
+			Assert.assertEquals( 0, result.getAllErrorsSize() );
+		} catch (Exception e) {
+			this.failEx(e);
+		}		
+	}
+	
 }
