@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+	/*
+	 * @(#)binding-config-1-3.xsd
+	 *
+	 * @project    : fj-core
+	 * @creation   : 2020-05-26
+	 * @version    : 1.3.0 (2020-05-26)
+	 *
+	 * XSD for fugerit binding config
+	 */
+
+	Sample doc : 	
+	
+<binding-config
+	xmlns="http://bindingconfig.fugerit.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://bindingconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/binding/binding-config-1-3.xsd" > 	
+</binding-config>	
+	
+	Basically, this configuration is made of 
+	
+-->
+<xsd:schema
+	xmlns='https://schemacatalogconfig.fugerit.org'
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<xsd:element name='schema-catalog-config'>
+		<xsd:annotation>
+			<xsd:documentation>
+				Schema catalog config, inherits all feature from CustomListCatalogConfig 
+			</xsd:documentation>
+		</xsd:annotation>		
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name='schema-list' minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>List of schema catalogs.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name='schema' minOccurs="0" maxOccurs="unbounded">
+								<xsd:annotation>
+									<xsd:documentation>A single schema</xsd:documentation>
+								</xsd:annotation>	
+								<xsd:complexType>
+									<xsd:attribute name='id' type='xsd:string' use='required' />
+								</xsd:complexType>
+							</xsd:element>	
+						</xsd:sequence>
+						<xsd:attribute name='id' type='xsd:string' use='required' />
+						<xsd:attribute name='extends' type='xsd:string' use='optional' />			
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attribute name='try-xsd-validation' type='xsd:string' use='optional' />
+			<xsd:attribute name='path-mode' type='xsd:string' use='optional' />
+			<xsd:attribute name='path-base' type='xsd:string' use='optional' />
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>	

@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- schema-catalog-config-1-0.xsd for improved coverage (#21)
+
+### Changed
+
+- Improved coverage and serialization for BasicValidator XMLSchemaValidatorConifg, FactoryCatalog (#21).
+
 ### Fixed
 
 - TreeConfigXML didn't check if multiple root node where present (#21).

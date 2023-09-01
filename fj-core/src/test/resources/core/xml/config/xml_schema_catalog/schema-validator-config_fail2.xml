@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema-catalog-config
+<schema-catalog-config xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	path-mode="class-loader"
 	path-base="core/xml/config/xml_schema_catalog/xsds"
-	try-xsd-validation="true">
+	list-type="test.org.fugerit.java.core.xml.config.MyCollectionFail">
 	
 	<schema-list id="version-2-0">
 		<schema id="doc-2-0.xsd"/>

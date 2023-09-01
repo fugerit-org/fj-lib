@@ -1,4 +1,9 @@
-<factory-catalog>
+<factory-catalog
+	try-xsd-validation="true">
+	
+	<!--
+		try-xsd-validation set to 'true' only for test coverage
+	-->
 
 	<factory id="default-catalog">
 		<data id="test.ok" info="test001" type="test.org.fugerit.java.core.cfg.xml.MyTypeImplOk" />

@@ -289,7 +289,7 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 				if ( c instanceof IdConfigType ) {
 					XmlBeanHelper.setFromElementSafe( c , current );	
 				}
-			} catch (Throwable e) {
+			} catch (Exception | LinkageError e) {
 				throw new ConfigException( e );
 			}
 		} else  if ( typeSample instanceof KeyObject<?> ) {
@@ -344,18 +344,22 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 		
 	}
 	
+	private void printEx( Collection<SAXException> exList, String type ) {
+		if ( exList != null ) {
+			for ( SAXException ex : exList ) {
+				if ( this.getLogger().isWarnEnabled() ) {
+					this.getLogger().warn( "sax {} -> {}", type, ex.getMessage() );	
+				}
+			}
+		}
+	}
+	
 	private void actualValidation(Element tag) throws ConfigException {
 		try {
 			SAXErrorHandlerStore eh = this.validate( new DOMSource( tag ) );
-			for ( SAXException se : eh.getFatals() ) {
-				this.getLogger().error( "xsd validation fatal : {}", se );
-			}
-			for ( SAXException se : eh.getErrors() ) {
-				this.getLogger().error( "xsd validation error : {}", se );
-			}
-			for ( SAXException se : eh.getWarnings() ) {
-				this.getLogger().warn( "xsd validation warning : {}", se );
-			}
+			this.printEx( eh.getErrors(), "error" );
+			this.printEx( eh.getFatals(), "fatal" );
+			this.printEx( eh.getWarnings(), "warning" );
 		} catch (Exception e) {
 			throw ConfigException.convertEx( "Xsd Validation Error", e );
 		}
@@ -365,7 +369,7 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 		String tryXsdValidation = this.getGeneralProps().getProperty( ATT_TRY_XSD_VALIDATION, ATT_TRY_XSD_VALIDATION_DEFAULT );
 		if ( BooleanUtils.isTrue( tryXsdValidation ) ) {
 			if ( this.hasDefinition() ) {
-				this.getLogger().info( "ATT {} is false, skip xsd validation", ATT_TRY_XSD_VALIDATION );
+				this.getLogger().info( "ATT {} is true, try xsd validation", ATT_TRY_XSD_VALIDATION );
 				this.actualValidation(tag);
 			} else {
 				this.getLogger().info( "No xsd definition set, skip xsd validation" );

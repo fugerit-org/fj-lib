@@ -25,4 +25,11 @@
 	<schema-list id="binding-config-current" extends="binding-config-1-4">
 	</schema-list>	
 	
+	<schema-list id="schema-catalog-config-1-0">
+		<schema id="xsd_schema_catalog/schema-catalog-config-1-0.xsd"/>
+	</schema-list>	
+	
+	<schema-list id="schema-catalog-config-current" extends="schema-catalog-config-1-0">
+	</schema-list>		
+	
 </schema-catalog>
