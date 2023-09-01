@@ -19,7 +19,7 @@ import test.org.fugerit.java.BasicTest;
 
 public class TestXMLSchemaCatalogConfig extends BasicTest {
 
-	private static final String SCHEMA_ID_DEFAULT = "current";
+	private static final String SCHEMA_ID_DEFAULT = "current";	// default schema catalog id
 	
 	private static final String PATH_XML_OK = "core/xml/config/xml_schema_catalog/samples/doc_test_01.xml";
 	
