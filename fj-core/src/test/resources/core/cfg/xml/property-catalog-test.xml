@@ -9,6 +9,10 @@
 			mode="classloader" path="${base-conf-path}/props-01.properties" encoding="utf-8"/>
 		<data id="props-02" description="Second JUNIT config properties"
 			mode="classloader" path="${base-conf-path}/props-02.xml" xml="true"/>
+		<data id="props-03" description="Second JUNIT config properties"
+			mode="classloader" path="${base-conf-path}/props-02.xml" xml="true" encoding="utf-8" unsafe="warn"/>
+		<data id="props-04" description="Second JUNIT config properties"
+			mode="classloader" path="${base-conf-path}/props-02.xml" xml="true" encoding="utf-8" unsafe="true"/>						
 		<!--
 			 * When this mode is used, you must define in PATH reference to other holders in the same catalog, semicolon separated.
 			 * For instace if props-01 and props-02 are two holder in the same catalog : 
