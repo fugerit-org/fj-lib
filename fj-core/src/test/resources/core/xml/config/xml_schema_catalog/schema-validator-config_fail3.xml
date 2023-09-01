@@ -6,9 +6,6 @@
 	check-duplicate-entry-id="fail"	
 	try-xsd-validation="true" >
 	
-	<!-- ovveride general configuration -->
-	<data-catalog-config list-tag="schema-list"/>
-	
 	<tag-not-exists /> <!-- only to activate validation -->
 	
 	<schema-list id="version-2-0">
@@ -17,9 +14,11 @@
 	
 	<schema-list id="version-2-1">
 		<schema id="doc-2-1.xsd"/>
+		<!-- duplicate fail -->
+		<schema id="doc-2-1.xsd"/>
 	</schema-list>		
 
-	<schema-list id="current" extends="version-2-1">
+	<schema-list id="a" extends="version-2-1">
 	</schema-list>
 
 </schema-catalog-config>

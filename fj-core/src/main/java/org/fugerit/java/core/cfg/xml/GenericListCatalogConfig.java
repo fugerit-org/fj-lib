@@ -289,7 +289,7 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 				if ( c instanceof IdConfigType ) {
 					XmlBeanHelper.setFromElementSafe( c , current );	
 				}
-			} catch (Throwable e) {
+			} catch (Exception | LinkageError e) {
 				throw new ConfigException( e );
 			}
 		} else  if ( typeSample instanceof KeyObject<?> ) {
@@ -347,7 +347,9 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 	private void printEx( Collection<SAXException> exList, String type ) {
 		if ( exList != null ) {
 			for ( SAXException ex : exList ) {
-				this.getLogger().warn( "sax {} -> {}", type,ex.toString() );
+				if ( this.getLogger().isWarnEnabled() ) {
+					this.getLogger().warn( "sax {} -> {}", type, ex.getMessage() );	
+				}
 			}
 		}
 	}

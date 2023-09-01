@@ -139,4 +139,20 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 		Assert.assertNotNull( current );
 	}
 	
+	@Test
+	public void newInstanceException() {
+		Assert.assertThrows( ConfigRuntimeException.class , () -> {
+			XMLSchemaCatalogConfig current = loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config_fail2.xml" );
+			logger.info( "activateValidation() catalog loaded : {}", current );
+		});
+	}
+	
+	@Test
+	public void newInstanceExceptionDuplicate() {
+		Assert.assertThrows( ConfigRuntimeException.class , () -> {
+			XMLSchemaCatalogConfig current = loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config_fail3.xml" );
+			logger.info( "activateValidation() catalog loaded : {}", current );
+		});
+	}
+	
 }
