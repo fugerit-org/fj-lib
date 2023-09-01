@@ -1,6 +1,8 @@
-<schema-catalog 
+<?xml version="1.0" encoding="UTF-8"?>
+<schema-catalog-config
 	path-mode="class-loader"
-	path-base="core/xml/config/xml_schema_catalog/xsds">
+	path-base="core/xml/config/xml_schema_catalog/xsds"
+	try-xsd-validation="true">
 	
 	<schema-list id="version-2-0">
 		<schema id="doc-2-0.xsd"/>
@@ -13,4 +15,4 @@
 	<schema-list id="current" extends="version-2-1">
 	</schema-list>
 
-</schema-catalog>
+</schema-catalog-config>

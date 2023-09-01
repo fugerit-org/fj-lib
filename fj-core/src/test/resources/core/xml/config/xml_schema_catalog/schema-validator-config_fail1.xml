@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="LATIN1"?>
+<schema-catalog-config xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	path-mode="class-loader"
+	path-base="core/xml/config/xml_schema_catalog/xsds"
+	try-xsd-validation="true" >
+	
+	<tag-not-exists /> <!-- only to activate validation -->
+	
+	<schema-list id="version-2-0">
+		<schema id="doc-2-0.xsd"/>
+	</schema-list>	
+	
+	<schema-list id="version-2-1">
+		<schema id="doc-2-1.xsd"/>
+	</schema-list>		
+
+	<schema-list id="€" extends="version-2-1">
+	</schema-list>
+
+</schema-catalog-config>
