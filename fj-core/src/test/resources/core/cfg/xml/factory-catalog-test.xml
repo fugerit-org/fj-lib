@@ -1,0 +1,15 @@
+<factory-catalog>
+
+	<factory id="default-catalog">
+		<data id="test.ok" info="test001" type="test.org.fugerit.java.core.cfg.xml.MyTypeImplOk" />
+		<data id="test.ko.constructor.fail.1" info="test002" type="test.org.fugerit.java.core.cfg.xml.MyTypeImplKo" unsafe="true" />
+		<data id="test.ko.constructor.fail.2" info="test003" type="test.org.fugerit.java.core.cfg.xml.MyTypeImplKo" unsafe="true" unsafeMode="log-trace"/>
+		<data id="test.ko.constructor.fail.3" info="test004" type="test.org.fugerit.java.core.cfg.xml.MyTypeImplKo" unsafe="true" unsafeMode="log-message"/>
+	</factory>
+	
+	
+	<factory id="error-catalog">
+		<data id="test.ko.constructor.fail.1" info="test002" type="test.org.fugerit.java.core.cfg.xml.MyTypeImplKo" />
+	</factory>
+	
+</factory-catalog>
