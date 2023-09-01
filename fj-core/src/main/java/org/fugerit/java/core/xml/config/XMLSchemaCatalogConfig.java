@@ -2,6 +2,7 @@ package org.fugerit.java.core.xml.config;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,6 +28,27 @@ import org.xml.sax.ErrorHandler;
 
 public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6067071761917625426L;
+	
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END	
+	
 	public static XMLSchemaCatalogConfig loadConfigSchema( InputStream is ) throws Exception {
 		return (XMLSchemaCatalogConfig)loadConfig( is, new XMLSchemaCatalogConfig() );
 	}
@@ -40,11 +62,6 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 	public static final String ATT_TAG_SCHEMA = "schema";
 	
 	private Map<String, Schema> schemaMapCache = Collections.synchronizedMap( new HashMap<String, Schema>() );
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6067071761917625426L;
 
 	public static final String CONFIG_PATH_MODE = "path-mode";
 	public static final String CONFIG_PATH_MODE_FILE = "file";

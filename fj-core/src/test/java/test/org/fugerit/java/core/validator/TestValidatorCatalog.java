@@ -10,6 +10,7 @@ import org.fugerit.java.core.util.PropertyEntry;
 import org.fugerit.java.core.validator.ValidatorCatalog;
 import org.fugerit.java.core.validator.ValidatorDate;
 import org.fugerit.java.core.validator.ValidatorResult;
+import org.junit.Assert;
 import org.junit.Test;
 
 import test.org.fugerit.java.BasicTest;
@@ -27,6 +28,20 @@ public class TestValidatorCatalog extends BasicTest {
 		}
 	}
 	
+	@Test
+	public void testSerialization() {
+		try {
+			ValidatorCatalog loadedCatalog = (ValidatorCatalog) this.fullSerializationTest( catalog );
+			ValidatorResult result = new ValidatorResult();
+			String label = "test label 1 (valid)";
+			String value = "test value one";
+			boolean valid = loadedCatalog.validate( "testRegexValidator" , result, Locale.ENGLISH, label, value, label, new Properties() );
+			Assert.assertTrue(valid);
+		} catch (Exception e) {
+			this.failEx(e);
+		}
+	}
+	
 	private void validatorWorker( String validatorId, ValidatorResult result, Locale l, String value, String label, boolean expected, Properties params ) {
 		try {
 			boolean valid = catalog.validate( validatorId , result, l, label, value, label, params );
@@ -35,9 +50,7 @@ public class TestValidatorCatalog extends BasicTest {
 				fail( "Expected:"+expected+" != Result:"+valid );
 			}
 		} catch (Exception e) {
-			String message = "Error : "+e;
-			logger.error( message, e );
-			fail( message );
+			this.failEx(e);
 		}
 	}
 	
