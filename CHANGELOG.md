@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- fj-tester-helper8 set to 0.4.1
 - Improved coverage and serialization for BasicValidator XMLSchemaValidatorConifg, FactoryCatalog (#21).
 
 ### Fixed
