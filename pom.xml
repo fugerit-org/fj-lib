@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-bom</artifactId>
-		<version>1.3.1</version>
+		<version>1.3.3</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -47,8 +47,14 @@
 		<developer>
 			<name>Matteo a.k.a. Fugerit</name>
 			<email>m@fugerit.org</email>
+			<url>https://www.fugerit.org</url>
+			<timezone>+1</timezone>
 			<organization>Fugerit</organization>
 			<organizationUrl>https://www.fugerit.org</organizationUrl>
+			<roles>
+				<role>IT Senior Consultant</role>
+				<role>Senior Software Architect</role>
+			</roles>
 		</developer>
 		<developer>
 			<name>Daneel</name>
@@ -61,14 +67,24 @@
 	<scm>
 		<connection>scm:git:git://github.com/fugerit-org/fj-lib.git</connection>
 		<developerConnection>scm:git:ssh://github.com/fugerit-org/fj-lib.git</developerConnection>
-		<url>http://github.com/fugerit-org/fj-lib</url>
+		<url>https://github.com/fugerit-org/fj-lib.git</url>
+		<tag>HEAD</tag>
 	</scm>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/fugerit-org/fj-lib/issues</url>
+	</issueManagement>
 
 	<distributionManagement>
 		<snapshotRepository>
 			<id>ossrh</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>		
 	</distributionManagement>
 
 	<modules>
