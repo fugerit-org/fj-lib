@@ -1,5 +1,9 @@
 ﻿See new [CHANGELOG](https://github.com/fugerit-org/fj-lib/blob/main/CHANGELOG.md) for details.
 
+2023-09.1 (2023-09-04)
+----------------------
++ Fix to security alerts
+
 8.2.1 (2023-08-29)
 ------------------
 + [fix][fj-core] fix TransformerXML.newSafeTransformerFactory() bug [8.2.1-rc.1]
