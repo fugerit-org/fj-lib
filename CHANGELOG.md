@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- better coverage of BinaryCalc
+
+### Security
+
+- fj-bom updated to to 1.3.5
+
 ## [8.2.5] - 2023-09-04
 
 ### Added

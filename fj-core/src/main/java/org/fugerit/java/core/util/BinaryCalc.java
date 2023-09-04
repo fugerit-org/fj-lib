@@ -1,7 +1,9 @@
 package org.fugerit.java.core.util;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 /*
  * 
@@ -13,13 +15,39 @@ public class BinaryCalc {
 	
 	private BinaryCalc() {}
 	
-	public static long hexToLong( String hexString ) {
-		long result = 0;
-		hexString = hexString.toUpperCase();
-		for ( int k=hexString.length()-1, esp=0; k>=0; k--, esp++ ) {
-			result+= BinaryNumber.hexToInt( hexString.charAt( k ) )*Math.pow( 16 , esp );
+	private static final BigDecimal ZERO = new BigDecimal( "0" ).setScale( 0 ); 
+	
+	private static long convertToLong( String stringVal, Function<Character, Integer> fun, int pow ) {
+		BigDecimal result = ZERO;
+		stringVal = stringVal.toUpperCase();
+		for ( int k=stringVal.length()-1, esp=0; k>=0; k--, esp++ ) {
+			result = result.add( new BigDecimal( fun.apply( stringVal.charAt( k ) )*Math.pow( pow , esp ) ) );
 		}
-		return result;
+		return result.longValue();
+	}
+	
+	public static long hexToLong( String stringVal ) {
+		return convertToLong( stringVal , c -> BinaryNumber.hexToInt( c ) , 16 );
+	}
+	
+	public static long octToLong( String stringVal ) {
+		return convertToLong( stringVal , c -> BinaryNumber.octToInt( c ) , 8 );
+	}
+	
+	public static long binToLong( String stringVal ) {
+		return convertToLong( stringVal , c -> BinaryNumber.binToInt( c ) , 2 );
+	}
+
+	public static String longToHex( long value ) {
+		return new BinaryNumber( value ).getHexString();
+	}
+	
+	public static String longToOct( long value ) {
+		return new BinaryNumber( value ).getOctString();
+	}
+	
+	public static String longToBin( long value ) {
+		return new BinaryNumber( value ).getBinString();
 	}
 	
 }
@@ -66,6 +94,11 @@ class BinaryNumber {
 		this.size = 0;
 	}
 	
+	public BinaryNumber( long value ) {
+		this();
+		this.setValue(value);
+	}
+	
 	private byte[] data;
 	
 	private int size;
@@ -94,45 +127,10 @@ class BinaryNumber {
 		return result;
 	}
 	
-	public int binSize() {
-		return this.size;
-	}
-	
-	public int octSize() {
-		return this.size( OCT_RADIX );
-	}
-	
-	public int hextSize() {
-		return this.size( HEX_RADIX );
-	}	
-	
-	public int getBin( int index ) {
-		return this.data[index];
-	}	
-	
-	public int getOct( int index ) {
-		return this.get( index, OCT_RADIX );
-	}
-	
-	public int getHex( int index ) {
-		return this.get( index, HEX_RADIX );
-	}	
-	
-	public char getBinValue( int index ) {
-		return VALUES_BIN[ this.getBin( index ) ];
-	}
-	
-	public char getOctValue( int index ) {
-		return VALUES_OCT[ this.getOct( index ) ];
-	}	
-	
-	public char getHexValue( int index ) {
-		return VALUES_HEX[ this.getHex( index ) ];
-	}
-
 	private String getString( char[] values, int radix ) { 
 		StringBuilder buffer = new StringBuilder();
-		for ( int k=0; k<this.size( radix ); k++ ) {
+		int currSize = this.size( radix );
+		for ( int k=currSize-1; k>=0; k-- ) {
 			buffer.append( values[ this.get( k , radix ) ] );
 		}
 		return buffer.toString();
@@ -149,10 +147,5 @@ class BinaryNumber {
 	public String getHexString() { 
 		return this.getString( VALUES_HEX, HEX_RADIX );
 	}	
-	
-	@Override
-	public String toString() {
-		return this.getBinString();
-	}
 	
 }
