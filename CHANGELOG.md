@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [workflow](src/main/md/github/create_maven_build_workflow.md) for package testing and dependency upload
+
+### Changed
+
+- fj-bom set to 1.3.4
+
 ## [8.2.4] - 2023-09-04
 
 ### Added
