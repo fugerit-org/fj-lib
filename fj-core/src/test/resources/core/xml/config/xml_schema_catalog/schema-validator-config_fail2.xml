@@ -2,7 +2,7 @@
 <schema-catalog-config xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	path-mode="class-loader"
 	path-base="core/xml/config/xml_schema_catalog/xsds"
-	list-type="test.org.fugerit.java.core.xml.config.MyCollectionFail">
+	list-type="test.org.fugerit.java.helpers.util.ListStringConstructorFail">
 	
 	<schema-list id="version-2-0">
 		<schema id="doc-2-0.xsd"/>

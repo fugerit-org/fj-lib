@@ -118,7 +118,7 @@ public class PropertyHolder extends BasicIdConfigType {
 		if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) || UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
 			String unsafeMessafeWork = usafeMessage+" ";
 			if ( StringUtils.isNotEmpty( unsafeMessafeWork ) ) {
-				unsafeMessafeWork+= unsafeMessafeWork+" ";
+				unsafeMessafeWork+=" ";
 			}
 			unsafeMessafeWork = path + ", " + unsafe + ", " + e;
 			if ( UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {

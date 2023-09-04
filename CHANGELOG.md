@@ -10,14 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - schema-catalog-config-1-0.xsd for improved coverage (#21)
+- added tag element (HEAD) to scm element. (pom.xml)
+- added issueManagement element (pom.xml, url : https://github.com/fugerit-org/fj-lib/issues )
 
 ### Changed
 
+- fj-bom set to 1.3.3
+- Changelog badge link set absolute 'https://github.com/fugerit-org/fj-lib/blob/main/CHANGELOG.md'
+- fj-tester-helper8 set to 0.4.1
 - Improved coverage and serialization for BasicValidator XMLSchemaValidatorConifg, FactoryCatalog (#21).
 
 ### Fixed
 
 - TreeConfigXML didn't check if multiple root node where present (#21).
+- Set the license url in the property 'licenseURL' as in the 'license' tag.
+- scm url (.git was missing at the end).
 
 ## [8.2.3] - 2023-08-31
 
