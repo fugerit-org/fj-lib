@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema-catalog-config
+	xmlns="https://schemacatalogconfig.fugerit.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://schemacatalogconfig.fugerit.org https://www.fugerit.org/data/java/core/xsd/xsd_schema_catalog/schema-catalog-config-1-0.xsd"
 	path-mode="class-loader"
 	path-base="core/xml/config/xml_schema_catalog/xsds"
 	try-xsd-validation="true">

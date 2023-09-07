@@ -19,8 +19,8 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.fugerit.java.core.cfg.ConfigException;
-import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.xml.DataListCatalogConfig;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.w3c.dom.Element;
@@ -88,10 +88,10 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 	
 	public static Source[] getXsds( String pathMode, String pathBase, Collection<String> schemaList )  {
 		Source[] xsds = new Source[ schemaList.size() ];
-		Iterator<String> it = schemaList.iterator();
-		int k = 0;
-		while ( it.hasNext() ) {
-			try {
+		SafeFunction.apply( () -> {
+			Iterator<String> it = schemaList.iterator();
+			int k = 0;
+			while ( it.hasNext() ) {
 				String current = it.next();
 				InputStream is = null;
 				if ( CONFIG_PATH_MODE_FILE.equalsIgnoreCase( pathMode ) ) {
@@ -103,10 +103,8 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 				}
 				xsds[k] = new StreamSource( is );
 				k++;
-			} catch (Exception e) {
-				throw ConfigRuntimeException.convertEx( e );	
-			}
-		}
+			}	
+		});
 		return xsds;
 	}
 	

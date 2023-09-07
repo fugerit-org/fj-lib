@@ -1,6 +1,6 @@
 package org.fugerit.java.core.xml.config;
 
-import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 
 public class FugeritXmlSchemaCatalogConfig extends XMLSchemaCatalogConfig {
@@ -12,16 +12,11 @@ public class FugeritXmlSchemaCatalogConfig extends XMLSchemaCatalogConfig {
 
 	public static final String PATH_CATALOG = "validate/schema-catalog.xml";
 	
-	public static FugeritXmlSchemaCatalogConfig init( FugeritXmlSchemaCatalogConfig config ) {
-		try {
-			loadConfig( ClassHelper.loadFromDefaultClassLoader( PATH_CATALOG ) , config );
-		} catch (Exception e) {
-			throw new ConfigRuntimeException( e );
-		}
+	private static final FugeritXmlSchemaCatalogConfig INSTANCE = SafeFunction.get( () -> {
+		FugeritXmlSchemaCatalogConfig config = new FugeritXmlSchemaCatalogConfig();
+		loadConfig( ClassHelper.loadFromDefaultClassLoader( PATH_CATALOG ) , config );
 		return config;
-	}
-	
-	private static final FugeritXmlSchemaCatalogConfig INSTANCE = init( new FugeritXmlSchemaCatalogConfig() );
+	});
 	
 	public static FugeritXmlSchemaCatalogConfig getInstance() {
 		return INSTANCE;

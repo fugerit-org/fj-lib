@@ -39,7 +39,7 @@ public class ExDefaultHandler extends DefaultHandler {
     private ExHandler handler;
     
     public ExDefaultHandler(ExHandler handler) {
-        this.handler = handler;
+        this.setHandler(handler);
     }
 
     /*

@@ -2,6 +2,7 @@ package org.fugerit.java.core.io.file;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import org.fugerit.java.core.io.FileFun;
 
@@ -46,6 +47,15 @@ public abstract class AbstractFileFun implements FileFun {
 	@Override
 	public void close() throws IOException {
 		// usually is a good idea to implement this method.
+	}
+	
+	public static FileFun newFileFun( Consumer<File> c ) {
+		return new AbstractFileFun() {	
+			@Override
+			public void handleFile(File file) throws IOException {
+				c.accept(file);
+			}
+		};
 	}
     
 }

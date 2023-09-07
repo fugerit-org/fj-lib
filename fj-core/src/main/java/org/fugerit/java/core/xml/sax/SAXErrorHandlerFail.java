@@ -3,11 +3,14 @@ package org.fugerit.java.core.xml.sax;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * @author mttfranci
  *
  */
+@Slf4j
 public class SAXErrorHandlerFail extends SAXErrorHandlerStore {
 
 	public static final int MODE_FAIL_ON_ANY_ERROR_STORE_WARNINGS = 2;
@@ -33,7 +36,7 @@ public class SAXErrorHandlerFail extends SAXErrorHandlerStore {
 		};
 	}
 
-	public static SAXErrorHandlerFail newInstanceFailOnFatakErrorStoreOthers() {
+	public static SAXErrorHandlerFail newInstanceFailOnFatalErrorStoreOthers() {
 		return new SAXErrorHandlerFail() {
 			@Override
 			public void fatalError(SAXParseException e) throws SAXException {
@@ -57,7 +60,7 @@ public class SAXErrorHandlerFail extends SAXErrorHandlerStore {
 			}
 			@Override
 			public void warning(SAXParseException e) throws SAXException {
-				super.warning( e );
+				log.trace( "warning : {}", e.toString() );
 			}
 		};
 	}

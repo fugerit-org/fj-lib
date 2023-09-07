@@ -1,6 +1,7 @@
 package org.fugerit.java.core.xml.sax;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import javax.xml.parsers.SAXParser;
 
@@ -11,6 +12,7 @@ import org.fugerit.java.core.xml.sax.eh.ResultErrorHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /*
  * 
@@ -19,17 +21,21 @@ import org.xml.sax.SAXException;
  */
 public class XMLValidatorSAX extends AbstractXMLValidator {
 	
-    final static String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
-    final static String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
-    final static String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
+    static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+    static final String W3C_XML_SCHEMA = "http://www.w3.org/2001/XMLSchema";
+    static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
     
     public static XMLValidatorSAX newInstance(EntityResolver er) throws XMLException {
         return newInstance(er, false);
     }    
     
-    public static XMLValidatorSAX newInstance(EntityResolver er, boolean nsa) throws XMLException {
+    public static XMLValidatorSAX newInstance(Function<SAXParseResult, DefaultHandler> fun, boolean nsa) throws XMLException {
         SAXParser parser = XMLFactorySAX.makeSAXParser(true, nsa);
-        return (new XMLValidatorSAX(parser, er));
+        return (new XMLValidatorSAX(parser, fun));
+    }   
+    
+    public static XMLValidatorSAX newInstance(EntityResolver er, boolean nsa) throws XMLException {
+        return newInstance( r -> new DefaultHandlerComp( er, new ResultErrorHandler( r ) ) , nsa );
     }    
 
     public static XMLValidatorSAX newInstance() throws XMLException {
@@ -37,17 +43,17 @@ public class XMLValidatorSAX extends AbstractXMLValidator {
     }    
     
     public static XMLValidatorSAX newInstance(boolean nsa) throws XMLException {
-        return newInstance(null, nsa);
+        return newInstance( DefaultHandlerComp.DEFAULT_ER, nsa );
     }
     
-    private XMLValidatorSAX(SAXParser parser, EntityResolver resolver) {
-        this.parser = parser;
-        this.resolver = resolver;
+    private XMLValidatorSAX(SAXParser parser, Function<SAXParseResult, DefaultHandler> fun) {
+    	this.parser = parser;
+    	this.fun = fun;
     }
+    
+    private Function<SAXParseResult, DefaultHandler> fun;
     
     private SAXParser parser;
-    
-    private EntityResolver resolver;
     
     /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(org.xml.sax.InputSource, org.fugerit.java.core.xml.sax.SAXParseResult)
@@ -55,15 +61,9 @@ public class XMLValidatorSAX extends AbstractXMLValidator {
     @Override
     public boolean validateXML(InputSource source, SAXParseResult result) throws XMLException {
         try {
-            if (this.resolver!=null) {
-                parser.parse(source, new DefaultHandlerComp(this.resolver, new ResultErrorHandler(result)));
-            } else {
-                parser.parse(source, new DefaultHandlerComp(new ResultErrorHandler(result)));
-            }
-        } catch (IOException ioe) {
-            throw (new XMLException(ioe));
-        } catch (SAXException sax) {
-            throw (new XMLException(sax));
+        	this.parser.parse(source, this.fun.apply(result) );
+        } catch (IOException | SAXException e) {
+            throw (new XMLException(e));
         }
         return this.isValid(result);
     }

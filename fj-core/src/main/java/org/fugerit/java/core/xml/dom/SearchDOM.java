@@ -36,6 +36,8 @@ import org.w3c.dom.NodeList;
  */
 public class SearchDOM {
 
+	private SearchDOM() {}
+	
 	/**
 	 * Creates a new SearchDOM instance
 	 * 

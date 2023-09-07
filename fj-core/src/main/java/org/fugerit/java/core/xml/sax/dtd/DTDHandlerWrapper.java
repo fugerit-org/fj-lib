@@ -12,7 +12,7 @@ public class DTDHandlerWrapper implements DTDHandler {
 
     public DTDHandlerWrapper(DTDHandler handler) {
         super();
-        this.wrappedDTDHandler = handler;
+        this.setWrappedDTDHandler(handler);
     }
 
     /* (non-Javadoc)

@@ -140,9 +140,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
      */
     @Override
     public SAXParseResult validateXML(String source) throws XMLException {
-        SAXParseResult result = new SAXParseResult();
-        this.validateXML(source, result);
-        return result;
+        return this.validateXML( (CharSequence) source );
     }
 
     /* (non-Javadoc)
@@ -150,7 +148,7 @@ public abstract class AbstractXMLValidator implements XMLValidator {
      */
     @Override
     public boolean isValidaXML(String source) throws XMLException {
-        return this.isValid(this.validateXML(source));
+        return this.isValidaXML( (CharSequence) source );
     }
 
     /* (non-Javadoc)

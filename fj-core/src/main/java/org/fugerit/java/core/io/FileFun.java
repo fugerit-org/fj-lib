@@ -1,5 +1,6 @@
 package org.fugerit.java.core.io;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
  * @author Fugerit
  *
  */
-public interface FileFun {
+public interface FileFun extends Closeable {
 
 	/*
 	 * <p>Does operations starting from a file.</p>  
