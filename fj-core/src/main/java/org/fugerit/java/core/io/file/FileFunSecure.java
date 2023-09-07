@@ -3,6 +3,7 @@ package org.fugerit.java.core.io.file;
 import java.io.File;
 import java.io.IOException;
 
+import org.fugerit.java.core.function.UnsafeVoid;
 import org.fugerit.java.core.io.FileFun;
 import org.fugerit.java.core.lang.helpers.ExHandler;
 
@@ -22,16 +23,24 @@ public class FileFunSecure extends FileFunWrapper {
     private ExHandler handler;	// handler for exception which
     							// can be thrown during execution
 
+    public static void apply( ExHandler handler, UnsafeVoid<IOException> fun ) {
+    	try {
+			fun.apply();
+		} catch (IOException e) {
+			handler.error(e);
+		}
+    }
+    
+    private void handleWorker( UnsafeVoid<IOException> fun ) {
+    	apply( this.handler, fun );
+    }
+    
     /* (non-Javadoc)
      * @see org.fugerit.java.core.io.FileFun#handleFile(java.io.File, java.lang.String)
      */
     @Override
     public void handleFile(File parent, String name) throws IOException {
-        try {
-            super.handleFile(parent, name);    
-        } catch (IOException ioe) {
-            this.handler.error(ioe);
-        }
+    	this.handleWorker( () -> super.handleFile(parent, name) );
     }
     
     /* (non-Javadoc)
@@ -39,11 +48,7 @@ public class FileFunSecure extends FileFunWrapper {
      */
     @Override
     public void handleFile(File file) throws IOException {
-        try {
-            super.handleFile(file);    
-        } catch (IOException ioe) {
-            this.handler.error(ioe);
-        }
+    	this.handleWorker( () -> super.handleFile(file) );
     }
     
     /* (non-Javadoc)
@@ -51,11 +56,7 @@ public class FileFunSecure extends FileFunWrapper {
      */
     @Override
     public void handleFile(String parent, String name) throws IOException {
-        try {
-            super.handleFile(parent, name);    
-        } catch (IOException ioe) {
-            this.handler.error(ioe);
-        }
+    	this.handleWorker( () -> super.handleFile(parent, name) );
     }
     
     /* (non-Javadoc)
@@ -63,11 +64,7 @@ public class FileFunSecure extends FileFunWrapper {
      */
     @Override
     public void handleFile(String path) throws IOException {
-        try {
-            super.handleFile(path);    
-        } catch (IOException ioe) {
-            this.handler.error(ioe);
-        }
+    	this.handleWorker( () -> super.handleFile(path) );
     }
     
 }

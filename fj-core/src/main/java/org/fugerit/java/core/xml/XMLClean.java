@@ -52,9 +52,10 @@ public class XMLClean {
 					if ( current.getName().indexOf( ".xml" ) != -1 ) {
 						File out = new File( dir, prefix+current.getName() );
 						if ( !out.exists() ) {
-							FileReader fr = new FileReader( current );
-							FileWriter fw = new FileWriter( out );
-							cleanStream( fr , fw );
+							try ( FileReader fr = new FileReader( current );
+									FileWriter fw = new FileWriter( out ) ) {
+								cleanStream( fr , fw );	
+							}
 						}
 					}
 	 			}
@@ -63,23 +64,5 @@ public class XMLClean {
 			throw ConfigRuntimeException.convertEx( e );
 		}
 	} 
-	
-	public static void main( String[] args ) {
-		try {
-			String in = args[0];
-			String out = args[1];
-			File file = new File( in );
-			if ( file.isFile() ) {
-				try ( FileReader fr = new FileReader( new File( in ) );
-						FileWriter fw = new FileWriter( new File( out ) ) ) {
-					cleanStream( fr , fw );				
-				}
-			} else {
-				cleanFolder( file, out );
-			}
-		} catch (Exception e) {
-			log.error( "Error : "+e, e );
-		}
-	}
 	
 }

@@ -18,8 +18,8 @@ public class MavenProps {
 	
 	public static final String ARTIFACT_ID = "artifactId";
 	
-	public static String getPropery( String groupId, String artifactId, String proertyName ) {
-		return loadMavenProps(groupId, artifactId).getProperty( proertyName );
+	public static String getPropery( String groupId, String artifactId, String propertyName ) {
+		return loadMavenProps(groupId, artifactId).getProperty( propertyName );
 	}
 	
 	public static Properties loadMavenProps( String groupId, String artifactId ) {
@@ -28,7 +28,7 @@ public class MavenProps {
 			String path = "META-INF/maven/"+groupId+"/"+artifactId+"/pom.properties";
 			props = PropsIO.loadFromClassLoader( path );
 			logger.debug( "Maven Properties : {}", props );
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			logger.warn( "Failed to load props : "+e, e );
 			props = new Properties();
 		}

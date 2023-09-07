@@ -1,5 +1,7 @@
 package org.fugerit.java.core.xml;
 
+import java.util.function.Function;
+
 /*
  * 
  *
@@ -29,5 +31,13 @@ public class XMLException extends Exception {
         super(cause);
     }
 
+    public static final Function<Exception, XMLException> CONVERT_FUN = e -> {
+    	XMLException res = null;
+    	if ( e != null ) {
+    		res = new XMLException( e );
+    	}
+    	return res;
+    };
+    
 
 }

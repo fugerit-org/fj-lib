@@ -41,6 +41,15 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	private static XMLSchemaCatalogConfig catalog = loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config.xml" );
 		
 	@Test
+	public void testLoad() {
+		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
+			Assert.assertNotNull( XMLSchemaCatalogConfig.loadConfigSchema( is ) );
+		} catch (Exception e) {
+			this.failEx(e);
+		}
+	}
+	
+	@Test
 	public void testValidateOK() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();

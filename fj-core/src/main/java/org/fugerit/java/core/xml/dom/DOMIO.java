@@ -42,6 +42,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
+import org.fugerit.java.core.xml.FeatureUtils;
 import org.fugerit.java.core.xml.TransformerXML;
 import org.fugerit.java.core.xml.XMLException;
 import org.w3c.dom.Document;
@@ -62,8 +63,8 @@ public class DOMIO {
 	public static DocumentBuilderFactory newSafeDocumentBuilderFactory( Properties features ) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		try {
-			factory.setFeature( "http://xml.org/sax/features/external-general-entities", false );
-			factory.setFeature( "http://xml.org/sax/features/external-parameter-entities", false );
+			factory.setFeature( FeatureUtils.EXTERNAL_GENERAL_ENTITIES, false );
+			factory.setFeature( FeatureUtils.EXTERNAL_PARAMETER_ENTITIES, false );
 			if ( features != null ) {
 				for ( Object k : features.keySet() ) {
 					String key = String.valueOf( k );
@@ -79,8 +80,8 @@ public class DOMIO {
 	
 	public static DocumentBuilderFactory newDocumentBuilderFactory( boolean allowExternaEntities ) {
 		Properties features = new Properties();
-		features.setProperty( "http://xml.org/sax/features/external-general-entities" , String.valueOf( allowExternaEntities ) );
-		features.setProperty( "http://xml.org/sax/features/external-parameter-entities" , String.valueOf( allowExternaEntities ) );
+		features.setProperty( FeatureUtils.EXTERNAL_GENERAL_ENTITIES , String.valueOf( allowExternaEntities ) );
+		features.setProperty( FeatureUtils.EXTERNAL_PARAMETER_ENTITIES , String.valueOf( allowExternaEntities ) );
 		return newSafeDocumentBuilderFactory( features );
 	}
 	

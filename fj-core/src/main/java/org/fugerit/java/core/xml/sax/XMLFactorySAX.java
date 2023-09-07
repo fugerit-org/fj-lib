@@ -4,10 +4,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.xml.XMLException;
 import org.fugerit.java.core.xml.XMLValidator;
 import org.xml.sax.EntityResolver;
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
@@ -31,15 +31,7 @@ public class XMLFactorySAX {
     }
     
     public SAXParser newSAXParser() throws XMLException {
-        SAXParser parser = null;
-        try {
-            parser = this.factory.newSAXParser();
-        } catch (ParserConfigurationException pce) {
-            throw (new XMLException(pce));
-        } catch (SAXException se) {
-            throw (new XMLException(se));
-        }
-        return parser;
+    	return SafeFunction.get( () -> this.factory.newSAXParser(), XMLException.CONVERT_FUN );
     }
     
     public static XMLFactorySAX newInstance() throws XMLException {
@@ -68,12 +60,8 @@ public class XMLFactorySAX {
     public void setFeature(String name, boolean value) throws XMLException {
         try {
             this.factory.setFeature(name, value);
-        } catch (SAXNotRecognizedException snr) {
+        } catch (SAXNotRecognizedException | SAXNotSupportedException | ParserConfigurationException snr) {
             throw (new XMLException(snr));
-        } catch (SAXNotSupportedException sns) {
-            throw (new XMLException(sns));
-        } catch (ParserConfigurationException pce) {
-            throw (new XMLException(pce));
         }
     }
     
@@ -89,12 +77,8 @@ public class XMLFactorySAX {
         boolean result = false;
         try {
             result = this.factory.getFeature(name);
-        } catch (SAXNotRecognizedException snr) {
+        } catch (SAXNotRecognizedException | SAXNotSupportedException | ParserConfigurationException snr) {
             throw (new XMLException(snr));
-        } catch (SAXNotSupportedException sns) {
-            throw (new XMLException(sns));
-        } catch (ParserConfigurationException pce) {
-            throw (new XMLException(pce));
         }        
         return result;
     }
