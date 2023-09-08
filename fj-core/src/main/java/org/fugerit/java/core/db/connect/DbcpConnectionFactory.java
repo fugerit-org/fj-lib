@@ -21,7 +21,6 @@
 package org.fugerit.java.core.db.connect;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.fugerit.java.core.db.dao.DAOException;
@@ -66,7 +65,7 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 	 * @throws DAOException		in case of issues
 	 */
 	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max, ClassLoader cl ) throws DAOException {
-		try {
+		DAOException.apply( () -> {
 			this.dataSource = new BasicDataSource();
 			this.dataSource.setDriverClassName( drv );
 			this.dataSource.setUrl( url );
@@ -78,21 +77,12 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 			if ( cl != null ) {
 				this.dataSource.setDriverClassLoader( cl );
 			}
-		} catch (Exception e) {
-			throw new DAOException( e );
-		}
+		});
 	}
 	
 	@Override
 	public Connection getConnection() throws DAOException {
-		Connection conn = null;
-		try {
-			conn = this.dataSource.getConnection();
-		} catch (SQLException e) {
-			throw new DAOException( e );
-		}
-		return conn;
+		return DAOException.get( () -> this.dataSource.getConnection() );
 	}
 
-	
 }
