@@ -21,7 +21,7 @@ public class BinaryCalc {
 		BigDecimal result = ZERO;
 		stringVal = stringVal.toUpperCase();
 		for ( int k=stringVal.length()-1, esp=0; k>=0; k--, esp++ ) {
-			result = result.add( new BigDecimal( fun.apply( stringVal.charAt( k ) )*Math.pow( pow , esp ) ) );
+			result = result.add( BigDecimal.valueOf( fun.apply( stringVal.charAt( k ) )*Math.pow( pow , esp ) ) );
 		}
 		return result.longValue();
 	}
