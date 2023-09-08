@@ -78,6 +78,13 @@
 			</exclusions>
 		</dependency>
 
+		<dependency>
+		    <groupId>com.github.h-thurow</groupId>
+		    <artifactId>simple-jndi</artifactId>
+		    <version>0.23.0</version>
+		    <scope>test</scope>
+		</dependency>
+
 	</dependencies>
 	
 	<profiles>

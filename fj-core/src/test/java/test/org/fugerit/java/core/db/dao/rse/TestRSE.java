@@ -2,9 +2,14 @@ package test.org.fugerit.java.core.db.dao.rse;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
+import org.fugerit.java.core.db.connect.ConnectionFacade;
+import org.fugerit.java.core.db.connect.ConnectionFactoryCloseable;
+import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
 import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.db.dao.DAOUtilsNG;
 import org.fugerit.java.core.db.dao.RSExtractor;
@@ -17,6 +22,7 @@ import org.fugerit.java.core.db.dao.rse.PropertyRSE;
 import org.fugerit.java.core.db.dao.rse.SingleColumnRSE;
 import org.fugerit.java.core.db.dao.rse.StringRSE;
 import org.fugerit.java.core.function.SafeFunction;
+import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.util.collection.OptionItem;
 import org.junit.Assert;
 import org.junit.Test;
@@ -141,6 +147,30 @@ public class TestRSE extends BasicDBHelper {
 		PropertyRSE rse = PropertyRSE.newAutoCachingMetadataRSE();
 		Properties result = this.worker( "SELECT username, state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, rse, null );
 		Assert.assertEquals( TEST_USERNAME , result.getProperty( "USERNAME" ) );
+	}
+	
+	@Test
+	public void tesConnectionFacade() throws Exception {
+		try ( ConnectionFactoryCloseable cf = ConnectionFactoryImpl.wrap( 
+				ConnectionFactoryImpl.newInstance( PropsIO.loadFromClassLoaderSafe( BasicDBHelper.DEFAULT_DB_CONN_PATH ) ) ) ) {
+			try ( Connection conn = cf.getConnection();  
+					Statement stm = conn.createStatement(); 
+					ResultSet rs = stm.executeQuery( "SELECT * FROM fugerit.user" ) ) {
+				ConnectionFacade.closeLoose( rs );
+				ConnectionFacade.closeLoose( stm );
+				ConnectionFacade.closeLoose( conn );
+			}
+			try ( Connection conn = cf.getConnection();  
+					Statement stm = conn.createStatement(); 
+					ResultSet rs = stm.executeQuery( "SELECT * FROM fugerit.user" ) ) {
+				ConnectionFacade.closeLoose(conn, stm, rs);
+			}
+			try ( Connection conn = cf.getConnection();  
+					Statement stm = conn.createStatement(); 
+					ResultSet rs = stm.executeQuery( "SELECT * FROM fugerit.user" ) ) {
+				ConnectionFacade.closeLoose(conn, stm);
+			}
+		}
 	}
 
 }
