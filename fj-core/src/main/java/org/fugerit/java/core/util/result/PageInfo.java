@@ -21,8 +21,8 @@ public class PageInfo implements Serializable {
 	
 	public PageInfo(int number, int size) {
 		super();
-		this.number = number;
-		this.size = size;
+		this.setNumber(number);
+		this.setSize(size);
 	}
 
 	public int getNumber() {

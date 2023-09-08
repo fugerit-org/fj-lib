@@ -25,6 +25,7 @@
  */
 package org.fugerit.java.core.io.line;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /*
@@ -42,7 +43,7 @@ import java.io.IOException;
  * @author Morozko
  *
  */
-public interface LineReader {
+public interface LineReader extends Closeable {
 
     /*
      * <p> 

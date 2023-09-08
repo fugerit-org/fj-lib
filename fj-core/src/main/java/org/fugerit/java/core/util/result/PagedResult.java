@@ -84,14 +84,6 @@ public interface PagedResult<T> extends Result {
 	public Iterator<Integer> getPageCountIterator();
 	
 	/**
-	 * Result code for this page
-	 * 
-	 * @return result code
-	 */
-	@Override
-	public int getResultCode();
-	
-	/**
 	 * Additional info of this page.
 	 * 
 	 * @return	info
