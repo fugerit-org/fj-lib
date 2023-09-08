@@ -48,6 +48,7 @@ public class BigDecimalRSE extends SingleColumnRSE<BigDecimal> {
 
 	@Override
 	protected BigDecimal convert(Object o) {
+		// not used in this rs exctractor
 		return null;
 	}
 
