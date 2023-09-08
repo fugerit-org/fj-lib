@@ -30,6 +30,18 @@ public class StringRSE extends SingleColumnRSE<String> {
 
 	public static final StringRSE DEFAULT = new StringRSE();
 	
+	public StringRSE() {
+		super();
+	}
+	
+	public StringRSE(int index) {
+		super(index);
+	}
+
+	public StringRSE(String name) {
+		super(name);
+	}
+	
 	@Override
 	protected String convert(Object o) {
 		String c = null;
