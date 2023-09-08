@@ -152,6 +152,27 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 */
 	public static final String PROP_CF_EXT_POOLED_MC = "db-ext-pooled-mc";
 
+	public static ConnectionFactoryCloseable wrap( ConnectionFactory cf ) {
+		return new ConnectionFactoryCloseable() {
+			@Override
+			public void close() throws Exception {
+				this.release();
+			}
+			@Override
+			public void release() throws DAOException {
+				cf.release();
+			}
+			@Override
+			public DataBaseInfo getDataBaseInfo() throws DAOException {
+				return cf.getDataBaseInfo();
+			}
+			@Override
+			public Connection getConnection() throws DAOException {
+				return cf.getConnection();
+			}
+		};
+	}
+	
 	/**
 	 * Parse a configuration Element looking for ConnectionFactory configuration
 	 * 

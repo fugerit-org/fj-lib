@@ -1,0 +1,25 @@
+<connect-properties>
+
+	<cf-config-entry id="mem-db"
+		db-cf-mode="DC"
+		db-mode-dc-drv="org.hsqldb.jdbcDriver"
+		db-mode-dc-url="jdbc:hsqldb:mem:base_db"
+		db-mode-dc-usr="test_db"
+		db-mode-dc-pwd="test_db">
+	</cf-config-entry>
+
+
+	<cf-config-entry id="mem-db-pooled"
+		db-cf-mode="DC"
+		db-mode-dc-drv="org.hsqldb.jdbcDriver"
+		db-mode-dc-url="jdbc:hsqldb:mem:base_db"
+		db-mode-dc-usr="test_db"
+		db-mode-dc-pwd="test_db"
+		db-ext-pooled="true"
+		db-ext-pooled-sc="1"
+		db-ext-pooled-ic="1"
+		db-ext-pooled-mc="3">
+	</cf-config-entry>
+	
+
+</connect-properties>

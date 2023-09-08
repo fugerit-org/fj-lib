@@ -1,7 +1,6 @@
 package org.fugerit.java.core.db.connect;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.metadata.DataBaseInfo;
@@ -24,11 +23,7 @@ public class SingleConnectionFactory implements ConnectionFactory {
 
 	@Override
 	public void release() throws DAOException {
-		try {
-			this.getConnection().close();
-		} catch (SQLException e) {
-			throw new DAOException( "Error closing connection "+this.conn, e );
-		}
+		DAOException.apply( () -> this.getConnection().close() );
 	}
 
 	@Override

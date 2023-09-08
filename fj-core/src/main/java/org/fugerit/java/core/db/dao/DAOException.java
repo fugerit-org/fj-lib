@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.db.dao;
 
+import org.fugerit.java.core.function.UnsafeVoid;
 import org.fugerit.java.core.lang.ex.ExConverUtils;
 
 /*
@@ -67,6 +68,14 @@ public class DAOException extends Exception {
 	
 	public static DAOException convertEx( Exception e ) {
 		return convertEx( ExConverUtils.DEFAULT_CAUSE_MESSAGE, e );
+	}
+	
+	public static <E extends Exception> void apply( UnsafeVoid<E> fun ) throws DAOException {
+		try {
+			fun.apply();
+		} catch (Exception e) {
+			throw new DAOException( e );
+		}
 	}
 	
 }
