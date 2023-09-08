@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.sql.DataSource;
@@ -42,27 +43,48 @@ public class JMountDaogenDB implements JMount {
 	
 	private String rootParentPath;
 	
+	private Supplier<ModelDbJvfsFile> modelSupplier; 
+	
+	private static final Supplier<ModelDbJvfsFile> DEFAULT = HelperDbJvfsFile::new;
+	
 	public JMountDaogenDB(DataSource ds, EntityDbJvfsFileFacade facade) throws DAOException {
-		this( ConnectionFactoryImpl.newInstance( ds ), facade );
+		this( ConnectionFactoryImpl.newInstance( ds ), facade, DEFAULT );
 	}
 	
 	public JMountDaogenDB(ConnectionFactory cf, EntityDbJvfsFileFacade facade) {
+		this( cf, facade, DEFAULT );
+	}
+	
+	public JMountDaogenDB(ConnectionFactory cf, EntityDbJvfsFileFacade facade, Supplier<ModelDbJvfsFile> modelSupplier) {
 		super();
 		this.cf = cf;
 		this.facade = facade;
 		this.rootParentPath = JFile.SEPARATOR+JFile.SEPARATOR;
+		this.modelSupplier = modelSupplier;
 	}
 	
 	public static JVFS createJVFSWithPrefix( ConnectionFactory cf, String prefix ) throws IOException {
 		return createJVFS( cf, DataEntityDbJvfsFileFacade.newInstanceWithTable(prefix) );
 	}
 	
+	public static JVFS createJVFSWithPrefix( ConnectionFactory cf, String prefix, Supplier<ModelDbJvfsFile> modelSupplier ) throws IOException {
+		return createJVFS( cf, DataEntityDbJvfsFileFacade.newInstanceWithTable(prefix), modelSupplier );
+	}
+	
 	public static JVFS createJVFSWithTableName( ConnectionFactory cf, String tableName ) throws IOException {
 		return createJVFS( cf, DataEntityDbJvfsFileFacade.newInstanceWithTable(tableName) );
 	}
 	
+	public static JVFS createJVFSWithTableName( ConnectionFactory cf, String tableName, Supplier<ModelDbJvfsFile> modelSupplier ) throws IOException {
+		return createJVFS( cf, DataEntityDbJvfsFileFacade.newInstanceWithTable(tableName), modelSupplier );
+	}
+	
 	public static JVFS createJVFS( ConnectionFactory cf, EntityDbJvfsFileFacade facade ) throws IOException {
-		return JVFSImpl.getInstance( new JMountDaogenDB(cf , facade ) );
+		return createJVFS(cf, facade, DEFAULT);
+	}
+	
+	public static JVFS createJVFS( ConnectionFactory cf, EntityDbJvfsFileFacade facade, Supplier<ModelDbJvfsFile> modelSupplier ) throws IOException {
+		return JVFSImpl.getInstance( new JMountDaogenDB(cf , facade, modelSupplier ) );
 	}
 	
 	public static JVFS createJVFS( ConnectionFactory cf ) throws IOException {
@@ -119,7 +141,7 @@ public class JMountDaogenDB implements JMount {
 		JFile[] list = null;
 		try ( CloseableDAOContext context = newContext() ) {
 			DbJvfsFileFinder finder = new DbJvfsFileFinder();
-			finder.setModel( new HelperDbJvfsFile() );
+			finder.setModel( this.modelSupplier.get() );
 			finder.getModel().setParentPath( file.getPath() );
 			BasicDaoResult<ModelDbJvfsFile> res = this.facade.loadAllByFinder( context , finder );
 			if ( res.isResultOk() ) {
@@ -187,7 +209,7 @@ public class JMountDaogenDB implements JMount {
 			boolean create = ( model == null );
 			Timestamp currentTime = TimeHelper.nowTimestamp();
 			if ( create ) {
-				model = new HelperDbJvfsFile();
+				model = this.modelSupplier.get();
 				model.setFileName( descriptor.getName() );
 				model.setParentPath( this.getParentPath(descriptor) );
 				model.setCreationTime( currentTime );

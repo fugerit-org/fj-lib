@@ -4,41 +4,27 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
-import org.fugerit.java.core.jvfs.JFile;
-import org.fugerit.java.core.jvfs.JMount;
+import org.fugerit.java.core.io.helper.HelperIOException;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.file.RealJMount;
 
-public class UriFileClJMount implements JMount {
+public class UriFileClJMount {
 	
-	private JMount mount;
+	private UriFileClJMount() {}
 	
 	public static File toFile( String packageName ) throws IOException {
-		File res = null;
-		try {
-        	URI uri = Thread.currentThread().getContextClassLoader().getResource( packageName ).toURI();
-			res = new File( uri );
-		} catch (Exception e) {
-			throw new IOException( e );
-		}
-		return res;
+		return HelperIOException.get(() -> {
+			URI uri = Thread.currentThread().getContextClassLoader().getResource( packageName ).toURI();
+			return new File( uri );
+		});
 	}
 		
     public static JVFS createJVFS( String packageName ) throws IOException {
-    	JVFS res = null;
-        try {
-        	URI uri = Thread.currentThread().getContextClassLoader().getResource( packageName ).toURI();
+    	return HelperIOException.get(() -> {
+    		URI uri = Thread.currentThread().getContextClassLoader().getResource( packageName ).toURI();
 			File root = new File( uri );
-			res = RealJMount.createJVFS( root );
-		} catch (Exception e) {
-			throw new IOException( e );
-		}
-        return res;
+			return RealJMount.createJVFS( root );
+    	});
     }
 
-	@Override
-	public JFile getJFile(JVFS jvfs, String point, String relPath) {
-		return this.mount.getJFile(jvfs, point, relPath);
-	}
-    
 }
