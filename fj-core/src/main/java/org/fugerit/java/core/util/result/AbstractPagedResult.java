@@ -1,7 +1,6 @@
 package org.fugerit.java.core.util.result;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +20,6 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	private int currentPage;
 	
 	private List<T> pageElements;
-	
-	private Map<String, Object> info;
 
 	protected AbstractPagedResult() {
 		super( RESULT_CODE_OK );
@@ -36,11 +33,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 		this.currentPage = currentPage;
 		this.pageElements = pageElements;
 		this.pageCount = pageCount;
-		this.info = new HashMap<String, Object>();
 	}
-	
-
-	
 
 	/*
 	 * <p>The position of the first element of the current pages ( (currentPage-1) * perPage )</p> 
@@ -138,7 +131,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 
 	@Override
 	public Map<String, Object> getInfo() {
-		return info;
+		return this.getInfoMap();
 	}
 	
 	@Override
