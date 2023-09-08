@@ -59,8 +59,8 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 	
 	@Override
 	public int rename( DAOContext context, DaogenJFileDB file, JFile newFile ) throws DAOException {
-		int res = 0;
-		try {
+		return DAOException.get(() -> {
+			int res = 0;
 			if ( file.isRoot() ) {
 				throw new DAOException( "Cannot rename root : "+file );
 			} else {
@@ -87,10 +87,8 @@ public class DataEntityDbJvfsFileFacade extends DataEntityDbJvfsFileFacadeHelper
 							descriptor2.getName(), descriptor2.getParentPath(), TimeHelper.nowTimestamp(), descriptor1.getName(), descriptor1.getParentPath() );
 				}	
 			}
-		} catch (Exception e) {
-			throw DAOException.convertEx( e ); 
-		}
-		return res;
+			return res;
+		});
 	}
 
 	private static final long serialVersionUID = 504022259276L;

@@ -3,6 +3,8 @@ package org.fugerit.java.core.io.helper;
 import java.io.Closeable;
 import java.io.IOException;
 
+import org.fugerit.java.core.function.UnsafeSupplier;
+import org.fugerit.java.core.function.UnsafeVoid;
 import org.fugerit.java.core.lang.ex.ExConverUtils;
 
 public class HelperIOException {
@@ -27,25 +29,29 @@ public class HelperIOException {
 		return convertEx( ExConverUtils.DEFAULT_CAUSE_MESSAGE, e );
 	}
 	
-	private static final String BASIC_CLOSE_MESSAGE = "Error closing object : ";
-	
 	public static void close( AutoCloseable ac ) throws IOException {
-		if ( ac != null ) {
-			try {
-				ac.close();
-			} catch (Exception e) {
-				throw HelperIOException.convertEx( BASIC_CLOSE_MESSAGE+ac , e );
-			}
-		}
+		apply( () -> { if ( ac != null ) ac.close(); } );
 	}
 	
 	public static void close( Closeable ac ) throws IOException {
-		if ( ac != null ) {
-			try {
-				ac.close();
-			} catch (Exception e) {
-				throw HelperIOException.convertEx( BASIC_CLOSE_MESSAGE+ac , e );
-			}
+		apply( () -> { if ( ac != null ) ac.close(); } );
+	}
+	
+	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun ) throws IOException {
+		T res = null;
+		try {
+			res = fun.get();
+		} catch (Exception e) {
+			throw convertEx( e );
+		}
+		return res;
+	}
+	
+	public static <E extends Exception> void apply( UnsafeVoid<E> fun ) throws IOException {
+		try {
+			fun.apply();
+		} catch (Exception e) {
+			throw convertEx( e );
 		}
 	}
 	

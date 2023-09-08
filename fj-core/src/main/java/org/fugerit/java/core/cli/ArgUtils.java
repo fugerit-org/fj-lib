@@ -25,7 +25,7 @@ import java.io.FileInputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.function.SafeFunction;
 
 /**
  * <p>Simple arg parsing utility.</p>
@@ -119,25 +119,23 @@ public class ArgUtils {
 		String paramFile = props.getProperty( ARG_PARAM_FILE );
 		if ( paramFile != null ) {
 			File f = new File( paramFile );
-			try {
-				FileInputStream fis = new FileInputStream( f );
-				if ( priorityToParamFile ) {
-					props.load( fis );	
-				} else {
-					Properties toLoad = new Properties();
-					toLoad.load( fis );
-					Enumeration<Object> keys = toLoad.keys();
-					while ( keys.hasMoreElements() ) {
-						String currentKey = keys.nextElement().toString();
-						if ( !props.containsKey( currentKey ) ) {
-							props.setProperty( currentKey , toLoad.getProperty( currentKey ) );
+			SafeFunction.apply(() -> {
+				try (FileInputStream fis = new FileInputStream( f )) {
+					if ( priorityToParamFile ) {
+						props.load( fis );	
+					} else {
+						Properties toLoad = new Properties();
+						toLoad.load( fis );
+						Enumeration<Object> keys = toLoad.keys();
+						while ( keys.hasMoreElements() ) {
+							String currentKey = keys.nextElement().toString();
+							if ( !props.containsKey( currentKey ) ) {
+								props.setProperty( currentKey , toLoad.getProperty( currentKey ) );
+							}
 						}
 					}
 				}
-				fis.close();	
-			} catch (Exception e) {
-				throw ConfigRuntimeException.convertEx( e );
-			}
+			});
 		}
 	}
 	

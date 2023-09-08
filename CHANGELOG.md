@@ -9,8 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Api for SafeFunctions handling
 - [workflow codeql on branch main](.github/workflows/codeql-analysis.yml)
 - [dependabot](.github/dependabot.yml) configuration
+
+### Changed
+
+- fj-bom updated to to 1.3.6
+- better test coverage
 
 ## [8.2.6] - 2023-09-04
 
