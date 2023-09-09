@@ -5,9 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.store.ConfigStoreMap;
+import org.fugerit.java.core.cfg.store.ConfigStoreUtils;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreMapDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreProps;
@@ -115,7 +117,13 @@ public class TestConfigStore extends BasicTest {
 		}
 		Assert.assertTrue( ok );
 	}
-    
 	
+	@Test
+	public void testToProperties() {
+		Properties props = ConfigStoreUtils.toProperties( ADD_MAP );
+		log.info( "toProperties : {}", props );
+		Assert.assertEquals( ADD_MAP.getKeySet().size() , props.keySet().size() );
+	}
+    
 }
 

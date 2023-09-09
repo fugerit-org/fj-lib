@@ -101,9 +101,6 @@ public class ArgUtils {
 		for ( int k=0; k<args.length; k++ ) {
 			String current = args[k];
 			if ( current.startsWith( ARG_PREFIX ) ) {
-				if ( !keySet ) {
-					props.setProperty( currentkey , ARG_DEFAULT_VALUE );
-				}
 				currentkey = current.substring( ARG_PREFIX.length() );
 				keySet = false;
 			} else {
@@ -111,6 +108,9 @@ public class ArgUtils {
 					props.setProperty( currentkey , current );
 					keySet = true;	
 				}
+			}
+			if ( !keySet ) {
+				props.setProperty( currentkey , ARG_DEFAULT_VALUE );
 			}
 		}
 	}
