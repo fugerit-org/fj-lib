@@ -20,7 +20,7 @@ public class ConfigProviderWrapper implements Wrapper<ConfigProvider>, ConfigPro
 	
 	public ConfigProviderWrapper(ConfigProvider wrapped) {
 		super();
-		this.wrapped = wrapped;
+		this.wrapModel(wrapped);
 	}
 
 	@Override
