@@ -43,7 +43,7 @@ public abstract class PropertiesConfigurableObject  extends AbstractConfigurable
 	 */
 	@Override
 	public void configure(Element tag) throws ConfigException {
-		throw ( new ConfigException( "Properties configuration not supported" ) );
+		throw ( new ConfigException( "XML configuration not supported" ) );
 	}
 
 }

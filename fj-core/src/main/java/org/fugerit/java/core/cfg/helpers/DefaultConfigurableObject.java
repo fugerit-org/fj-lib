@@ -60,7 +60,9 @@ public class DefaultConfigurableObject extends AbstractConfigurableObject implem
 	 */
 	@Override
 	public void configure(Properties props) throws ConfigException {
-		// do nothing implementation
+		/*
+		 * Just do nothing
+		 */
 	}
 
 	/* (non-Javadoc)

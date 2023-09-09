@@ -2,6 +2,8 @@ package org.fugerit.java.core.cfg;
 
 import java.io.Closeable;
 
+import org.fugerit.java.core.function.SafeFunction;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -35,48 +37,42 @@ public class CloseHelper {
 	
 	public static void closeRuntimeEx( AutoCloseable ac ) {
 		if ( ac != null ) {
-			try {
-				ac.close();
-			} catch (Exception e) {
-				throw ConfigRuntimeException.convertEx( BASIC_CLOSE_MESSAGE+ac , e );
-			}
+			SafeFunction.apply( () -> ac.close(), e -> { throw ConfigRuntimeException.convertEx( BASIC_CLOSE_MESSAGE+ac , e ); } );
 		}
 	}
 	
 	public static void closeRuntimeEx( Closeable ac ) {
 		if ( ac != null ) {
-			try {
-				ac.close();
-			} catch (Exception e) {
-				throw ConfigRuntimeException.convertEx( BASIC_CLOSE_MESSAGE+ac , e );
-			}
+			SafeFunction.apply( () -> ac.close(), e -> { throw ConfigRuntimeException.convertEx( BASIC_CLOSE_MESSAGE+ac , e ); } );
 		}
 	}
 	
 	public static boolean closeSilent( AutoCloseable ac ) {
-		boolean closed = true;
-		if ( ac != null ) {
-			try {
-				ac.close();
-			} catch (Exception e) {
-				closed = false;
-				log.warn( BASIC_CLOSE_MESSAGE_SILENT+ac , e );
-			}
-		}
-		return closed;
+		return SafeFunction.getWithDefault( 
+				() -> {
+					if ( ac != null ) {
+						ac.close();
+					}
+					return ac != null;
+				}, 
+				e -> { 
+					log.warn( BASIC_CLOSE_MESSAGE_SILENT+ac , e ); 
+					return Boolean.FALSE; 
+				} );
 	}
 	
 	public static boolean closeSilent( Closeable ac ) {
-		boolean closed = true;
-		if ( ac != null ) {
-			try {
-				ac.close();
-			} catch (Exception e) {
-				closed = false;
-				log.warn( BASIC_CLOSE_MESSAGE_SILENT+ac , e );
-			}
-		}
-		return closed;
+		return SafeFunction.getWithDefault( 
+				() -> {
+					if ( ac != null ) {
+						ac.close();
+					}
+					return ac != null;
+				}, 
+				e -> { 
+					log.warn( BASIC_CLOSE_MESSAGE_SILENT+ac , e ); 
+					return Boolean.FALSE; 
+				} );
 	}
 
 	private static Exception handle( Object obj, Exception e ) {
@@ -86,15 +82,13 @@ public class CloseHelper {
 	
 	public static Exception closeAll( Closeable... c ) {
 		Exception res = null;
-		if ( c != null ) {
-			for ( Closeable current : c ) {
-				try {
-					if ( current != null ) {
-						current.close();
-					}
-				} catch (Exception e) {
-					res = handle(c, e);
+		for ( Closeable current : c ) {
+			try {
+				if ( current != null ) {
+					current.close();
 				}
+			} catch (Exception e) {
+				res = handle(c, e);
 			}
 		}
 		return res;
@@ -102,15 +96,13 @@ public class CloseHelper {
 	
 	public static Exception closeAll( AutoCloseable... c ) {
 		Exception res = null;
-		if ( c != null ) {
-			for ( AutoCloseable current : c ) {
-				try {
-					if ( current != null ) {
-						current.close();
-					}
-				} catch (Exception e) {
-					res = handle(c, e);
+		for ( AutoCloseable current : c ) {
+			try {
+				if ( current != null ) {
+					current.close();
 				}
+			} catch (Exception e) {
+				res = handle(c, e);
 			}
 		}
 		return res;
