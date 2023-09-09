@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.fugerit.java.core.io.helper.HelperIOException;
+
 public class CompressUtils {
 
 	private CompressUtils() {}
@@ -14,12 +16,7 @@ public class CompressUtils {
 	
 	
 	public static void compressZipfile( File sourceDir, File  outputFile) throws IOException, FileNotFoundException {
-		try {
-			ArchiveDicFacadeTool.getInstanceExt().compressByExtension(sourceDir, outputFile);	
-		} catch (Exception e) {
-			throw new IOException( e );
-		}
+		HelperIOException.apply( () -> ArchiveDicFacadeTool.getInstanceExt().compressByExtension(sourceDir, outputFile) );
 	}
-	
 	
 }

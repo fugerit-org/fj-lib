@@ -1,6 +1,6 @@
 <fixed-field-file-config>
 
-	<fixed-field-file  id="testFixedValidator" mode="map" check-length="726" endline="\r\n" base-locale="en_UK">
+	<fixed-field-file  id="testFixedValidator" mode="map" check-length="33" base-locale="en_UK">
 		<validator-list>
             <validator id="stringValidator" type="org.fugerit.java.core.fixed.parser.FixedFileFieldRegexValidator" regex="[^/]*" locale="en_UK"/>
             <validator id="numberValidator" type="org.fugerit.java.core.fixed.parser.FixedFileFieldRegexValidator" regex="^[0-9]*$" locale="en_UK"/>

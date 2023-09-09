@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
 
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.slf4j.Logger;
@@ -49,19 +50,18 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 		return exit;
 	}
 	
-	protected ClassLoader getClassLoader( Properties params ) throws RunToolException {
-		ClassLoader cl = ClassHelper.getDefaultClassLoader();
-		try {
+	protected ClassLoader getClassLoader( Properties params ) {
+		final ClassLoader cl = ClassHelper.getDefaultClassLoader();
+		return SafeFunction.get( () -> {
+			ClassLoader res = cl;
 			String extraJar = params.getProperty( ARG_EXTRA_JAR );
 			if ( extraJar != null ) {
 				File jarFile = new File( extraJar );
 				URL[] u = { jarFile.toURI().toURL() };
-				cl = new URLClassLoader( u , cl );
+				res = new URLClassLoader( u , res );
 			}
-		} catch (Exception e) {
-			throw RunToolException.convertEx( e );
-		}
-		return cl;
+			return res;
+		});
 	}
 	
 	/**

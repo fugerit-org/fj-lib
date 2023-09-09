@@ -14,9 +14,8 @@ import java.util.Properties;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
 import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
-import org.fugerit.java.core.db.dao.DAOException;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.lang.helpers.StringUtils;
-import org.fugerit.java.tool.RunToolException;
 import org.fugerit.java.tool.ToolHandlerHelper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,58 +65,50 @@ public class ExportQuery extends ToolHandlerHelper {
 		pw.println( "</tr>" );
 	}
 	
-	private ConnectionFactory getCf( Properties params, ClassLoader cl ) throws RunToolException {
-		ConnectionFactory cf = null;
-		try {
-			cf = ConnectionFactoryImpl.newInstance( params, null, cl );
-		} catch (DAOException e) {
-			throw RunToolException.convertEx( e );
-		}
-		return cf;
+	private ConnectionFactory getCf( Properties params, ClassLoader cl ) {
+		return SafeFunction.get( () -> ConnectionFactoryImpl.newInstance( params, null, cl ) );
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.tool.ToolHandlerHelper#handleWorker(java.util.Properties)
 	 */
 	@Override
-	public int handleWorker(Properties params) throws RunToolException {
-		int exit = EXIT_KO_DEFAULT;
+	public int handleWorker(Properties params) {
 		ClassLoader cl = this.getClassLoader( params );
 		ConnectionFactory cf = this.getCf(params, cl);
 		String output = params.getProperty( ARG_OUTPUT );
-		try (
-			PrintWriter pw = new PrintWriter( new OutputStreamWriter( new FileOutputStream( output ) ) );
-				Connection conn = cf.getConnection();
-				Statement stm = conn.createStatement() ) {
-			String sql = params.getProperty( ARG_QUERY );
-			String format = params.getProperty( ARG_FORMAT, ARG_FORMAT_DEFAULT );
-			openFile( pw, format );
-			try ( ResultSet rs = stm.executeQuery( sql ) ) {
-				ResultSetMetaData rsmd = rs.getMetaData();
-				String head[] = new String[rsmd.getColumnCount()];
-				for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
-					head[k] = rsmd.getColumnLabel( k+1 );
-				}
-				addRecord( pw , head , true );
-				while ( rs.next() ) {
-					String localRecord[] = new String[rsmd.getColumnCount()];
-					for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
-						Object obj = rs.getObject( k+1 );
-						if ( obj == null ) {
-							obj = "";
+		return SafeFunction.get( () -> {
+			try (
+					PrintWriter pw = new PrintWriter( new OutputStreamWriter( new FileOutputStream( output ) ) );
+						Connection conn = cf.getConnection();
+						Statement stm = conn.createStatement() ) {
+					String sql = params.getProperty( ARG_QUERY );
+					String format = params.getProperty( ARG_FORMAT, ARG_FORMAT_DEFAULT );
+					openFile( pw, format );
+					try ( ResultSet rs = stm.executeQuery( sql ) ) {
+						ResultSetMetaData rsmd = rs.getMetaData();
+						String head[] = new String[rsmd.getColumnCount()];
+						for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
+							head[k] = rsmd.getColumnLabel( k+1 );
 						}
-						localRecord[k] = String.valueOf( obj );
+						addRecord( pw , head , true );
+						while ( rs.next() ) {
+							String localRecord[] = new String[rsmd.getColumnCount()];
+							for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
+								Object obj = rs.getObject( k+1 );
+								if ( obj == null ) {
+									obj = "";
+								}
+								localRecord[k] = String.valueOf( obj );
+							}
+							addRecord( pw , localRecord , false );				
+						}
+						closeFile( pw, format );
 					}
-					addRecord( pw , localRecord , false );				
+					pw.flush();
 				}
-				closeFile( pw, format );
-			}
-			pw.flush();
-			exit = EXIT_OK;
-		} catch (Exception e) {
-			logger.error( "Error", e );
-		}
-		return exit;
+			return EXIT_OK;
+		} );
 	}
 
 }
