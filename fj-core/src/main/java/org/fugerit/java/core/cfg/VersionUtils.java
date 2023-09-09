@@ -37,8 +37,12 @@ public class VersionUtils {
 	
 	private VersionUtils() {}
 
-	public static Properties MODULES = new Properties();
+	private static Properties MODULES = new Properties();
 
+	public static final String CODE_01_NOT_FOUND = "[01] Module does not exist";
+	
+	public static final String CODE_03_NO_CONVERT = "[03] Impossible to convert module version";
+	
 	/**
 	 * Register a module
 	 * 
@@ -76,7 +80,7 @@ public class VersionUtils {
 				log.warn( versionString, t1 );
 			}	
 		} else {
-			versionString = "[01] Module does not exist";
+			versionString = CODE_01_NOT_FOUND;
 		}
 		return versionString;
 	}
@@ -86,8 +90,8 @@ public class VersionUtils {
 		try {
 			ModuleVersion vc = (ModuleVersion) o;
 			versionString = vc.getName()+" "+vc.getVersion()+" "+vc.getDate();
-		} catch ( Throwable t2 ) {
-			versionString = "[03] Impossible to find module version";
+		} catch ( Exception | NoClassDefFoundError t2 ) {
+			versionString = CODE_03_NO_CONVERT;
 			log.warn( versionString, t2 );
 		}
 		return versionString;
