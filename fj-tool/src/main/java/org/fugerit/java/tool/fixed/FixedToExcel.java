@@ -18,6 +18,7 @@ import org.fugerit.java.core.fixed.parser.FixedFieldDescriptor;
 import org.fugerit.java.core.fixed.parser.FixedFieldFileConfig;
 import org.fugerit.java.core.fixed.parser.FixedFieldFileDescriptor;
 import org.fugerit.java.core.fixed.parser.FixedFieldFileReader;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.tool.RunToolException;
 import org.fugerit.java.tool.ToolHandlerHelper;
 
@@ -45,58 +46,52 @@ public class FixedToExcel extends ToolHandlerHelper {
 	
 	@Override
 	public int handleWorker(Properties params) throws RunToolException {
-		int exit = EXIT_OK;
-		String inputFilePath = params.getProperty( PARAM_INPUT_FILE );
-		String inputConfigPath = params.getProperty( PARAM_INPUT_CONFIG );
-		String configId = params.getProperty( PARAM_CONFIG_ID );
-		String outputXls = params.getProperty( PARAM_OUTPUT_XLS );
-		try ( FileInputStream fis = new FileInputStream( new File( inputConfigPath ) ) ) {
-			FixedFieldFileConfig config = FixedFieldFileConfig.parseConfig( fis );
-			FixedFieldFileDescriptor descriptor = config.getFileDescriptor( configId );
-			
-			try ( Reader fr = new FileReader( new File( inputFilePath) );
-					FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, fr );
-					Workbook workbook = new HSSFWorkbook() ) {
-				Sheet s = workbook.createSheet( "data" );
-				int currentRow = 0;
-				
-				Row rowHead = s.createRow( 0 );
-				for ( int k=0; k<descriptor.getListFields().size(); k++ ) {
-					FixedFieldDescriptor ffd = descriptor.getListFields().get( k );
-					Cell cell = rowHead.createCell( k );
-					String value = ffd.getName();
-					cell.setCellValue( value );
-				}
-				currentRow++;
-				while ( reader.hasNext() ) {
-					Map<String, String> map = reader.nextRawMap();
-					Row row = s.createRow( currentRow );
-					int currentCell = 0;
-					Iterator<FixedFieldDescriptor> it = descriptor.getListFields().iterator();
-					while ( it.hasNext() ) {
-						FixedFieldDescriptor ffd = it.next();
-						Cell cell = row.createCell( currentCell );
-						String value = map.get( ffd.getNormalizedName() );
+		return SafeFunction.get( () -> {
+			int exit = EXIT_OK;
+			String inputFilePath = params.getProperty( PARAM_INPUT_FILE );
+			String inputConfigPath = params.getProperty( PARAM_INPUT_CONFIG );
+			String configId = params.getProperty( PARAM_CONFIG_ID );
+			String outputXls = params.getProperty( PARAM_OUTPUT_XLS );
+			try ( FileInputStream fis = new FileInputStream( new File( inputConfigPath ) ) ) {
+				FixedFieldFileConfig config = FixedFieldFileConfig.parseConfig( fis );
+				FixedFieldFileDescriptor descriptor = config.getFileDescriptor( configId );
+				try ( Reader fr = new FileReader( new File( inputFilePath) );
+						FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, fr );
+						Workbook workbook = new HSSFWorkbook() ) {
+					Sheet s = workbook.createSheet( "data" );
+					int currentRow = 0;
+					
+					Row rowHead = s.createRow( 0 );
+					for ( int k=0; k<descriptor.getListFields().size(); k++ ) {
+						FixedFieldDescriptor ffd = descriptor.getListFields().get( k );
+						Cell cell = rowHead.createCell( k );
+						String value = ffd.getName();
 						cell.setCellValue( value );
-						currentCell++;
 					}
 					currentRow++;
-					if ( currentRow%1000 == 0 ) {
-						logger.debug( "CURRENT ROW {}", currentRow );
+					while ( reader.hasNext() ) {
+						Map<String, String> map = reader.nextRawMap();
+						Row row = s.createRow( currentRow );
+						int currentCell = 0;
+						Iterator<FixedFieldDescriptor> it = descriptor.getListFields().iterator();
+						while ( it.hasNext() ) {
+							FixedFieldDescriptor ffd = it.next();
+							Cell cell = row.createCell( currentCell );
+							String value = map.get( ffd.getNormalizedName() );
+							cell.setCellValue( value );
+							currentCell++;
+						}
+						currentRow++;
+					}			
+					workbook.close();
+					try ( FileOutputStream fos = new FileOutputStream( new File( outputXls ) ) ) {
+						workbook.write( fos );
+						fos.flush();
 					}
-				}			
-				workbook.close();
-				try ( FileOutputStream fos = new FileOutputStream( new File( outputXls ) ) ) {
-					workbook.write( fos );
-					fos.flush();
-				}
-				
+				}	
 			}
-			
-		} catch (Exception e) {
-			throw RunToolException.convertEx( e );
-		}
-		return exit;
+			return exit;
+		});
 	}
 
 }

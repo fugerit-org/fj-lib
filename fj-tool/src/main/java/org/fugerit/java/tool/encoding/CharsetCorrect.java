@@ -9,9 +9,9 @@ import java.io.FileOutputStream;
 import java.util.Properties;
 
 import org.fugerit.java.core.charset.EncodingCheck;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.tool.Launcher;
-import org.fugerit.java.tool.RunToolException;
 import org.fugerit.java.tool.ToolHandlerHelper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CharsetCorrect extends ToolHandlerHelper {
 
-	private CharsetCorrect() {}
-	
-	private static void handleFile( File input, File output, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) throws RunToolException {
-		try {
+	private static void handleFile( File input, File output, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) {
+		SafeFunction.apply( () -> {
 			FileInputStream is = new FileInputStream( input );
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			StreamIO.pipeStream( is , os , StreamIO.MODE_CLOSE_BOTH );
@@ -59,12 +57,10 @@ public class CharsetCorrect extends ToolHandlerHelper {
 			} else if ( verbose ) {
 				log.info( "correct encoding, skipping : {}", input.getAbsolutePath() );
 			}
-		} catch ( Exception e ) {
-			throw RunToolException.convertEx( e );
-		}
+		} );
 	}
 	
-	private static void recurse( File current, FileFilter filter, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) throws RunToolException {
+	private static void recurse( File current, FileFilter filter, String sourceCharset, String targetCharset, boolean infoComment, boolean verbose ) {
 		log.debug( "recurse "+current.getAbsolutePath() );
 		if ( current.isFile() ) {
 			handleFile( current , current, sourceCharset, targetCharset, infoComment, verbose );
@@ -125,9 +121,8 @@ public class CharsetCorrect extends ToolHandlerHelper {
 	 * 
 	 * 
 	 * @param params		the arguments
-	 * @throws RunToolException	if issues arise.
 	 */
-	public static void correct( Properties params ) throws RunToolException {
+	public static void correct( Properties params ) {
 		String inputFile = params.getProperty( PARAM_INPUT_FILE );
 		String outputFile = params.getProperty( PARAM_OUTPUT_FILE, inputFile );
 		String folderRecurse = params.getProperty( PARAM_FOLDER_RECURSE );
@@ -152,7 +147,7 @@ public class CharsetCorrect extends ToolHandlerHelper {
 	}
 
 	@Override
-	public int handleWorker(Properties params) throws RunToolException {
+	public int handleWorker(Properties params) {
 		correct( params );
 		return EXIT_OK;
 	}

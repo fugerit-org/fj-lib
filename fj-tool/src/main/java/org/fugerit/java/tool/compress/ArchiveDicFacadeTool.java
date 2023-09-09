@@ -5,6 +5,8 @@ import org.fugerit.java.tool.compress.sevenz.SevenZArchiveDirFileFun;
 
 public class ArchiveDicFacadeTool extends ArchiveDicFacade {
 
+	private ArchiveDicFacadeTool() {}
+	
 	private static ArchiveDicFacade instanceExt;
 	
 	static {
