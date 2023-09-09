@@ -31,7 +31,7 @@ public class XMLFactorySAX {
     }
     
     public SAXParser newSAXParser() throws XMLException {
-    	return SafeFunction.get( () -> this.factory.newSAXParser(), XMLException.CONVERT_FUN );
+    	return SafeFunction.getEx( () -> this.factory.newSAXParser(), XMLException.CONVERT_FUN );
     }
     
     public static XMLFactorySAX newInstance() throws XMLException {

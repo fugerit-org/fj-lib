@@ -3,6 +3,7 @@ package org.fugerit.java.core.lang.helpers.reflect;
 import java.beans.PropertyDescriptor;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.function.SafeFunction;
 
 /**
  * Simple class to look up a property path in a java object
@@ -37,19 +38,17 @@ public class PathHelper {
 	 * @param target	the target object
 	 * @param facadeImplFinder	facade for finding target property type
 	 * @return	the object used to initialized the empty field
+	 * @throws ConfigRuntimeException may throw ConfigRuntimeException see {@link SafeFunction}
 	 */
 	public static Object initEmptyField( String property, Object target, FacadeImplFinder facadeImplFinder ) {
-		Object temp = null;
-		try {
+		return SafeFunction.get(() -> {
 			PropertyDescriptor pd = new PropertyDescriptor( property, target.getClass() );
 			Class<?> propertyClass = pd.getReadMethod().getReturnType();
 			Class<?> implClass = facadeImplFinder.findImpl( propertyClass );
-			temp = implClass.getConstructor().newInstance();
-			pd.getWriteMethod().invoke(target, temp);
-		} catch (Exception e ) {
-			throw ConfigRuntimeException.convertEx( e );
-		}
-		return temp;
+			Object res = implClass.getConstructor().newInstance();
+			pd.getWriteMethod().invoke(target, res);
+			return res;
+		});
 	}
 	
 	/**

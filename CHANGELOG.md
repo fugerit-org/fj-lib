@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fj-bom updated to to 1.3.6
 - better test coverage
 
+### Fixed
+
+- ArgUtils flag (param without values) are now read to default value of '1'
+
 ## [8.2.6] - 2023-09-04
 
 ### Changed

@@ -27,7 +27,7 @@
 		<field id="valueOne" value="TEST"/>
 	</binding>
 
-	<!-- case 02  when a field value is not found we privide init type -->
+	<!-- case 02  when a field value is not found we provide init type -->
 	<binding id="binding-02-default" tryInit="0">
 		<field id="kid" initOnNull="test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo"/>
 		<field id="idOne" bindTo="kid.idTwo"/>
