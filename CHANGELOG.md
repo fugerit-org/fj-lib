@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.2.7] - 2023-09-11
+
 ### Added
 
 - Api for SafeFunctions handling
 - [workflow codeql on branch main](.github/workflows/codeql-analysis.yml)
+- [workflow deploy on branch main](.github/workflows/deploy_maven_package.yml)
 - [dependabot](.github/dependabot.yml) configuration
 
 ### Changed
