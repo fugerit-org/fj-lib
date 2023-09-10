@@ -1,8 +1,11 @@
 package test.org.fugerit.java.core.function;
 
+import static org.junit.Assert.assertThrows;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.function.Consumer;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.function.SafeFunction;
@@ -86,6 +89,22 @@ public class TestSafeFunction {
 		Assert.assertNull( res );
 		res = SafeFunction.getIfNotNUll( null , () -> "b" );
 		Assert.assertNull( res );
+	}
+
+	private boolean testExHandlerWorker( Consumer<Exception> exHandler, boolean ex ) {
+		if ( ex ) {
+			assertThrows( Exception.class , () -> exHandler.accept( new IOException( "test" ) ) );
+		} else {
+			exHandler.accept( new IOException( "test" ) );
+		}
+		return true;
+	}
+	
+	@Test
+	public void testExHandler() {
+		Assert.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_LOG_WARN, false ) );
+		Assert.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_TRACE_WARN, false ) );
+		Assert.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_THROW_CONFIG_RUNTIME, true ) );
 	}
 	
 	public String testExampleToOneLineClassic() {

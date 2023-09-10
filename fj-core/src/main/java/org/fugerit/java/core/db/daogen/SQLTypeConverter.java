@@ -10,7 +10,7 @@ import org.fugerit.java.core.function.SafeFunction;
 
 public class SQLTypeConverter {
 
-	public static final Function<Exception, SQLException> CONVERT_EX = e -> new SQLException(e);
+	public static final Function<Exception, SQLException> CONVERT_EX = SQLException::new;
 	
 	private SQLTypeConverter() {}
 	
@@ -27,15 +27,11 @@ public class SQLTypeConverter {
 	}
 	
 	public static ByteArrayDataHandler blobToByteHandler( java.sql.Blob s ) throws SQLException {
-		return SafeFunction.getEx( () -> {
-			return ByteArrayDataHandler.newHandlerDefault( s );
-		} , CONVERT_EX );
+		return SafeFunction.getEx( () -> ByteArrayDataHandler.newHandlerDefault( s ) , CONVERT_EX );
 	}
 	
 	public static CharArrayDataHandler clobToCharHandler( java.sql.Clob s ) throws SQLException {
-		return SafeFunction.getEx( () -> {
-			return CharArrayDataHandler.newHandlerDefault( s );
-		} , CONVERT_EX );
+		return SafeFunction.getEx( () -> CharArrayDataHandler.newHandlerDefault( s ) , CONVERT_EX );
 	}
 	
 }

@@ -1,7 +1,6 @@
 package test.org.fugerit.java.core.db.dao.daogen;
 
 import java.io.Serializable;
-
 import java.math.BigDecimal;
 
 import org.fugerit.java.core.db.dao.DAOException;

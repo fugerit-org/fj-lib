@@ -5,6 +5,8 @@ import java.util.function.Function;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * <p>Collections of utilities for handling exceptions through functions.</p>
  * 
@@ -37,11 +39,18 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
  * <p>So this way it is possible to separate the exception handling from the actual software logic. (useful to reduce testing coverage too).</p>
  * 
  */
+@Slf4j
 public class SafeFunction {
 
 	private SafeFunction() {}
 	
-	private static final Consumer<Exception> DEFAULT_EX_CONSUMER = e -> { throw new ConfigRuntimeException( e ); };
+	public static final Consumer<Exception> EX_CONSUMER_LOG_WARN = e -> log.warn( "Exception suppressed : {}", e.toString() );
+	
+	public static final Consumer<Exception> EX_CONSUMER_TRACE_WARN = e -> log.warn( "Exception suppressed : "+e, e );
+	
+	public static final Consumer<Exception> EX_CONSUMER_THROW_CONFIG_RUNTIME = e -> { throw new ConfigRuntimeException( e ); };
+	
+	private static final Consumer<Exception> DEFAULT_EX_CONSUMER = EX_CONSUMER_THROW_CONFIG_RUNTIME;
 	
 	/**
 	 * <p>Get a value returned by an UnsafeSupplier, and convert any raised Exception</p>
@@ -82,6 +91,10 @@ public class SafeFunction {
 	 */
 	public static void apply( UnsafeVoid<Exception> fun ) {
 		apply( fun , DEFAULT_EX_CONSUMER );
+	}
+
+	public static void applySilent( UnsafeVoid<Exception> fun ) {
+		apply( fun , EX_CONSUMER_LOG_WARN );
 	}
 	
 	/**
@@ -143,7 +156,8 @@ public class SafeFunction {
 	public static <R> R getOnCondition( UnsafeSupplier<Boolean, Exception> condition, UnsafeSupplier<R, Exception> supplier ) {
 		return get( () -> {
 			R res = null;
-			if ( condition.get() ) {
+			boolean cond = condition.get().booleanValue();
+			if ( cond ) {
 				res = supplier.get();
 			}	
 			return res;
