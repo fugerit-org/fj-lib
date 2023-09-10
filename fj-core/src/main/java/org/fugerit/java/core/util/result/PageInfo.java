@@ -2,6 +2,9 @@ package org.fugerit.java.core.util.result;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 
  *
@@ -15,30 +18,14 @@ public class PageInfo implements Serializable {
 	 */
 	private static final long serialVersionUID = 2423423423421L;
 
-	private int number;
+	@Getter @Setter private int number;
 	
-	private int size;
+	@Getter @Setter private int size;
 	
 	public PageInfo(int number, int size) {
 		super();
 		this.setNumber(number);
 		this.setSize(size);
-	}
-
-	public int getNumber() {
-		return number;
-	}
-
-	public void setNumber(int number) {
-		this.number = number;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
 	}
 	
 }

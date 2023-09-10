@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.db.dao;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -134,9 +135,11 @@ public class FieldFactory implements Serializable {
 
 }
 
-class NullField extends Field {
+class NullField extends Field implements Serializable {
     
-    @Override
+    private static final long serialVersionUID = 1353453L;
+
+	@Override
     public String toString() {
         return this.getClass().getName()+"[type:"+this.value+"]";
     }    
@@ -157,9 +160,11 @@ class NullField extends Field {
     
 }
 
-class BlobDataField extends Field {
+class BlobDataField extends Field implements Serializable {
     
-    @Override
+    private static final long serialVersionUID = -3392455269498148472L;
+
+	@Override
     public String toString() {
         return this.getClass().getName()+"[value:skipped for blob]";
     }   
@@ -180,9 +185,27 @@ class BlobDataField extends Field {
     
 }
 
-class ClobDataField extends Field {
+class ClobDataField  extends Field implements Serializable {
     
-    @Override
+    private static final long serialVersionUID = 100284648506019470L;
+
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
+    
+	@Override
     public String toString() {
         return this.getClass().getName()+"[value:skipped for clob]";
     }   
@@ -203,8 +226,26 @@ class ClobDataField extends Field {
     
 }
 
-class GenericField<T> extends Field {
+class GenericField<T> extends Field implements Serializable {
 
+	private static final long serialVersionUID = 2328668486886550398L;
+
+	// code added to setup a basic conditional serialization - START
+	
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		out.defaultWriteObject();
+	}
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		// this class is conditionally serializable, depending on contained object
+		// special situation can be handleded using this method in future
+		in.defaultReadObject();
+	}
+	
+	// code added to setup a basic conditional serialization - END
+	
 	public GenericField(T value) {
 		this( value, null );
 	}
@@ -226,13 +267,7 @@ class GenericField<T> extends Field {
 	
 	@Override
 	public void setField(PreparedStatement ps, int index) throws SQLException {
-		if ( value == null ) {
-			if ( type == null ) {
-				ps.setObject(index, this.value);	
-			} else {
-				ps.setNull( index, this.type );	
-			}
-		} else if ( value instanceof String ) {
+		if ( value instanceof String ) {
 			ps.setString(index, (String)this.value);
 		} else if ( value instanceof Long ) {
 			ps.setLong(index, (Long)this.value);

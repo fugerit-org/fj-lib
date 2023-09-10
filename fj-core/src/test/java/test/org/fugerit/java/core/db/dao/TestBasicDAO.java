@@ -170,12 +170,14 @@ public class TestBasicDAO extends BasicDBHelper {
 					Assert.assertTrue(res);
 				} );
 				// test query wrapper
-				String[] products = { "maria", "mysql", "postgres", "oracle" };
+				String[] products = BasicDBHelper.PRODUCT_NAME_STRING;
 				for ( int k=0; k<products.length; k++ ) {
 					QueryWrapper wrapper = dao.getQueryWrapperFor( products[k] );
-					PageInfoDB page = new PageInfoDB( 10 , 5 );
-					String pagedSql = wrapper.createPagedQuery( "SELECT * FROM fugerit.users", page );
-					dao.getLogger().info( "pagedSql : {}", pagedSql );
+					if ( wrapper != null ) {
+						PageInfoDB page = new PageInfoDB( 10 , 5 );
+						String pagedSql = wrapper.createPagedQuery( "SELECT * FROM fugerit.users", page );
+						dao.getLogger().info( "pagedSql : {}", pagedSql );
+					}
 				}
 				// other tests
 				Assert.assertNull( dao.getQueryWrapper() );

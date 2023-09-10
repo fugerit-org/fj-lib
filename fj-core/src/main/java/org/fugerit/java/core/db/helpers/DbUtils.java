@@ -40,9 +40,9 @@ public class DbUtils {
 		}
 	}
 	
-	public static int indentifyDB( Connection conn ) throws SQLException {
+	public static int indentifyDB( String productName ) {
 		int dbType = DB_UNKNOWN;
-		String name = conn.getMetaData().getDriverName().toLowerCase();
+		String name = productName.toLowerCase();
 		log.info( "Configuring Database specific logic, driver : {}", name );
 		if ( name.indexOf( "postgres" ) != -1 ) {
 			dbType = DB_POSTGRESQL;
@@ -64,6 +64,11 @@ public class DbUtils {
 			log.info( "Unknown db type ({})", dbType );
 		}
 		return dbType;
+	}
+	
+	public static int indentifyDB( Connection conn ) throws SQLException {
+		String name = conn.getMetaData().getDriverName().toLowerCase();
+		return indentifyDB( name );
 	}
 	
 }

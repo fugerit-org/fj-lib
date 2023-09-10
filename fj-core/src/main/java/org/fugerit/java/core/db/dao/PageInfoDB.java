@@ -22,6 +22,9 @@ package org.fugerit.java.core.db.dao;
 
 import org.fugerit.java.core.util.result.PageInfo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class PageInfoDB extends PageInfo {
 
 	/*
@@ -38,14 +41,6 @@ public class PageInfoDB extends PageInfo {
 		this.setOrder( order );
 	}
 	
-	private String order;
-
-	public String getOrder() {
-		return order;
-	}
-
-	public void setOrder(String order) {
-		this.order = order;
-	}
+	@Getter @Setter private String order;
 	
 }

@@ -1,11 +1,11 @@
 package org.fugerit.java.core.cfg.store.helper;
 
-import org.fugerit.java.core.cfg.store.ConfigStoreMap;
-import org.fugerit.java.core.lang.helpers.StringUtils;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.fugerit.java.core.cfg.store.ConfigStoreMap;
+import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public class ConfigStoreMapDefault implements ConfigStoreMap {
 

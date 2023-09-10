@@ -79,6 +79,14 @@ public class TestSafeFunction {
 		ok = SafeFunction.applyIfNotNull( null , () -> log.info( "do nothing" ) );
 		Assert.assertFalse( ok );
 	}
+
+	@Test
+	public void testGetOnCondition() {
+		String res = SafeFunction.getOnCondition( () -> Boolean.FALSE , () -> "a" );
+		Assert.assertNull( res );
+		res = SafeFunction.getIfNotNUll( null , () -> "b" );
+		Assert.assertNull( res );
+	}
 	
 	public String testExampleToOneLineClassic() {
 		StringBuilder builder = new StringBuilder();

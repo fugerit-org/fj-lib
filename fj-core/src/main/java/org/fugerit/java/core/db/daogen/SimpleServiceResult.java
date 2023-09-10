@@ -76,7 +76,7 @@ public class SimpleServiceResult<T> {
 	}
 
 	public SimpleServiceResult() {
-		
+		this( null );
 	}
 	
 	public Map<String, Object> getInfo() {

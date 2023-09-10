@@ -23,6 +23,7 @@ package org.fugerit.java.core.db.dao;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
@@ -62,6 +63,10 @@ public class FieldList implements Serializable {
 	private FieldFactory fieldFactory;
 	
     private List<Field> list;
+    
+    public List<Field> getList() {
+    	return Collections.unmodifiableList( list );
+    }
     
     public Field getField(int index) {
         return (Field)this.list.get(index);

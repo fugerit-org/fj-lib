@@ -45,6 +45,9 @@ public class TestConfig {
 		Assert.assertNotNull( e3 );
 		Exception e4 = CloseHelper.closeAll( CloseableFactory.wrap( CloseableFactory.DO_NOTHING_CLOSEABLE ), CloseableFactory.wrap( CloseableFactory.ERROR_CLOSEABLE ) );
 		Assert.assertNotNull( e4);
+		Assert.assertThrows( ConfigRuntimeException.class, () -> CloseHelper.closeAllAndThrowConfigRuntime( 
+				 CloseableFactory.DO_NOTHING_CLOSEABLE, 
+				 CloseableFactory.ERROR_CLOSEABLE ) );
 	}
 	
 }

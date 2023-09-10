@@ -128,8 +128,8 @@ public class SafeFunction {
 		}
 	}
 
-	public static boolean applyOnCondition( UnsafeSupplier<Boolean, Exception> suppplier, UnsafeVoid<Exception> fun ) {
-		boolean cond = get( suppplier );
+	public static boolean applyOnCondition( UnsafeSupplier<Boolean, Exception> condition, UnsafeVoid<Exception> fun ) {
+		boolean cond = get( condition );
 		if ( cond ) {
 			apply( fun );
 		}
@@ -138,6 +138,21 @@ public class SafeFunction {
 	
 	public static <T> boolean applyIfNotNull( T v, UnsafeVoid<Exception> fun ) {
 		return applyOnCondition( () -> v != null , fun);
+	}
+	
+	public static <R> R getOnCondition( UnsafeSupplier<Boolean, Exception> condition, UnsafeSupplier<R, Exception> supplier ) {
+		return get( () -> {
+			R res = null;
+			if ( condition.get() ) {
+				res = supplier.get();
+			}	
+			return res;
+		} );
+		
+	}
+	
+	public static <T, R> R getIfNotNUll( T v, UnsafeSupplier<R, Exception> supplier ) {
+		return getOnCondition( () -> v != null , supplier );
 	}
 	
 }

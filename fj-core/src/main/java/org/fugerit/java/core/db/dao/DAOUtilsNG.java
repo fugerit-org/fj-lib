@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
+import org.fugerit.java.core.lang.helpers.CollectionUtils;
 import org.fugerit.java.core.util.checkpoint.CheckpointUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +17,30 @@ import lombok.extern.slf4j.Slf4j;
 public class DAOUtilsNG {
 	
 	private DAOUtilsNG() {}
+	
+	public static <T> Iterator<T> toIterator(LoadResultNG<T> lr) {
+		return new Iterator<T>() {
+			boolean hasNext = false;
+			@Override
+			public boolean hasNext() {
+				this.hasNext = DAORuntimeException.get( lr::hasNext );
+				return hasNext;
+			}
+			@Override
+			public T next() {
+				if ( hasNext ) {
+					this.hasNext = false;
+					return DAORuntimeException.get( lr::next );
+				} else {
+					throw new NoSuchElementException( "Call next() only if hasNext() is true" );
+				}
+			}
+		};
+	}
+
+	public static <T> void fillList(LoadResultNG<T> lr, List<T> list) {
+		CollectionUtils.fill(list, toIterator(lr));
+	}
 	
 	public static String createQueryId( long startTime ) {
 		return String.format( "%s_%s", Thread.currentThread().getId(), startTime );
@@ -23,26 +51,26 @@ public class DAOUtilsNG {
 	}
 	
 	public static <T> void extractAll( Connection conn, Collection<T> result, OpDAO<T> op ) {
-		long startTime = System.currentTimeMillis();
-		String queryId = createQueryId( startTime );
-		log.debug( "queryId:'{}', extractAll sql           : '{}'", queryId, op.getSql() );
-		if ( op.getFieldList() != null ) {
-			log.debug( "queryId:'{}', extractAll fields        : '{}'", queryId, op.getFieldList().size() );
-		}
-		log.debug( "queryId:'{}', extractAll RSExtractor   : '{}'", queryId, op.getRsExtractor() );
-		try ( PreparedStatement pstm = conn.prepareStatement( op.getSql() ) ) {
-			DAOHelper.setAll( queryId, pstm , op.getFieldList(), log );
-			try ( ResultSet rs = pstm.executeQuery() ) {
-				log.debug("queryId:'{}', extractAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
-				while ( rs.next() ) {
-					T current = op.getRsExtractor().extractNext( rs );
-					result.add( current );
-				}
-				log.debug("queryId:'{}', extractAll query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+		DAORuntimeException.apply( () -> {
+			long startTime = System.currentTimeMillis();
+			String queryId = createQueryId( startTime );
+			log.debug( "queryId:'{}', extractAll sql           : '{}'", queryId, op.getSql() );
+			if ( op.getFieldList() != null ) {
+				log.debug( "queryId:'{}', extractAll fields        : '{}'", queryId, op.getFieldList().size() );
 			}
-		} catch (Exception e) {
-			throw DAORuntimeException.convertExMethod( "extractAll" , e );
-		}
+			log.debug( "queryId:'{}', extractAll RSExtractor   : '{}'", queryId, op.getRsExtractor() );
+			try ( PreparedStatement pstm = conn.prepareStatement( op.getSql() ) ) {
+				DAOHelper.setAll( queryId, pstm , op.getFieldList(), log );
+				try ( ResultSet rs = pstm.executeQuery() ) {
+					log.debug("queryId:'{}', extractAll query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+					while ( rs.next() ) {
+						T current = op.getRsExtractor().extractNext( rs );
+						result.add( current );
+					}
+					log.debug("queryId:'{}', extractAll query result end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+				}
+			}
+		} );
 	}
 	
 	public static <T> T extractOne( Connection conn, OpDAO<T> op ) {
@@ -70,22 +98,41 @@ public class DAOUtilsNG {
 	}
 	
 	public static <T> int update( Connection conn, OpDAO<T> op ) {
-		long startTime = System.currentTimeMillis();
-		String queryId = createQueryId( startTime );
-		log.debug( "queryId:'{}', update sql           : '{}'", queryId, op.getSql() );
-		if ( op.getFieldList() != null ) {
-			log.debug( "queryId:'{}', update fields        : '{}'", queryId, op.getFieldList().size() );
-		}
-		log.debug( "queryId:'{}', update RSExtractor   : '{}'", queryId, op.getRsExtractor() );
-		int res = 0;
-		try ( PreparedStatement pstm = conn.prepareStatement( op.getSql() ) ) {
-			DAOHelper.setAll( queryId, pstm , op.getFieldList(), log );
-			res = pstm.executeUpdate(); 
-			log.debug("queryId:'{}', update query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
-		} catch (Exception e) {
-			throw DAORuntimeException.convertExMethod( "update" , e );
-		}
-		return res;
+		return DAORuntimeException.get( () -> {
+			long startTime = System.currentTimeMillis();
+			String queryId = createQueryId( startTime );
+			log.debug( "queryId:'{}', update sql           : '{}'", queryId, op.getSql() );
+			if ( op.getFieldList() != null ) {
+				log.debug( "queryId:'{}', update fields        : '{}'", queryId, op.getFieldList().size() );
+			}
+			log.debug( "queryId:'{}', update RSExtractor   : '{}'", queryId, op.getRsExtractor() );
+			int res = 0;
+			try ( PreparedStatement pstm = conn.prepareStatement( op.getSql() ) ) {
+				DAOHelper.setAll( queryId, pstm , op.getFieldList(), log );
+				res = pstm.executeUpdate(); 
+				log.debug("queryId:'{}', update query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+			}
+			return res;
+		} );
+	}
+	
+	public static <T> boolean execute( Connection conn, OpDAO<T> op ) {
+		return DAORuntimeException.get( () -> {
+			long startTime = System.currentTimeMillis();
+			String queryId = createQueryId( startTime );
+			log.debug( "queryId:'{}', execute sql           : '{}'", queryId, op.getSql() );
+			if ( op.getFieldList() != null ) {
+				log.debug( "queryId:'{}', execute fields        : '{}'", queryId, op.getFieldList().size() );
+			}
+			log.debug( "queryId:'{}', execute RSExtractor   : '{}'", queryId, op.getRsExtractor() );
+			boolean res = false;
+			try ( PreparedStatement pstm = conn.prepareStatement( op.getSql() ) ) {
+				DAOHelper.setAll( queryId, pstm , op.getFieldList(), log );
+				res = pstm.execute();
+				log.debug("queryId:'{}', execute query execute end time : '{}'", queryId, CheckpointUtils.formatTimeDiff(startTime, System.currentTimeMillis()) );
+			}
+			return res;
+		});
 	}
 	
 	

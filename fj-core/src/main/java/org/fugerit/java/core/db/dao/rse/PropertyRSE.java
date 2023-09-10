@@ -96,7 +96,7 @@ public abstract class PropertyRSE implements RSExtractor<Properties>, Serializab
 			@Override
 			public Properties extractNext(ResultSet rs) throws SQLException {
 				if ( this.wrapped == null ) {
-					this.wrapped = PropertyRSECached.newNoReusableRSE( rs );
+					this.wrapped = PropertyRSE.newNoReusableRSE( rs );
 				}
 				return this.wrapped.extractNext(rs);
 			}

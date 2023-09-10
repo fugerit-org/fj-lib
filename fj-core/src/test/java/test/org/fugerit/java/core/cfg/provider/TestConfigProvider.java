@@ -1,5 +1,6 @@
 package test.org.fugerit.java.core.cfg.provider;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
@@ -12,6 +13,7 @@ import org.junit.Test;
 import org.w3c.dom.Element;
 
 import lombok.extern.slf4j.Slf4j;
+import test.org.fugerit.java.BasicTest;
 
 @Slf4j
 public class TestConfigProvider extends AbstractConfigurableObject {
@@ -19,7 +21,7 @@ public class TestConfigProvider extends AbstractConfigurableObject {
 	private static final long serialVersionUID = 134123432L;
 
 	@Test
-	public void testConfigProvider() throws ConfigException {
+	public void testConfigProvider() throws ConfigException, IOException {
 		ConfigProviderWrapper wrapper = new ConfigProviderWrapper(); // will wrap around a DefaultConfigProvider
 		wrapper.readConfiguration( StreamHelper.MODE_CLASSLOADER , "core/cfg/xml/factory-catalog-test.xml" );
 		log.info( "unwrap : {}", wrapper.unwrap() );
@@ -32,6 +34,7 @@ public class TestConfigProvider extends AbstractConfigurableObject {
 		Assert.assertNotNull( ConfigProviderFacade.getInstance().getProviderByName( caller.getClass().getName() ) );
 		ConfigProviderFacade.setDefaultProvider(wrapper);
 		ConfigProviderFacade.getInstance().findAndSetConfigProvider( caller.getClass().getName() , caller );
+		Assert.assertNotNull( new BasicTest().fullSerializationTest( wrapper ) );
 	}
 
 	@Override

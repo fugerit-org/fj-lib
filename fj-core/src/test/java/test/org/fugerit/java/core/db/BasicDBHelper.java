@@ -22,4 +22,6 @@ public class BasicDBHelper extends MemTestDBHelper {
 		} );
 	}
 	
+	public static final String[] PRODUCT_NAME_STRING = { "maria", "mysql", "postgres", "oracle", "sqlserver" };
+	
 }
