@@ -2,7 +2,6 @@ package org.fugerit.java.core.db.dao.idgen;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
@@ -10,9 +9,11 @@ import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.db.dao.CloseDAOHelper;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.helpers.DAOID;
-import org.fugerit.java.core.xml.dom.DOMUtils;
-import org.w3c.dom.Element;
+import org.fugerit.java.core.function.SafeFunction;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 
 	protected abstract String createSequenceQuery();
@@ -20,14 +21,6 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 	private String sequenceName;
 	
 	public static final String PROP_SEQ_NAME = "sequenceName";
-	
-	/* (non-Javadoc)
-	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#configure(org.w3c.dom.Element)
-	 */
-	@Override
-	public void configure(Element tag) throws ConfigException {
-		this.configure( DOMUtils.attributesToProperties( tag ) ); 
-	}
 
 	/* (non-Javadoc)
 	 * @see org.morozko.java.mod.db.dao.idgen.BasicIdGenerator#configure(java.util.Properties)
@@ -42,26 +35,24 @@ public abstract class BasicSeqIdGenerator extends BasicIdGenerator {
 	 */
 	@Override
 	public DAOID generateId( Connection conn ) throws DAOException {
-		this.getLogger().debug( "generateId start " );
-		DAOID id = null;
-		try {
-			String sql = this.createSequenceQuery();
-			this.getLogger().debug( "generateId query : '{}'", sql );
-			try ( Statement stm = conn.createStatement();
-					ResultSet rs = stm.executeQuery( sql ) ) {
-				if ( rs.next() ) {
-					id = new DAOID( rs.getLong( 1 ) );
+		return DAOException.get(() ->{
+			log.debug( "generateId start " );
+			DAOID id = null;
+			try {
+				String sql = this.createSequenceQuery();
+				log.debug( "generateId query : '{}'", sql );
+				try ( Statement stm = conn.createStatement();
+						ResultSet rs = stm.executeQuery( sql ) ) {
+					if ( rs.next() ) {
+						id = new DAOID( rs.getLong( 1 ) );
+					}
 				}
+			} finally {
+				SafeFunction.applyOnCondition( this::isAutoCloseConnection , () -> CloseDAOHelper.close( conn ) );
 			}
-		} catch (SQLException e) {
-			throw ( new DAOException( e ) );
-		} finally {
-			if ( this.isAutoCloseConnection() ) {
-				CloseDAOHelper.close( conn );
-			}
-		}
-		this.getLogger().debug( "generateId end : {}", id );
-		return id;
+			log.debug( "generateId end : {}", id );
+			return id;
+		});
 	}
 
 	/**

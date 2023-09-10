@@ -56,6 +56,9 @@ public class DbUtils {
 		} else if ( name.indexOf( "mysql" ) != -1 ) {
 			dbType = DB_MYSQL;
 			log.info( "IdGenerator configured for : MYSQL ({})", dbType );
+		} else if ( name.indexOf( "hsql" ) != -1 ) {
+			dbType = DB_POSTGRESQL;
+			log.info( "IdGenerator configured for : POSTGRESQL ({}) was ({})", dbType, name );
 		} else {
 			dbType = DB_UNKNOWN;
 			log.info( "Unknown db type ({})", dbType );

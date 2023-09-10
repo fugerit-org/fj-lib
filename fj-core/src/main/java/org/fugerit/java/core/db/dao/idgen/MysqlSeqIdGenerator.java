@@ -7,22 +7,30 @@ import java.sql.Statement;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.helpers.DAOID;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class MysqlSeqIdGenerator extends BasicSeqIdGenerator {
 
-	public static String createSequenceQuery( String seqName) {
-		return " SELECT nextval('"+seqName+"'); ";
+	private String lastInsertIdFun;
+	
+	public MysqlSeqIdGenerator(String lastInsertIdFun) {
+		super();
+		this.lastInsertIdFun = lastInsertIdFun;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.morozko.java.mod.db.dao.idgen.BasicSeqIdGenerator#createSequenceQuery()
-	 */
+	public MysqlSeqIdGenerator() {
+		this( "SELECT LAST_INSERT_ID()" );
+	}
+	
+
 	@Override
 	protected String createSequenceQuery() {
-		return createSequenceQuery( this.getSequenceName() ); 
+		return this.lastInsertIdFun;
 	}
 
 	private String createUpdateQuery() {
-		return "UPDATE "+this.getSequenceName()+" SET id=LAST_INSERT_ID(id+1);";
+		return "INSERT INTO "+this.getSequenceName()+" (ID) VALUES (NULL)";
 	}
 	
 	/* (non-Javadoc)
@@ -30,21 +38,21 @@ public class MysqlSeqIdGenerator extends BasicSeqIdGenerator {
 	 */
 	@Override
 	public DAOID generateId() throws DAOException {
-		this.getLogger().debug( "generateId start " );
-		DAOID id = null;
-		try (  Connection conn = this.getConnectionFactory().getConnection();
-				Statement stm = conn.createStatement() ) {
-			stm.executeUpdate( this.createUpdateQuery() );
-			try ( ResultSet rs = stm.executeQuery( " SELECT LAST_INSERT_ID(); " ) ) {
-				if ( rs.next() ) {
-					id = new DAOID( rs.getLong( 1 ) );	
+		return DAOException.get( () -> {
+			log.debug( "generateId start {}", this.getSequenceName() );
+			DAOID id = null;
+			try (  Connection conn = this.getConnectionFactory().getConnection();
+					Statement stm = conn.createStatement() ) {
+				stm.executeUpdate( this.createUpdateQuery() );
+				try ( ResultSet rs = stm.executeQuery( this.createSequenceQuery() ) ) {
+					if ( rs.next() ) {
+						id = new DAOID( rs.getLong( 1 ) );	
+					}
 				}
 			}
-		} catch (Exception e) {
-			throw ( new DAOException( e ) );
-		}
-		this.getLogger().debug( "generateId end : {}", id );
-		return id;
+			log.debug( "generateId end : {}", id );
+			return id;
+		} );
 	}
 
 }
