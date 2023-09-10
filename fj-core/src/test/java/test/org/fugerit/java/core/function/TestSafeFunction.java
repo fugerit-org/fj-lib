@@ -72,6 +72,13 @@ public class TestSafeFunction {
 		Assert.assertEquals( "default-string", res );
 	}
 	
+	@Test
+	public void testApplyOnCondition() {
+		boolean ok = SafeFunction.applyOnCondition( () -> false , () -> log.info( "do nothing" ) );
+		Assert.assertFalse( ok );
+		ok = SafeFunction.applyIfNotNull( null , () -> log.info( "do nothing" ) );
+		Assert.assertFalse( ok );
+	}
 	
 	public String testExampleToOneLineClassic() {
 		StringBuilder builder = new StringBuilder();

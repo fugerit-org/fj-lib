@@ -149,26 +149,39 @@ public class TestRSE extends BasicDBHelper {
 		Assert.assertEquals( TEST_USERNAME , result.getProperty( "USERNAME" ) );
 	}
 	
+	private final static String SIMPLE_QUERY = "SELECT * FROM fugerit.user";
+	
 	@Test
 	public void tesConnectionFacade() throws Exception {
 		try ( ConnectionFactoryCloseable cf = ConnectionFactoryImpl.wrap( 
 				ConnectionFactoryImpl.newInstance( PropsIO.loadFromClassLoaderSafe( BasicDBHelper.DEFAULT_DB_CONN_PATH ) ) ) ) {
 			try ( Connection conn = cf.getConnection();  
 					Statement stm = conn.createStatement(); 
-					ResultSet rs = stm.executeQuery( "SELECT * FROM fugerit.user" ) ) {
+					ResultSet rs = stm.executeQuery( SIMPLE_QUERY ) ) {
 				ConnectionFacade.closeLoose( rs );
 				ConnectionFacade.closeLoose( stm );
 				ConnectionFacade.closeLoose( conn );
 			}
 			try ( Connection conn = cf.getConnection();  
 					Statement stm = conn.createStatement(); 
-					ResultSet rs = stm.executeQuery( "SELECT * FROM fugerit.user" ) ) {
-				ConnectionFacade.closeLoose(conn, stm, rs);
+					ResultSet rs = stm.executeQuery( SIMPLE_QUERY ) ) {
+				Assert.assertTrue( ConnectionFacade.closeLoose(conn, stm, rs) );
 			}
 			try ( Connection conn = cf.getConnection();  
-					Statement stm = conn.createStatement(); 
-					ResultSet rs = stm.executeQuery( "SELECT * FROM fugerit.user" ) ) {
-				ConnectionFacade.closeLoose(conn, stm);
+					Statement stm = conn.createStatement() ) {
+				Assert.assertFalse( ConnectionFacade.closeLoose(conn, stm, null) );
+			}
+			try ( Connection conn = cf.getConnection() ) {
+				Assert.assertFalse( ConnectionFacade.closeLoose(conn, null, null) );
+			}
+			Assert.assertFalse( ConnectionFacade.closeLoose(null, null, null) );
+			try ( Connection conn = cf.getConnection();  
+					Statement stm = conn.createStatement() ) {
+				Assert.assertTrue( ConnectionFacade.closeLoose(conn, stm) );
+			}
+			Assert.assertFalse( ConnectionFacade.closeLoose(null, null) );
+			try ( Connection conn = cf.getConnection() ) {
+				Assert.assertFalse( ConnectionFacade.closeLoose(conn, null) );
 			}
 		}
 	}

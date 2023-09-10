@@ -127,6 +127,17 @@ public class SafeFunction {
 			exHandler.accept( e );
 		}
 	}
+
+	public static boolean applyOnCondition( UnsafeSupplier<Boolean, Exception> suppplier, UnsafeVoid<Exception> fun ) {
+		boolean cond = get( suppplier );
+		if ( cond ) {
+			apply( fun );
+		}
+		return cond;
+	}
 	
+	public static <T> boolean applyIfNotNull( T v, UnsafeVoid<Exception> fun ) {
+		return applyOnCondition( () -> v != null , fun);
+	}
 	
 }

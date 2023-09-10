@@ -7,7 +7,32 @@ import org.fugerit.java.core.cfg.ConfigException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import test.org.fugerit.java.core.HelperCheck;
+
 public class TestConfigException {
+	
+	@Test
+	public void testApplyEX() {
+		Assert.assertThrows( ConfigException.class ,() -> ConfigException.apply( () -> { throw new IOException( "junit test scenario" ); } ) );
+	}
+
+	@Test
+	public void testGetEX() {
+		Assert.assertThrows( ConfigException.class ,() -> ConfigException.get( () -> { throw new IOException( "junit test scenario" ); } ) );
+	}
+	
+	@Test
+	public void testApply() throws ConfigException {
+		HelperCheck check = new HelperCheck();
+		Assert.assertNotEquals( HelperCheck.TEST_S1 , check.getField1() );
+		ConfigException.apply( () -> check.setField1( HelperCheck.TEST_S1 ) );
+		Assert.assertEquals( HelperCheck.TEST_S1 , check.getField1() );
+	}
+
+	@Test
+	public void testGet() throws ConfigException {
+		Assert.assertEquals( "test", ConfigException.get( () -> "test" ) );
+	}
 	
 	@Test
 	public void testEx1() {

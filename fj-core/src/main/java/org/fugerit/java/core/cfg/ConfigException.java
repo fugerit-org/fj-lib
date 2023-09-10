@@ -20,6 +20,8 @@
  */
 package org.fugerit.java.core.cfg;
 
+import org.fugerit.java.core.function.UnsafeSupplier;
+import org.fugerit.java.core.function.UnsafeVoid;
 import org.fugerit.java.core.lang.ex.CodeException;
 import org.fugerit.java.core.lang.ex.ExConverUtils;
 
@@ -95,6 +97,24 @@ public class ConfigException extends CodeException {
 	
 	public static ConfigException convertEx( Exception e ) {
 		return convertEx( ExConverUtils.DEFAULT_CAUSE_MESSAGE, e );
+	}
+	
+	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun ) throws ConfigException {
+		T res = null;
+		try {
+			res = fun.get();
+		} catch (Exception e) {
+			throw convertEx( e );
+		}
+		return res;
+	}
+	
+	public static <E extends Exception> void apply( UnsafeVoid<E> fun ) throws ConfigException {
+		try {
+			fun.apply();
+		} catch (Exception e) {
+			throw convertEx( e );
+		}
 	}
 	
 }

@@ -73,7 +73,10 @@ public class ConnectionFacade {
 	 * @return		true if everything was closed with no errors
 	 */
 	public static boolean closeLoose( Connection conn, Statement stm, ResultSet rs ) {
-		return closeLoose( conn ) & closeLoose( stm ) & closeLoose( rs );
+		boolean close1 = closeLoose(conn);
+		boolean close2 = closeLoose(stm);
+		boolean close3 = closeLoose(rs);
+		return close1 && close2 && close3;
 	}	
 
 	/**
@@ -84,7 +87,9 @@ public class ConnectionFacade {
 	 * @return		true if everything was closed with no errors
 	 */
 	public static boolean closeLoose( Connection conn, Statement stm ) {
-		return closeLoose( conn ) & closeLoose( stm );
+		boolean close1 = closeLoose(conn);
+		boolean close2 = closeLoose(stm);
+		return close1 && close2;
 	}
 	
 	/**
