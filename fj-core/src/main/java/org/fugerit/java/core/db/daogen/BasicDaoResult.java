@@ -73,7 +73,8 @@ public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
 	
 	@Override
 	public void setSingleResult( T value ) {
-		this.getList().set( 0 , value );
+		this.getList().clear();
+		this.getList().add( value );
 	}
 	
 	/**

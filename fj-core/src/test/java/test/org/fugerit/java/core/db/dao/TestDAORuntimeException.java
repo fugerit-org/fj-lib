@@ -9,6 +9,16 @@ import org.junit.Test;
 public class TestDAORuntimeException {
 	
 	@Test
+	public void testApply() {
+		Assert.assertThrows( DAORuntimeException.class ,() -> DAORuntimeException.apply( () -> { throw new SQLException( "junit test scenario" ); } ) );
+	}
+
+	@Test
+	public void testGet() {
+		Assert.assertThrows( DAORuntimeException.class ,() -> DAORuntimeException.get( () -> { throw new SQLException( "junit test scenario" ); } ) );
+	}
+	
+	@Test
 	public void testEx1() {
 		Assert.assertNotNull( new DAORuntimeException() );
 	}

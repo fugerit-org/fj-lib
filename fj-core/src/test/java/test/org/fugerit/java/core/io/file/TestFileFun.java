@@ -99,11 +99,14 @@ public class TestFileFun extends BasicTest {
 	
 	@Test
 	public void testZip() throws IOException {
+		boolean ok = false;
 		File sourceDir = new File( "src/test/resources/core/xml/dtd" );
 		try ( ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( new File( "target/zip_fun_test.zip" ) ) );
 				ZipFileFun fun = new ZipFileFun(zos, sourceDir) ) {
 			fun.handleFile( sourceDir.listFiles()[0] );
+			ok = true;
 		}
+		Assert.assertTrue( ok );
 	}
 	
 }

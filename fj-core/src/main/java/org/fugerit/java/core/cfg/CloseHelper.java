@@ -108,4 +108,11 @@ public class CloseHelper {
 		return res;
 	}
 	
+	public static void closeAllAndThrowConfigRuntime( AutoCloseable... c ) {
+		Exception res = closeAll( c );
+		if ( res != null ) {
+			throw new ConfigRuntimeException( res );
+		}
+	}
+	
 }

@@ -1,7 +1,6 @@
 package org.fugerit.java.core.xml.sax.eh;
 
 import org.fugerit.java.core.lang.helpers.ExHandler;
-
 import org.fugerit.java.core.lang.helpers.Result;
 import org.fugerit.java.core.lang.helpers.ResultExHandler;
 import org.xml.sax.ErrorHandler;

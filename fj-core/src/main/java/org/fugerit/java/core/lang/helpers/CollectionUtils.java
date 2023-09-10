@@ -1,6 +1,7 @@
 package org.fugerit.java.core.lang.helpers;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 public class CollectionUtils {
 
@@ -54,5 +55,12 @@ public class CollectionUtils {
 		}
 		return merged;
 	}
+
+	public static <T> void fill( Collection<T> c, Iterator<T> it ) {
+		while ( it.hasNext() ) {
+			c.add( it.next() );
+		}
+	}
 	
 }
+

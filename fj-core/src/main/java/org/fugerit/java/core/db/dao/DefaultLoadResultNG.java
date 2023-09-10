@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.fugerit.java.core.cfg.CloseHelper;
+import org.fugerit.java.core.io.helper.HelperIOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,34 +33,23 @@ public class DefaultLoadResultNG<T> implements LoadResultNG<T> {
 
 	@Override
 	public void close() throws IOException { 
-		Exception res = CloseHelper.closeAll( this.rs, this.stm );
-		if ( res != null ) {
-			throw new IOException( res );
-		}
+		HelperIOException.apply( () -> CloseHelper.closeAllAndThrowConfigRuntime( this.rs, this.stm ) );
 	}
 
 	@Override
 	public boolean hasNext() throws DAOException {
-		boolean res = false;
-		try {
-			res = this.rs.next();
+		return DAOException.get( () -> {
+			boolean res = this.rs.next();
 			if ( res ) {
 				count++;
 			}
-		} catch (SQLException e) {
-			throw new DAOException( e );
-		}
-		return res;
+			return res;
+		} );
 	}
 
 	@Override
 	public T next() throws DAOException {
-		try {
-			this.count++;
-			return this.rse.extractNext( rs );
-		} catch (SQLException e) {
-			throw new DAOException( e ); 
-		}
+		return DAOException.get( () -> this.rse.extractNext( rs ) );
 	}
 
 	@Override
@@ -77,29 +66,21 @@ public class DefaultLoadResultNG<T> implements LoadResultNG<T> {
 	}
 	
 	public static <T> LoadResultNG<T> newLoadResult( Connection conn, OpDAO<T> opDAO ) {
-		LoadResultNG<T> lr = null;
-		try {
+		return DAORuntimeException.get( () -> {
 			PreparedStatement pstm = conn.prepareStatement( opDAO.getSql() );
 			DAOHelper.setAll( pstm , opDAO.getFieldList(), logger );
 			ResultSet rs = pstm.executeQuery();
-			lr = new DefaultLoadResultNG<T>( opDAO.getRsExtractor(), pstm, rs );	
-		} catch (Exception e) {
-			throw DAORuntimeException.convertExMethod( "init" , e );
-		}
-		return lr;
+			return new DefaultLoadResultNG<>( opDAO.getRsExtractor(), pstm, rs );	
+		} );
 	}
 	
 	public static <T> LoadResultNG<T> newLoadResultCloseConnection( Connection conn, OpDAO<T> opDAO ) {
-		LoadResultNG<T> lr = null;
-		try {
+		return DAORuntimeException.get( () -> {
 			PreparedStatement pstm = conn.prepareStatement( opDAO.getSql() );
 			DAOHelper.setAll( pstm , opDAO.getFieldList(), logger );
 			ResultSet rs = pstm.executeQuery();
-			lr = new CloseConnectionLoadResultNG<T>( opDAO.getRsExtractor(), pstm, rs, conn );			
-		} catch (Exception e) {
-			throw DAORuntimeException.convertExMethod( "init" , e );
-		}
-		return lr;
+			return new CloseConnectionLoadResultNG<>( opDAO.getRsExtractor(), pstm, rs, conn );			
+		} );
 	}
 	
 }
@@ -115,10 +96,7 @@ class CloseConnectionLoadResultNG<T> extends DefaultLoadResultNG<T> {
 
 	@Override
 	public void close() throws IOException {
-		Exception res = CloseHelper.closeAll( () -> { super.close(); }, this.conn );
-		if ( res != null ) {
-			throw new IOException( res );
-		}
+		HelperIOException.apply( () -> CloseHelper.closeAllAndThrowConfigRuntime( super::close, this.conn ) );
 	}
 	
 }

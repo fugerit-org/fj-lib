@@ -69,11 +69,7 @@ public class DAOHelper {
 	}
 	
     public static void close(Connection conn) throws DAOException {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            throw (new DAOException(e));
-        }
+    	DAOException.apply( conn::close );
     }
     
 	public static <T> void loadAll(List<T> l, String query, FieldList fields, RSExtractor<T> re,  DAOFactory bdf, LogObject log ) throws DAOException {

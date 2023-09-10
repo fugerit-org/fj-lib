@@ -1,13 +1,13 @@
 package org.fugerit.java.core.cfg.store.helper;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.store.ConfigStore;
 import org.fugerit.java.core.cfg.store.ConfigStoreMap;
 import org.fugerit.java.core.lang.helpers.StringUtils;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class ConfigStoreDefault implements ConfigStore {
 

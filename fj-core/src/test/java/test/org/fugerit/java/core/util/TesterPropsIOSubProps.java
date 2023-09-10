@@ -1,6 +1,6 @@
 package test.org.fugerit.java.core.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import java.util.Properties;
 

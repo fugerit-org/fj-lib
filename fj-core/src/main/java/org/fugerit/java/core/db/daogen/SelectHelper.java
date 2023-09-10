@@ -8,6 +8,9 @@ import java.util.List;
 import org.fugerit.java.core.db.dao.FieldList;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * 
  * Query helper for select operations.
@@ -322,6 +325,7 @@ public class SelectHelper extends QueryHelper {
 	
 }
 
+@AllArgsConstructor
 class OrderByHandler implements Serializable {
 	
 	/**
@@ -329,30 +333,8 @@ class OrderByHandler implements Serializable {
 	 */
 	private static final long serialVersionUID = -6753430035123845585L;
 
-	private String columnName;
+	@Getter private String columnName;
 	
-	private String orderByMode;
-
-	public String getColumnName() {
-		return columnName;
-	}
-
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
-	}
-
-	public String getOrderByMode() {
-		return orderByMode;
-	}
-
-	public void setOrderByMode(String orderByMode) {
-		this.orderByMode = orderByMode;
-	}
-
-	public OrderByHandler(String columnName, String orderByMode) {
-		super();
-		this.columnName = columnName;
-		this.orderByMode = orderByMode;
-	}
+	@Getter private String orderByMode;
 	
 }
