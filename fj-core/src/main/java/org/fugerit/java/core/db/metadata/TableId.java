@@ -43,7 +43,7 @@ public class TableId implements KeyObject<String> {
 	
 	@Override
 	public String getKey() {
-		return null;
+		return generateKey(this);
 	}
 
 	@Override

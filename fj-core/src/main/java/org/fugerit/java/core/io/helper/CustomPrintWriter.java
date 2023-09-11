@@ -89,4 +89,12 @@ public class CustomPrintWriter extends PrintWriter {
 		}
 	}
 
+	@Override
+	public void close() {
+		super.close();
+		this.out = null;
+	}
+
+	
+	
 }

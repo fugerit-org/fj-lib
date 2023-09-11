@@ -36,7 +36,8 @@ import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.log.LogFacade;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -460,15 +461,14 @@ class OracleJdbcAdaptor extends DefaulJdbcdaptor {
 	
 }
 
-@Data
 @AllArgsConstructor
 class MetaDataUtilsContext {
 
-	private ConnectionFactory cf;
-	private String catalog;
-	private String schema;
-	private JdbcAdaptor jdbcAdaptor;
-	private List<String> tableNameList;
-	private String[] types; 
+	@Getter private ConnectionFactory cf;
+	@Getter private String catalog;
+	@Getter private String schema;
+	@Getter @Setter private JdbcAdaptor jdbcAdaptor;
+	@Getter private List<String> tableNameList;
+	@Getter private String[] types; 
 	
 }
