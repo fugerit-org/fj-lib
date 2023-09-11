@@ -9,6 +9,7 @@ import org.fugerit.java.core.db.metadata.IndexModel;
 import org.fugerit.java.core.db.metadata.MetaDataUtils;
 import org.fugerit.java.core.db.metadata.TableModel;
 import org.fugerit.java.core.function.SafeFunction;
+import org.junit.Assert;
 import org.junit.Test;
 
 import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
@@ -18,6 +19,7 @@ public class TestMetadataUtils extends MemDBTestBase {
 	@Test
 	public void testDatabaseMetadata() {
 		SafeFunction.apply( () -> {
+			boolean ok = false;
 			ConnectionFactory cf = new SingleConnectionFactory( this.getConnection() );
 			DataBaseModel dbModel = MetaDataUtils.createModel( cf );
 			for ( TableModel tableModel : dbModel.getTableList() ) {
@@ -38,6 +40,8 @@ public class TestMetadataUtils extends MemDBTestBase {
 					logger.info( "internal column list : {}", foreignKeyModel.internalColumnList( tableModel ) );
 				}
 			}
+			ok = true;
+			Assert.assertTrue( ok );
 		} );
 	}
 }
