@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Javadoc generation with java 17
+
 ## [8.2.8] - 2023-09-13
 
 ### Changed
