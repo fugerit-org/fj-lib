@@ -7,10 +7,26 @@ import org.fugerit.java.core.function.UnsafeSupplier;
 import org.fugerit.java.core.function.UnsafeVoid;
 import org.fugerit.java.core.lang.ex.ExConverUtils;
 
-public class HelperIOException {
+public class HelperIOException extends IOException {
 
-	private HelperIOException() {}
-	
+	private static final long serialVersionUID = -74952101536562005L;
+
+	public HelperIOException() {
+		super();
+	}
+
+	public HelperIOException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public HelperIOException(String message) {
+		super(message);
+	}
+
+	public HelperIOException(Throwable cause) {
+		super(cause);
+	}
+
 	public static IOException convertEx( String baseMessage, Exception e ) {
 		IOException res = null;
 		if ( e instanceof IOException ) {

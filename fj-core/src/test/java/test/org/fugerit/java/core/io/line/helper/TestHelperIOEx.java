@@ -13,6 +13,26 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestHelperIOEx {
 
+	
+	@Test
+	public void testEx1() {
+		Assert.assertNotNull( new HelperIOException() );
+	}
+	
+	@Test
+	public void testEx2() {
+		Assert.assertNotNull( new HelperIOException( "a" ) );
+	}
+	
+	@Test
+	public void testEx3() {
+		Assert.assertNotNull( new HelperIOException( new SQLException( "b" ) ) );
+	}
+	
+	@Test
+	public void testEx4() {
+		Assert.assertNotNull( new HelperIOException( "c", new SQLException( "d" ) ) );
+	}
 	@Test
 	public void testClose1() throws IOException {
 		HelperIOException.close( (Closeable) () -> log.info( "Closeable.close()" ) );
