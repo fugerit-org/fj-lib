@@ -117,10 +117,10 @@ public class PropertyHolder extends BasicIdConfigType {
 	private static void handleException( String path, Exception e, String unsafe, String usafeMessage ) throws IOException {
 		if ( UNSAFE_TRUE.equalsIgnoreCase( unsafe ) || UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
 			String unsafeMessafeWork = usafeMessage+" ";
-			if ( StringUtils.isNotEmpty( unsafeMessafeWork ) ) {
-				unsafeMessafeWork+=" ";
+			if ( StringUtils.isNotEmpty( usafeMessage ) ) {
+				unsafeMessafeWork+= usafeMessage+" ";
 			}
-			unsafeMessafeWork = path + ", " + unsafe + ", " + e;
+			unsafeMessafeWork+= path + ", " + unsafe + ", " + e;
 			if ( UNSAFE_WARN.equalsIgnoreCase( unsafe ) ) {
 				log.warn( "Error loading unsafe property holder : {}", unsafeMessafeWork );	
 			} else {

@@ -41,7 +41,7 @@ public class JFileUtilCP {
 	}
 
 	public static int copyFile(JFile from, JFile to, boolean recurse, boolean force, boolean verbose) throws IOException {
-		return copyFile( from, to, recurse, force, verbose, ( f ) -> true );
+		return copyFile( from, to, recurse, force, verbose, f -> true );
 	}
 
 	private static int copyFileRecurse( JFile from, JFile to, boolean recurse, boolean force, boolean verbose, Predicate<JFile> filter, int res ) throws IOException {

@@ -37,7 +37,7 @@ public class VersionUtils {
 	
 	private VersionUtils() {}
 
-	private static Properties MODULES = new Properties();
+	private static final Properties MODULES = new Properties();
 
 	public static final String CODE_01_NOT_FOUND = "[01] Module does not exist";
 	

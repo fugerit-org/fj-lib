@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- MetaDataUtils types constant arrays removed in favor of public builder methods (may raise minor compatibility issues)
+
+### Fixed
+
 - Javadoc generation with java 17
+- VirtualPageCache entry store did not work properly
 
 ## [8.2.8] - 2023-09-13
 
