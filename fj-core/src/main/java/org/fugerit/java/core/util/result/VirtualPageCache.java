@@ -69,6 +69,7 @@ class CacheWrapper<T> {
 	
 	public CacheWrapper(PagedResult<T> page) {
 		super();
+		this.page = page;
 		this.cacheTime = System.currentTimeMillis();
 	}
 

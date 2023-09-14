@@ -85,7 +85,7 @@ public class PropertyCatalog extends ListMapCatalogConfig<PropertyHolder> {
 		
 	}
 	
-	private static ParamFinder PARAM_FINDER = ParamFinder.newFinder();
+	private static final ParamFinder PARAM_FINDER = ParamFinder.newFinder();
 	
 	private ParamProvider pathParamProvider;
 	

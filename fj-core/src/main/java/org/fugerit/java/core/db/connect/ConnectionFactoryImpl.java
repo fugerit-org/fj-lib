@@ -362,7 +362,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 */
 	public static ConnectionFactoryImpl newInstance(DataSource ds) throws DAOException {
 		log.info( "ConnectionFactoryImpl.newInstance() data source : {}", ds );
-		return new SupplierConnectionFactory( "dataSourceSupplier" , () -> ds.getConnection() );
+		return new SupplierConnectionFactory( "dataSourceSupplier" , ds::getConnection );
 	}	
 	
 	/*

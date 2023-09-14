@@ -28,12 +28,19 @@ import org.fugerit.java.core.lang.helpers.ConcatHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.collection.KeyObject;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Identifier for a table in a database.
  *
  * @author Fugerit
  *
  */
+@AllArgsConstructor
+@NoArgsConstructor
 public class TableId implements KeyObject<String> {
 
 	public static String generateKey( TableId tableId ) {
@@ -51,35 +58,11 @@ public class TableId implements KeyObject<String> {
 		return this.getClass().getSimpleName()+"[tableName:"+this.getTableName()+",tableSchema:"+this.getTableSchema()+"]";
 	}
 	
-	private String tableName;
+	@Getter @Setter private String tableName;
 	
-	private String tableSchema;
+	@Getter @Setter private String tableSchema;
 	
-	private String tableCatalog;
-
-	public String getTableCatalog() {
-		return tableCatalog;
-	}
-
-	public void setTableCatalog(String tableCatalog) {
-		this.tableCatalog = tableCatalog;
-	}
-
-	public String getTableName() {
-		return tableName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
-	public String getTableSchema() {
-		return tableSchema;
-	}
-
-	public void setTableSchema(String tableSchema) {
-		this.tableSchema = tableSchema;
-	}
+	@Getter @Setter private String tableCatalog;
 
 	private static boolean equals( Object o1, Object o2 ) {
 		return ( o1 == null && o2 == null ) || ( o1 != null && o1.equals( o2 ) );

@@ -28,6 +28,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.fugerit.java.core.db.connect.ConnectionFactory;
@@ -38,6 +39,7 @@ import org.fugerit.java.core.log.LogFacade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -55,13 +57,27 @@ public class MetaDataUtils {
 	
 	public static final String TYPE_VIEW = "VIEW";
 	
-	public static final String[] TYPES_TABLE = { TYPE_TABLE };
+	public static final String[] typesAll() {
+		return Arrays.asList( TYPE_TABLE, TYPE_VIEW ).toArray( new String[0] );
+	}
 	
-	public static final String[] TYPES_VIEW = { TYPE_VIEW };
+	public static final String[] typesDefault() {
+		return Arrays.asList( TYPE_TABLE ).toArray( new String[0] );
+	}
 	
-	public static final String[] TYPES_DEFAULT = TYPES_TABLE;
+	public static final String[] typesView() {
+		return Arrays.asList( TYPE_VIEW ).toArray( new String[0] );
+	}
 	
-	public static final String[] TYPES_ALL = { TYPE_TABLE, TYPE_VIEW };
+	public static final String[] typesTable() {
+		return Arrays.asList( TYPE_TABLE ).toArray( new String[0] );
+	}
+	
+	public static final List<String> tableListAll() {
+		List<String> tableNameList = new ArrayList<String>();
+		tableNameList.add( "*" );
+		return tableNameList;
+	}
 	
 	private static final String S_COLUMN_NAME = "COLUMN_NAME";
 	
@@ -85,18 +101,24 @@ public class MetaDataUtils {
 		return createModel( cf , null, null);
 	}
 	
+	public static DataBaseModel createModel( ConnectionFactory cf, String[] types ) throws DAOException {
+		return createModel( cf , null, null, types );
+	}
+	
 	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema ) throws DAOException {
-		List<String> tableNameList = new ArrayList<String>();
-		tableNameList.add( "*" );
-		return createModel(cf, catalog, schema, tableNameList);
+		return createModel(cf, catalog, schema, tableListAll());
+	}
+	
+	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, String[] types) throws DAOException {
+		return createModel(cf, catalog, schema, tableListAll(),  types);
 	}
 	
 	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList ) throws DAOException {
-		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList, TYPES_DEFAULT );	 
+		return createModel( cf , catalog, schema, new DefaulJdbcdaptor( cf ), tableNameList, typesDefault() );	 
 	}
 	
 	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, List<String> tableNameList, String[] types ) throws DAOException {
-		return createModel( cf , catalog, schema, (JdbcAdaptor) new DefaulJdbcdaptor( cf ), tableNameList, types );	 
+		return createModel( cf , catalog, schema, new DefaulJdbcdaptor( cf ), tableNameList, types );	 
 	}
 	
 	private static final int MODE_LOOSE = 1;
@@ -107,19 +129,27 @@ public class MetaDataUtils {
 		return "SELECT * FROM "+tableId.toIdString()+" WHERE 1=0";
 	}
 	
+	public static JdbcAdaptor getDefaultAdaptorFor( String databaseProductName, ConnectionFactory cf ) {
+		JdbcAdaptor jdbcAdaptor = null;
+		String driverInfo = databaseProductName.toLowerCase();
+		if ( driverInfo.indexOf( "oracle" ) != -1 ) {
+			LogFacade.getLog().info( "setting adaptor for oracle for {}", driverInfo );
+			jdbcAdaptor = new OracleJdbcAdaptor( cf );
+		} else if ( driverInfo.indexOf( "mysql" ) != -1 ) {
+			LogFacade.getLog().info( "setting adaptor for mysql for {}", driverInfo );
+			jdbcAdaptor = new MysqlJdbcAdatapor( cf );
+		} else {
+			LogFacade.getLog().info( "setting adaptor default for {}", driverInfo );
+			jdbcAdaptor = new DefaulJdbcdaptor( cf );
+		}
+		return jdbcAdaptor;
+	}
+	
 	private static int handleDriverInfo( DataBaseModel dataBaseModel, MetaDataUtilsContext context ) {
 		int mode = MODE_STRICT;
 		String driverInfo = dataBaseModel.getDatabaseProductName().toLowerCase();
-		if ( driverInfo.indexOf( "oracle" ) != -1 ) {
-			LogFacade.getLog().info( "setting adaptor for oracle" );
-			context.setJdbcAdaptor( new OracleJdbcAdaptor( context.getCf() ) );
-		} else if ( driverInfo.indexOf( "postgres" ) != -1 ) {
-			LogFacade.getLog().info( "setting adaptor for postgres" );
-		} else if ( driverInfo.indexOf( "mysql" ) != -1 ) {
-			LogFacade.getLog().info( "setting adaptor for mysql" );
-			context.setJdbcAdaptor( new MysqlJdbcAdatapor( context.getCf() ) );
-		} else if ( driverInfo.indexOf( "access" ) != -1 ) {
-			LogFacade.getLog().info( "setting adaptor for access" );
+		context.setJdbcAdaptor( getDefaultAdaptorFor(driverInfo, context.getCf()) );
+		if ( driverInfo.indexOf( "access" ) != -1 ) {
 			mode = MODE_LOOSE;
 		}
 		return mode;
@@ -276,67 +306,88 @@ public class MetaDataUtils {
 	}
 	
 	private static DataBaseModel createModel( MetaDataUtilsContext context ) throws DAOException { 
-		DataBaseModel dataBaseModel = new DataBaseModel();
-		try ( Connection conn = context.getCf().getConnection() ) {
-			LogFacade.getLog().debug( "DataBaseModel.DataBaseModel() catalog : {}, schema : {}", context.getCatalog(), context.getSchema() ); 
-			
-			// set metadata
-			DatabaseMetaData dbmd = conn.getMetaData();
-			dataBaseModel.setDatabaseProductName( dbmd.getDatabaseProductName() );
-			dataBaseModel.setDatabaseProductVersion( dbmd.getDatabaseProductVersion() );
-			dataBaseModel.setDriverName( dbmd.getDriverName() );
-			dataBaseModel.setDriverVersion( dbmd.getDriverVersion() );		
-	
-			// driver info setup
-			int mode = handleDriverInfo(dataBaseModel, context);
-
-			// table metadata
-			try ( ResultSet tableRS = dbmd.getTables( context.getCatalog(), context.getSchema(), null, context.getTypes() ) ) {			
-				while ( tableRS.next() ) {
-					TableModel tableModel = new TableModel();
-						handleCurrentTable(context, tableModel, tableRS, dbmd, mode, conn);
-						dataBaseModel.addTable( tableModel );
+		return DAOException.get( () -> {
+			DataBaseModel dataBaseModel = new DataBaseModel();
+			try ( Connection conn = context.getCf().getConnection() ) {
+				LogFacade.getLog().debug( "DataBaseModel.DataBaseModel() catalog : {}, schema : {}", context.getCatalog(), context.getSchema() ); 
+				// set metadata
+				DatabaseMetaData dbmd = conn.getMetaData();
+				dataBaseModel.setDatabaseProductName( dbmd.getDatabaseProductName() );
+				dataBaseModel.setDatabaseProductVersion( dbmd.getDatabaseProductVersion() );
+				dataBaseModel.setDriverName( dbmd.getDriverName() );
+				dataBaseModel.setDriverVersion( dbmd.getDriverVersion() );		
+				// driver info setup
+				int mode = handleDriverInfo(dataBaseModel, context);
+				// table metadata
+				try ( ResultSet tableRS = dbmd.getTables( context.getCatalog(), context.getSchema(), null, context.getTypes() ) ) {			
+					while ( tableRS.next() ) {
+						TableModel tableModel = new TableModel();
+							handleCurrentTable(context, tableModel, tableRS, dbmd, mode, conn);
+							dataBaseModel.addTable( tableModel );
+					}
 				}
 			}
-		} catch ( Exception e) {
-			throw DAOException.convertExMethod( "createModel", e );
-		}
-		
-		return dataBaseModel;
+			return dataBaseModel;
+		} );
 	}
 	
 }
 
-interface JdbcAdaptor {
-	
-	public String getTableComment( TableId tableId ) throws DAOException;
-	
-	public String getColumnComment( TableId tableId, String columnName ) throws DAOException;
-	
-	public String getColumnExtraInfo( TableId tableId, String columnName ) throws DAOException;
-	
-}
-
+@ToString
 class DefaulJdbcdaptor extends BasicLogObject implements JdbcAdaptor {
 
 	private ConnectionFactory connectionFactory;
 	
+	private String descriptor;
+	
+	private String sqlTablesExtraInfo;
+	
+	private String sqlColumnsExtraInfo;
+	
+	public DefaulJdbcdaptor(ConnectionFactory connectionFactory, String descriptor, String sqlTablesExtraInfo, String sqlColumnsExtraInfo) {
+		super();
+		this.connectionFactory = connectionFactory;
+		this.descriptor = descriptor;
+		this.sqlTablesExtraInfo = sqlTablesExtraInfo;
+		this.sqlColumnsExtraInfo = sqlColumnsExtraInfo;
+	}
+
 	/*
 	 * <p>Creats a new instance of AbstractCommentAdaptor.</p>
 	 *
 	 * @param connectionFactory
 	 */
 	public DefaulJdbcdaptor(ConnectionFactory connectionFactory) {
-		super();
-		this.connectionFactory = connectionFactory;
+		this( connectionFactory, null, null, null );
 	}
 
+	protected String getExtraInfoHelper( String sql, TableId tableId, String columnName) throws DAOException {
+		return DAOException.get( () -> {
+			String info = "";
+			this.getLogger().debug( "getExtraInfoHelper tableId    : {}, columnName : {}", tableId, columnName );
+			try ( PreparedStatement pstm = this.connectionFactory.getConnection().prepareStatement( sql ) ) {
+				pstm.setString( 1, tableId.getTableSchema() );
+				pstm.setString( 2, tableId.getTableName() );
+				if ( columnName != null ) {
+					pstm.setString( 3, columnName );	
+				}
+				try ( ResultSet rs = pstm.executeQuery() ) {
+					if ( rs.next() ) {
+						info = rs.getString( 1 );
+						this.getLogger().debug( "getExtraInfoHelper {} extra : {}", this.descriptor, info );
+					}	
+				}
+			}
+			return info;
+		} );
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.opinf.jlib.mod.tools.db.meta.JdbcCommentAdaptor#getColumnComment(org.fugerit.java.core.db.metadata.TableId, java.lang.String)
 	 */
 	@Override
 	public String getColumnComment(TableId tableId, String columnName) throws DAOException {
-		return "";
+		return this.sqlColumnsExtraInfo == null ? "" : this.getExtraInfoHelper( this.sqlColumnsExtraInfo, tableId, columnName );
 	}
 
 	/* (non-Javadoc)
@@ -344,7 +395,7 @@ class DefaulJdbcdaptor extends BasicLogObject implements JdbcAdaptor {
 	 */
 	@Override
 	public String getTableComment(TableId tableId) throws DAOException {
-		return "";
+		return this.sqlTablesExtraInfo == null ? "" : this.getExtraInfoHelper( this.sqlTablesExtraInfo, tableId, null );
 	}
 
 	/*
@@ -372,31 +423,8 @@ class DefaulJdbcdaptor extends BasicLogObject implements JdbcAdaptor {
 class MysqlJdbcAdatapor extends DefaulJdbcdaptor {
 
 	public MysqlJdbcAdatapor(ConnectionFactory connectionFactory) {
-		super(connectionFactory);
-	}
-
-	private static final String SQL = "SELECT extra FROM information_schema.columns WHERE table_catalog IS NULL AND table_schema=? AND table_name=? AND column_name=?";
-	
-	@Override
-	public String getColumnExtraInfo(TableId tableId, String columnName) throws DAOException {
-		String info = "";
-		this.getLogger().debug( "getColumnExtraInfo tableId    : {}, columnName : {}", tableId, columnName );
-		
-		try ( Connection conn = this.getConnectionFactory().getConnection();
-				PreparedStatement pstm = conn.prepareStatement( SQL ) ) {
-			pstm.setString( 1, tableId.getTableCatalog() );
-			pstm.setString( 2, tableId.getTableName() );
-			pstm.setString( 3, columnName );
-			try ( ResultSet rs = pstm.executeQuery() ) {
-				if ( rs.next() ) {
-					info = rs.getString( "extra" );
-					this.getLogger().debug( "getColumnExtraInfo extra : {}", info );
-				}	
-			}
-		} catch (SQLException e) {
-			throw DAOException.convertExMethod( "getColumnExtraInfo[Mysql]" , e );
-		}
-		return info;
+		super(connectionFactory, MysqlJdbcAdatapor.class.getSimpleName(), null, 
+				"SELECT extra FROM information_schema.columns WHERE table_catalog IS NULL AND table_schema=? AND table_name=? AND column_name=?" );
 	}
 	
 }
@@ -409,56 +437,11 @@ class OracleJdbcAdaptor extends DefaulJdbcdaptor {
 	 * @param connectionFactory
 	 */
 	public OracleJdbcAdaptor(ConnectionFactory connectionFactory) {
-		super(connectionFactory);
+		super(connectionFactory, OracleJdbcAdaptor.class.getSimpleName(), 
+				"SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?", 
+				"SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?" );
 	}
 
-	private static final String SQL_COLUMN_COMMENT = "SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?";
-	
-	/* (non-Javadoc)
-	 * @see org.opinf.jlib.mod.tools.db.meta.AbstractCommentAdaptor#getColumnComment(org.fugerit.java.core.db.metadata.TableId, java.lang.String)
-	 */
-	@Override
-	public String getColumnComment(TableId tableId, String columnName) throws DAOException {
-		String comment = "";
-		try ( Connection conn = this.getConnectionFactory().getConnection();
-				PreparedStatement pstm = conn.prepareStatement( SQL_COLUMN_COMMENT ) ) {
-			pstm.setString( 1, tableId.getTableSchema() );
-			pstm.setString( 2, tableId.getTableName() );
-			pstm.setString( 3, columnName );
-			try ( ResultSet rs = pstm.executeQuery() ) {
-				if ( rs.next() ) {
-					comment = rs.getString( "comments" );
-				}	
-			}
-		} catch ( SQLException e ) {
-			throw DAOException.convertExMethod( "getColumnExtraInfo[Oracle]" , e );
-		}
-		return comment;
-	}
-
-	private static final String SQL_TABLE_COMMENT = "SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?";
-	
-	/* (non-Javadoc)
-	 * @see org.opinf.jlib.mod.tools.db.meta.AbstractCommentAdaptor#getTableComment(org.fugerit.java.core.db.metadata.TableId)
-	 */
-	@Override
-	public String getTableComment(TableId tableId) throws DAOException {
-		String comment = "";
-		try ( Connection conn = this.getConnectionFactory().getConnection();
-				PreparedStatement pstm = conn.prepareStatement( SQL_TABLE_COMMENT ) ) {
-			pstm.setString( 1, tableId.getTableSchema() );
-			pstm.setString( 2, tableId.getTableName() );
-			try ( ResultSet rs = pstm.executeQuery() ) {
-				if ( rs.next() ) {
-					comment = rs.getString( "comments" );
-				}
-			}
-		} catch (Exception e) {
-			throw DAOException.convertExMethod( "getTableComment[Oracle]" , e );
-		}
-		return comment;
-	}
-	
 }
 
 @AllArgsConstructor

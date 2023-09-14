@@ -37,13 +37,13 @@ public class CloseHelper {
 	
 	public static void closeRuntimeEx( AutoCloseable ac ) {
 		if ( ac != null ) {
-			SafeFunction.apply( () -> ac.close(), e -> { throw ConfigRuntimeException.convertEx( BASIC_CLOSE_MESSAGE+ac , e ); } );
+			SafeFunction.apply( ac::close, e -> { throw ConfigRuntimeException.convertEx( BASIC_CLOSE_MESSAGE+ac , e ); } );
 		}
 	}
 	
 	public static void closeRuntimeEx( Closeable ac ) {
 		if ( ac != null ) {
-			SafeFunction.apply( () -> ac.close(), e -> { throw ConfigRuntimeException.convertEx( BASIC_CLOSE_MESSAGE+ac , e ); } );
+			SafeFunction.apply( ac::close, e -> { throw ConfigRuntimeException.convertEx( BASIC_CLOSE_MESSAGE+ac , e ); } );
 		}
 	}
 	

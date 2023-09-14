@@ -151,7 +151,7 @@ public class TestResult {
 		int perPage = 3;
 		int elementCount = DATA.size();
 		cache.addPageToCache( DefaultPagedResult.newPagedResult( perPage, elementCount, 0, DATA, 3, DATA.size(), "test" ) );
-		Assert.assertNull( cache.getCachedPage( new DefaultVirtualFinder(perPage, elementCount, 3, DATA.size(), "test" ) ) );
+		Assert.assertNotNull( cache.getCachedPage( new DefaultVirtualFinder(perPage, elementCount, 3, DATA.size(), "test" ) ) );
 	}
 
 	@Test

@@ -52,14 +52,10 @@ public class ClassHelper {
 			ClassLoader classLoader = getDefaultClassLoader();
 			Class<?> c = classLoader.loadClass( type );
 			result = c.getDeclaredConstructor().newInstance();	
+		} catch (ClassNotFoundException | NoSuchMethodException e) {
+			throw e;
 		} catch (Exception e) {
-			if ( e instanceof ClassNotFoundException ) {
-				throw (ClassNotFoundException)e;
-			} else if ( e instanceof NoSuchMethodException ) {
-				throw (NoSuchMethodException)e;
-			} else {
-				throw ConfigException.convertExMethod( "newInstance" , e );
-			}
+			throw ConfigException.convertExMethod( "newInstance" , e );
 		}
 		return result;
 	}
