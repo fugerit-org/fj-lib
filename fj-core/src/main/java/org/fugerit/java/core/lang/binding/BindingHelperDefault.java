@@ -10,9 +10,9 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.lang.helpers.reflect.PathHelper;
 import org.fugerit.java.core.util.collection.KeyString;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Default binding helper implementation
@@ -24,6 +24,7 @@ import org.w3c.dom.Element;
  * @author Matteo a.k.a. Fugerit
  *
  */
+@Slf4j
 public class BindingHelperDefault extends XMLConfigurableObject implements Serializable, BindingHelper, IdConfigType, KeyString {
 
 	public static final BindingHelper DEFAULT = new BindingHelperDefault( BindingCatalogConfig.ID_DEFAULT_HELPER );	
@@ -34,15 +35,14 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 	public BindingHelperDefault( String id ) {
 		this.setId( id );
 	}
-	
-	private final static Logger logger = LoggerFactory.getLogger( BindingHelperDefault.class );
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1342342342323L;
 
 	public Object convertValue(BindingContext context, BindingConfig binding, BindingFieldConfig field, Object value) throws Exception {
+		log.trace( "convertValue() context {} , binding {}", context, binding );
+		log.trace( "convertValue() field {} , value {}", field, value );
 		return value;
 	}
 	
@@ -82,7 +82,7 @@ public class BindingHelperDefault extends XMLConfigurableObject implements Seria
 			}	
 		}
 		String messageTo = bindTo+" - "+bind;
-		logger.debug( "bindFrom {} to {}", bindFrom, messageTo );
+		log.debug( "bindFrom {} to {}", bindFrom, messageTo );
 	}
 	
 	@Override

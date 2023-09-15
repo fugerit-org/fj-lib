@@ -20,8 +20,7 @@ public interface ToolHandler {
 	 * 
 	 * @param params		the params
 	 * @return				the result code of the operation
-	 * @throws Exception	if issues arises
 	 */
-	public int handle( Properties params ) throws Exception;
+	public int handle( Properties params );
 	
 }

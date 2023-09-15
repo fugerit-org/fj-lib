@@ -11,15 +11,15 @@ import org.slf4j.LoggerFactory;
 
 public class TestHelperI18N {
 
-	public final static String LANG_EN = "en";
+	public static final String LANG_EN = "en";
 	
-	public final static String LANG_IT = "it";
+	public static final String LANG_IT = "it";
 	
-	public final static String LANG_DEF = LANG_EN;
+	public static final String LANG_DEF = LANG_EN;
 	
-	public final static String LANG_ALT[] = { LANG_IT };
+	public static final String LANG_ALT[] = { LANG_IT };
 	
-	private final static Logger logger = LoggerFactory.getLogger( TestHelperI18N.class );
+	private static final Logger logger = LoggerFactory.getLogger( TestHelperI18N.class );
 	
 	private static final String CONF_PATH = "core.util.i18n.test";
 	

@@ -15,7 +15,7 @@ public class IdGeneratorFacade {
 
 	private IdGeneratorFacade() {}
 	
-	private final static Properties SEQ_TYPES = PropsIO.loadFromClassLoaderSafe( "core/dao/idgen/seq_generator.properties" );
+	private static final Properties SEQ_TYPES = PropsIO.loadFromClassLoaderSafe( "core/dao/idgen/seq_generator.properties" );
 	
 	public static BasicSeqIdGenerator sequenceGenerator( DAOContext context, String sequenceName ) throws DAOException {
 		return sequenceGenerator( context.getConnection(), sequenceName );

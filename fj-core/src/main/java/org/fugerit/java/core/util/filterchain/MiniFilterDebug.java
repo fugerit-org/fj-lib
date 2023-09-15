@@ -8,31 +8,25 @@ public class MiniFilterDebug {
 
 	private MiniFilterDebug() {}
 	
-	public static void dumpConfig( PrintWriter writer, InputStream is ) throws Exception {
+	public static void dumpConfig( PrintWriter writer, InputStream is ) {
 		MiniFilterConfig config = new MiniFilterConfig();
 		MiniFilterConfig.loadConfig( is , config );	
 		dumpConfig(writer, config);
 	}
 	
-	public static void dumpConfig( PrintWriter writer, MiniFilterConfig config ) throws Exception {
-		try {
-			writer.println( "General config properties : "+config.getGeneralProps().toString() );
-			Iterator<String> itConfig = config.getIdSet().iterator();
-			while ( itConfig.hasNext() )  {
-				String currentId = itConfig.next();
-				writer.println( "***********************************************" );
-				writer.println( "AnprOperationBase.getChain() id='"+currentId+"'" );
-				writer.println( "***********************************************" );
-				Iterator<MiniFilterConfigEntry> itEntry = config.getDataList( currentId ).iterator();
-				while ( itEntry.hasNext() ) {
-					MiniFilterConfigEntry entry = itEntry.next();
-					writer.println( "entry chain : "+entry.getId()+" - "+entry.getType() );
-				}
+	public static void dumpConfig( PrintWriter writer, MiniFilterConfig config ) {
+		writer.println( "General config properties : "+config.getGeneralProps().toString() );
+		Iterator<String> itConfig = config.getIdSet().iterator();
+		while ( itConfig.hasNext() )  {
+			String currentId = itConfig.next();
+			writer.println( "***********************************************" );
+			writer.println( "AnprOperationBase.getChain() id='"+currentId+"'" );
+			writer.println( "***********************************************" );
+			Iterator<MiniFilterConfigEntry> itEntry = config.getDataList( currentId ).iterator();
+			while ( itEntry.hasNext() ) {
+				MiniFilterConfigEntry entry = itEntry.next();
+				writer.println( "entry chain : "+entry.getId()+" - "+entry.getType() );
 			}
-		} catch (Exception e) {
-			writer.println( "Error dumping config "+e );
-			e.printStackTrace( writer );
-			throw e;
 		}
 	}
 

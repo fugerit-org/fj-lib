@@ -40,6 +40,7 @@ public class TestConnectionFactory extends BasicTest {
 		try ( ConnectionFactoryCloseable cf = ConnectionFactoryImpl.wrap( wrapped );
 				Connection conn = cf.getConnection() ) {
 			log.info( "db info : {}", cf.getDataBaseInfo() );
+			log.info( "db info second time : {}", cf.getDataBaseInfo() );
 			log.info( "driver info : {}", ConnectionFactoryImpl.getDriverInfo( cf ) );
 		}
 		ok = (wrapped != null);
@@ -50,15 +51,15 @@ public class TestConnectionFactory extends BasicTest {
 	public void testCFProps() throws Exception {
 		String name = "wrapped";
 		Properties props= PropsIO.loadFromClassLoaderSafe( BasicDBHelper.DEFAULT_DB_CONN_PATH );
+		props.setProperty( ConnectionFactoryImpl.PROP_CF_EXT_POOLED_IC , "1" );
+		props.setProperty( ConnectionFactoryImpl.PROP_CF_EXT_POOLED_SC , "1" );
+		props.setProperty( ConnectionFactoryImpl.PROP_CF_EXT_POOLED_MC , "3" );
 		ConnectionFactory wrapped = ConnectionFactoryImpl.newInstance( props );
 		ConnectionFacade.registerFactory( name , wrapped );
 		boolean ok = this.worker( ConnectionFacade.getFactory( name ) );
 		Assert.assertTrue(ok);
 		// pooled
-		ok = this.worker( new DbcpConnectionFactory( props.getProperty( ConnectionFactoryImpl.PROP_CF_MODE_DC_DRV ), 
-				props.getProperty( ConnectionFactoryImpl.PROP_CF_MODE_DC_URL ), 
-				props.getProperty( ConnectionFactoryImpl.PROP_CF_MODE_DC_USR ), 
-				props.getProperty( ConnectionFactoryImpl.PROP_CF_MODE_DC_PWD ), 1, 1, 3 ) );
+		ok = this.worker( new DbcpConnectionFactory( props ) );
 		Assert.assertTrue(ok);
 	}
 	

@@ -14,17 +14,17 @@ public class MiniFilterConfigEntry extends BasicIdConfigType {
 	/**
 	 * Next step will be processed
 	 */
-	public final static String DEFAULT_BEHAVIOUR_CONTINUE = "CONTINUE";
+	public static final String DEFAULT_BEHAVIOUR_CONTINUE = "CONTINUE";
 	
 	/**
 	 * All following steps will be skipped unless some of them have "ALWAYS" behaviour
 	 */
-	public final static String DEFAULT_BEHAVIOUR_SKIP = "SKIP";
+	public static final String DEFAULT_BEHAVIOUR_SKIP = "SKIP";
 	
 	/**
 	 * This stepp will always be processed, regardless of previous steps status.
 	 */
-	public final static String DEFAULT_BEHAVIOUR_ALWAYS = "ALWAYS";
+	public static final String DEFAULT_BEHAVIOUR_ALWAYS = "ALWAYS";
 	
 	public int getDefaultBehaviourInt() {
 		int res = MiniFilter.CONTINUE;

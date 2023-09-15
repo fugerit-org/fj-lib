@@ -25,17 +25,17 @@ public class PropertyHolder extends BasicIdConfigType {
 	public static final String UNSAFE_FALSE = "false";
 	public static final String UNSAFE_WARN = "warn";
 	
-	public final static String MODE_CLASS_LOADER = "classloader";
-	public final static String MODE_CL = "cl";
+	public static final String MODE_CLASS_LOADER = "classloader";
+	public static final String MODE_CL = "cl";
 	
-	public final static String MODE_FILE = "file";
+	public static final String MODE_FILE = "file";
 	
 	/**
 	 * When this mode is used, you must define in PATH reference to other holders in the same catalog, semicolon separated.
 	 * For instace if props-01 and props-02 are two holder in the same catalog : 
 	 * path="props01;props-02"
 	 */
-	public final static String MODE_MULTI = "multi";
+	public static final String MODE_MULTI = "multi";
 	
 	/**
 	 * 

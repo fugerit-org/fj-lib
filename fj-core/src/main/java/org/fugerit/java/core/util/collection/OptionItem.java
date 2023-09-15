@@ -40,23 +40,13 @@ public class OptionItem implements KeyObject<String>, Serializable {
 	 * Comparator to sort OptionItem by label String value
 	 * 
 	 */
-	public final static Comparator<OptionItem> LABEL_SORTER = new Comparator<OptionItem>() {
-		@Override
-		public int compare(OptionItem object1, OptionItem object2) {
-			return object1.getLabel().compareTo( object2.getLabel() );
-		}
-	};
+	public static final Comparator<OptionItem> LABEL_SORTER = (object1, object2) -> object1.getLabel().compareTo( object2.getLabel() );
 
 	/**
 	 * Comparator to sort OptionItem by value String value
 	 * 
 	 */
-	public final static Comparator<OptionItem> VALUE_SORTER = new Comparator<OptionItem>() {
-		@Override
-		public int compare(OptionItem object1, OptionItem object2) {
-			return object1.getValue().compareTo( object2.getValue() );
-		}
-	};
+	public static final Comparator<OptionItem> VALUE_SORTER = (object1, object2) -> object1.getValue().compareTo( object2.getValue() );
 	
 	private String value;
 	

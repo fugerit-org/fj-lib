@@ -21,6 +21,7 @@
 package org.fugerit.java.core.db.connect;
 
 import java.sql.Connection;
+import java.util.Properties;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.fugerit.java.core.db.dao.DAOException;
@@ -36,41 +37,30 @@ public class DbcpConnectionFactory extends ConnectionFactoryImpl {
 	private BasicDataSource dataSource;
 
 	/**
-	 * Constructor
 	 * 
-	 * @param drv		driver type
-	 * @param url		jdbc url
-	 * @param usr		user
-	 * @param pwd		password
-	 * @param init		initial connection
-	 * @param min		minimum connection
-	 * @param max		maximum connection	
-	 * @throws DAOException		in case of issues
+	 * @param cfProps		connections parameters
+	 * @throws DAOException	in case of issues
 	 */
-	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max ) throws DAOException {
-		this(drv, url, usr, pwd, init, min, max, null);
+	public DbcpConnectionFactory( Properties cfProps ) throws DAOException {
+		this(cfProps, null);
 	}
 	
 	/**
-	 * Constructor
 	 * 
-	 * @param drv		driver type
-	 * @param url		jdbc url
-	 * @param usr		user
-	 * @param pwd		password
-	 * @param init		initial connection
-	 * @param min		minimum connection
-	 * @param max		maximum connection	
-	 * @param cl		the class loader
-	 * @throws DAOException		in case of issues
+	 * @param cfProps		connections parameters
+	 * @param cl			to use for driver class loading
+	 * @throws DAOException	in case of issues
 	 */
-	public DbcpConnectionFactory( String drv, String url, String usr, String pwd, int init, int min, int max, ClassLoader cl ) throws DAOException {
+	public DbcpConnectionFactory( Properties cfProps, ClassLoader cl ) throws DAOException {
 		DAOException.apply( () -> {
+			int init = Integer.parseInt( cfProps.getProperty( PROP_CF_EXT_POOLED_SC , "3" ) );
+			int min = Integer.parseInt( cfProps.getProperty( PROP_CF_EXT_POOLED_IC , "10" ) );
+			int max = Integer.parseInt( cfProps.getProperty( PROP_CF_EXT_POOLED_MC , "30" ) );
 			this.dataSource = new BasicDataSource();
-			this.dataSource.setDriverClassName( drv );
-			this.dataSource.setUrl( url );
-			this.dataSource.setUsername( usr );
-			this.dataSource.setPassword( pwd );
+			this.dataSource.setDriverClassName( cfProps.getProperty( PROP_CF_MODE_DC_DRV ) );
+			this.dataSource.setUrl( cfProps.getProperty( PROP_CF_MODE_DC_URL ) );
+			this.dataSource.setUsername( cfProps.getProperty( PROP_CF_MODE_DC_USR ) );
+			this.dataSource.setPassword( cfProps.getProperty( PROP_CF_MODE_DC_PWD ) );
 			this.dataSource.setMaxTotal( max );
 			this.dataSource.setMaxIdle( min );
 			this.dataSource.setInitialSize( init );

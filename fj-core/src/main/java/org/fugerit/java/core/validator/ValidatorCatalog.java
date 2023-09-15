@@ -35,7 +35,7 @@ import org.w3c.dom.NodeList;
  */
 public class ValidatorCatalog implements Serializable {
 
-	private final static Logger logger = LoggerFactory.getLogger(ValidatorCatalog.class);
+	private static final Logger logger = LoggerFactory.getLogger(ValidatorCatalog.class);
 
 	public static final String TAG_CUSTOM_MESSAGE = "custom-messages";
 

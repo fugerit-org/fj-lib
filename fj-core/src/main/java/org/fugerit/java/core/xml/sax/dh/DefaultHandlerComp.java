@@ -24,10 +24,10 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class DefaultHandlerComp extends DefaultHandler {
     
-    public final static ErrorHandler DEFAULT_EH = new DoNothingErrorHandler();
-    public final static EntityResolver DEFAULT_ER = new DoNothingEntityResolver();
-    public final static DTDHandler DEFAULT_DH = new DoNothingDTDHandler();
-    public final static ContentHandler DEFAULT_CH = new DoNothingContentHandler();
+    public static final ErrorHandler DEFAULT_EH = new DoNothingErrorHandler();
+    public static final EntityResolver DEFAULT_ER = new DoNothingEntityResolver();
+    public static final DTDHandler DEFAULT_DH = new DoNothingDTDHandler();
+    public static final ContentHandler DEFAULT_CH = new DoNothingContentHandler();
 
     public DefaultHandlerComp() {
         this(DEFAULT_CH, DEFAULT_DH, DEFAULT_ER, DEFAULT_EH);

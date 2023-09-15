@@ -35,7 +35,7 @@ public class FacadeImplFinder  {
 		this.finderList.remove( finder );
 	}
 	
-	public ImplFinder getFinderFor( Class<?> c ) throws Exception {
+	public ImplFinder getFinderFor( Class<?> c ) {
 		ImplFinder finder = null;
 		Iterator<ImplFinder> it = this.finders();
 		while ( finder == null && it.hasNext() ) {
@@ -47,11 +47,11 @@ public class FacadeImplFinder  {
 		return finder;
 	}
 	
-	public boolean hasFinderFor( Class<?> c ) throws Exception {
+	public boolean hasFinderFor( Class<?> c ) {
 		return (this.getFinderFor( c ) != null);
 	}
 	
-	public Class<?> findImpl( Class<?> c ) throws Exception {
+	public Class<?> findImpl( Class<?> c ) {
 		Class<?> ret = c;
 		ImplFinder finder = this.getFinderFor( c );
 		if ( finder != null ) {

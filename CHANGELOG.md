@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- fj-daogen-version set to 1.2.1 in module fj-core-jvfs
+- ImplFinder interface methods does not throw any exception now
+
 ## [8.3.1] - 2023-09-15
 
 ### Changed

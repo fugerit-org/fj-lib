@@ -11,6 +11,7 @@ import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
 import org.fugerit.java.core.cfg.xml.ListMapConfig;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
@@ -57,18 +58,42 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 		this.getGeneralProps().setProperty( ATT_TYPE , MiniFilterConfigEntry.class.getName() );
 	}
 
-	public static MiniFilterConfig loadConfig( InputStream is, MiniFilterConfig config ) throws Exception {
-		Document doc = DOMIO.loadDOMDoc( is );
-		Element root = doc.getDocumentElement();
-		config.configure( root );
-		return config;
+	/**
+	 * <p>Configure a MiniFilterConfig instance.</p>
+	 * 
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param is		the configuration stream
+	 * @param config	the item to configure (will be configured by side effect too)
+	 * @return			the configured item
+	 * @throws 			ConfigRuntimeException in case of issues during loading
+	 */
+	public static MiniFilterConfig loadConfig( InputStream is, MiniFilterConfig config ) {
+		return SafeFunction.get( () -> {
+			Document doc = DOMIO.loadDOMDoc( is );
+			Element root = doc.getDocumentElement();
+			config.configure( root );
+			return config;
+		});
+		
 	}
 	
-	public static MiniFilterMap loadConfigMap( InputStream is, MiniFilterConfig config ) throws Exception {
-		Document doc = DOMIO.loadDOMDoc( is );
-		Element root = doc.getDocumentElement();
-		config.configure( root );
-		return config;
+	/**
+	 * <p>Configure a MiniFilterConfig instance as a MiniFilterMap.</p>
+	 * 
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param is		the configuration stream
+	 * @param config	the item to configure (will be configured by side effect too)
+	 * @return			the configured item
+	 * @throws 			ConfigRuntimeException in case of issues during loading
+	 */
+	public static MiniFilterMap loadConfigMap( InputStream is, MiniFilterConfig config ) {
+		return loadConfig(is, config);
 	}
 	
 	@Override

@@ -14,7 +14,7 @@ public class DefineImplFinder implements ImplFinder, Serializable {
 	public static final ImplFinder DEFAULT = new DefineImplFinder();
 	
 	@Override
-	public Class<?> findImplFor(Class<?> c) throws Exception {
+	public Class<?> findImplFor(Class<?> c) {
 		Class<?> ret = c;
 		if ( this.isFinderFor( c )) {
 			DefineImpl fug = c.getAnnotation( DefineImpl.class );
@@ -24,7 +24,7 @@ public class DefineImplFinder implements ImplFinder, Serializable {
 	}
 
 	@Override
-	public boolean isFinderFor(Class<?> c) throws Exception {
+	public boolean isFinderFor(Class<?> c) {
 		return c.isAnnotationPresent( DefineImpl.class );
 	}
 

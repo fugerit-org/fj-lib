@@ -20,7 +20,7 @@ public class VirtualPageCache<T> extends BasicLogObject implements Serializable 
 	private transient HashMap<String, CacheWrapper<T>> cache;
 	
 	// 12 hours
-	private final static long DEFAULT_TTL = TimeUnit.MILLISECONDS.convert( 12, TimeUnit.HOURS ); // was 12*60*60*1000L
+	private static final long DEFAULT_TTL = TimeUnit.MILLISECONDS.convert( 12, TimeUnit.HOURS ); // was 12*60*60*1000L
 	
 	// <code>true</code> it the wrapper is still valid
 	private boolean checkTtl( CacheWrapper<T> wrapper ) {

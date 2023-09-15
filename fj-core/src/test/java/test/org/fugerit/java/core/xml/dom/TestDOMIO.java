@@ -80,7 +80,7 @@ public class TestDOMIO extends BasicTest {
 	public void testNewUnsafeDocumentBuilderFactory() {
 		DocumentBuilderFactory dbf = DOMIO.newDocumentBuilderFactory( true );
 		log.info( "DOMIO.newDocumentBuilderFactory -> {}", dbf );
-		Assert.assertTrue( dbf != null );
+		Assert.assertNotNull( dbf );
 	}
 	
 	
@@ -88,7 +88,7 @@ public class TestDOMIO extends BasicTest {
 	public void testNewSafeDocumentBuilderFactory() {
 		DocumentBuilderFactory dbf = DOMIO.newSafeDocumentBuilderFactory();
 		log.info( "DOMIO.newSafeDocumentBuilderFactory -> {}", dbf );
-		Assert.assertTrue( dbf != null );
+		Assert.assertNotNull( dbf );
 	}
 	
 	@Test

@@ -52,9 +52,9 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 	private int handleRow( int start, String length, String name, List<FixedFieldDescriptor> listFields, int rowCount ) {
 		Integer len = Integer.valueOf( length );
 		FixedFieldDescriptor ffd = new FixedFieldDescriptor( name, start, len );
-		logger.info( "field descriptor : {}", ffd );
+		logger.info( "field descriptor : {}, rowCount : {}", ffd, rowCount );
 		listFields.add( ffd );
-		return (start+= len);
+		return (start+len);
 	}
 	
 	@Override

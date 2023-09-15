@@ -65,9 +65,9 @@ public class OpDAO<T> {
 		return op;
 	}
 
-	public final static int TYPE_UPDATE = 0;
-	public final static int TYPE_QUERY = 1;
-	public final static int TYPE_EXECUTE = 2;
+	public static final int TYPE_UPDATE = 0;
+	public static final int TYPE_QUERY = 1;
+	public static final int TYPE_EXECUTE = 2;
 
 	private String sql;
 	

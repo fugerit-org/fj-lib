@@ -16,9 +16,9 @@ public interface PagedResult<T> extends Result {
 	public static final int FIRST_PAGE_INDEX = 1;
 	
 	/**
-	 * The method getElementCount() returns this value if the element count is unavalable
+	 * The method getElementCount() returns this value if the element count is unavailable
 	 */
-	public final static Integer ELEMENT_COUNT_UNAVAILABLE = -1;
+	public static final Integer ELEMENT_COUNT_UNAVAILABLE = -1;
 	
 	/**
 	 * <p>The position of the first element of the current pages ( (currentPage-1) * perPage )</p> 

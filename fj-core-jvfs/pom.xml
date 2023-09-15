@@ -30,7 +30,7 @@
 	</organization>
 
 	<properties>
-		<fj-daogen-version>1.1.9</fj-daogen-version>
+		<fj-daogen-version>1.2.1</fj-daogen-version>
 		<gen.base.dir>${project.basedir}</gen.base.dir>
 		<generated.source.daogen>target/generated-sources/daogen</generated.source.daogen>
 	</properties>

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class TestDuplicateFailOnSet {
 
-	private final static Logger logger = LoggerFactory.getLogger( TestDuplicateFailOnSet.class );
+	private static final Logger logger = LoggerFactory.getLogger( TestDuplicateFailOnSet.class );
 	
 	private static final String CONF_PATH_DUPLICATE_FAIL_ON_SET = "core/util/filterchain/minifilter-test-duplicate-fail-on-set.xml";
 	

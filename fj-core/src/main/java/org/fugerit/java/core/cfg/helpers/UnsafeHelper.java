@@ -10,7 +10,7 @@ public class UnsafeHelper {
 
 	private UnsafeHelper() {}
 	
-	private final static Logger logger = LoggerFactory.getLogger( UnsafeHelper.class );
+	private static final Logger logger = LoggerFactory.getLogger( UnsafeHelper.class );
 	
 	public static final String UNSAFE_TRUE = BooleanUtils.BOOLEAN_TRUE;
 	public static final String UNSAFE_FALSE = BooleanUtils.BOOLEAN_FALSE;

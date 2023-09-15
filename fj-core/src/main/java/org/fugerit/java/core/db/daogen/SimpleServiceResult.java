@@ -8,14 +8,14 @@ import org.fugerit.java.core.util.result.Result;
 
 public class SimpleServiceResult<T> {
 
-	public final static int DEFAULT_OK = Result.RESULT_CODE_OK;
-	public final static int DEFAULT_KO = Result.RESULT_CODE_KO;
+	public static final int DEFAULT_OK = Result.RESULT_CODE_OK;
+	public static final int DEFAULT_KO = Result.RESULT_CODE_KO;
 	
-	public final static String INFO_RESULT = "result";
-	public final static String INFO_RESULT_MESSAGE = "resultMessage";
+	public static final String INFO_RESULT = "result";
+	public static final String INFO_RESULT_MESSAGE = "resultMessage";
 	
-	public final static String INFO_ESITO_OK_NO_DATA_FOUND = String.valueOf( 2 );
-	public final static String INFO_ESITO_OK_MULTIPLE_RESULTS = String.valueOf( 3 );
+	public static final String INFO_ESITO_OK_NO_DATA_FOUND = String.valueOf( 2 );
+	public static final String INFO_ESITO_OK_MULTIPLE_RESULTS = String.valueOf( 3 );
 	
 	public void addInfoEsito( String result, String resultMessage ) {
 		this.getInfo().put( INFO_RESULT , result );

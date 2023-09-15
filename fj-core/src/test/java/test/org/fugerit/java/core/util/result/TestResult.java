@@ -121,7 +121,7 @@ public class TestResult {
 	
 	@Test
 	public void testConstants() {
-		Assert.assertEquals( Integer.valueOf( -1 ) , PagedResult.ELEMENT_COUNT_UNAVAILABLE );
+		Assert.assertEquals( PagedResult.ELEMENT_COUNT_UNAVAILABLE, Integer.valueOf( -1 ) );
 		Assert.assertFalse( AbstractPagedResult.DEFAULT_SUPPORT_VIRTUAL_PAGING );
 	}
 	
@@ -135,7 +135,7 @@ public class TestResult {
 		log.info( "finder.getRealPerPage : {}", finder.getRealPerPage() );
 		log.info( "finder.isVirtualPagingUsed : {}", finder.isVirtualPagingUsed() );
 		log.info( "finder : {}", finder );
-		Assert.assertTrue( finder != null );
+		Assert.assertNotNull( finder );
 	}
 	
 	@Test

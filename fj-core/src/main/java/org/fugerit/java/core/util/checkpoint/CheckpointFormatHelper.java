@@ -27,21 +27,11 @@ public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
 	
 	// code added to setup a basic conditional serialization - END
 	
-	public static final StringFormat<Number> FORMAT_TIME_DEFAULT = new StringFormat<Number>() {
-		@Override
-		public String convert(Number input) {
-			return String.valueOf( input.longValue() );
-		}
-	};
+	public static final StringFormat<Number> FORMAT_TIME_DEFAULT = input -> String.valueOf( input.longValue() );
 	
 	public static final StringFormat<Number> FORMAT_TIME_NICE = FormatTime.DEFAULT;
 	
-	public static final StringFormat<Number> FORMAT_DURATION_DEFAULT = new StringFormat<Number>() {
-		@Override
-		public String convert(Number input) {
-			return String.valueOf( input.longValue() )+"ms";
-		}
-	};
+	public static final StringFormat<Number> FORMAT_DURATION_DEFAULT = input ->  String.valueOf( input.longValue() )+"ms";
 	
 	public static final StringFormat<Number> FORMAT_DURATION_NICE = MillisToSecondsFormat.INSTANCE_APPEND_SECOND;
 	
@@ -49,9 +39,9 @@ public class CheckpointFormatHelper implements CheckpointFormat, Serializable {
 	
 	public static final CheckpointFormat DEFAULT_DECORATION = new CheckpointFormatHelper( FORMAT_TIME_NICE , FORMAT_DURATION_NICE );
 	
-	public final static String TOKEN_START_DEF = "[";
-	public final static String TOKEN_END_DEF = "]";
-	public final static String TOKEN_SEPARATOR_DEF = ",";
+	public static final String TOKEN_START_DEF = "[";
+	public static final String TOKEN_END_DEF = "]";
+	public static final String TOKEN_SEPARATOR_DEF = ",";
 
 	public void formatDataHelperDefault( StringBuilder builder, CheckpointData data ) {
 		builder.append( this.tokenStart() );

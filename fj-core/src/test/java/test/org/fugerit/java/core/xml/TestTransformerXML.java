@@ -28,7 +28,7 @@ public class TestTransformerXML extends BasicTest {
 	public void newSafeTransformerFactory() {
 		TransformerFactory factory = TransformerXML.newSafeTransformerFactory();
 		log.info( "factory -> {}", factory );
-		Assert.assertTrue( factory != null );
+		Assert.assertNotNull( factory );
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ public class TestTransformerXML extends BasicTest {
 		features.setProperty( XMLConstants.FEATURE_SECURE_PROCESSING , BooleanUtils.BOOLEAN_FALSE );
 		TransformerFactory factory = TransformerXML.newSafeTransformerFactory( features );
 		log.info( "factory -> {}", factory );
-		Assert.assertTrue( factory != null );
+		Assert.assertNotNull( factory );
 	}
 	
 	@Test

@@ -14,8 +14,8 @@ import java.io.Writer;
  */
 public class CustomPrintWriter extends PrintWriter {
 	
-	public final static String WINDOWS_LINE_SEPARATOR = "\r\n";
-	public final static String DEFAULT_LINE_SEPARATOR = WINDOWS_LINE_SEPARATOR;
+	public static final String WINDOWS_LINE_SEPARATOR = "\r\n";
+	public static final String DEFAULT_LINE_SEPARATOR = WINDOWS_LINE_SEPARATOR;
 	
 	private String lineSeparator;
 	

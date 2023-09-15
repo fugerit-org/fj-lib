@@ -27,25 +27,23 @@ public class DefaultPagedResult<T> extends AbstractPagedResult<T>  implements Se
 	 * @return				the paged result
 	 */
 	public static <T> PagedResult<T>  newPagedResult( int perPage, long elementCount, int currentPage, List<T> pageElements ) {
-		int pageCount = calcPageCount( elementCount, perPage );
-		AbstractPagedResult<T> result = new DefaultPagedResult<T>( perPage, elementCount, currentPage, pageCount, pageElements, perPage, currentPage, null );
+		AbstractPagedResult<T> result = new DefaultPagedResult<T>( perPage, elementCount, currentPage, pageElements, perPage, currentPage, null );
 		return result;
 	}
 	
 	public static <T> PagedResult<T>  newPagedResult( int perPage, long elementCount, int currentPage, List<T> pageElements, int realPerPage, int realCurrentPage, String virtualKey ) {
-		int pageCount = calcPageCount( elementCount, perPage );
-		AbstractPagedResult<T> result = new DefaultPagedResult<T>( perPage, elementCount, currentPage, pageCount, pageElements, realPerPage, realCurrentPage, virtualKey );
+		AbstractPagedResult<T> result = new DefaultPagedResult<T>( perPage, elementCount, currentPage, pageElements, realPerPage, realCurrentPage, virtualKey );
 		return result;
 	}
 	
 	public static <T>  PagedResult<T>  newPagedResult( int resultCode ) {
-		DefaultPagedResult<T> result = new DefaultPagedResult<T>( -1, -1, -1, -1, null, -1, -1, null );
+		DefaultPagedResult<T> result = new DefaultPagedResult<T>( -1, -1, -1, null, -1, -1, null );
 		result.setResultCode( resultCode );
 		return result;
 	}
 	
-	protected DefaultPagedResult(int perPage, long elementCount, int currentPage, int pageCount, List<T> pageElements, int realPerPage, int realCurrentPage, String virtualKey) {
-		super(perPage, elementCount, currentPage, pageCount, pageElements);
+	protected DefaultPagedResult(int perPage, long elementCount, int currentPage, List<T> pageElements, int realPerPage, int realCurrentPage, String virtualKey) {
+		super(perPage, elementCount, currentPage, calcPageCount( elementCount, perPage ), pageElements);
 		this.realCurrentPage = realCurrentPage;
 		this.realPerPage = realPerPage;
 		this.virtualKey = virtualKey;

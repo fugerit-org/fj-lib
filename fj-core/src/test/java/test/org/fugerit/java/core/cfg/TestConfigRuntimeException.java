@@ -9,6 +9,8 @@ import org.junit.Test;
 
 public class TestConfigRuntimeException {
 	
+	private static final IOException TEST_IO_EX = new IOException( "test io ex" );
+	
 	@Test
 	public void testEx1() {
 		Assert.assertNotNull( new ConfigRuntimeException() );
@@ -66,7 +68,7 @@ public class TestConfigRuntimeException {
 	
 	@Test
 	public void testEx12() throws ConfigRuntimeException {
-		Assert.assertThrows( ConfigRuntimeException.class, () -> ConfigRuntimeException.stadardExceptionWrapping( new IOException( "n" ) ) );
+		Assert.assertThrows( ConfigRuntimeException.class, () -> ConfigRuntimeException.stadardExceptionWrapping( TEST_IO_EX ) );
 	}
 	
 }

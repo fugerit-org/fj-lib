@@ -34,8 +34,10 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.metadata.DataBaseInfo;
 import org.fugerit.java.core.function.UnsafeSupplier;
+import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.log.BasicLogObject;
+import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.xml.dom.DOMUtils;
 import org.fugerit.java.core.xml.dom.SearchDOM;
 import org.w3c.dom.Element;
@@ -175,11 +177,11 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	/**
 	 * Parse a configuration Element looking for ConnectionFactory configuration
 	 * 
-	 * @param cfConfig		the Element
-	 * @return			the CfConfig
-	 * @throws Exception	in case of issues
+	 * @param cfConfig			the Element
+	 * @return					the CfConfig
+	 * @throws DAOException		in case of issues
 	 */
-	public static CfConfig parseCfConfig( Element cfConfig ) throws Exception {
+	public static CfConfig parseCfConfig( Element cfConfig ) throws DAOException {
 		CfConfig config = new CfConfig();
 		SearchDOM searchDOM = SearchDOM.newInstance( true , true );
 		List<Element> cfConfigEntryList = searchDOM.findAllTags( cfConfig , "cf-config-entry" );
@@ -216,21 +218,6 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	}
 	
 	/**
-	 * Helper method to create a property with prefix
-	 * 
-	 * @param prefix	the prefix
-	 * @param name		the property base name
-	 * @return			the property full name ( prefix-name, or name if prefix == null)
-	 */
-	private static String getParamName( String prefix, String name ) {
-		String res = name;
-		if ( StringUtils.isNotEmpty( prefix ) ) {
-			res = prefix+"-"+name;
-		}
-		return res;
-	}
-	
-	/**
 	 * Creates a ConnectionFactory from a property object
 	 * 
 	 * @param props		the configuration properties
@@ -256,25 +243,24 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		}
 		ConnectionFactory cf = null;
 		String prefix = props.getProperty( PROP_CF_MODE_DC_PREFIX, propsPrefix );
-		String mode = props.getProperty( getParamName( prefix, PROP_CF_MODE ) );
+		Properties prefixProps = props;
+		if ( StringUtils.isNotEmpty( prefix ) ) {
+			prefixProps = PropsIO.subProps( props , prefix+"-" );
+			log.info( "subProps : {} -> {}", prefix, prefixProps );
+		}
+		String mode = prefixProps.getProperty( PROP_CF_MODE );
 		log.info( "ConnectionFactory.newInstance() mode : {}", mode );
 		if ( PROP_CF_MODE_DC.equalsIgnoreCase( mode ) ) {
-			if ( "true".equalsIgnoreCase( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED ) ) ) ) {
-				int sc = Integer.parseInt( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED_SC ), "3" ) );
-				int ic = Integer.parseInt( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED_IC ), "10" ) );
-				int mc = Integer.parseInt( props.getProperty( getParamName( prefix, PROP_CF_EXT_POOLED_MC ), "30" ) );
-				cf = new DbcpConnectionFactory( props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_DRV ) ), 
-						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_URL ) ),
-						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_USR ) ),
-						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_PWD ) ), sc, ic, mc, cl );
+			if ( BooleanUtils.isTrue( prefixProps.getProperty(PROP_CF_EXT_POOLED ) ) ) {
+				cf = new DbcpConnectionFactory(prefixProps, cl);
 			} else {
-				cf = newInstance( props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_DRV ) ), 
-						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_URL ) ),
-						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_USR ) ),
-						props.getProperty( getParamName( prefix, PROP_CF_MODE_DC_PWD ) ), cl );
+				cf = newInstance( prefixProps.getProperty( PROP_CF_MODE_DC_DRV ), 
+						prefixProps.getProperty(PROP_CF_MODE_DC_URL ),
+						prefixProps.getProperty(PROP_CF_MODE_DC_USR ),
+						prefixProps.getProperty(PROP_CF_MODE_DC_PWD ), cl );
 			}
 		} else if ( PROP_CF_MODE_DS.equalsIgnoreCase( mode ) || PROP_CF_MODE_DS2.equalsIgnoreCase( mode ) ) {
-			String dsName = props.getProperty( PROP_CF_MODE_DS_NAME );
+			String dsName = prefixProps.getProperty( PROP_CF_MODE_DS_NAME );
 			log.info( "dsName -> {}", dsName );
 			cf = newInstance( dsName );
 		} else {

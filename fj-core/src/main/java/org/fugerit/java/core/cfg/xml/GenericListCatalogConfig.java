@@ -279,7 +279,7 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 	 * 
 	 * @param <T>		the type of the elements in catalog
 	 * @param is		the input stream to load from
-	 * @param config	the instance to be configured
+	 * @param config	the instance to be configured (will be configured by side effect too)
 	 * @return			the configured instance
 	 * @throws 			ConfigRuntimeException in case of issues during loading
 	 */

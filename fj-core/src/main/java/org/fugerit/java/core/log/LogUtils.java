@@ -41,12 +41,7 @@ public class LogUtils {
 	}
 	
 	public static LogObject wrap( final Logger logger ) {
-		return new LogObject() {
-			@Override
-			public Logger getLogger() {
-				return logger;
-			}
-		};
+		return () -> logger;
 	}
 	
 }

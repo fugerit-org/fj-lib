@@ -25,6 +25,7 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.w3c.dom.Element;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
 
 public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 
@@ -116,10 +117,6 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 		validate(er, (Source)source, schemaListId);
 	}
 	
-	public static void validateWorker( ErrorHandler er, SAXSource source, Source[] xsds ) throws Exception {
-        validateWorker(er, (Source)source, xsds);
-	}
-	
 	public void validateCacheSchema( ErrorHandler er, Source source, String schemaListId ) throws Exception {
 		Schema schema = this.schemaMapCache.get( schemaListId );
 		if ( schema == null ) {
@@ -136,13 +133,41 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 		validateWorker( er, source, xsds );
 	}
 	
-	public static void validateWorker( ErrorHandler er, Source source, Source[] xsds ) throws Exception {
-        SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = sf.newSchema( xsds );
-        validateWorker(er, source, schema);
+	/**
+	 * <p>Validate an XML source.</p>
+	 * 
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param er		the error handler
+	 * @param source	the XML source
+	 * @param xsds		the reference XSD
+	 */
+	public static void validateWorker( ErrorHandler er, SAXSource source, Source[] xsds ) {
+        validateWorker(er, (Source)source, xsds);
 	}
 	
-	private static void validateWorker( ErrorHandler er, Source source, Schema schema ) throws Exception {
+	/**
+	 * <p>Validate an XML source.</p>
+	 * 
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param er		the error handler
+	 * @param source	the XML source
+	 * @param xsds		the reference XSD
+	 */
+	public static void validateWorker( ErrorHandler er, Source source, Source[] xsds ) {
+		SafeFunction.apply( () -> {
+			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+	        Schema schema = sf.newSchema( xsds );
+	        validateWorker(er, source, schema);
+		} );
+	}
+	
+	private static void validateWorker( ErrorHandler er, Source source, Schema schema ) throws SAXException, IOException {
         Validator validator = schema.newValidator();
         validator.setErrorHandler( er );
         validator.validate(source);

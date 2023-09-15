@@ -60,7 +60,6 @@ public class DbUtils {
 			dbType = DB_POSTGRESQL;
 			log.info( "IdGenerator configured for : POSTGRESQL ({}) was ({})", dbType, name );
 		} else {
-			dbType = DB_UNKNOWN;
 			log.info( "Unknown db type ({})", dbType );
 		}
 		return dbType;

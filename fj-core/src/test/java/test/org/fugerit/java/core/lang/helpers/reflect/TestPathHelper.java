@@ -11,15 +11,15 @@ import test.org.fugerit.java.BasicTest;
 
 public class TestPathHelper extends BasicTest {
 	
-	private final static int EXPECTED_RESULT_EXCEPTION = 1;
-	private final static int EXPECTED_RESULT_NULL = 2;
-	private final static int EXPECTED_RESULT_VALUE = 3;
+	private static final int EXPECTED_RESULT_EXCEPTION = 1;
+	private static final int EXPECTED_RESULT_NULL = 2;
+	private static final int EXPECTED_RESULT_VALUE = 3;
 	
-	private final static TestModelOne TEST_CASE_001 = new TestModelOne( new BigDecimal( 1 ), "value 001_1", new TestModelTwo( new BigDecimal( 2 ), "value 001_2" )  );
+	private static final TestModelOne TEST_CASE_001 = new TestModelOne( new BigDecimal( 1 ), "value 001_1", new TestModelTwo( new BigDecimal( 2 ), "value 001_2" )  );
 	
-	private final static TestModelOne TEST_CASE_002 = new TestModelOne();
+	private static final TestModelOne TEST_CASE_002 = new TestModelOne();
 	
-	private final static TestModelOne TEST_CASE_003 = new TestModelOne( new BigDecimal( 3 ), "value 003_1", null  );
+	private static final TestModelOne TEST_CASE_003 = new TestModelOne( new BigDecimal( 3 ), "value 003_1", null  );
 	
 	private void testLookupWorker( Object target, String path, boolean useMethodLookup, boolean continueOnNull, int expectedResult ) {
 		try {

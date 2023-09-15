@@ -10,6 +10,7 @@ import org.junit.Test;
 
 public class TestConfig {
 
+	
 	@Test
 	public void testClose() throws ConfigException {
 		// close config exception
@@ -25,7 +26,7 @@ public class TestConfig {
 		CloseHelper.closeRuntimeEx( CloseableFactory.DO_NOTHING_CLOSEABLE );
 		Assert.assertThrows( ConfigRuntimeException.class, () -> CloseHelper.closeRuntimeEx( CloseableFactory.ERROR_CLOSEABLE ) );
 		CloseHelper.closeRuntimeEx( CloseableFactory.wrap( CloseableFactory.DO_NOTHING_CLOSEABLE ) );
-		Assert.assertThrows( ConfigRuntimeException.class, () -> CloseHelper.closeRuntimeEx( CloseableFactory.wrap(  CloseableFactory.ERROR_CLOSEABLE ) ) );
+		Assert.assertThrows( ConfigRuntimeException.class, () -> CloseHelper.closeRuntimeEx( CloseableFactory.ERROR_AUTO_CLOSEABLE ) );
 		// close silent
 		CloseHelper.closeSilent( (Closeable)null );
 		CloseHelper.closeSilent( (AutoCloseable)null );

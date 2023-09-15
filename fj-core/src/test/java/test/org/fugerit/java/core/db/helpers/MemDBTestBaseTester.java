@@ -16,7 +16,7 @@ public class MemDBTestBaseTester extends MemDBTestBase {
 		super();
 	}
 
-	protected final static Logger logger = LoggerFactory.getLogger(RunListener.class);
+	protected static final Logger logger = LoggerFactory.getLogger(RunListener.class);
 
 	public void execute( Statement stm, String sql ) throws Exception {
 		logger.info( "Execute : "+sql+" START!" );

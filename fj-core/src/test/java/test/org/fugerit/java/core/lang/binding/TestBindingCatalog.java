@@ -19,7 +19,7 @@ import test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo;
 
 public class TestBindingCatalog {
 
-	private final static Logger logger = LoggerFactory.getLogger( TestBindingCatalog.class );
+	private static final Logger logger = LoggerFactory.getLogger( TestBindingCatalog.class );
 	
 	
 	private static BindingCatalogConfig init() {

@@ -39,7 +39,7 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 	abstract public int handleWorker( Properties params ) throws RunToolException;
 	
 	@Override
-	public int handle( Properties params ) throws Exception {
+	public int handle( Properties params ) {
 		int exit = EXIT_OK;
 		try {
 			exit = handleWorker( params );

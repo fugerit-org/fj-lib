@@ -149,7 +149,7 @@ public class TestRSE extends BasicDBHelper {
 		Assert.assertEquals( TEST_USERNAME , result.getProperty( "USERNAME" ) );
 	}
 	
-	private final static String SIMPLE_QUERY = "SELECT * FROM fugerit.user";
+	private static final String SIMPLE_QUERY = "SELECT * FROM fugerit.user";
 	
 	@Test
 	public void tesConnectionFacade() throws Exception {
