@@ -11,7 +11,7 @@
 		<relativePath></relativePath>
 	</parent>
 
-	<version>8.3.1</version>
+	<version>8.3.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>fj-lib</name>
@@ -24,7 +24,6 @@
 	    <maven.compiler.source>${java-version-compliance}</maven.compiler.source>
 	    <maven.compiler.target>${java-version-compliance}</maven.compiler.target>	
 	    <maven.compiler.release>${java-version-compliance}</maven.compiler.release>
-	    <fj-test-helper-version>0.5.0</fj-test-helper-version>    	
 	    <javax-rs-api-version>2.1.1</javax-rs-api-version>
 	    <fj-version>${project.version}</fj-version>
 	    <awaitility-version>4.2.0</awaitility-version>		
@@ -108,20 +107,7 @@
 				<artifactId>fj-core-jvfs</artifactId>
 				<version>${fj-version}</version>
 			</dependency>			
-
-			<dependency>
-				<groupId>org.fugerit.java</groupId>
-				<artifactId>fj-test-helper8</artifactId>
-				<version>${fj-test-helper-version}</version>
-				<scope>test</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>*</groupId>
-						<artifactId>*</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>			
-
+			
 		</dependencies>
 
 	</dependencyManagement>
