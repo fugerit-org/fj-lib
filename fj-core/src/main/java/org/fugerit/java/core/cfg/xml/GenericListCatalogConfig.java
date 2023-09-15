@@ -15,9 +15,11 @@ import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.helpers.AbstractConfigurableObject;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
 import org.fugerit.java.core.cfg.provider.ConfigProviderFacade;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
@@ -268,11 +270,26 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 
 	private Set<String> entryIdCheck;
 	
-	public static <T> GenericListCatalogConfig<T> load( InputStream is, GenericListCatalogConfig<T> config ) throws Exception {
-		Document doc = DOMIO.loadDOMDoc( is, true );
-		Element root = doc.getDocumentElement();
-		config.configure( root );
-		return config;
+	/**
+	 * <p>Configure an instance of GenericListCatalogConfig</p>
+	 * 
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param <T>		the type of the elements in catalog
+	 * @param is		the input stream to load from
+	 * @param config	the instance to be configured
+	 * @return			the configured instance
+	 * @throws 			ConfigRuntimeException in case of issues during loading
+	 */
+	public static <T> GenericListCatalogConfig<T> load( InputStream is, GenericListCatalogConfig<T> config ) {
+		return SafeFunction.get( () -> {
+			Document doc = DOMIO.loadDOMDoc( is, true );
+			Element root = doc.getDocumentElement();
+			config.configure( root );
+			return config;	
+		} );
 	}
 
 	protected Set<String> getEntryIdCheck() {

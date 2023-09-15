@@ -3,6 +3,7 @@ package org.fugerit.java.core.lang.binding;
 import java.io.InputStream;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
 import org.fugerit.java.core.cfg.xml.CustomListCatalogConfig;
 import org.fugerit.java.core.cfg.xml.XmlBeanHelper;
@@ -72,7 +73,18 @@ public class BindingCatalogConfig extends CustomListCatalogConfig<BindingFieldCo
 	 */
 	private static final long serialVersionUID = 5246222821349199544L;
 
-	public static BindingCatalogConfig loadConfig( InputStream is ) throws Exception {
+	/**
+	 * <p>Create and configure an instance of BindingCatalogConfig</p>
+	 * 
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param is		the input stream to load from
+	 * @return			the configured instance
+	 * @throws 			ConfigRuntimeException in case of issues during loading
+	 */
+	public static BindingCatalogConfig loadConfig( InputStream is ) {
 		BindingCatalogConfig config = new BindingCatalogConfig();
 		load( is , config );
 		return config;
