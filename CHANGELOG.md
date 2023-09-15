@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- fj-bom updated to 1.3.8
+- fj-bom updated to 1.3.8 [Apache Commons Compress denial of service vulnerability](https://github.com/fugerit-org/fj-lib/security/dependabot/7)
 - fj-test-helper8 to 0.5.0
 - MetaDataUtils types constant arrays removed in favor of public builder methods (may raise minor compatibility issues)
 
@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Javadoc generation with java 17
 - VirtualPageCache entry store did not work properly
+
+### Security
+
+- [Apache Commons Compress denial of service vulnerability](https://github.com/fugerit-org/fj-lib/security/dependabot/7)
 
 ## [8.2.8] - 2023-09-13
 
