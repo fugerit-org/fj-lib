@@ -9,7 +9,9 @@ Provides helper libraries for other java projects (io, configuration, etc.)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fugerit-org_fj-lib&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fugerit-org_fj-lib)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=fugerit-org_fj-lib&metric=coverage)](https://sonarcloud.io/summary/new_code?id=fugerit-org_fj-lib)
 
-**Note : Starting from version 0.7+, minimum required java version changed to 1.8**
+![Java runtime version](https://img.shields.io/badge/run%20on-java%208+-%23113366.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Java build version](https://img.shields.io/badge/build%20on-java%2011+-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Apache Maven](https://img.shields.io/badge/Apache%20Maven-3.9.0+-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
 
 Useful resources : 
 * [Jupiter - Fugerit Java Library Home](https://www.fugerit.org/perm/jupiter/) - Home page to the project
