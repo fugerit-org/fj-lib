@@ -102,7 +102,7 @@ public class TableId implements KeyObject<String> {
 	}
 	
 	public String toIdString() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		CollectionUtils.addIfNotNull( list , this.getTableCatalog() );
 		CollectionUtils.addIfNotNull( list , this.getTableSchema() );
 		CollectionUtils.addIfNotNull( list , this.getTableName() );

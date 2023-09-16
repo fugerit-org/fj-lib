@@ -27,7 +27,7 @@ import org.w3c.dom.Document;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
-import test.org.fugerit.java.core.db.BasicDBHelper;
+import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
 public class TestConnectionFactory extends BasicTest {
@@ -50,7 +50,7 @@ public class TestConnectionFactory extends BasicTest {
 	@Test
 	public void testCFProps() throws Exception {
 		String name = "wrapped";
-		Properties props= PropsIO.loadFromClassLoaderSafe( BasicDBHelper.DEFAULT_DB_CONN_PATH );
+		Properties props= PropsIO.loadFromClassLoaderSafe( TestBasicDBHelper.DEFAULT_DB_CONN_PATH );
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_EXT_POOLED_IC , "1" );
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_EXT_POOLED_SC , "1" );
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_EXT_POOLED_MC , "3" );
@@ -117,6 +117,12 @@ public class TestConnectionFactory extends BasicTest {
 	@Test
 	public void testCFDS() throws Exception {
 		boolean ok = this.worker( new ConnectionFacadeWrapper( ConnectionFactoryImpl.newInstance( this.createDS() ) ) );
+		Assert.assertTrue(ok);
+	}
+	
+	@Test
+	public void testCFDSTestConn() throws Exception {
+		boolean ok = this.worker( new ConnectionFacadeWrapper( ConnectionFactoryImpl.newInstance( this.createDS(), true ) ) );
 		Assert.assertTrue(ok);
 	}
 	

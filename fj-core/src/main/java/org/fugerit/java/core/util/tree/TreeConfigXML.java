@@ -72,8 +72,7 @@ public class TreeConfigXML<T extends Node<T, L>, L extends Collection<T>> extend
 	
 	protected T setupData( Element tag ) throws Exception {
 		String type = this.getGeneralProps().getProperty( ATT_TYPE );
-		T obj = XmlBeanHelper.setFromElement( type , tag );
-		return obj;
+		return XmlBeanHelper.setFromElement( type , tag );
 	}
 	
 	private T configureCurrent( T root, Element current ) throws ConfigException {

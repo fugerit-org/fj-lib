@@ -34,7 +34,7 @@ public class BasicDAOFactory implements DAOFactory {
 
 	private DAOUtils daoUtils;
 	
-	public Object[] sqlArgs = new Object[0];
+	private Object[] sqlArgs = new Object[0];
 	
     /* (non-Javadoc)
 	 * @see org.fugerit.java.core.db.dao.DAOFactory#getConnection()

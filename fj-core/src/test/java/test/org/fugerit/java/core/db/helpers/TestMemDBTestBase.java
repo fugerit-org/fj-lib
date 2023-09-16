@@ -10,9 +10,9 @@ import org.junit.runner.notification.RunListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MemDBTestBaseTester extends MemDBTestBase {
+public class TestMemDBTestBase extends MemDBTestBase {
 
-	public MemDBTestBaseTester() throws Exception {
+	public TestMemDBTestBase() throws Exception {
 		super();
 	}
 

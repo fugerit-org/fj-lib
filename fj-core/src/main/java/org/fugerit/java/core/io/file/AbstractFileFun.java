@@ -23,12 +23,6 @@ public abstract class AbstractFileFun implements FileFun {
     }
     
     /* (non-Javadoc)
-     * @see org.fugerit.java.core.io.FileFun#handleFile(java.io.File)
-     */
-    @Override
-    public abstract void handleFile(File file) throws IOException;
-    
-    /* (non-Javadoc)
      * @see org.fugerit.java.core.io.FileFun#handleFile(java.lang.String, java.lang.String)
      */
     @Override

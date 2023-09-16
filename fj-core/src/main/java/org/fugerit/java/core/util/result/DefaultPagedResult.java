@@ -27,17 +27,15 @@ public class DefaultPagedResult<T> extends AbstractPagedResult<T>  implements Se
 	 * @return				the paged result
 	 */
 	public static <T> PagedResult<T>  newPagedResult( int perPage, long elementCount, int currentPage, List<T> pageElements ) {
-		AbstractPagedResult<T> result = new DefaultPagedResult<T>( perPage, elementCount, currentPage, pageElements, perPage, currentPage, null );
-		return result;
+		return new DefaultPagedResult<>( perPage, elementCount, currentPage, pageElements, perPage, currentPage, null );
 	}
 	
 	public static <T> PagedResult<T>  newPagedResult( int perPage, long elementCount, int currentPage, List<T> pageElements, int realPerPage, int realCurrentPage, String virtualKey ) {
-		AbstractPagedResult<T> result = new DefaultPagedResult<T>( perPage, elementCount, currentPage, pageElements, realPerPage, realCurrentPage, virtualKey );
-		return result;
+		return new DefaultPagedResult<>( perPage, elementCount, currentPage, pageElements, realPerPage, realCurrentPage, virtualKey );
 	}
 	
 	public static <T>  PagedResult<T>  newPagedResult( int resultCode ) {
-		DefaultPagedResult<T> result = new DefaultPagedResult<T>( -1, -1, -1, null, -1, -1, null );
+		DefaultPagedResult<T> result = new DefaultPagedResult<>( -1, -1, -1, null, -1, -1, null );
 		result.setResultCode( resultCode );
 		return result;
 	}

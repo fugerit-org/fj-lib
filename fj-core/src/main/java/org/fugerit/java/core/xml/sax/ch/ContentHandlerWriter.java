@@ -20,11 +20,12 @@ public class ContentHandlerWriter implements ContentHandler {
 	private PrintWriter writer;
 	
 	private void println( String line ) {
-		String prefix = "";
+		StringBuilder builder = new StringBuilder();
 		for (int k=0; k<this.depth; k++) {
-			prefix+= "  ";
+			builder.append( "  " );
 		}
-		this.writer.println( prefix+line );
+		builder.append( line );
+		this.writer.println( builder.toString() );
 	}
 	
 	/* (non-Javadoc)

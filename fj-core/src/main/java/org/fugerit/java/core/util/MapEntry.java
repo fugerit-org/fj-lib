@@ -15,7 +15,7 @@ public class MapEntry<K, V> implements KeyObject<K> {
 	}
 
 	public void setKey(K key) {
-		this.entry = new AbstractMap.SimpleEntry<K, V>( key, this.getValue() );
+		this.entry = new AbstractMap.SimpleEntry<>( key, this.getValue() );
 	}
 
 	public V getValue() {
@@ -28,7 +28,7 @@ public class MapEntry<K, V> implements KeyObject<K> {
 
 	public MapEntry(K key, V value) {
 		super();
-		this.entry = new AbstractMap.SimpleEntry<K, V>( key, value );
+		this.entry = new AbstractMap.SimpleEntry<>( key, value );
 	}
 
 	public MapEntry() {

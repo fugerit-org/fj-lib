@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.fixed.parser.FixedFieldDescriptor;
 import org.fugerit.java.core.fixed.parser.FixedFieldFileDescriptor;
-import org.fugerit.java.core.fixed.parser.FixedFieldFileReader;
 import org.fugerit.java.core.fixed.parser.FixedFileFieldBasicValidator;
 import org.fugerit.java.core.fixed.parser.FixedFileFieldMap;
 import org.fugerit.java.core.fixed.parser.FixedFileFieldValidationResult;
@@ -20,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class  FixedFieldFileReaderAbstract {
 	
-	protected static Logger logger = LoggerFactory.getLogger( FixedFieldFileReader.class );
+	protected static Logger logger = LoggerFactory.getLogger( FixedFieldFileReaderAbstract.class );
 	
 	private String endline;
 	
@@ -37,7 +36,7 @@ public abstract class  FixedFieldFileReaderAbstract {
 		} else {
 			this.endline = null;
 		}
-		this.genericValidationErrors = new ArrayList<FixedFileFieldValidationResult>();
+		this.genericValidationErrors = new ArrayList<>();
 	}
 	
 	public static final Properties endlineMapper() {

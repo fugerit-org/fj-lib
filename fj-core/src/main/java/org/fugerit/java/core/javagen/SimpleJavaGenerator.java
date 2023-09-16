@@ -2,7 +2,6 @@ package org.fugerit.java.core.javagen;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -148,7 +147,7 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	
 	public abstract void generateBody() throws IOException;
 	
-	protected void customPartWorker( String startTag, String endTag, String indent ) throws FileNotFoundException, IOException {
+	protected void customPartWorker( String startTag, String endTag, String indent ) throws IOException {
 		if ( !this.isNoCustomComment() ) {
 			customPartWorker( this.getJavaFile(), this.getWriter(), startTag, endTag, indent );
 		}

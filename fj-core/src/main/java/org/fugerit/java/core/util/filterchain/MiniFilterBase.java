@@ -12,7 +12,7 @@ public abstract class MiniFilterBase implements MiniFilter {
 		return UUID.randomUUID().toString();
 	}
 	
-	protected static Logger logger = LoggerFactory.getLogger( MiniFilter.class );
+	protected static Logger logger = LoggerFactory.getLogger( MiniFilterBase.class );
 
 	protected MiniFilterBase( String key, String description, int defaultBehaviour ) {
 		this.key = key;
@@ -105,8 +105,5 @@ public abstract class MiniFilterBase implements MiniFilter {
 		this.description = description;
 		this.defaultBehaviour = defaultBehaviour.intValue();
 	}
-
-	@Override
-	public abstract int apply(MiniFilterContext context, MiniFilterData data) throws Exception;
 	
 }

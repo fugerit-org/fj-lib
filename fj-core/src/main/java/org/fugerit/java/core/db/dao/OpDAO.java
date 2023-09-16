@@ -41,7 +41,7 @@ public class OpDAO<T> {
 	}
 	
 	public static <T> OpDAO<T> newExecuteOp( String sql, FieldList fl ) {
-		OpDAO<T> op = new OpDAO<T>();
+		OpDAO<T> op = new OpDAO<>();
 		op.setType( TYPE_EXECUTE );
 		op.setFieldList( fl );
 		op.setSql( sql );
@@ -49,7 +49,7 @@ public class OpDAO<T> {
 	}
 	
 	public static <T> OpDAO<T> newQueryOp( String sql, FieldList fl, RSExtractor<T> rse ) {
-		OpDAO<T> op = new OpDAO<T>();
+		OpDAO<T> op = new OpDAO<>();
 		op.setType( TYPE_QUERY );
 		op.setFieldList( fl );
 		op.setSql( sql );
@@ -58,7 +58,7 @@ public class OpDAO<T> {
 	}
 	
 	public static <T> OpDAO<T> newUpdateOp( String sql, FieldList fl ) {
-		OpDAO<T> op = new OpDAO<T>();
+		OpDAO<T> op = new OpDAO<>();
 		op.setType( TYPE_UPDATE );
 		op.setFieldList( fl );
 		op.setSql( sql );

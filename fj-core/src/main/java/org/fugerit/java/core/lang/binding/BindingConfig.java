@@ -11,6 +11,18 @@ import org.w3c.dom.Element;
 
 public class BindingConfig extends ListMapStringKey<BindingFieldConfig> implements IdConfigType, KeyObject<String>, ListMapConfigurable {
 
+	@Override
+	public int hashCode() {
+		// super class implementation is ok
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		// super class implementation is ok - is equals if all contained elements are equals
+		return super.equals(o);
+	}
+	
 	private BindingCatalogConfig catalog;
 	
 	private Properties config = new Properties();

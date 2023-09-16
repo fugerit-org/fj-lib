@@ -187,7 +187,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 		List<Element> cfConfigEntryList = searchDOM.findAllTags( cfConfig , "cf-config-entry" );
 		Iterator<Element> cfConfigEntryIt = cfConfigEntryList.iterator();
 		while ( cfConfigEntryIt.hasNext() ) {
-			Element currentEntryTag = (Element) cfConfigEntryIt.next();
+			Element currentEntryTag = cfConfigEntryIt.next();
 			Properties props = DOMUtils.attributesToProperties( currentEntryTag );
 			String id = props.getProperty( "id" );
 			if ( StringUtils.isEmpty( id ) ) {
@@ -321,7 +321,7 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 			if ( cl != null ) {
 				driver = (Driver)cl.loadClass( drv ).getDeclaredConstructor().newInstance();
 			} else {
-				driver= (Driver)Class.forName( drv ).asSubclass( Driver.class ).getDeclaredConstructor().newInstance();
+				driver= Class.forName( drv ).asSubclass( Driver.class ).getDeclaredConstructor().newInstance();
 			}
 			return newInstance(driver, url, usr, pwd);
 		});
@@ -347,38 +347,47 @@ public abstract class ConnectionFactoryImpl extends BasicLogObject implements Co
 	 * @throws DAOException		in case of issues
 	 */
 	public static ConnectionFactoryImpl newInstance(DataSource ds) throws DAOException {
+		return newInstance( ds, false );
+	}	
+
+	public static ConnectionFactoryImpl newInstance(DataSource ds, boolean testConn) throws DAOException {
 		log.info( "ConnectionFactoryImpl.newInstance() data source : {}", ds );
-		return new SupplierConnectionFactory( "dataSourceSupplier" , ds::getConnection );
+		return new SupplierConnectionFactory( "dataSourceSupplier" , ds::getConnection, testConn );
 	}	
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#getConnection()
-	 */
-	@Override
-	public abstract Connection getConnection() throws DAOException;
-
 	/*
 	 * (non-Javadoc)
 	 * @see org.fugerit.java.core.db.connect.ConnectionFactory#release()
 	 */
 	@Override
 	public void release() throws DAOException {
-		
+		// do nothing implementation : sub classes should override it
 	}	
 	
 }
 
+@Slf4j
 class SupplierConnectionFactory extends ConnectionFactoryImpl {
 	
 	private String description;
 	
 	private UnsafeSupplier<Connection, Exception> supplier;
 
-	public SupplierConnectionFactory(String description, UnsafeSupplier<Connection, Exception> supplier) {
+	public SupplierConnectionFactory(String description, UnsafeSupplier<Connection, Exception> supplier) throws DAOException {
+		this( description, supplier, false );
+	}
+	
+	public SupplierConnectionFactory(String description, UnsafeSupplier<Connection, Exception> supplier, boolean checkConn) throws DAOException {
 		super();
 		this.description = description;
 		this.supplier = supplier;
+		if ( checkConn ) {
+			DAOException.apply( () -> {
+				try ( Connection conn = supplier.get() ) {
+					log.info( "check connection ok {}", conn );
+				}	
+			});
+		}
 	}
 
 	@Override

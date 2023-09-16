@@ -77,15 +77,15 @@ public class Result implements Serializable {
 	    }
 	    
 	    public Exception getWarning(int index) {
-	        return (Exception)this.warningList.get(index);
+	        return this.warningList.get(index);
 	    }
 	    
 	    public Exception getFatal(int index) {
-	        return (Exception)this.fatalList.get(index);
+	        return this.fatalList.get(index);
 	    }    
 	    
 	    public Exception getError(int index) {
-	        return (Exception)this.errorList.get(index);
+	        return this.errorList.get(index);
 	    }
 	    
 	    private List<Exception> errorList;
@@ -99,9 +99,9 @@ public class Result implements Serializable {
 	     */
 	    public Result() {
 	        super();
-	        this.errorList = new ArrayList<Exception>();
-	        this.fatalList = new ArrayList<Exception>();
-	        this.warningList = new ArrayList<Exception>();
+	        this.errorList = new ArrayList<>();
+	        this.fatalList = new ArrayList<>();
+	        this.warningList = new ArrayList<>();
 	    }
 	    
 	    public Collection<Exception> errors() {

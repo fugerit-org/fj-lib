@@ -9,9 +9,9 @@ import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import test.org.fugerit.java.core.db.BasicDBHelper;
+import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestCloseDAOHelper extends BasicDBHelper {
+public class TestCloseDAOHelper extends TestBasicDBHelper {
 
 	@Test
 	public void testClose1() {

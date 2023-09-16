@@ -40,7 +40,7 @@ public class CfConfig {
 	 * 
 	 */
 	public CfConfig() {
-		this.cfMap = new HashMap<String, ConnectionFactory>();
+		this.cfMap = new HashMap<>();
 	}
 	
 	private Map<String, ConnectionFactory> cfMap;

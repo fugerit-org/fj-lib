@@ -74,7 +74,7 @@ public class MetaDataUtils {
 	}
 	
 	public static final List<String> tableListAll() {
-		List<String> tableNameList = new ArrayList<String>();
+		List<String> tableNameList = new ArrayList<>();
 		tableNameList.add( "*" );
 		return tableNameList;
 	}
@@ -85,10 +85,10 @@ public class MetaDataUtils {
 		List<ColumnModel> columnList = tableModel.getColumnList();
 		StringBuilder insertSQL = new StringBuilder();
 		StringBuilder tmpBuffer = new StringBuilder();
-		insertSQL.append( "INSERT INTO "+tableModel.getName()+" ( "+((ColumnModel)columnList.get( 0 )).getName() );
+		insertSQL.append( "INSERT INTO "+tableModel.getName()+" ( "+(columnList.get( 0 )).getName() );
 		tmpBuffer.append( " VALUES ( ? " );
 		for ( int k=1; k<columnList.size(); k++ ) {
-			insertSQL.append( ", "+	((ColumnModel)columnList.get( k )).getName() );
+			insertSQL.append( ", "+	(columnList.get( k )).getName() );
 			tmpBuffer.append( ", ? " );
 		}
 		insertSQL.append( ") " );
@@ -201,7 +201,7 @@ public class MetaDataUtils {
 		}
 	}
 
-	private static void handleCurrentTableIndex( TableModel tableModel, DatabaseMetaData dbmd, int mode ) throws SQLException, DAOException{
+	private static void handleCurrentTableIndex( TableModel tableModel, DatabaseMetaData dbmd, int mode ) throws SQLException {
 		if ( mode == MODE_STRICT ) {
 			try ( ResultSet pkRS = dbmd.getPrimaryKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() ) ) {
 				IndexModel primaryKey = new IndexModel();
@@ -222,7 +222,7 @@ public class MetaDataUtils {
 		try ( ResultSet indexRS = dbmd.getIndexInfo( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName(), true, true ); ) {
 			while ( indexRS.next() ) {
 				String indexName = indexRS.getString( "INDEX_NAME" );
-				IndexModel indexModel = (IndexModel)tableModel.getIndexMap().get( indexName );
+				IndexModel indexModel = tableModel.getIndexMap().get( indexName );
 				if ( indexModel==null ) {
 					indexModel = new IndexModel();
 					indexModel.setName( indexName );
@@ -230,19 +230,19 @@ public class MetaDataUtils {
 				}
 				String columnName = indexRS.getString( S_COLUMN_NAME );
 				if ( columnName != null ) {
-					indexModel.addColumn( (ColumnModel)tableModel.getColumnMap().get( columnName ) );	
+					indexModel.addColumn( tableModel.getColumnMap().get( columnName ) );	
 				}
 			}
 		}
 	}
 	
-	private static void handleCurrentTableStrict( TableModel tableModel, DatabaseMetaData dbmd, int mode ) throws SQLException, DAOException {
+	private static void handleCurrentTableStrict( TableModel tableModel, DatabaseMetaData dbmd, int mode ) throws SQLException {
 		if ( mode == MODE_STRICT ) {
 			// estrazione chiavi esterne
 			ResultSet foreignRS = dbmd.getImportedKeys( tableModel.getCatalog(), tableModel.getSchema(), tableModel.getName() );
 			while ( foreignRS.next() ) {
 				String foreignName = foreignRS.getString( "FK_NAME" );
-				ForeignKeyModel foreignKeyModel = (ForeignKeyModel)tableModel.getForeignKeyMap().get( foreignName );
+				ForeignKeyModel foreignKeyModel = tableModel.getForeignKeyMap().get( foreignName );
 				if ( foreignKeyModel == null ) {
 					foreignKeyModel = new ForeignKeyModel();
 					foreignKeyModel.setName( foreignName );

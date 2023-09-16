@@ -44,8 +44,10 @@ public class MillisToSecondsFormat implements StringFormat<Number>, Serializable
 		builder.append( (time/1000) );
 		builder.append( "." );
 		String millis = String.valueOf( (time%1000) );
-		while ( millis.length() < 3 ) {
-			millis = "0"+millis;
+		int pad = 3-millis.length();
+		while ( pad>0 ) {
+			builder.append( "0" );
+			pad--;
 		}
 		builder.append( millis );
 		if ( StringUtils.isNotEmpty( this.getAppend() ) ) {

@@ -36,7 +36,7 @@ public class StreamFixedFieldFileReader extends FixedFieldFileReaderAbstract {
 					found = true;
 				} 	
 			}
-			if ( this.getGenericValidationErrors().size() > 0 ) {
+			if ( !this.getGenericValidationErrors().isEmpty() ) {
 				this.linebuffer = null;
 			}
 		}

@@ -11,6 +11,18 @@ public class FixedFileFieldMap extends HashMap<String, String> {
 	 */
 	private static final long serialVersionUID = 4410493087160204864L;
 
+	@Override
+	public int hashCode() {
+		// super class implementation is ok
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		// super class implementation is ok
+		return super.equals(o);
+	}
+	
 	private List<FixedFileFieldValidationResult> validationErrors;
 
 	public List<FixedFileFieldValidationResult> getValidationErrors() {
@@ -19,7 +31,7 @@ public class FixedFileFieldMap extends HashMap<String, String> {
 	
 	public FixedFileFieldMap( int recordLength, int currentRow ) {
 		super();
-		this.validationErrors = new ArrayList<FixedFileFieldValidationResult>();
+		this.validationErrors = new ArrayList<>();
 		this.recordLength = recordLength;
 		this.currentRow = currentRow;
 	}

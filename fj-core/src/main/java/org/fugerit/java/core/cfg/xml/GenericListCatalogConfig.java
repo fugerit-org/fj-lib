@@ -139,12 +139,12 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 	 * @param attTagData		attribute name to use for data entry
 	 */
 	public GenericListCatalogConfig( String attTagDataList, String attTagData ) {
-		this.dataMap = new HashMap<String, Collection<T>>();
+		this.dataMap = new HashMap<>();
 		this.attTagDataList = attTagDataList;
 		this.attTagData = attTagData;
 		this.generalProps = new Properties();
-		this.orderedId = new ConcurrentSkipListSet<String>();
-		this.entryIdCheck = new HashSet<String>();
+		this.orderedId = new ConcurrentSkipListSet<>();
+		this.entryIdCheck = new HashSet<>();
 	}
 
 	/**
@@ -310,9 +310,9 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 				throw new ConfigException( e );
 			}
 		} else  if ( typeSample instanceof KeyObject<?> ) {
-			c = new ListMapConfig<T>();
+			c = new ListMapConfig<>();
 		} else {
-			c = new ArrayList<T>();
+			c = new ArrayList<>();
 		}
 		if ( c instanceof ListMapConfig ) {
 			((ListMapConfig<T>)c).initFromElementAttributes( current );

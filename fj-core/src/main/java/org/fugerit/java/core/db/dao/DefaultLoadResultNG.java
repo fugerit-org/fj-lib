@@ -58,11 +58,11 @@ public class DefaultLoadResultNG<T> implements LoadResultNG<T> {
 	}
 
 	public static <T> LoadResultNG<T> newLoadResult( RSExtractor<T> rse, Statement stm, ResultSet rs ) {
-		return new DefaultLoadResultNG<T>( rse, stm, rs );
+		return new DefaultLoadResultNG<>( rse, stm, rs );
 	}
 	
 	public static <T> LoadResultNG<T> newLoadResult( Connection conn, RSExtractor<T> rse, Statement stm, ResultSet rs ) {
-		return new CloseConnectionLoadResultNG<T>( rse, stm, rs, conn );
+		return new CloseConnectionLoadResultNG<>( rse, stm, rs, conn );
 	}
 	
 	public static <T> LoadResultNG<T> newLoadResult( Connection conn, OpDAO<T> opDAO ) {

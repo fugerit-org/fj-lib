@@ -17,7 +17,7 @@ public class BasicResult extends BasicLogObject implements Result {
 	
 	public BasicResult( int resultCode ) {
 		this.resultCode = resultCode;
-		this.infoMap = new HashMap<String, Object>();
+		this.infoMap = new HashMap<>();
 	}
 		
 	@Override

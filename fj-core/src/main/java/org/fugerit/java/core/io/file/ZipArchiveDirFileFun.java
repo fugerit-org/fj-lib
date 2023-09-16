@@ -11,7 +11,7 @@ import org.fugerit.java.core.io.StreamIO;
 
 public class ZipArchiveDirFileFun extends BaseArchiveDirFileFun {
 	
-	public static final String[] FORMAT_LIST = { "zip", "ZIP" };
+	private static final String[] FORMAT_LIST = { "zip", "ZIP" };
 	
 	private ZipOutputStream stream;
 	

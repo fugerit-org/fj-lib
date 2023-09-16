@@ -36,6 +36,18 @@ public class ListMapStringKey<T> extends ListMap<String, T> {
 	 */
 	private static final long serialVersionUID = -3178662537960623081L;
 
+	@Override
+	public int hashCode() {
+		// super class implementation is ok
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		// super class implementation is ok - is equals if all contained elements are equals
+		return super.equals(o);
+	}
+	
 	/**
 	 * Default constructor
 	 * 

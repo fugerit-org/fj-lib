@@ -6,11 +6,6 @@
     </Console>
   </Appenders>
   <Loggers>
-  <!-- 
-    <Logger name="org.fugerit.java.core.db.daogen.BasicDAOHelper" level="INFO">
-    	<AppenderRef ref="Console"/>
-    </Logger>
-    -->
     <Root level="DEBUG">
       <AppenderRef ref="Console"/>
     </Root>

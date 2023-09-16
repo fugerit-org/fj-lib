@@ -38,8 +38,7 @@ public class LoadResult<T> extends BasicLogObject {
 	}
 
 	public static <T> LoadResult<T> initResult( BasicDAO<T> basicDAO, String query, FieldList fields, RSExtractor<T> re ) {
-		LoadResult<T> loadResult = new LoadResult<T>( re, fields, query, basicDAO );
-		return loadResult;
+		return new LoadResult<>( re, fields, query, basicDAO );
 	}
 	
 	private RSExtractor<T> re;

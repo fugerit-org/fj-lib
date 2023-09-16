@@ -174,18 +174,15 @@ public class BasicDAOHelper<T> implements LogObject {
 	}
 	
 	public InsertHelper newInsertHelper( String tableName ) {
-		InsertHelper query = new InsertHelper( tableName , this.newFieldList() );
-		return query;
+		return new InsertHelper( tableName , this.newFieldList() );
 	}
 	
 	public UpdateHelper newUpdateHelper( String tableName ) {
-		UpdateHelper query = new UpdateHelper( tableName , this.newFieldList() );
-		return query;
+		return new UpdateHelper( tableName , this.newFieldList() );
 	}
 	
 	public DeleteHelper newDeleteHelper( String tableName ) {
-		DeleteHelper query = new DeleteHelper( tableName , this.newFieldList() );
-		return query;
+		return new DeleteHelper( tableName , this.newFieldList() );
 	}
 	
 	

@@ -59,7 +59,7 @@ public class SearchDOM {
     }
     
     private static List<Element> makeList(Element base) {
-        List<Element> list = new ArrayList<Element>();
+        List<Element> list = new ArrayList<>();
         list.add(base);
         return list;
     }
@@ -82,7 +82,7 @@ public class SearchDOM {
         String text = null;
         List<String> list = this.findAllText(node);
         if (!list.isEmpty()) {
-            text = (String)list.get(0);
+            text = list.get(0);
         }
         return text;
     }
@@ -94,7 +94,7 @@ public class SearchDOM {
      * @return		list of text
      */
     public List<String> findAllText(Element node) {
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         NodeList kids = node.getChildNodes();
         for (int k=0; k<kids.getLength(); k++) {
             String text = this.getText(kids.item(k));
@@ -113,7 +113,7 @@ public class SearchDOM {
      * @return			the list of element
      */
     public List<Element> findAllTags(Element node, String name) {
-        List<Element> result = new ArrayList<Element>();
+        List<Element> result = new ArrayList<>();
         List<Element> search = makeList(node);
         Element tag = findTag(search, name);
         while (tag!=null) {
@@ -137,7 +137,7 @@ public class SearchDOM {
     private Element findTag(List<Element> queue, String name) {
         Element tag = null;
         while (tag==null && !queue.isEmpty()) {
-            Element current = (Element)queue.remove(0);
+            Element current = queue.remove(0);
             if (current.getTagName().equals(name)) {
                 tag = current;
             }

@@ -45,6 +45,8 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
  */
 public class StreamHelper {
 
+	public static final String SLASH = "/";
+	
 	private StreamHelper() {}
 
 	private static final String URL_HELPER = "://";

@@ -27,6 +27,7 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
+import java.util.Arrays;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,10 +66,7 @@ public class EncodingCheck {
 			totalSize+= read;
 			byte[] checkData = buffer;
 			if ( read != buffer.length ) {
-				checkData = new byte[read];
-				for ( int k=0; k<read; k++ ) {
-					checkData[k] = buffer[k];
-				}
+				checkData = Arrays.copyOf( buffer , read );
 			}
 			result = checkEncoding( checkData , encoding );
 			read = is.read( buffer );

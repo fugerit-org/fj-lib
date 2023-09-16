@@ -122,7 +122,7 @@ public abstract class AbstractPagedResult<T> extends BasicResult implements Page
 	 */
 	@Override
 	public Iterator<Integer> getPageCountIterator() {
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 		for ( int k=1; k<=this.pageCount; k++ ) {
 			list.add( Integer.valueOf( k ) );
 		}

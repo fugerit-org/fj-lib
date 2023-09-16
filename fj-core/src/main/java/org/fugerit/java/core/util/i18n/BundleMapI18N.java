@@ -29,13 +29,12 @@ public class BundleMapI18N extends HelperI18N {
 	}
 	
 	public static HelperI18N newHelperI18N( String baseName, String defaultLanguge,  String... altLocale ) {
-		HelperI18N helper = new BundleMapI18N(baseName, defaultLanguge, altLocale);
-		return helper;
+		return new BundleMapI18N(baseName, defaultLanguge, altLocale);
 	}
 	
 	public BundleMapI18N(String baseName, String defaultLanguge, String... altLocale) {
 		super(baseName, defaultLanguge, altLocale);
-		this.bundleMap = new HashMap<String, ResourceBundle>();
+		this.bundleMap = new HashMap<>();
 		createBundleMap(this.bundleMap, baseName, defaultLanguge, altLocale);	
 	}
 	

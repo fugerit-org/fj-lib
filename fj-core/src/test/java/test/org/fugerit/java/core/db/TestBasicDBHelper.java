@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class BasicDBHelper extends MemTestDBHelper {
+public class TestBasicDBHelper extends MemTestDBHelper {
 
 	public static final String DEFAULT_DB_CONN_PATH = "test/memdb/base-db-conn.properties";
 	public static final String DEFAULT_DB_INIT_PATH = "test/memdb/base_db_init.sql";

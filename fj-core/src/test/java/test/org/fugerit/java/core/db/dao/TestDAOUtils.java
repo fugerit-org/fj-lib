@@ -12,9 +12,9 @@ import org.fugerit.java.core.db.dao.DAOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import test.org.fugerit.java.core.db.BasicDBHelper;
+import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestDAOUtils extends BasicDBHelper {
+public class TestDAOUtils extends TestBasicDBHelper {
 
 	private ConnectionFactoryCloseable connFactory() {
 		return ConnectionFactoryImpl.wrap( new ConnectionFactoryImpl() {	

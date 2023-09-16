@@ -24,7 +24,7 @@ public class SQLScriptFacade {
 	public static String[] parseSqlCommands( String script ) throws IOException {	
 		Pattern regex = Pattern.compile("/\\*[^;(\\*/)]*?(;)[^;]*?\\*/", Pattern.DOTALL | Pattern.MULTILINE);
 	    Matcher regexMatcher = regex.matcher( script );
-	    List<String> list = new ArrayList<String>();
+	    List<String> list = new ArrayList<>();
 	    while (regexMatcher.find()) {
 	        String match = regexMatcher.group();
 	        list.add( match );

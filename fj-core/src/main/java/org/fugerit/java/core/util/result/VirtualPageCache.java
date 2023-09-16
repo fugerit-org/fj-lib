@@ -14,7 +14,7 @@ public class VirtualPageCache<T> extends BasicLogObject implements Serializable 
 	private static final long serialVersionUID = -6408904239036858385L;
 
 	public VirtualPageCache() {
-		this.cache = new HashMap<String, CacheWrapper<T>>();
+		this.cache = new HashMap<>();
 	}
 	
 	private transient HashMap<String, CacheWrapper<T>> cache;
@@ -60,7 +60,7 @@ public class VirtualPageCache<T> extends BasicLogObject implements Serializable 
 		String virtualKey = bufferPage.getVirtualSearchKey();
 		String key = this.buildPageKey(virtualKey, currentPage);
 		this.getLogger().debug( "ADD TO CACHE : {}", key );
-		this.cache.put( key , new CacheWrapper<T>( bufferPage ) );
+		this.cache.put( key , new CacheWrapper<>( bufferPage ) );
 	}
 	
 }

@@ -11,12 +11,12 @@ public class GeneratorNameHelper {
 	}
 	
 	public static String toClassName( String name ) {
-		String res = "";
-		String part[] = name.toLowerCase().split( "_" );
+		String[] part = name.toLowerCase().split( "_" );
+		StringBuilder res = new StringBuilder();
 		for ( int k=0; k<part.length; k++ ) {
-			res+= part[k].substring( 0, 1 ).toUpperCase()+part[k].substring( 1 );
+			res.append( part[k].substring( 0, 1 ).toUpperCase()+part[k].substring( 1 ) );
 		}
-		return res;
+		return res.toString();
 	}
 	
 	public static String classFromPackage( String name ) {

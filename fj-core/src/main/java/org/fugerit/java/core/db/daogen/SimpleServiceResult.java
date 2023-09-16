@@ -86,16 +86,16 @@ public class SimpleServiceResult<T> {
 	public static <T> SimpleServiceResult<T> newDefaultResult( T data ) {
 		SimpleServiceResult<T> res = null;
 		if ( data == null ) {
-			res = new SimpleServiceResult<T>( DEFAULT_KO );
+			res = new SimpleServiceResult<>( DEFAULT_KO );
 		} else if ( data instanceof Collection ) {
 			Collection<?> c = (Collection<?>) data;
 			if ( c.isEmpty() ) {
-				res = new SimpleServiceResult<T>( DEFAULT_KO );	
+				res = new SimpleServiceResult<>( DEFAULT_KO );	
 			} else {
-				res = new SimpleServiceResult<T>( DEFAULT_OK, data );
+				res = new SimpleServiceResult<>( DEFAULT_OK, data );
 			}
 		} else {
-			res = new SimpleServiceResult<T>( DEFAULT_OK, data );
+			res = new SimpleServiceResult<>( DEFAULT_OK, data );
 		}
 		return res;
 	}

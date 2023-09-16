@@ -21,6 +21,7 @@ import javax.xml.validation.Validator;
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.xml.DataListCatalogConfig;
 import org.fugerit.java.core.function.SafeFunction;
+import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.w3c.dom.Element;
@@ -99,7 +100,7 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 					File currentFile = new File( pathBase, current );
 					is = new FileInputStream( currentFile );
 				} else {
-					String fullPath = pathBase+"/"+current;
+					String fullPath = pathBase+StreamHelper.SLASH+current;
 					is =  ClassHelper.getDefaultClassLoader().getResourceAsStream( fullPath );
 				}
 				xsds[k] = new StreamSource( is );

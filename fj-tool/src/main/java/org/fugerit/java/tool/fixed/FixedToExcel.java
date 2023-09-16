@@ -83,7 +83,6 @@ public class FixedToExcel extends ToolHandlerHelper {
 						}
 						currentRow++;
 					}			
-					workbook.close();
 					try ( FileOutputStream fos = new FileOutputStream( new File( outputXls ) ) ) {
 						workbook.write( fos );
 						fos.flush();

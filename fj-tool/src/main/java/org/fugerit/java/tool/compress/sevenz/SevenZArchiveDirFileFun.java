@@ -12,7 +12,7 @@ import org.fugerit.java.core.io.file.BaseArchiveDirFileFun;
 
 public class SevenZArchiveDirFileFun extends BaseArchiveDirFileFun {
 	
-	public static final String[] FORMAT_LIST = { "7z", "7Z" };
+	private static final String[] FORMAT_LIST = { "7z", "7Z" };
 	
 	public static OutputStream newWrapperStream( SevenZOutputFile archiveFile ) {
 		return new SevenZOutputStream( archiveFile ); 

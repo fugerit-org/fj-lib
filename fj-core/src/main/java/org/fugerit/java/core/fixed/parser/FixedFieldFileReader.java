@@ -17,8 +17,7 @@ public class FixedFieldFileReader implements Closeable {
 	private FixedFieldFileReaderAbstract readerImpl;
 	
 	public static final FixedFieldFileReader newInstance( FixedFieldFileDescriptor descriptor, Reader r ) throws IOException {
-		FixedFieldFileReader reader = new FixedFieldFileReader( descriptor, r );
-		return reader;
+		return new FixedFieldFileReader( descriptor, r );
 	}
 	
 	public static final FixedFieldFileReader newInstance( FixedFieldFileDescriptor descriptor, InputStream is ) throws IOException {
@@ -57,7 +56,7 @@ public class FixedFieldFileReader implements Closeable {
 	}
 	
 	public void close() throws IOException {
-		this.readerImpl.close();;
+		this.readerImpl.close();
 	}
 
 	public FixedFieldFileDescriptor getDescriptor() {

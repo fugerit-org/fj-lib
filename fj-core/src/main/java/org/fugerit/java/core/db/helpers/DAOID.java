@@ -47,11 +47,11 @@ public class DAOID extends Number {
 	
 	public static DAOID valueOf( String s ) {
 		StringTokenizer st = new StringTokenizer( s, "." );
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		while (st.hasMoreTokens()) {
-			result+=st.nextToken();
+			result.append( st.nextToken() );
 		}
-		return new DAOID( Long.parseLong( result ) );
+		return new DAOID( Long.parseLong( result.toString() ) );
 	}
 
 	private Long id;

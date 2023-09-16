@@ -23,9 +23,9 @@ import org.fugerit.java.core.function.SafeFunction;
 import org.junit.Assert;
 import org.junit.Test;
 
-import test.org.fugerit.java.core.db.BasicDBHelper;
+import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestMisc extends BasicDBHelper {
+public class TestMisc extends TestBasicDBHelper {
 
 	class CustomSimpleServiceProvider extends SimpleServiceProvider<String> {	
 		private static final long serialVersionUID = 89245089543485253L;

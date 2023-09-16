@@ -35,8 +35,8 @@ import org.fugerit.java.core.util.collection.ListMap;
 public class TableModel extends ColumnContainer {
 	
 	public TableModel() {
-		this.indexList = new ListMap<String, IndexModel>();
-		this.foreignKeyList = new ListMap<String, ForeignKeyModel>();
+		this.indexList = new ListMap<>();
+		this.foreignKeyList = new ListMap<>();
 	}
 	
 	private ListMap<String, ForeignKeyModel> foreignKeyList;

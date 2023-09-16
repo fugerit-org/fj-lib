@@ -20,6 +20,18 @@ import java.util.Set;
 public class SortedProperties extends Properties {
 
     private static final long serialVersionUID = -5401542664800054702L;
+  
+	@Override
+	public synchronized int hashCode() {
+		// super class implementation is ok
+		return super.hashCode();
+	}
+
+	@Override
+	public synchronized boolean equals(Object o) {
+		// super class implementation is ok
+		return super.equals(o);
+	}
     
 	private HashSet<String> sortedKeys;
 

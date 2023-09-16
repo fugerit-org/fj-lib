@@ -82,7 +82,7 @@ public class FieldFactory implements Serializable {
 	public Field newField(Object value, int type) {
 		Field field = null;
 		if ( value instanceof BlobData ) {
-			field = this.newField( (BlobData)value );
+			field = this.newField( value );
 		} else if (value instanceof DAOID) {
 			field = this.newField( (DAOID)value );
 		} else if ( value!=null ) {
@@ -106,7 +106,7 @@ public class FieldFactory implements Serializable {
     }
     
     public Field newField(ByteArrayDataHandler value) {
-        return new BlobDataField( BlobData.valueOf( (ByteArrayDataHandler)value ) );
+        return new BlobDataField( BlobData.valueOf( value ) );
     }
     
     public Field newField(CharArrayDataHandler value) {

@@ -49,9 +49,9 @@ public class DataBaseModel {
 	}
 	
 	public DataBaseModel() {
-		this.tableList = new ArrayList<TableModel>();
-		this.tableMap = new HashMap<TableId, TableModel>();
-		this.tableNameMap = new HashMap<String, TableModel>();
+		this.tableList = new ArrayList<>();
+		this.tableMap = new HashMap<>();
+		this.tableNameMap = new HashMap<>();
 	}
 	
 	private List<TableModel> tableList;

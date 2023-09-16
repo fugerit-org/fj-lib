@@ -2,7 +2,6 @@ package org.fugerit.java.core.javagen;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,14 +40,16 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 	private Collection<String> importList;
 	
 	public void init( File sourceFolder, String fullObjectBName, String lineSeparator ) throws ConfigException {
-		this.buffer = new StringWriter();
-		this.writer = new CustomPrintWriter( this.buffer, lineSeparator );
-		int index = fullObjectBName.lastIndexOf( '.' );
-		this.javaName = fullObjectBName.substring( index+1 );
-		this.packageName = fullObjectBName.substring( 0, index );
-		File packageFolder = new File( sourceFolder, packageName.replace( '.' , '/' ) );
-		this.javaFile = new File( packageFolder, javaName+".java" );
-		this.importList = new TreeSet<>();		
+		ConfigException.apply( () -> {
+			this.buffer = new StringWriter();
+			this.writer = new CustomPrintWriter( this.buffer, lineSeparator );
+			int index = fullObjectBName.lastIndexOf( '.' );
+			this.javaName = fullObjectBName.substring( index+1 );
+			this.packageName = fullObjectBName.substring( 0, index );
+			File packageFolder = new File( sourceFolder, packageName.replace( '.' , '/' ) );
+			this.javaFile = new File( packageFolder, javaName+".java" );
+			this.importList = new TreeSet<>();		
+		} );
 	}
 	
 	public void init( File sourceFolder, String fullObjectBName ) throws ConfigException {
@@ -93,14 +94,11 @@ public abstract class BasicJavaGenerator implements JavaGenerator {
 		logger.info( "Content written to : {}", this.getJavaFile().getCanonicalPath() );
 	}
 	
-	@Override
-	public abstract void generate() throws IOException;
-	
-	public static void customPartWorker( File file, PrintWriter writer, String startTag, String endTag, String indent ) throws FileNotFoundException, IOException {
+	public static void customPartWorker( File file, PrintWriter writer, String startTag, String endTag, String indent ) throws IOException {
 		customPartWorker(file, writer, startTag, endTag, indent, "" );
 	}
 	
-	public static void customPartWorker( File file, PrintWriter writer, String startTag, String endTag, String indent, String addIfEmpty ) throws FileNotFoundException, IOException {
+	public static void customPartWorker( File file, PrintWriter writer, String startTag, String endTag, String indent, String addIfEmpty ) throws IOException {
 		writer.println( indent+startTag );
 		boolean customCode = false;
 		boolean isEmpty = true;

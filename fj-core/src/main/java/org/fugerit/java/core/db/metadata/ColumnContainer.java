@@ -56,7 +56,7 @@ public class ColumnContainer {
 	}	
 	
 	public ColumnContainer() {
-		this.columnList = new ListMap<String, ColumnModel>();
+		this.columnList = new ListMap<>();
 	}
 	
 	/**
@@ -80,8 +80,7 @@ public class ColumnContainer {
 		if ( columnName != null ) {
 			columnName = columnName.toLowerCase();
 		}
-		ColumnModel columnModel = (ColumnModel)this.getColumnMap().get( columnName );
-		return columnModel;
+		return this.getColumnMap().get( columnName );
 	}
 	
 }

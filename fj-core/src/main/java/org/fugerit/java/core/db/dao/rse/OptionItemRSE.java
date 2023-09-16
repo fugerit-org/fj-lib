@@ -58,8 +58,7 @@ public class OptionItemRSE implements RSExtractor<OptionItem> {
 	public OptionItem extractNext(ResultSet rs) throws SQLException {
 		String value = rs.getString( this.valueField );
 		String label = rs.getString( this.labelField );
-		OptionItem optionItem = new OptionItem( value, label );
-		return optionItem;
+		return new OptionItem( value, label );
 	}
 
 	public String getLabelField() {

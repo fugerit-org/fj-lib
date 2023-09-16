@@ -18,7 +18,7 @@ public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
 	
 	public BasicDaoResult(int resultCode) {
 		super(resultCode);
-		this.list = new ArrayList<T>();
+		this.list = new ArrayList<>();
 		this.resultDescription = new StringBuilder();
 	}
 

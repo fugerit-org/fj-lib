@@ -38,7 +38,7 @@ public class ConnectionFacade {
 
 	private ConnectionFacade() {}
 	
-	private static Map<String, ConnectionFactory> cfMap = new HashMap<String, ConnectionFactory>();
+	private static Map<String, ConnectionFactory> cfMap = new HashMap<>();
 	
 	/**
 	 * Static connection factory registration.
@@ -61,7 +61,7 @@ public class ConnectionFacade {
 	 * @return		the factory
 	 */
 	public static ConnectionFactory getFactory( String name ) {
-		return (ConnectionFactory)cfMap.get( name );
+		return cfMap.get( name );
 	}
 
 	/**

@@ -18,11 +18,11 @@ import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
-import test.org.fugerit.java.core.db.BasicDBHelper;
+import test.org.fugerit.java.core.db.TestBasicDBHelper;
 import test.org.fugerit.java.core.db.dao.ModelUser;
 
 @Slf4j
-public class TestBasicDataFacade extends BasicDBHelper implements Serializable {
+public class TestBasicDataFacade extends TestBasicDBHelper implements Serializable {
 
 	private static final long serialVersionUID = 2428066303144473612L;
 

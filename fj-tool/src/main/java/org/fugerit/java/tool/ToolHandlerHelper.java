@@ -36,7 +36,7 @@ public abstract class ToolHandlerHelper implements ToolHandler {
 	 * @return					exit code (0 is all ok)
 	 * @throws RunToolException		issues if problems arise
 	 */
-	abstract public int handleWorker( Properties params ) throws RunToolException;
+	public abstract int handleWorker( Properties params ) throws RunToolException;
 	
 	@Override
 	public int handle( Properties params ) {

@@ -2,6 +2,9 @@ package org.fugerit.java.core.xml;
 
 import java.util.function.Function;
 
+import org.fugerit.java.core.function.UnsafeSupplier;
+import org.fugerit.java.core.function.UnsafeVoid;
+
 /*
  * 
  *
@@ -39,5 +42,22 @@ public class XMLException extends Exception {
     	return res;
     };
     
-
+	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun ) throws XMLException {
+		T res = null;
+		try {
+			res = fun.get();
+		} catch (Exception e) {
+			throw CONVERT_FUN.apply( e );
+		}
+		return res;
+	}
+	
+	public static <E extends Exception> void apply( UnsafeVoid<E> fun ) throws XMLException {
+		try {
+			fun.apply();
+		} catch (Exception e) {
+			throw CONVERT_FUN.apply( e );
+		}
+	}
+    
 }

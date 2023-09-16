@@ -28,7 +28,7 @@ import org.fugerit.java.core.xml.XMLException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import test.org.fugerit.java.core.db.BasicDBHelper;
+import test.org.fugerit.java.core.db.TestBasicDBHelper;
 import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
 import test.org.fugerit.java.helpers.FailHelper;
 
@@ -64,7 +64,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	
 	@Test
 	public void testIdentify() {
-		String[] products = BasicDBHelper.PRODUCT_NAME_STRING;
+		String[] products = TestBasicDBHelper.PRODUCT_NAME_STRING;
 		for ( int k=0; k<products.length; k++ ) {
 			int code = DbUtils.indentifyDB( products[k] );
 			Assert.assertNotEquals( -1 , code );

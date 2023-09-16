@@ -108,7 +108,6 @@ public class FixedFieldFileConfig {
 				// field list
 				handleFiledList(fileDescriptor, currentFileTag);
 				
-				// TODO: review this code
 				config.addFileDescriptor( idFile , fileDescriptor );
 			}
 			is.close();
@@ -117,7 +116,7 @@ public class FixedFieldFileConfig {
 	}
 	
 	private FixedFieldFileConfig() {
-		this.mapFileDescriptor = new HashMap<String, FixedFieldFileDescriptor>();
+		this.mapFileDescriptor = new HashMap<>();
 	}
 	
 	private Map<String, FixedFieldFileDescriptor> mapFileDescriptor;

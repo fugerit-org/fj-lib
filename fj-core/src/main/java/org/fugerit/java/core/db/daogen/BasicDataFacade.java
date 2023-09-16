@@ -93,8 +93,8 @@ public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 	}
 
 	public BasicDaoResult<T> loadAll( DAOContext context ) throws DAOException {
-		BasicDaoResult<T> result = new BasicDaoResult<T>();
-		BasicDAOHelper<T> daoHelper = new BasicDAOHelper<T>( context );
+		BasicDaoResult<T> result = new BasicDaoResult<>();
+		BasicDAOHelper<T> daoHelper = new BasicDAOHelper<>( context );
 		SelectHelper query = daoHelper.newSelectHelper( this.getTableName() );
 		daoHelper.loadAllHelper( result.getList() , query, this.getRse() );
 		result.evaluateResultFromList();

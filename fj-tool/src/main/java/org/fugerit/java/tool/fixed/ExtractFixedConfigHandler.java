@@ -66,7 +66,7 @@ public class ExtractFixedConfigHandler extends ToolHandlerHelper {
 				XSSFWorkbook workbook = new XSSFWorkbook( is ) ) {
 			Sheet sheet = workbook.getSheetAt( 0 );
 			Iterator<Row> rows = sheet.rowIterator();
-			List<FixedFieldDescriptor> listFields = new ArrayList<FixedFieldDescriptor>();
+			List<FixedFieldDescriptor> listFields = new ArrayList<>();
 			int rowCount = 0;
 			int start = 1;
 			while ( rows.hasNext() ) {

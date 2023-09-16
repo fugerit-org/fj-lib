@@ -29,9 +29,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 
-import test.org.fugerit.java.core.db.BasicDBHelper;
+import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestBasicDAO extends BasicDBHelper {
+public class TestBasicDAO extends TestBasicDBHelper {
 
 	private ConnectionFactoryCloseable connFactory() {
 		return ConnectionFactoryImpl.wrap( new ConnectionFactoryImpl() {	
@@ -170,7 +170,7 @@ public class TestBasicDAO extends BasicDBHelper {
 					Assert.assertTrue(res);
 				} );
 				// test query wrapper
-				String[] products = BasicDBHelper.PRODUCT_NAME_STRING;
+				String[] products = TestBasicDBHelper.PRODUCT_NAME_STRING;
 				for ( int k=0; k<products.length; k++ ) {
 					QueryWrapper wrapper = dao.getQueryWrapperFor( products[k] );
 					if ( wrapper != null ) {

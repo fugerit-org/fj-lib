@@ -30,7 +30,7 @@ public class ConfigStoreProps extends ConfigStoreDefault {
 
 	private static final String KEY_ENTRY_NAMES = "_"+ConfigStoreProps.class.getSimpleName()+"_ENTRY_NAMES";
 	
-	public Properties configProps;
+	private Properties configProps;
 
 	private ConfigStoreProps(Properties configProps) {
 		this.configProps = configProps;
@@ -71,7 +71,7 @@ public class ConfigStoreProps extends ConfigStoreDefault {
 	private Set<String> getNameSet() {
 		String names = this.configProps.getProperty( KEY_ENTRY_NAMES, "" );
 		Set<String> res = Arrays.asList( names.split( SEP_NAMES ) ).stream()
-				.filter( v -> StringUtils.isNotEmpty( v ) )
+				.filter( StringUtils::isNotEmpty )
 				.collect( Collectors.toCollection( LinkedHashSet::new ) );
 		logger.debug( "getNameSet() names '{}' -> {}", names, res );
 		return res;

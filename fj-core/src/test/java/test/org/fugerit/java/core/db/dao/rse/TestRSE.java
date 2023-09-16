@@ -28,10 +28,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
-import test.org.fugerit.java.core.db.BasicDBHelper;
+import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
-public class TestRSE extends BasicDBHelper {
+public class TestRSE extends TestBasicDBHelper {
 
 	private static final String TEST_USERNAME = "user1";
 	
@@ -154,7 +154,7 @@ public class TestRSE extends BasicDBHelper {
 	@Test
 	public void tesConnectionFacade() throws Exception {
 		try ( ConnectionFactoryCloseable cf = ConnectionFactoryImpl.wrap( 
-				ConnectionFactoryImpl.newInstance( PropsIO.loadFromClassLoaderSafe( BasicDBHelper.DEFAULT_DB_CONN_PATH ) ) ) ) {
+				ConnectionFactoryImpl.newInstance( PropsIO.loadFromClassLoaderSafe( TestBasicDBHelper.DEFAULT_DB_CONN_PATH ) ) ) ) {
 			try ( Connection conn = cf.getConnection();  
 					Statement stm = conn.createStatement(); 
 					ResultSet rs = stm.executeQuery( SIMPLE_QUERY ) ) {

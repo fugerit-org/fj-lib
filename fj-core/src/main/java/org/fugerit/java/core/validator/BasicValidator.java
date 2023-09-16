@@ -154,7 +154,7 @@ public class BasicValidator extends BasicIdConfigType {
 	
 	public String formatMessage( Properties bundle, String key, String... params ) {
 		String baseValue = bundle.getProperty( key );
-		Object[] p = (Object[])params;
+		Object[] p = params;
 		return MessageFormat.format( baseValue , p );
 	}
 	

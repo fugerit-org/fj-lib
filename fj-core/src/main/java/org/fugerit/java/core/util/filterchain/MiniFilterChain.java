@@ -19,7 +19,7 @@ public class MiniFilterChain extends MiniFilterBase {
 
 	public MiniFilterChain(String key, int defaultBehaviour) {
 		super(key, defaultBehaviour);
-		this.filterChain = new ArrayList<MiniFilter>();
+		this.filterChain = new ArrayList<>();
 		this.defaultConfig = new Properties();
 	}
 

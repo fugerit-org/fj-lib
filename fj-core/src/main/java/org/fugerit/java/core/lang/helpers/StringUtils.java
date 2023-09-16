@@ -1,6 +1,7 @@
 package org.fugerit.java.core.lang.helpers;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,10 +28,8 @@ public class StringUtils {
 	}
 	
 	public static Set<String> newSet( String... values ) {
-		HashSet<String> set = new HashSet<String>();
-		for (int k=0; k<values.length; k++ ) {
-			set.add( values[k] );
-		}
+		HashSet<String> set = new HashSet<>();
+		Collections.addAll( set , values );
 		return set;
 	}
 	

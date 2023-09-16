@@ -49,7 +49,7 @@ public class VersionUtils {
 	 * @param name			the name of the module to register
 	 * @param className		the implementing class for the module
 	 */
-	public synchronized static void registerModule( String name, String className ) {
+	public static synchronized void registerModule( String name, String className ) {
 		MODULES.setProperty( name , className );
 	}
 	
@@ -58,7 +58,7 @@ public class VersionUtils {
 	 * 
 	 * @return	the module list
 	 */
-	public synchronized static Properties getModuleList() {
+	public static synchronized Properties getModuleList() {
 		return MODULES;
 	}
 	

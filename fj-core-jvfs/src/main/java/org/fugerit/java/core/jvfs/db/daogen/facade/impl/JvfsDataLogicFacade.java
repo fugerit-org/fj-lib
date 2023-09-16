@@ -15,6 +15,7 @@ public class JvfsDataLogicFacade extends JvfsDataLogicFacadeHelper implements or
 	 * 
 	 */
 	private static final long serialVersionUID = 2818436404285930891L;
+	
 	private static final JvfsDataLogicFacade INSTANCE = new JvfsDataLogicFacade(); 
 	
 	public static JvfsLogicFacade getInstance() {

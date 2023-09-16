@@ -44,7 +44,7 @@ public class DAOHelper {
 			int param = (k+1);
 			Field f = fields.getField(k);
 			long startTime = System.currentTimeMillis();
-			String message = "n. "+param+", value: "+String.valueOf( f )+" (set time : '"+CheckpointUtils.formatTimeDiffMillis( startTime, System.currentTimeMillis() )+"')";
+			String message = "n. "+param+", value: "+f+" (set time : '"+CheckpointUtils.formatTimeDiffMillis( startTime, System.currentTimeMillis() )+"')";
 			log.debug( "queryId:'{}', setAll() Setting param (ng1) : '{}'", queryId, message );
 			f.setField(ps, param);
 			k++;

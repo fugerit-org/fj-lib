@@ -23,7 +23,6 @@ package org.fugerit.java.core.cfg.helpers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.cfg.ConfigurableObject;
@@ -32,7 +31,6 @@ import org.fugerit.java.core.log.LogObject;
 import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.slf4j.Logger;
-import org.w3c.dom.Element;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -72,18 +70,6 @@ public abstract class AbstractConfigurableObject implements ConfigurableObject, 
 	
 	protected static Logger logger = log; 	// for backward compatibility
 	
-	/* (non-Javadoc)
-	 * @see org.fugerit.java.core.cfg.ConfigurableObject#configure(java.util.Properties)
-	 */
-	@Override
-	public abstract void configure(Properties props) throws ConfigException;
-
-	/* (non-Javadoc)
-	 * @see org.fugerit.java.core.cfg.ConfigurableObject#configure(org.w3c.dom.Element)
-	 */
-	@Override	
-	public abstract void configure(Element tag) throws ConfigException;
-
 	/* (non-Javadoc)
 	 * @see org.fugerit.java.core.cfg.ConfigurableObject#configureProperties(java.io.InputStream)
 	 */

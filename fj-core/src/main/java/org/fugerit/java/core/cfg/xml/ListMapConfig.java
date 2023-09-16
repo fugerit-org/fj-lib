@@ -17,6 +17,18 @@ public class ListMapConfig<T> extends ListMapStringKey<T> implements IdConfigTyp
 	 */
 	private static final long serialVersionUID = -1229366094851449578L;
 
+	@Override
+	public int hashCode() {
+		// super class implementation is ok
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		// super class implementation is ok - ListMapConfig is equals if all contained elements are equals
+		return super.equals(o);
+	}
+
 	private Properties config = new Properties();
 	
 	public ListMapConfig() {

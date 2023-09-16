@@ -91,11 +91,6 @@ public class ValidatorNumber extends BasicValidator {
 		}
 		return res;
 	}
-	
-	@Override
-	public void checkConfig() throws ConfigException {
-		super.checkConfig();
-	}
 
 	@Override
 	public void configure( Properties atts ) throws ConfigException {

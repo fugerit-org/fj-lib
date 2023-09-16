@@ -49,7 +49,7 @@ public class DAOUtils extends BasicLogObject {
 	}
 
 	public List<String> extractStringList( String sql ) throws DAOException {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		DAOHelper.loadAll( list , sql, BasicDAO.NO_FIELDS, StringRSE.DEFAULT, this.basicDAOFactory, this );
 		return list;
 	}

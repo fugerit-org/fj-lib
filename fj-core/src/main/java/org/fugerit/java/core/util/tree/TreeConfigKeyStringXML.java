@@ -34,7 +34,7 @@ public class TreeConfigKeyStringXML<T extends NodeKeyString<T, L>, L extends Lis
 	private HashMap<String, T> map;
 	
 	public TreeConfigKeyStringXML() {
-		this.map = new HashMap<String, T>();
+		this.map = new HashMap<>();
 	}
 
 	@Override

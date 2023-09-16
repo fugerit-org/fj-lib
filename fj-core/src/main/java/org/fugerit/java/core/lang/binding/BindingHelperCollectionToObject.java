@@ -42,7 +42,7 @@ public class BindingHelperCollectionToObject extends BindingHelperDefault {
 	private Object convertWorker( Collection<?> c, Object res, String multiValueMode ) throws BindingException {
 		if ( c.size() > 1 && multiValueMode.equalsIgnoreCase( MULTI_VALUE_MODE_FAIL ) ) {
 			throw new BindingException( "Binding error : expected maximum one value : "+c.size() );
-		} else if ( c.size() > 0 ) {
+		} else if ( !c.isEmpty() ) {
 			// take first element
 			int count = 0;
 			for ( Object obj : c ) {

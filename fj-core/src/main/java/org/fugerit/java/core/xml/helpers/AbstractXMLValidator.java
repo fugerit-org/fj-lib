@@ -23,12 +23,6 @@ public abstract class AbstractXMLValidator implements XMLValidator {
     }
 
     /* (non-Javadoc)
-     * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(org.xml.sax.InputSource, org.fugerit.java.core.xml.sax.SAXParseResult)
-     */
-    @Override
-    public abstract boolean validateXML(InputSource source, SAXParseResult result) throws XMLException;
-
-    /* (non-Javadoc)
      * @see org.opinf.jlib.std.xml.XMLValidator#validateXML(org.xml.sax.InputSource)
      */
     @Override

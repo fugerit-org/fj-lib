@@ -15,7 +15,7 @@ public class FacadeImplFinder  {
 	}
 	
 	public FacadeImplFinder() {
-		this.finderList = new ArrayList<ImplFinder>();
+		this.finderList = new ArrayList<>();
 	}
 	
 	public FacadeImplFinder( ImplFinder defaultFinder ) {

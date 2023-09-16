@@ -42,6 +42,18 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
  */
 public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 	
+	@Override
+	public int hashCode() {
+		// super class implementation is ok
+		return super.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		// super class implementation is ok - is equals if all contained elements are equals
+		return super.equals(o);
+	}
+	
 	/*
 	 * Add mode  STRICT ( raise a runtime exception in case of duplicate keys )
 	 */
@@ -103,8 +115,8 @@ public class ListMap<K,T> extends AbstractList<T> implements Serializable {
 
 	
 	public ListMap( KeyMapper<K,T> keyMapper, int addMode ) {
-		this.list = new ArrayList<T>();
-		this.map = new HashMap<K, T>();
+		this.list = new ArrayList<>();
+		this.map = new HashMap<>();
 		this.keyMapper = keyMapper;
 		this.addMode = addMode;
 	}

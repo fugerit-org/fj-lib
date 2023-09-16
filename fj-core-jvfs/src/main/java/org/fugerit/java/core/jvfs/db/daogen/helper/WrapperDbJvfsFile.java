@@ -45,7 +45,7 @@ public class WrapperDbJvfsFile extends BasicWrapper<ModelDbJvfsFile> implements 
 
 	public ModelDbJvfsFile unwrap( WrapperDbJvfsFile wrapper ) {
 		ModelDbJvfsFile res = wrapper;
-		while ( res != null && res instanceof WrapperDbJvfsFile ) { 
+		while ( res instanceof WrapperDbJvfsFile ) { 
 			res = ((WrapperDbJvfsFile)res).unwrapModel();
 		}
 		return res;

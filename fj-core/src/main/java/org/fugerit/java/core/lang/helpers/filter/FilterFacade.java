@@ -28,7 +28,7 @@ public class FilterFacade {
 	}
 	
 	public static <T extends FilterInfo> boolean  accept( Object target, FilterApply apply, T filter ) throws Exception {
-		Collection<T> filters = new ArrayList<T>();
+		Collection<T> filters = new ArrayList<>();
 		filters.add( filter );
 		return accept(target, apply, filters);
 	}

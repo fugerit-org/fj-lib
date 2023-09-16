@@ -13,8 +13,8 @@ public class FixedFieldFileDescriptor {
 		super();
 		this.id = id;
 		this.mode = mode;
-		this.listFields = new ArrayList<FixedFieldDescriptor>();
-		this.validators = new HashMap<String, FixedFileFieldValidator>();
+		this.listFields = new ArrayList<>();
+		this.validators = new HashMap<>();
 		this.checkLengh = NO_CHECK_LENGH;
 		this.encoding = encoding;
 	}

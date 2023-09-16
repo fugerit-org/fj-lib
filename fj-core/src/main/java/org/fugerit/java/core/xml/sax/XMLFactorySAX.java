@@ -43,10 +43,12 @@ public class XMLFactorySAX {
     }
     
     public static XMLFactorySAX newInstance(boolean validating, boolean namespaceAware) throws XMLException {
-        SAXParserFactory saxFac = SAXParserFactory.newInstance();
-        saxFac.setValidating(validating);
-        saxFac.setNamespaceAware(namespaceAware);
-        return new XMLFactorySAX(saxFac);
+    	return XMLException.get( () -> {
+    		SAXParserFactory saxFac = SAXParserFactory.newInstance();
+            saxFac.setValidating(validating);
+            saxFac.setNamespaceAware(namespaceAware);
+            return new XMLFactorySAX(saxFac);
+    	} );
     }
     
     public void setValidating(boolean val) {
@@ -84,7 +86,7 @@ public class XMLFactorySAX {
     }
     
     
-    public SAXParserFactory factory;
+    private SAXParserFactory factory;
     
     private XMLFactorySAX(SAXParserFactory factory) {
         super();

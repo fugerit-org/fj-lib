@@ -67,7 +67,7 @@ public class BasicDAO<T> implements LogObject {
 	}
 
 	public List<T> newList() {
-		return new ArrayList<T>();
+		return new ArrayList<>();
 	}
 
 	private int update(OpDAO<T> op, Connection conn) throws SQLException {
@@ -88,7 +88,7 @@ public class BasicDAO<T> implements LogObject {
 			PreparedStatement pstm = null;
 			try {
 				for (int k = 0; k < opList.size(); k++) {
-					OpDAO<T> currentOp = (OpDAO<T>) opList.get(k);
+					OpDAO<T> currentOp = opList.get(k);
 					this.getLogger().debug("updateBatch : {} , params : {}", currentOp.getSql(),
 							currentOp.getFieldList().size());
 					if (pstm == null) {

@@ -102,10 +102,7 @@ public abstract class PropertyRSE implements RSExtractor<Properties>, Serializab
 			}
 		};
 	}
-	
-	@Override
-	public abstract Properties extractNext(ResultSet rs) throws SQLException;
-	
+
 }
 
 class PropertyRSECached extends PropertyRSE {
@@ -119,7 +116,7 @@ class PropertyRSECached extends PropertyRSE {
 
 	public PropertyRSECached( ResultSet configRS ) throws SQLException {
 		super();
-		this.columnNames = new ArrayList<String>();
+		this.columnNames = new ArrayList<>();
 		ResultSetMetaData rsmd = configRS.getMetaData();
 		int cols = rsmd.getColumnCount();
 		for ( int k=1; k<=cols; k++) {

@@ -3,7 +3,7 @@ package org.fugerit.java.core.util;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 /*
  * 
@@ -17,25 +17,25 @@ public class BinaryCalc {
 	
 	private static final BigDecimal ZERO = new BigDecimal( "0" ).setScale( 0 ); 
 	
-	private static long convertToLong( String stringVal, Function<Character, Integer> fun, int pow ) {
+	private static long convertToLong( String stringVal, ToIntFunction<Character> fun, int pow ) {
 		BigDecimal result = ZERO;
 		stringVal = stringVal.toUpperCase();
 		for ( int k=stringVal.length()-1, esp=0; k>=0; k--, esp++ ) {
-			result = result.add( BigDecimal.valueOf( fun.apply( stringVal.charAt( k ) )*Math.pow( pow , esp ) ) );
+			result = result.add( BigDecimal.valueOf( fun.applyAsInt( stringVal.charAt( k ) )*Math.pow( pow , esp ) ) );
 		}
 		return result.longValue();
 	}
 	
 	public static long hexToLong( String stringVal ) {
-		return convertToLong( stringVal , c -> BinaryNumber.hexToInt( c ) , 16 );
+		return convertToLong( stringVal , BinaryNumber::hexToInt , 16 );
 	}
 	
 	public static long octToLong( String stringVal ) {
-		return convertToLong( stringVal , c -> BinaryNumber.octToInt( c ) , 8 );
+		return convertToLong( stringVal , BinaryNumber::octToInt , 8 );
 	}
 	
 	public static long binToLong( String stringVal ) {
-		return convertToLong( stringVal , c -> BinaryNumber.binToInt( c ) , 2 );
+		return convertToLong( stringVal , BinaryNumber::binToInt , 2 );
 	}
 
 	public static String longToHex( long value ) {
@@ -68,14 +68,14 @@ class BinaryNumber {
 	
 	public static final int HEX_RADIX = 4;
 	
-	public static final char[] VALUES_BIN = { '0' , '1' };
-	public static final char[] VALUES_OCT = { '0' , '1' , '2' , '3' , '4' , '5' , '6', '7' };
-	public static final char[] VALUES_HEX = { '0' , '1' , '2' , '3' , '4' , '5' , '6', '7' , 
+	protected static final char[] VALUES_BIN = { '0' , '1' };
+	protected static final char[] VALUES_OCT = { '0' , '1' , '2' , '3' , '4' , '5' , '6', '7' };
+	protected static final char[] VALUES_HEX = { '0' , '1' , '2' , '3' , '4' , '5' , '6', '7' , 
 												'8' , '9' , 'A', 'B', 'C', 'D' , 'E' , 'F'};
 	
-	public static final List<Character> LIST_BIN = Arrays.asList( convert( VALUES_BIN ) );
-	public static final List<Character> LIST_OCT = Arrays.asList( convert( VALUES_OCT ) );
-	public static final List<Character> LIST_HEX = Arrays.asList( convert( VALUES_HEX ) );
+	protected static final List<Character> LIST_BIN = Arrays.asList( convert( VALUES_BIN ) );
+	protected static final List<Character> LIST_OCT = Arrays.asList( convert( VALUES_OCT ) );
+	protected static final List<Character> LIST_HEX = Arrays.asList( convert( VALUES_HEX ) );
 	
 	public static int hexToInt( char c ) {
 		return LIST_HEX.indexOf( Character.valueOf( c ) );
@@ -121,7 +121,7 @@ class BinaryNumber {
 	public int get( int index, int radix ) {
 		int result = 0;
 		for ( int k=index*radix, esp=0; k < Math.min( index*radix+radix , this.size ); k++, esp++ ) {
-			int current = (int)this.data[ k ] * (int)Math.pow( 2 , esp );
+			int current = this.data[ k ] * (int)Math.pow( 2 , esp );
 			result+= current;
 		}
 		return result;

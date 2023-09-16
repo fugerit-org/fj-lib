@@ -14,9 +14,9 @@ public class SAXErrorHandlerStore implements ErrorHandler {
 	private Collection<SAXException> warnings;
 	
 	public SAXErrorHandlerStore() {
-		this.errors = new ArrayList<SAXException>();
-		this.fatals = new ArrayList<SAXException>();
-		this.warnings = new ArrayList<SAXException>();
+		this.errors = new ArrayList<>();
+		this.fatals = new ArrayList<>();
+		this.warnings = new ArrayList<>();
 	}
 	
 	@Override

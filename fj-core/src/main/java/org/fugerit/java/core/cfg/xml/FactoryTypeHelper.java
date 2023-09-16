@@ -41,7 +41,7 @@ public class FactoryTypeHelper<T> implements Serializable {
 	}
 	
 	public static <T> FactoryTypeHelper<T> newInstance( Class<? extends T> ct ) {
-		return new FactoryTypeHelper<T>( ct );
+		return new FactoryTypeHelper<>( ct );
 	}
 	
 }

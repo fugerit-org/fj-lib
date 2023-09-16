@@ -69,7 +69,7 @@ public class FieldList implements Serializable {
     }
     
     public Field getField(int index) {
-        return (Field)this.list.get(index);
+        return this.list.get(index);
     }
     
     public int size() {
@@ -86,7 +86,7 @@ public class FieldList implements Serializable {
 
     public FieldList( FieldFactory fieldFactory ) {
         super();
-        this.list = new ArrayList<Field>();
+        this.list = new ArrayList<>();
         this.fieldFactory = fieldFactory;
     }
 
@@ -140,7 +140,7 @@ public class FieldList implements Serializable {
 	}
 
 	public void addField( CharArrayDataHandler value) {
-		this.addField( fieldFactory.newField( (CharArrayDataHandler)value ) );
+		this.addField( fieldFactory.newField( value ) );
 	}
 
 	public static FieldList newFieldList() {

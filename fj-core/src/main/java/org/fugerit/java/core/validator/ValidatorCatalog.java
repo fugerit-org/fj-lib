@@ -65,9 +65,9 @@ public class ValidatorCatalog implements Serializable {
 	private String bundlePath;
 
 	public ValidatorCatalog() {
-		this.validators = new ListMapConfig<BasicValidator>();
-		this.bundleMap = new HashMap<Locale, Properties>();
-		this.customMessageMap = new HashMap<String, Properties>();
+		this.validators = new ListMapConfig<>();
+		this.bundleMap = new HashMap<>();
+		this.customMessageMap = new HashMap<>();
 	}
 
 	public ListMapConfig<BasicValidator> getValidators() {
@@ -119,7 +119,7 @@ public class ValidatorCatalog implements Serializable {
 
 	public Properties getBundle(Locale l) {
 		return this.bundleMap.computeIfAbsent( l, 
-				( k ) -> {  
+				k -> {  
 					Properties bundle = new Properties();
 					ResourceBundle temp = FixedFileFieldBasicValidator
 							.newBundle(StringUtils.valueWithDefault(this.bundlePath, DEFAULT_BUNDLE_PATH), l.getLanguage());

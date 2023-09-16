@@ -32,18 +32,16 @@ public abstract class ByteArrayDataHandler {
 	}
 	
 	public static ByteArrayDataHandler newHandlerPreload( final Blob b ) throws DAOException {
-		ByteArrayDataHandler handler = null;
-		try {
+		return DAOException.get( () -> {
+			ByteArrayDataHandler handler = null;
 			if ( b != null && b.length() > 0 ) {
 				byte[] data = StreamIO.readBytes( b.getBinaryStream() );
 				if ( data != null && !( data.length == 1 && data[0] == 0) ) {
 					handler = new PreloadByteArrayDataHandler( data );
 				}
 			}
-		} catch (Exception e) {
-			throw DAOException.convertExMethod( "newHandlerPreload" , e);
-		}
-		return handler;
+			return handler;
+		} );
 	}
 	
 }

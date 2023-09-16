@@ -32,7 +32,7 @@ public class AttributeHolderDefault implements AttributesHolder, Serializable {
 	private HashMap<String, Object> map;
 	
 	public AttributeHolderDefault() {
-		this.map = new HashMap<String, Object>();
+		this.map = new HashMap<>();
 	}
 
 	public boolean containsAttribute(String key) {
@@ -62,7 +62,7 @@ public class AttributeHolderDefault implements AttributesHolder, Serializable {
 	}
 	
 	public Map<String, Object> toMap() {
-		return new HashMap<String, Object>( this.map );
+		return new HashMap<>( this.map );
 	}
 
 }

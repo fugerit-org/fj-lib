@@ -31,7 +31,7 @@ public class ReaderFixedFieldFileReader extends FixedFieldFileReaderAbstract {
 			if ( !this.getEndline().equals( this.currentEndline ) ) {
 				this.addEndlineError( this.currentEndline );
 			} 
-			if ( this.getGenericValidationErrors().size() > 0 ) {
+			if ( !this.getGenericValidationErrors().isEmpty() ) {
 				this.currentLine = null;
 			}
 		}

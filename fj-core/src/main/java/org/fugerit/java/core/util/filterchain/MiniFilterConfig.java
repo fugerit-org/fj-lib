@@ -54,7 +54,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 
 	public MiniFilterConfig(String attTagDataList, String attTagData) {
 		super(attTagDataList, attTagData);
-		this.mapChain = new HashMap<String, MiniFilterChain>();
+		this.mapChain = new HashMap<>();
 		this.getGeneralProps().setProperty( ATT_TYPE , MiniFilterConfigEntry.class.getName() );
 	}
 
@@ -159,7 +159,7 @@ public class MiniFilterConfig extends CustomListCatalogConfig<MiniFilterConfigEn
 	
 	@Override
 	public Set<String> getKeys() {
-		Set<String> set = new HashSet<String>( this.getIdSet() );
+		Set<String> set = new HashSet<>( this.getIdSet() );
 		set.addAll( this.mapChain.keySet() );
 		return set;
 	}

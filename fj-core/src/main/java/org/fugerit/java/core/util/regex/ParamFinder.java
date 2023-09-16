@@ -58,12 +58,11 @@ public class ParamFinder extends BasicLogObject {
 	
 	public Set<String> getParamSet( CharSequence text ) {
 		List<String> paramList = this.getParamList( text );
-		Set<String> paramSet = new HashSet<String>( paramList );
-		return paramSet;
+		return new HashSet<>( paramList );
 	}
 	
 	public List<String> getParamList( CharSequence text ) {
-		List<String> paramList = new ArrayList<String>();
+		List<String> paramList = new ArrayList<>();
 		Matcher m = p.matcher( text );
 		while ( m.find() ) {
 			String found = m.group();
@@ -96,7 +95,7 @@ public class ParamFinder extends BasicLogObject {
 		List<String> list = this.getParamList( result );
 		Iterator<String> it = list.iterator();
 		while ( it.hasNext() ) {
-			String current = it.next().toString();
+			String current = it.next();
 			String sub = params.getProperty( current );
 			if ( sub != null ) {
 				result = result.replaceAll( this.pre+current+this.post , sub );	

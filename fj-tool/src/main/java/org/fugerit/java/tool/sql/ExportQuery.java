@@ -87,13 +87,13 @@ public class ExportQuery extends ToolHandlerHelper {
 					openFile( pw, format );
 					try ( ResultSet rs = stm.executeQuery( sql ) ) {
 						ResultSetMetaData rsmd = rs.getMetaData();
-						String head[] = new String[rsmd.getColumnCount()];
+						String[] head = new String[rsmd.getColumnCount()];
 						for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
 							head[k] = rsmd.getColumnLabel( k+1 );
 						}
 						addRecord( pw , head , true );
 						while ( rs.next() ) {
-							String localRecord[] = new String[rsmd.getColumnCount()];
+							String[] localRecord = new String[rsmd.getColumnCount()];
 							for ( int k=0; k<rsmd.getColumnCount(); k++ ) {
 								Object obj = rs.getObject( k+1 );
 								if ( obj == null ) {
