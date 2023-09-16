@@ -2,6 +2,8 @@ package org.fugerit.java.core.cfg.xml;
 
 import java.io.InputStream;
 
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -58,18 +60,24 @@ public class DataListCatalogConfig extends GenericListCatalogConfig<String> {
 	private static final long serialVersionUID = 60670717619176336L;
 
 	/**
-	 * Worker method for loading an xml from an input stream
+	 * <p>Configure an instance of DataListCatalogConfig</p>
 	 * 
-	 * @param is			input source
-	 * @param config		config object
-	 * @return				the object configured
-	 * @throws Exception	in case of issues
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param is		the input stream to load from
+	 * @param config	the instance to be configured (will be configured by side effect too)
+	 * @return			the configured instance
+	 * @throws 			ConfigRuntimeException in case of issues during loading
 	 */
-	protected static DataListCatalogConfig loadConfig( InputStream is, DataListCatalogConfig config ) throws Exception {
-		Document doc = DOMIO.loadDOMDoc( is );
-		Element root = doc.getDocumentElement();
-		config.configure( root );
-		return config;
+	protected static DataListCatalogConfig loadConfig( InputStream is, DataListCatalogConfig config ) {
+		return SafeFunction.get( () -> {
+			Document doc = DOMIO.loadDOMDoc( is );
+			Element root = doc.getDocumentElement();
+			config.configure( root );
+			return config;
+		} );
 	}
 	
 	/**

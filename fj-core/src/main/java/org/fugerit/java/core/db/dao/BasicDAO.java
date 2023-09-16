@@ -308,8 +308,7 @@ public class BasicDAO<T> implements LogObject {
 	}
 
 	protected LoadResult<T> loadAllResult(String query, FieldList fields, RSExtractor<T> re) throws DAOException {
-		return LoadResult.initResult(this, query, fields, re);
-
+		return DAOException.get( () -> LoadResult.initResult(this, query, fields, re) );
 	}
 
 	protected void loadAll(List<T> l, String query, FieldList fields, RSExtractor<T> re) throws DAOException {

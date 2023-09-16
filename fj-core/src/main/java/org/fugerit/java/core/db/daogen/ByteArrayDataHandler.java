@@ -15,11 +15,13 @@ public abstract class ByteArrayDataHandler {
 	public abstract byte[] getData();
 
 	public static ByteArrayDataHandler newHandlerByte( byte[] data ) throws DAOException {
-		ByteArrayDataHandler r = null;
-		if ( data != null ) {
-			r = new PreloadByteArrayDataHandler( data );
-		}
-		return r;
+		return DAOException.get( () -> {
+			ByteArrayDataHandler r = null;
+			if ( data != null ) {
+				r = new PreloadByteArrayDataHandler( data );
+			}
+			return r;
+		} );
 	}
 	
 	public static ByteArrayDataHandler newHandlerDefault( Blob b ) throws DAOException {

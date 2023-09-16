@@ -16,11 +16,13 @@ public abstract class CharArrayDataHandler {
 	public abstract char[] getData();
 
 	public static CharArrayDataHandler newHandlerByte( char[] data ) throws DAOException {
-		CharArrayDataHandler r = null;
-		if ( data != null ) {
-			r = new PreloadCharArrayDataHandler( data );
-		}
-		return r;
+		return DAOException.get( () -> {
+			CharArrayDataHandler r = null;
+			if ( data != null ) {
+				r = new PreloadCharArrayDataHandler( data );
+			}
+			return r;
+		} );
 	}
 	
 	public static CharArrayDataHandler newHandlerDefault( Clob c ) throws DAOException {
@@ -33,8 +35,8 @@ public abstract class CharArrayDataHandler {
 	}
 	
 	public static CharArrayDataHandler newHandlerPreload( Clob c ) throws DAOException {
-		CharArrayDataHandler handler = null;
-		try {
+		return DAOException.get( () -> {
+			CharArrayDataHandler handler = null;
 			if ( c != null && c.length() > 0 ) {
 				CharArrayWriter writer = new CharArrayWriter();
 				StreamIO.pipeChar( c.getCharacterStream(), writer, StreamIO.MODE_CLOSE_BOTH );
@@ -43,10 +45,8 @@ public abstract class CharArrayDataHandler {
 					handler = new PreloadCharArrayDataHandler( data );
 				}
 			}	
-		} catch (Exception e) {
-			throw DAOException.convertExMethod( "newHandlerPreload" , e);
-		}
-		return handler;
+			return handler;
+		} );
 	}
 	
 }

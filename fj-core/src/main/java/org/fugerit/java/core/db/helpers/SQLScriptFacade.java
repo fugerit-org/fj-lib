@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.fugerit.java.core.io.helper.HelperIOException;
+
 public class SQLScriptFacade {
 	
 	private SQLScriptFacade() {}
@@ -18,18 +20,21 @@ public class SQLScriptFacade {
 	}
 
 	public static String removeSqlComments( String script ) throws IOException {
-		return script.replaceAll("\\B--*\\B.*", "");
+		return HelperIOException.get( () -> script.replaceAll("\\B--*\\B.*", "") );
 	}
 
 	public static String[] parseSqlCommands( String script ) throws IOException {	
-		Pattern regex = Pattern.compile("/\\*[^;(\\*/)]*?(;)[^;]*?\\*/", Pattern.DOTALL | Pattern.MULTILINE);
-	    Matcher regexMatcher = regex.matcher( script );
-	    List<String> list = new ArrayList<>();
-	    while (regexMatcher.find()) {
-	        String match = regexMatcher.group();
-	        list.add( match );
-	    } 
-	    return list.toArray( new String[0] );
+		return HelperIOException.get( () -> {
+			Pattern regex = Pattern.compile("/\\*[^;(\\*/)]*?(;)[^;]*?\\*/", Pattern.DOTALL | Pattern.MULTILINE);
+		    Matcher regexMatcher = regex.matcher( script );
+		    List<String> list = new ArrayList<>();
+		    while (regexMatcher.find()) {
+		        String match = regexMatcher.group();
+		        list.add( match );
+		    } 
+		    return list.toArray( new String[0] );	
+		} );
+
 	}
 	
 	public static int executeAll( SQLScriptReader reader, Connection conn ) throws SQLException, IOException {
