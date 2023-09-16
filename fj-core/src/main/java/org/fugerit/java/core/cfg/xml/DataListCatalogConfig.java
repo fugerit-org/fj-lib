@@ -81,13 +81,17 @@ public class DataListCatalogConfig extends GenericListCatalogConfig<String> {
 	}
 	
 	/**
-	 * Worker method for loading an xml from an input stream
+	 * <p>Creates and configure an instance of DataListCatalogConfig</p>
 	 * 
-	 * @param is			input source
-	 * @return				the object configured
-	 * @throws Exception	in case of issues
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param is		the input stream to load from
+	 * @return			the configured instance
+	 * @throws 			ConfigRuntimeException in case of issues during loading
 	 */
-	public static DataListCatalogConfig loadConfig( InputStream is ) throws Exception {
+	public static DataListCatalogConfig loadConfig( InputStream is ) {
 		return loadConfig( is, new DataListCatalogConfig() );
 	}
 	

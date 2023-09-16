@@ -19,6 +19,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.xml.DataListCatalogConfig;
 import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.helper.StreamHelper;
@@ -51,7 +52,18 @@ public class XMLSchemaCatalogConfig extends DataListCatalogConfig {
 	
 	// code added to setup a basic conditional serialization - END	
 	
-	public static XMLSchemaCatalogConfig loadConfigSchema( InputStream is ) throws Exception {
+	/**
+	 * <p>Creates and configure an instance of XMLSchemaCatalogConfig</p>
+	 * 
+	 * <p>NOTE: starting from version 8.4.X java.lang.Exception removed in favor of org.fugerit.java.core.cfg.ConfigRuntimeException.</p>
+	 * 
+	 * @see <a href="https://fuzzymemory.fugerit.org/src/docs/sonar_cloud/java-S112.html">Define and throw a dedicated exception instead of using a generic one.</a>
+	 * 
+	 * @param is		the input stream to load from
+	 * @return			the configured instance
+	 * @throws 			ConfigRuntimeException in case of issues during loading
+	 */
+	public static XMLSchemaCatalogConfig loadConfigSchema( InputStream is ) {
 		return (XMLSchemaCatalogConfig)loadConfig( is, new XMLSchemaCatalogConfig() );
 	}
 	

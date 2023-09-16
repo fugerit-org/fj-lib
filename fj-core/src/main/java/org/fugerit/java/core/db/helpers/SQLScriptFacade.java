@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.fugerit.java.core.io.helper.HelperIOException;
 
@@ -24,16 +20,7 @@ public class SQLScriptFacade {
 	}
 
 	public static String[] parseSqlCommands( String script ) throws IOException {	
-		return HelperIOException.get( () -> {
-			Pattern regex = Pattern.compile("/\\*[^;(\\*/)]*?(;)[^;]*?\\*/", Pattern.DOTALL | Pattern.MULTILINE);
-		    Matcher regexMatcher = regex.matcher( script );
-		    List<String> list = new ArrayList<>();
-		    while (regexMatcher.find()) {
-		        String match = regexMatcher.group();
-		        list.add( match );
-		    } 
-		    return list.toArray( new String[0] );	
-		} );
+		return HelperIOException.get( () -> script.split( "(?<=;)\\s+" ) );
 
 	}
 	
