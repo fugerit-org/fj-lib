@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.3.4] - 2023-09-16
+
+### Changed
+
+- All Sonar Cloud issues addressed
+
 ## [8.3.3] - 2023-09-16
 
 ### Added
