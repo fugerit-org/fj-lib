@@ -1,7 +1,7 @@
 CREATE TABLE fugerit.db_jvfs_file (
-	file_name VARCHAR(1024) NOT NULL,
-	parent_path VARCHAR(2048) NOT NULL,
-	file_props VARCHAR(1024),
+	file_name VARCHAR2(1024) NOT NULL,
+	parent_path VARCHAR2(2048) NOT NULL,
+	file_props VARCHAR2(1024),
 	creation_time TIMESTAMP NOT NULL,
 	update_time TIMESTAMP NOT NULL,
 	file_size BIGINT,
@@ -19,9 +19,9 @@ COMMENT ON COLUMN fugerit.db_jvfs_file.file_content IS 'The content of the file 
 
 
 CREATE TABLE fugerit.alt_db_jvfs_file (
-	file_name VARCHAR(1024) NOT NULL,
-	parent_path VARCHAR(2048) NOT NULL,
-	file_props VARCHAR(1024),
+	file_name VARCHAR2(1024) NOT NULL,
+	parent_path VARCHAR2(2048) NOT NULL,
+	file_props VARCHAR2(1024),
 	creation_time TIMESTAMP NOT NULL,
 	update_time TIMESTAMP NOT NULL,
 	file_size BIGINT,
@@ -30,9 +30,9 @@ CREATE TABLE fugerit.alt_db_jvfs_file (
 ALTER TABLE fugerit.alt_db_jvfs_file ADD CONSTRAINT alt_db_jvfs_file_ok PRIMARY KEY ( file_name, parent_path );
 
 CREATE TABLE fugerit.alt2_db_jvfs_file (
-	file_name VARCHAR(1024) NOT NULL,
-	parent_path VARCHAR(2048) NOT NULL,
-	file_props VARCHAR(1024),
+	file_name VARCHAR2(1024) NOT NULL,
+	parent_path VARCHAR2(2048) NOT NULL,
+	file_props VARCHAR2(1024),
 	creation_time TIMESTAMP NOT NULL,
 	update_time TIMESTAMP NOT NULL,
 	file_size BIGINT,

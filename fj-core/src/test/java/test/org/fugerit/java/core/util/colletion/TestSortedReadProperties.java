@@ -40,7 +40,8 @@ public class TestSortedReadProperties extends BasicTest {
             	logger.info( "{} -> {}", k, testProps.get( k ) );
             }
             testProps.store( fos , "test sorted properties" );
-            ok = true;
+            logger.info( "hashCode : {}, toString {}", testProps.hashCode(), testProps.toString() );
+            ok = testProps.equals( testProps );
         } catch (Exception e) {
             throw new ConfigRuntimeException( e );
         }

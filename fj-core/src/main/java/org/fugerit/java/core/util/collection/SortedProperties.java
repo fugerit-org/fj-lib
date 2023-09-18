@@ -45,7 +45,7 @@ public class SortedProperties extends Properties {
     }
 
     @Override
-    public Enumeration<Object> keys() {
+    public synchronized Enumeration<Object> keys() {
     	return new Enumeration<Object>() {
     		private Iterator<String> it = sortedKeys.iterator();
 			@Override
