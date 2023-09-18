@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.3.6] - 2023-09-18
+
+### Changed
+
+- Renamed typo in SafeFunction.applyIfNotNull()
+
 ## [8.3.5] - 2023-09-16
 
 ### Changed
