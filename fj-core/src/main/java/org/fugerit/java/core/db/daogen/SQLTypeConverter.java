@@ -15,15 +15,15 @@ public class SQLTypeConverter {
 	private SQLTypeConverter() {}
 	
 	public static Timestamp utilDateToSqlTimestamp(java.util.Date s) {
-		return SafeFunction.getIfNotNUll( s , () -> new Timestamp( s.getTime() ) );
+		return SafeFunction.getIfNotNull( s , () -> new Timestamp( s.getTime() ) );
 	}
 	
 	public static Date utilDateToSqlDate(java.util.Date s) {
-		return SafeFunction.getIfNotNUll( s , () -> new Date( s.getTime() ) );
+		return SafeFunction.getIfNotNull( s , () -> new Date( s.getTime() ) );
 	}
 	
 	public static Time utilDateToSqlTime(java.util.Date s) {
-		return SafeFunction.getIfNotNUll( s , () -> new Time( s.getTime() ) );
+		return SafeFunction.getIfNotNull( s , () -> new Time( s.getTime() ) );
 	}
 	
 	public static ByteArrayDataHandler blobToByteHandler( java.sql.Blob s ) throws SQLException {

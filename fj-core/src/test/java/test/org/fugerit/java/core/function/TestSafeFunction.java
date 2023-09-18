@@ -87,7 +87,7 @@ public class TestSafeFunction {
 	public void testGetOnCondition() {
 		String res = SafeFunction.getOnCondition( () -> Boolean.FALSE , () -> "a" );
 		Assert.assertNull( res );
-		res = SafeFunction.getIfNotNUll( null , () -> "b" );
+		res = SafeFunction.getIfNotNull( null , () -> "b" );
 		Assert.assertNull( res );
 	}
 

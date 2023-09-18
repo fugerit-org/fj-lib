@@ -165,7 +165,7 @@ public class SafeFunction {
 		
 	}
 	
-	public static <T, R> R getIfNotNUll( T v, UnsafeSupplier<R, Exception> supplier ) {
+	public static <T, R> R getIfNotNull( T v, UnsafeSupplier<R, Exception> supplier ) {
 		return getOnCondition( () -> v != null , supplier );
 	}
 	
