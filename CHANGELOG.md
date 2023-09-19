@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed typo in SafeFunction.applyIfNotNull()
+- Restored log behavior of setFromElementSafe() (will not print stack trace)
+
 ## [8.3.6] - 2023-09-18
 
 ### Changed

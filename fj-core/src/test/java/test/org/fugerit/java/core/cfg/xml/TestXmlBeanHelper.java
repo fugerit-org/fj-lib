@@ -64,6 +64,20 @@ public class TestXmlBeanHelper extends BasicTest {
 	}
 	
 	@Test
+	public void testSetFromElement() {
+		SafeFunction.apply( () -> {
+			try ( Reader reader = new StringReader( "<config>test1</config>" ) ) {
+				Document doc = DOMIO.loadDOMDoc( reader );
+				Element root = doc.getDocumentElement();
+				XmlBeanText check = new XmlBeanText();
+				Assert.assertNull( check.getTextValue() );
+				XmlBeanHelper.setFromElement( check, root );
+				Assert.assertEquals( TEST_VALUE , check.getTextValue() );	
+			}	
+		} );
+	}
+	
+	@Test
 	public void testSetFromAttributes() {
 		boolean set = this.setWorker( "<config field1='test1'/>" , XmlBeanHelper.MODE_XML_ATTRIBUTES, true );
 		Assert.assertTrue( set );

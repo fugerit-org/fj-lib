@@ -2,7 +2,7 @@ package org.fugerit.java.core.lang.helpers.reflect;
 
 import java.lang.reflect.Method;
 
-import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.function.SafeFunction;
 
 
 /*
@@ -112,17 +112,10 @@ public class MethodHelper {
 	 * @throws Exception	in case something goes wrong
 	 */	
 	public static Object invoke( Object obj, String methodName, Class<?>[] paramTypes, Object[] paramValues ) {
-		Object result = null;
-		try {
+		return SafeFunction.get( () -> {
 			Method method = obj.getClass().getMethod( methodName, paramTypes );
-			if ( method == null ) {
-				throw new ConfigRuntimeException( "Method not found "+methodName+" on class "+obj.getClass().getName() );
-			}
-			result = method.invoke( obj, paramValues );
-		} catch (Exception e) {
-			throw ConfigRuntimeException.convertExMethod( "invoke" , e );
-		}
-		return result;
+			return method.invoke( obj, paramValues );			
+		} );
 	}
 	
 }
