@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.3.8] - 2023-09-23
+
+### Added
+
+- IteratorHelper utils
+
 ## [8.3.7] - 2023-09-19
 
 ### Changed

@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.fugerit.java.core.lang.helpers.CollectionUtils;
+import org.fugerit.java.core.util.IteratorHelper;
 import org.fugerit.java.core.util.checkpoint.CheckpointUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,23 +19,7 @@ public class DAOUtilsNG {
 	private DAOUtilsNG() {}
 	
 	public static <T> Iterator<T> toIterator(LoadResultNG<T> lr) {
-		return new Iterator<T>() {
-			boolean hasNext = false;
-			@Override
-			public boolean hasNext() {
-				this.hasNext = DAORuntimeException.get( lr::hasNext );
-				return hasNext;
-			}
-			@Override
-			public T next() {
-				if ( hasNext ) {
-					this.hasNext = false;
-					return DAORuntimeException.get( lr::next );
-				} else {
-					throw new NoSuchElementException( "Call next() only if hasNext() is true" );
-				}
-			}
-		};
+		return IteratorHelper.createSimpleIterator( () -> DAORuntimeException.get( lr::hasNext ) , () -> DAORuntimeException.get( lr::next ) );
 	}
 
 	public static <T> void fillList(LoadResultNG<T> lr, List<T> list) {
