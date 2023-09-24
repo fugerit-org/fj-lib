@@ -3,9 +3,11 @@ package org.fugerit.java.core.db.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.fugerit.java.core.lang.helpers.CollectionUtils;
 import org.fugerit.java.core.util.IteratorHelper;
@@ -149,6 +151,32 @@ public class DAOUtilsNG {
 	}
 	public static int updateFields( Connection conn, String sql, Field... fields ) {
 		return update(conn, OpDAO.newUpdateOp(sql, FieldList.newFieldList( fields ) ) );
+	}
+	
+	public static <T> List<T> loadListFields( Connection conn, String sql, RSExtractor<T> rse, Field... fields ) {
+		return loadList(conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
+	}
+	
+	public static <T> List<T> loadList( Connection conn, String sql, RSExtractor<T> rse, Object... fields ) {
+		return loadList(conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) );
+	}
+	
+	public static <T> List<T> loadList( Connection conn, OpDAO<T> op ) {
+		List<T> list = new ArrayList<>();
+		extractAll(conn, list, op);
+		return list;
+	}
+	
+	public static <T> Stream<T> loadStreamFields( Connection conn, String sql, RSExtractor<T> rse, Field... fields ) {
+		return loadList(conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) ).stream();
+	}
+	
+	public static <T> Stream<T> loadStream( Connection conn, String sql, RSExtractor<T> rse, Object... fields ) {
+		return loadList(conn, OpDAO.newQueryOp(sql, FieldList.newFieldList( fields ), rse) ).stream();
+	}
+	
+	public static <T> Stream<T> loadStream( Connection conn, OpDAO<T> op ) {
+		return loadList(conn, op).stream();
 	}
 	
 }

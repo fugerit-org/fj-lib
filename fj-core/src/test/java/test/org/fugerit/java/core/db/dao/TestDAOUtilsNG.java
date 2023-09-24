@@ -71,6 +71,50 @@ public class TestDAOUtilsNG extends TestBasicDBHelper {
 			}
 		} );	
 	}
+
+	@Test
+	public void testDAOUtilsNGLoadMethods() {
+		OpDAO<ModelUser> opDaoQueryAll = OpDAO.newQueryOp( QUERY_DEF , ModelUser.RSE );
+		DAORuntimeException.apply( () -> {
+			try ( Connection conn = newConnection() ) {
+				List<ModelUser> list = DAOUtilsNG.loadList(conn, opDaoQueryAll);
+				Assert.assertFalse( list.isEmpty() );
+			}
+		} );
+		DAORuntimeException.apply( () -> {
+			try ( Connection conn = newConnection() ) {
+				List<ModelUser> list = DAOUtilsNG.loadListFields(conn, opDaoQueryAll.getSql(), opDaoQueryAll.getRsExtractor(), opDaoQueryAll.getFieldList().toArray() );
+				Assert.assertFalse( list.isEmpty() );
+			}
+		} );
+		DAORuntimeException.apply( () -> {
+			try ( Connection conn = newConnection() ) {
+				List<ModelUser> list = DAOUtilsNG.loadList(conn, opDaoQueryAll.getSql(), opDaoQueryAll.getRsExtractor(), new Object[0] );
+				Assert.assertFalse( list.isEmpty() );
+			}
+		} );
+		DAORuntimeException.apply( () -> {
+			try ( Connection conn = newConnection() ) {
+				List<ModelUser> test = new ArrayList<>();
+				DAOUtilsNG.loadStream(conn, opDaoQueryAll).forEach( test::add );
+				Assert.assertFalse( test.isEmpty() );
+			}
+		} );
+		DAORuntimeException.apply( () -> {
+			try ( Connection conn = newConnection() ) {
+				List<ModelUser> test = new ArrayList<>();
+				DAOUtilsNG.loadStreamFields(conn, opDaoQueryAll.getSql(), opDaoQueryAll.getRsExtractor(), opDaoQueryAll.getFieldList().toArray() ).forEach( test::add );
+				Assert.assertFalse( test.isEmpty() );
+			}
+		} );
+		DAORuntimeException.apply( () -> {
+			try ( Connection conn = newConnection() ) {
+				List<ModelUser> test = new ArrayList<>();
+				DAOUtilsNG.loadStream(conn, opDaoQueryAll.getSql(), opDaoQueryAll.getRsExtractor(), new Object[0] ).forEach( test::add );
+				Assert.assertFalse( test.isEmpty() );
+			}
+		} );
+	}
 	
 	@Test
 	public void testDAOUtilsNG() {

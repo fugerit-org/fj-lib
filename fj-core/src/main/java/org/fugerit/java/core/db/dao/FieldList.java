@@ -64,6 +64,10 @@ public class FieldList implements Serializable {
 	
     private List<Field> list;
     
+    public Field[] toArray() {
+    	return list.toArray( new Field[0] );
+    }
+    
     public List<Field> getList() {
     	return Collections.unmodifiableList( list );
     }
