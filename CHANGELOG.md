@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Code of conduct badge and file
+- [Sample jdk compatibility check workflow on branch develop](.github/workflows/build_maven_compatibility.yml)
+
+### Changed
+
+- [Sonar cloud workflow merged in maven build](.github/workflows/deploy_maven_package.yml)
+- fj-bom version set to 1.4.2
+
+### Removed
+
+- Sonar cloud workflow yml removed. (after being merged with maven build)
 
 ### Fixed
 
