@@ -24,6 +24,14 @@ public class BasicDaoResult<T> extends BasicResult implements DAOResultListExt<T
 		this.resultDescription = new StringBuilder();
 	}
 
+	public static <T> Optional<T> oneFromResult( DAOResultListExt<T> result ) {
+		return Optional.ofNullable( result.getSingleResult() );
+	}
+	
+	public static <T> Optional<T> firstFromResult( DAOResultListExt<T> result ) {
+		return result.getList().isEmpty() ? Optional.empty() : Optional.of( result.getList().get( 0 ) );
+	}
+	
 	public BasicDaoResult() {
 		this( RESULT_NOT_SET );
 	}
@@ -42,12 +50,12 @@ public class BasicDaoResult<T> extends BasicResult implements DAOResultListExt<T
 	
 	@Override
 	public Optional<T> getOne() {
-		return Optional.ofNullable( this.getSingleResult() );
+		return oneFromResult( this );
 	}
 	
 	@Override
 	public Optional<T> getFirst() {
-		return this.getList().isEmpty() ? Optional.empty() : Optional.of( this.getList().get( 0 ) );
+		return firstFromResult( this );
 	}
 	
 	private StringBuilder resultDescription;

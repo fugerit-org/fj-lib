@@ -3,6 +3,8 @@ package org.fugerit.java.core.db.daogen;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.fugerit.java.core.db.dao.DAORuntimeException;
+
 /**
  * 
  * <p>Extensions for stream() and Optional in DAOResultList.</p>
@@ -24,7 +26,7 @@ public interface DAOResultListExt<T> extends DaoResultList<T> {
 	 * <p>Return the first element if any, or an empty optional.</p>
 	 * 
 	 * @return	the first and only element
-	 * @throws DAORuntimeException	if more than one result is found in the list
+	 * @throws 			DAORuntimeException if more than one result is found.
 	 */
 	Optional<T> getOne();
 

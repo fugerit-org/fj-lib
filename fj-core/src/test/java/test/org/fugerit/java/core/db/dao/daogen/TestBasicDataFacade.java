@@ -46,7 +46,7 @@ public class TestBasicDataFacade extends TestBasicDBHelper implements Serializab
 				Assert.assertEquals( TABLE_NAME , facade.getTableName() );	
 				BasicDaoResult<ModelUser> resultAll = facade.loadAll(context);
 				Assert.assertFalse( resultAll.getList().isEmpty() );
-				resultAll.stream().forEach( m -> log.info( "test basic dao result stream {}", m) );
+				facade.loadAllStream( context ).forEach( m -> log.info( "test basic dao result stream {}", m) );
 				log.info( "test basic dao result first() {}", resultAll.getFirst() );
 				Assert.assertThrows( DAORuntimeException.class , resultAll::getOne );
 				BasicDaoResult<ModelUser> resultOne = new BasicDaoResult<>();

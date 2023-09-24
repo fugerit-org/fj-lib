@@ -2,6 +2,7 @@ package org.fugerit.java.core.db.daogen;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.RSExtractor;
@@ -11,11 +12,14 @@ import org.fugerit.java.core.db.helpers.DAOID;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.util.result.Result;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 
-	protected static Logger logger = LoggerFactory.getLogger( BasicDataFacade.class );
+	protected static Logger logger = log;	// for backward compatibility
 	
 	public String getSequenceName() {
 		return null;
@@ -42,11 +46,11 @@ public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 	
 	// code added to setup a basic conditional serialization - END
 	
-	private String tableName;
+	@Getter private String tableName;
 	
-	private String queryView;
+	@Getter private String queryView;
 
-	private RSExtractor<T> rse;
+	@Getter private RSExtractor<T> rse;
 	
 	private BasicSeqIdGenerator idGenerator;
 	
@@ -60,21 +64,6 @@ public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 			id = new BigDecimal( daoid.longValue() );
 		}
 		return id;
-	}
-
-	@Override
-	public String getTableName() {
-		return tableName;
-	}
-
-	public RSExtractor<T> getRse() {
-		return rse;
-	}
-	
-
-	@Override
-	public String getQueryView() {
-		return queryView;
 	}
 
 	public BasicDataFacade(String tableName, RSExtractor<T> rse, String queryView) {
@@ -99,6 +88,10 @@ public class BasicDataFacade<T> extends BasicHelper implements DataEntityInfo {
 		daoHelper.loadAllHelper( result.getList() , query, this.getRse() );
 		result.evaluateResultFromList();
 		return result;
+	}
+	
+	public Stream<T> loadAllStream( DAOContext context ) throws DAOException {
+		return this.loadAll(context).stream();
 	}
 	
 	public void evaluteSqlUpdateResult( int res, T model, BasicDaoResult<T> result ) {
