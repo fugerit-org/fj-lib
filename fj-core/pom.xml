@@ -40,14 +40,15 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>javax.ws.rs</groupId>
-		    <artifactId>javax.ws.rs-api</artifactId>
-		    <version>${javax-rs-api-version}</version>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
 		</dependency>
 
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-dbcp2</artifactId>
+		    <groupId>javax.ws.rs</groupId>
+		    <artifactId>javax.ws.rs-api</artifactId>
+		    <version>${javax-rs-api-version}</version>
+		    <scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -79,6 +80,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.fugerit.java</groupId>
+			<artifactId>fj-test-helper-java-jaxrs</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
 		    <version>2.13.0</version>
@@ -96,14 +103,6 @@
 					<artifactId>commons-io</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-server -->
-		<dependency>
-		    <groupId>org.glassfish.jersey.core</groupId>
-		    <artifactId>jersey-server</artifactId>
-		    <version>2.40</version>
-		    <scope>test</scope>
 		</dependency>
 
 	</dependencies>

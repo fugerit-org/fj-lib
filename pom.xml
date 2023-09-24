@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-bom</artifactId>
-		<version>1.4.2</version>
+		<version>1.4.3</version>
 		<relativePath></relativePath>
 	</parent>
 
@@ -152,7 +152,6 @@
 		<dependency>
 		    <groupId>org.awaitility</groupId>
 		    <artifactId>awaitility</artifactId>
-		    <version>${awaitility-version}</version>
 		    <scope>test</scope>
 		</dependency>
 
