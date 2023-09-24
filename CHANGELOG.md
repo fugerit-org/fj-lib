@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Code of conduct badge and file
 
+### Fixed
+
+- dependabot workflow ecosystem 
+
 ## [8.3.8] - 2023-09-23
 
 ### Added
