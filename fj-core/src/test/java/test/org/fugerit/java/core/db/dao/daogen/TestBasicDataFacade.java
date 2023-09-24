@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import org.fugerit.java.core.db.dao.DAOException;
+import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.db.dao.FieldList;
 import org.fugerit.java.core.db.daogen.BasicDaoResult;
 import org.fugerit.java.core.db.daogen.BasicDataFacade;
@@ -31,7 +32,7 @@ public class TestBasicDataFacade extends TestBasicDBHelper implements Serializab
 	private static final String TABLE_NAME = "fugerit.user";
 	
 	@Test
-	public void testBasicDataFacade() {
+	public void testBasicDataFacade1() {
 		
 		SafeFunction.apply( () -> {
 			try ( CloseableDAOContextSC context =  new CloseableDAOContextSC( newConnection() ) ) {
@@ -45,8 +46,21 @@ public class TestBasicDataFacade extends TestBasicDBHelper implements Serializab
 				Assert.assertEquals( TABLE_NAME , facade.getTableName() );	
 				BasicDaoResult<ModelUser> resultAll = facade.loadAll(context);
 				Assert.assertFalse( resultAll.getList().isEmpty() );
+				resultAll.stream().forEach( m -> log.info( "test basic dao result stream {}", m) );
+				log.info( "test basic dao result first() {}", resultAll.getFirst() );
+				Assert.assertThrows( DAORuntimeException.class , resultAll::getOne );
+				BasicDaoResult<ModelUser> resultOne = new BasicDaoResult<>();
+				Assert.assertFalse( resultOne.getFirst().isPresent() );
+				Assert.assertFalse( resultOne.getOne().isPresent() );
+				resultOne.getList().add( resultAll.getFirst().get() );
+				Assert.assertTrue( resultOne.getFirst().isPresent() );
+				Assert.assertTrue( resultOne.getOne().isPresent() );
 			}
 		} );
+	}
+
+	@Test
+	public void testBasicDataFacade2() {
 		SafeFunction.apply( () -> {
 			try ( CloseableDAOContextSC context =  new CloseableDAOContextSC( newConnection() ) ) {
 				// advance feature features

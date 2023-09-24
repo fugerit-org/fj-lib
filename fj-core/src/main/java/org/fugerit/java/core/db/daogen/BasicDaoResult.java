@@ -2,11 +2,13 @@ package org.fugerit.java.core.db.daogen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.util.result.BasicResult;
 
-public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
+public class BasicDaoResult<T> extends BasicResult implements DAOResultListExt<T> {
 
 	public static final int RESULT_NODATAFOUND = -3;
 	public static final int RESULT_NOT_SET = Integer.MIN_VALUE;
@@ -33,6 +35,21 @@ public class BasicDaoResult<T> extends BasicResult implements DaoResultList<T> {
 		return list;
 	}
 
+	@Override
+	public Stream<T> stream() {
+		return this.getList().stream();
+	}
+	
+	@Override
+	public Optional<T> getOne() {
+		return Optional.ofNullable( this.getSingleResult() );
+	}
+	
+	@Override
+	public Optional<T> getFirst() {
+		return this.getList().isEmpty() ? Optional.empty() : Optional.of( this.getList().get( 0 ) );
+	}
+	
 	private StringBuilder resultDescription;
 	
 	@Override
