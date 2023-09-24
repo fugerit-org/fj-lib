@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Sonar cloud workflow merged in maven build](.github/workflows/deploy_maven_package.yml)
 - fj-bom version set to 1.4.3
+- fj-daogen version set to 1.2.4
 - jersey-server substituted by fj-test-helper-java-jaxrs dependency 
 
 ### Removed
