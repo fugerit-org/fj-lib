@@ -130,7 +130,7 @@ public abstract class AbstractJFile implements JFile {
 
 	@Override
 	public String describe() {
-		// see SafeFunction.get() [if any Exception is thrown, it will be wrapped by a ConfigRuntimeException]
+		// see SafeFunction : https://jupiterdocs.fugerit.org/fj-core/src/docs/SafeFunction.html
 		return SafeFunction.get( () -> this.getClass().getSimpleName()+"[path:"+this.getPath()+",isDirectory:"+this.isDirectory()+",isFile:"+this.isFile()+"]" );
 	}
 	
