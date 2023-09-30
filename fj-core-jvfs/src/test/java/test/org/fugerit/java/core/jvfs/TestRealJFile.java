@@ -2,14 +2,18 @@ package test.org.fugerit.java.core.jvfs;
 
 import static org.junit.Assert.fail;
 
+
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
+import java.time.Duration;
 import java.util.Date;
 
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
+import org.awaitility.Awaitility;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -33,12 +37,16 @@ public class TestRealJFile extends BasicTest {
 			Assert.assertTrue( file.isFile() );			// now it is file
 			Assert.assertTrue( file.exists() );			// now exists
 			// last modified
-			long lastModified = System.currentTimeMillis()-10000L;
+			long lastModified = System.currentTimeMillis()-50L;
 			file.setLastModified(lastModified);
 			Assert.assertEquals( lastModified , file.getLastModified() );
 			// check content
-			String readContent = StreamIO.readString( file.getReader() );
+			String readContent = null;
+			try ( Reader reader = file.getReader() ) {
+				readContent = StreamIO.readString( file.getReader() );
+			}
 			log.info( "content expected : {}, found : {}", content, readContent );
+			Awaitility.await().atLeast( Duration.ofMillis( 100 ) );
 			Assert.assertEquals( content , readContent );
 			boolean deleteFile = file.delete();
 			log.info( "delete file if exists end : {}", deleteFile );
