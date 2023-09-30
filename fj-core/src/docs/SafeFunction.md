@@ -32,7 +32,10 @@ With safe functions it look likes :
 	}
 ```
 
-The default behavior is that any thrown Exception will be wrapped by a ConfigRuntimeException.
+The default behavior when an exception is thrown : 
+- Wraps checked Exception around a *ConfigRuntimeException*
+- *RuntimeException* are just re-thrown
+
 It is possible to provide custom exception handlers.
 
 Read the [SafeFunction javadoc](https://javadoc.io/doc/org.fugerit.java/fj-core/latest/org/fugerit/java/core/function/SafeFunction.html) too.

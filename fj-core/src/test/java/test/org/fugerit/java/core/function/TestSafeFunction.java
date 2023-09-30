@@ -8,6 +8,8 @@ import java.io.StringReader;
 import java.util.function.Consumer;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.db.dao.DAOException;
+import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.xml.XMLException;
 import org.junit.Assert;
@@ -19,6 +21,10 @@ import test.org.fugerit.java.helpers.FailHelper;
 @Slf4j
 public class TestSafeFunction {
 
+	private static final DAOException TEST_CHECKED_EX = new DAOException( "test checked" );
+	
+	private static final DAORuntimeException TEST_RUNTIME_EX = new DAORuntimeException( "test runtime" );
+	
 	@Test
 	public void testFailGet() {
 		Assert.assertThrows(ConfigRuntimeException.class, () -> {
@@ -105,6 +111,22 @@ public class TestSafeFunction {
 		Assert.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_LOG_WARN, false ) );
 		Assert.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_TRACE_WARN, false ) );
 		Assert.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_THROW_CONFIG_RUNTIME, true ) );
+	}
+	
+	@Test
+	public void testExHandlerThrowConfigRuntime() {
+		Assert.assertThrows( ConfigRuntimeException.class , 
+				() -> SafeFunction.EX_CONSUMER_THROW_CONFIG_RUNTIME.accept( TEST_RUNTIME_EX ) );
+		Assert.assertThrows( ConfigRuntimeException.class , 
+				() -> SafeFunction.EX_CONSUMER_THROW_CONFIG_RUNTIME.accept( TEST_CHECKED_EX ) );
+	}
+	
+	@Test
+	public void testExHandlerThrowConfigRuntimeRethrowRTE() {
+		Assert.assertThrows( TEST_RUNTIME_EX.getClass() , 
+				() -> SafeFunction.EX_CONSUMER_RETHROW_RTE_OR_CONVERT_CHECKED_TO_CRE.accept( TEST_RUNTIME_EX ) );
+		Assert.assertThrows( ConfigRuntimeException.class , 
+				() -> SafeFunction.EX_CONSUMER_RETHROW_RTE_OR_CONVERT_CHECKED_TO_CRE.accept( TEST_CHECKED_EX ) );
 	}
 	
 	public String testExampleToOneLineClassic() {

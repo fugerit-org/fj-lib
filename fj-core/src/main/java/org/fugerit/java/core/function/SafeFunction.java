@@ -44,13 +44,38 @@ public class SafeFunction {
 
 	private SafeFunction() {}
 	
+	/**
+	 * <p>This Exception consumer just log the exception at warn log level. (no Exception is re-thrown).</p>
+	 */
 	public static final Consumer<Exception> EX_CONSUMER_LOG_WARN = e -> log.warn( "Exception suppressed : {}", e.toString() );
 	
+	/**
+	 * <p>This Exception consumer log and print the stack trace of the exception at warn log level. (no Exception is re-thrown).</p>
+	 */
 	public static final Consumer<Exception> EX_CONSUMER_TRACE_WARN = e -> log.warn( "Exception suppressed : "+e, e );
 	
+	/**
+	 * <p>This Exception consumer wraps any Exception around a {@link ConfigRuntimeException}.</p>
+	 */
 	public static final Consumer<Exception> EX_CONSUMER_THROW_CONFIG_RUNTIME = e -> { throw new ConfigRuntimeException( e ); };
 	
-	private static final Consumer<Exception> DEFAULT_EX_CONSUMER = EX_CONSUMER_THROW_CONFIG_RUNTIME;
+	/**
+	 * <p>This Exception consumer wraps checked Exception around a {@link ConfigRuntimeException}.</p>
+	 * 
+	 * <p>RuntimeException are just re-thrown.</p>
+	 */
+	public static final Consumer<Exception> EX_CONSUMER_RETHROW_RTE_OR_CONVERT_CHECKED_TO_CRE = e -> { 
+		if ( e instanceof RuntimeException ) {
+			throw (RuntimeException)e;
+		} else {
+			throw new ConfigRuntimeException( "Convert exception to ConfigRuntimeException : "+e, e );
+		}
+	};
+	
+	/**
+	 * Default behavior is {@link EX_CONSUMER_RETHROW_RTE_OR_CONVERT_CHECKED_TO_CRE}
+	 */
+	private static final Consumer<Exception> DEFAULT_EX_CONSUMER = EX_CONSUMER_RETHROW_RTE_OR_CONVERT_CHECKED_TO_CRE;
 	
 	/**
 	 * <p>Get a value returned by an UnsafeSupplier, and convert any raised Exception</p>
@@ -141,6 +166,13 @@ public class SafeFunction {
 		}
 	}
 
+	/**
+	 * <p>This method will apply a function only if a condition is met.</p>
+	 * 
+	 * @param condition		the condition to check
+	 * @param fun			the function to apply if the condition returned <code>true</code>
+	 * @return				the value returned by the condition
+	 */
 	public static boolean applyOnCondition( UnsafeSupplier<Boolean, Exception> condition, UnsafeVoid<Exception> fun ) {
 		boolean cond = get( condition );
 		if ( cond ) {
@@ -149,10 +181,26 @@ public class SafeFunction {
 		return cond;
 	}
 	
+	/**
+	 * <p>This method will apply a function only if a object is not null.</p>
+	 * 
+	 * @param <T>	the type of the object to check
+	 * @param v		the object to check for <code>null</code>
+	 * @param fun	the function to apply
+	 * @return		<code>true</code> if the object is not null.
+	 */
 	public static <T> boolean applyIfNotNull( T v, UnsafeVoid<Exception> fun ) {
 		return applyOnCondition( () -> v != null , fun);
 	}
 	
+	/**
+	 * <p>This method return a value, provided by a supplier function, only if a condition is met.</p>
+	 * 
+	 * @param <R>		the return type
+	 * @param condition	the condition to check
+	 * @param supplier	the supplier function
+	 * @return			the value returned by the supplier if the condition returns <code>true</code> or <code>null</code> otherwise.
+	 */
 	public static <R> R getOnCondition( UnsafeSupplier<Boolean, Exception> condition, UnsafeSupplier<R, Exception> supplier ) {
 		return get( () -> {
 			R res = null;
@@ -165,6 +213,15 @@ public class SafeFunction {
 		
 	}
 	
+	/**
+	 *  <p>This method return a value, provided by a supplier function, only if an object is not <code>null</code>.</p>
+	 * 
+	 * @param <T> 			the type of the object to check for <code>null</code>
+	 * @param <R>			the return type
+	 * @param v				the object to check for <code>null</code>
+	 * @param supplier		the supplier function
+	 * @return				the value returned by the supplier if the object is not <code>null</code> or <code>null</code> otherwise.
+	 */
 	public static <T, R> R getIfNotNull( T v, UnsafeSupplier<R, Exception> supplier ) {
 		return getOnCondition( () -> v != null , supplier );
 	}
