@@ -1,0 +1,27 @@
+<config>
+  	
+  <bean id="4.1">
+    		
+    <field>field21</field>
+    		
+	
+    <labelKey>sec_41_Testlabelwith</labelKey>
+  </bean>
+  	
+  <bean id="4.2">
+    		
+    <field>field22</field>
+    		
+	
+    <labelKey>sec_42_Testlabel2</labelKey>
+  </bean>
+  	
+  <bean id="4.2">
+    		
+    <field>field23</field>
+    		
+	
+    <labelKey>sec_42_Testlabel4</labelKey>
+  </bean>
+  
+</config>
