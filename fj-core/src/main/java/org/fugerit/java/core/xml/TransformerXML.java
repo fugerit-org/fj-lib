@@ -45,6 +45,18 @@ public class TransformerXML {
 	public static TransformerFactory newSafeTransformerFactory() {
 		return newSafeTransformerFactory( NO_FEATURES );
 	}
+
+    public static Transformer newTransformerWithConfig(TransformerConfig config) throws XMLException {
+        Transformer transformer = newTransformer();
+        config.setAll(transformer);
+        return transformer;
+    }
+	
+    public static Transformer newTransformer(Source source, TransformerConfig config) throws XMLException {
+        Transformer transformer = newTransformer( source );
+        config.setAll(transformer);
+        return transformer;
+    }
 	
     public static Transformer newTransformer(Source source) throws XMLException {
         Transformer transformer = null;
@@ -61,7 +73,7 @@ public class TransformerXML {
     }
 
     public static Transformer newTransformer() throws XMLException {
-       return newTransformer(null);
+       return newTransformer( null );
     }	
 	
 }

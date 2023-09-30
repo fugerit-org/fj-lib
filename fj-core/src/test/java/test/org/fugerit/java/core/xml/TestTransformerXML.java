@@ -10,6 +10,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
+import org.fugerit.java.core.xml.TransformerConfig;
 import org.fugerit.java.core.xml.TransformerXML;
 import org.junit.Assert;
 import org.junit.Test;
@@ -59,6 +60,19 @@ public class TestTransformerXML extends BasicTest {
 		boolean ok = false;
 		try {
 			Transformer transformer = TransformerXML.newTransformer();
+			log.info( "factory -> {}", transformer );
+			ok = transformer != null;
+		} catch (Exception e) {
+			this.failEx(e);
+		}
+		Assert.assertTrue( ok );
+	}
+	
+	@Test
+	public void newTransformerConfig() {
+		boolean ok = false;
+		try {
+			Transformer transformer = TransformerXML.newTransformerWithConfig( TransformerConfig.newIndentConfig(null) );
 			log.info( "factory -> {}", transformer );
 			ok = transformer != null;
 		} catch (Exception e) {

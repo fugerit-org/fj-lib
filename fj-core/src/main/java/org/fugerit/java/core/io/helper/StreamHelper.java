@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
@@ -62,6 +63,10 @@ public class StreamHelper {
 	public static final String PATH_FILE = MODE_FILE+URL_HELPER;
 	
 	public static final String PATH_JNDI = MODE_JNDI+URL_HELPER;
+	
+	public static Reader resolveReader( String path ) throws IOException {
+		return new InputStreamReader( resolveStream( path, null ) );
+	}
 	
 	public static InputStream resolveStream( String path ) throws IOException {
 		return resolveStream( path, null );
