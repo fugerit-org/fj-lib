@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- [SafeFunction documentation](https://jupiterdocs.fugerit.org/fj-core/src/docs/SafeFunction.html)
+
+### Changed
+
+- RealJFile nows creates a FileWriter and FileReader for getWriter() and getReader() methods.
+
+### Fixed
+
+- windows run of TestRealJFile.testFullFile()
+
 ## [8.4.0] - 2023-09-30
 
 ### Added
