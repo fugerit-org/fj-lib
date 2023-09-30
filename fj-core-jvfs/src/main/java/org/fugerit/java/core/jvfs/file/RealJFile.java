@@ -2,10 +2,15 @@ package org.fugerit.java.core.jvfs.file;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
@@ -54,8 +59,13 @@ public class RealJFile extends AbstractJFile {
     }
 
     @Override
+    public Reader getReader() throws FileNotFoundException {
+    	return new FileReader(this.file);
+    }
+    
+    @Override
     public InputStream getInputStream() throws IOException {
-        return (new FileInputStream(this.file));
+        return new FileInputStream(this.file);
     }
 
     @Override
@@ -70,10 +80,15 @@ public class RealJFile extends AbstractJFile {
 		}
         return name;
     }
+    
+    @Override
+    public Writer getWriter() throws IOException {
+        return new FileWriter(this.file);
+    }
 
     @Override
     public OutputStream getOutputStream() throws IOException {
-        return (new FileOutputStream(this.file));
+        return new FileOutputStream(this.file);
     }
 
     @Override
