@@ -3,6 +3,7 @@ package test.org.fugerit.java.core.jvfs;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
 import java.util.Date;
@@ -37,7 +38,10 @@ public class TestRealJFile extends BasicTest {
 			file.setLastModified(lastModified);
 			Assert.assertEquals( lastModified , file.getLastModified() );
 			// check content
-			String readContent = StreamIO.readString( file.getReader() );
+			String readContent = null;
+			try ( Reader reader = file.getReader() ) {
+				readContent = StreamIO.readString( reader );
+			}
 			log.info( "content expected : {}, found : {}", content, readContent );
 			Assert.assertEquals( content , readContent );
 			boolean deleteFile = file.delete();
