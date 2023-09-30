@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.4.1] - 2023-10-01
+
 ### Added
 
 - [SafeFunction documentation](https://jupiterdocs.fugerit.org/fj-core/src/docs/SafeFunction.html)
@@ -14,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - RealJFile nows creates a FileWriter and FileReader for getWriter() and getReader() methods.
+- Default behavior of SafeFunction is now to wraps only checked exceptions. runtime exception are just re thrown.
 
 ### Fixed
 
