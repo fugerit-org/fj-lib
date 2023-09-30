@@ -10,7 +10,7 @@ import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
 
-import org.fugerit.java.core.cfg.ConfigRuntimeException;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.jvfs.JFile;
 import org.fugerit.java.core.jvfs.JVFS;
 
@@ -130,11 +130,8 @@ public abstract class AbstractJFile implements JFile {
 
 	@Override
 	public String describe() {
-		try {
-			return this.getClass().getSimpleName()+"[path:"+this.getPath()+",isDirectory:"+this.isDirectory()+",isFile:"+this.isFile()+"]";
-		} catch (IOException e) {
-			throw new ConfigRuntimeException( e );
-		}
+		// see SafeFunction.get() [if any Exception is thrown, it will be wrapped by a ConfigRuntimeException]
+		return SafeFunction.get( () -> this.getClass().getSimpleName()+"[path:"+this.getPath()+",isDirectory:"+this.isDirectory()+",isFile:"+this.isFile()+"]" );
 	}
 	
 }
