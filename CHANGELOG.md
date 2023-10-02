@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- commons-io version set to 2.14.0
 - java and maven badges link
 
 ### Fixed
