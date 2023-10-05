@@ -19,7 +19,6 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.helpers.AbstractConfigurableObject;
 import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
 import org.fugerit.java.core.cfg.provider.ConfigProviderFacade;
-import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.helper.StreamHelper;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
@@ -284,12 +283,14 @@ public class GenericListCatalogConfig<T> extends AbstractConfigurableObject {
 	 * @throws 			ConfigRuntimeException in case of issues during loading
 	 */
 	public static <T> GenericListCatalogConfig<T> load( InputStream is, GenericListCatalogConfig<T> config ) {
-		return SafeFunction.get( () -> {
+		try {
 			Document doc = DOMIO.loadDOMDoc( is, true );
 			Element root = doc.getDocumentElement();
 			config.configure( root );
-			return config;	
-		} );
+		} catch (Exception e) {
+			throw new ConfigRuntimeException( e );
+		}
+		return config;	
 	}
 
 	protected Set<String> getEntryIdCheck() {
