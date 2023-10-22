@@ -97,6 +97,14 @@ public class DAOException extends Exception {
 		apply(fun, EX_HANDLER_SILENT);
 	}
 		
+	public static <T, E extends Exception> T getWithMessage( UnsafeSupplier<T, E> fun, String message ) throws DAOException {
+		return get( fun, e -> { throw convertEx( message , e); } );
+	}
+	
+	public static <E extends Exception> void applyWithMessage( UnsafeVoid<E> fun, String message ) throws DAOException {
+		apply(fun,  e -> { throw convertEx( message , e); } );
+	}
+	
 	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun, UnsafeConsumer<Exception, DAOException> exHandler ) throws DAOException {
 		T res = null;
 		try {

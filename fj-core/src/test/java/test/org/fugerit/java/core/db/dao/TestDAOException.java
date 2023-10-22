@@ -23,6 +23,16 @@ public class TestDAOException {
 	}
 	
 	@Test
+	public void testApplyEXMessage() {
+		Assert.assertThrows( DAOException.class ,() -> DAOException.applyWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+	}
+
+	@Test
+	public void testGetEXMessage() {
+		Assert.assertThrows( DAOException.class ,() -> DAOException.getWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+	}
+	
+	@Test
 	public void testApply() {
 		Assert.assertThrows( DAOException.class ,() -> DAOException.apply( () -> { throw new SQLException( "junit test scenario" ); } ) );
 	}

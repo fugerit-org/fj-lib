@@ -27,6 +27,16 @@ public class TestHelperIOEx {
 	}
 	
 	@Test
+	public void testApplyEXMessage() {
+		Assert.assertThrows( IOException.class ,() -> HelperIOException.applyWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+	}
+
+	@Test
+	public void testGetEXMessage() {
+		Assert.assertThrows( IOException.class ,() -> HelperIOException.getWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+	}
+	
+	@Test
 	public void testEx1() {
 		Assert.assertNotNull( new HelperIOException() );
 	}

@@ -125,6 +125,14 @@ public class ConfigException extends CodeException {
 		apply(fun, EX_HANDLER_SILENT);
 	}
 		
+	public static <T, E extends Exception> T getWithMessage( UnsafeSupplier<T, E> fun, String message ) throws ConfigException {
+		return get( fun, e -> { throw convertEx( message , e); } );
+	}
+	
+	public static <E extends Exception> void applyWithMessage( UnsafeVoid<E> fun, String message ) throws ConfigException {
+		apply(fun,  e -> { throw convertEx( message , e); } );
+	}
+	
 	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun, UnsafeConsumer<Exception, ConfigException> exHandler ) throws ConfigException {
 		T res = null;
 		try {

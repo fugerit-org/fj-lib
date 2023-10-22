@@ -36,6 +36,16 @@ public class TestConfigException {
 	}
 	
 	@Test
+	public void testApplyEXMessage() {
+		Assert.assertThrows( ConfigException.class ,() -> ConfigException.applyWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+	}
+
+	@Test
+	public void testGetEXMessage() {
+		Assert.assertThrows( ConfigException.class ,() -> ConfigException.getWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+	}
+	
+	@Test
 	public void testApply() throws ConfigException {
 		HelperCheck check = new HelperCheck();
 		Assert.assertNotEquals( HelperCheck.TEST_S1 , check.getField1() );
