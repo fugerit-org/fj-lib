@@ -1,5 +1,6 @@
 package test.org.fugerit.java.core.db.dao;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.fugerit.java.core.db.dao.DAOException;
@@ -8,6 +9,19 @@ import org.junit.Test;
 
 public class TestDAOException {
 
+	@Test
+	public void testApplySilent() throws DAOException {
+		boolean ok = true;
+		DAOException.applySilent( () -> { throw new IOException( "junit test scenario" ); } );
+		Assert.assertTrue( ok );
+	}
+	
+	@Test
+	public void testGetSilent() throws DAOException {
+		Object result = DAOException.getSilent( () -> { throw new IOException( "junit test scenario" ); } );
+		Assert.assertNull( result );
+	}
+	
 	@Test
 	public void testApply() {
 		Assert.assertThrows( DAOException.class ,() -> DAOException.apply( () -> { throw new SQLException( "junit test scenario" ); } ) );

@@ -13,6 +13,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestHelperIOEx {
 
+	@Test
+	public void testApplySilent() throws IOException {
+		boolean ok = true;
+		HelperIOException.applySilent( () -> { throw new IOException( "junit test scenario" ); } );
+		Assert.assertTrue( ok );
+	}
+	
+	@Test
+	public void testGetSilent() throws IOException {
+		Object result = HelperIOException.getSilent( () -> { throw new IOException( "junit test scenario" ); } );
+		Assert.assertNull( result );
+	}
 	
 	@Test
 	public void testEx1() {

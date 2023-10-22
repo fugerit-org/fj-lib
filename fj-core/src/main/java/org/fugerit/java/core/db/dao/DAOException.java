@@ -20,15 +20,19 @@
  */
 package org.fugerit.java.core.db.dao;
 
+import org.fugerit.java.core.function.UnsafeConsumer;
 import org.fugerit.java.core.function.UnsafeSupplier;
 import org.fugerit.java.core.function.UnsafeVoid;
 import org.fugerit.java.core.lang.ex.ExConverUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 /*
 *
 * @author Fugerit
 *
 */
+@Slf4j
 public class DAOException extends Exception {
 
 	/*
@@ -71,21 +75,43 @@ public class DAOException extends Exception {
 		return convertEx( ExConverUtils.DEFAULT_CAUSE_MESSAGE, e );
 	}
 
+	public static final UnsafeConsumer<Exception, DAOException> EX_HANDLER_SILENT = e -> log.warn( "Suppressed exception : "+e, e );
+	
+	public static final UnsafeConsumer<Exception, DAOException> EX_HANDLER_RETHROW = e -> { throw convertEx( e ); };
+	
+	public static final UnsafeConsumer<Exception, DAOException> EX_HANDLER_DEFAULT = EX_HANDLER_RETHROW;
+	
 	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun ) throws DAOException {
+		return get( fun, EX_HANDLER_DEFAULT );
+	}
+	
+	public static <E extends Exception> void apply( UnsafeVoid<E> fun ) throws DAOException {
+		apply(fun, EX_HANDLER_DEFAULT);
+	}
+	
+	public static <T, E extends Exception> T getSilent( UnsafeSupplier<T, E> fun ) throws DAOException {
+		return get( fun, EX_HANDLER_SILENT );
+	}
+	
+	public static <E extends Exception> void applySilent( UnsafeVoid<E> fun ) throws DAOException {
+		apply(fun, EX_HANDLER_SILENT);
+	}
+		
+	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun, UnsafeConsumer<Exception, DAOException> exHandler ) throws DAOException {
 		T res = null;
 		try {
 			res = fun.get();
 		} catch (Exception e) {
-			throw convertEx( e );
+			exHandler.accept( e );
 		}
 		return res;
 	}
 	
-	public static <E extends Exception> void apply( UnsafeVoid<E> fun ) throws DAOException {
+	public static <E extends Exception> void apply( UnsafeVoid<E> fun, UnsafeConsumer<Exception, DAOException> exHandler ) throws DAOException {
 		try {
 			fun.apply();
 		} catch (Exception e) {
-			throw convertEx( e );
+			exHandler.accept( e );
 		}
 	}
 	

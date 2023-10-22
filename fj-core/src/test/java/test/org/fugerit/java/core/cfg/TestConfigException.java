@@ -11,6 +11,20 @@ import test.org.fugerit.java.core.HelperCheck;
 
 public class TestConfigException {
 	
+	
+	@Test
+	public void testApplySilent() throws ConfigException {
+		boolean ok = true;
+		ConfigException.applySilent( () -> { throw new IOException( "junit test scenario" ); } );
+		Assert.assertTrue( ok );
+	}
+	
+	@Test
+	public void testGetSilent() throws ConfigException {
+		Object result = ConfigException.getSilent( () -> { throw new IOException( "junit test scenario" ); } );
+		Assert.assertNull( result );
+	}
+	
 	@Test
 	public void testApplyEX() {
 		Assert.assertThrows( ConfigException.class ,() -> ConfigException.apply( () -> { throw new IOException( "junit test scenario" ); } ) );

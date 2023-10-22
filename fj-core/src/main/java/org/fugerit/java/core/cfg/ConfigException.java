@@ -20,10 +20,13 @@
  */
 package org.fugerit.java.core.cfg;
 
+import org.fugerit.java.core.function.UnsafeConsumer;
 import org.fugerit.java.core.function.UnsafeSupplier;
 import org.fugerit.java.core.function.UnsafeVoid;
 import org.fugerit.java.core.lang.ex.CodeException;
 import org.fugerit.java.core.lang.ex.ExConverUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>Exception for handling unexpected situations during configuration.</p>
@@ -33,6 +36,7 @@ import org.fugerit.java.core.lang.ex.ExConverUtils;
  * @author Fugerit
  *
  */
+@Slf4j
 public class ConfigException extends CodeException {
 
 	/**
@@ -99,21 +103,43 @@ public class ConfigException extends CodeException {
 		return convertEx( ExConverUtils.DEFAULT_CAUSE_MESSAGE, e );
 	}
 	
+	public static final UnsafeConsumer<Exception, ConfigException> EX_HANDLER_SILENT = e -> log.warn( "Suppressed exception : "+e, e );
+	
+	public static final UnsafeConsumer<Exception, ConfigException> EX_HANDLER_RETHROW = e -> { throw convertEx( e ); };
+	
+	public static final UnsafeConsumer<Exception, ConfigException> EX_HANDLER_DEFAULT = EX_HANDLER_RETHROW;
+	
 	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun ) throws ConfigException {
+		return get( fun, EX_HANDLER_DEFAULT );
+	}
+	
+	public static <E extends Exception> void apply( UnsafeVoid<E> fun ) throws ConfigException {
+		apply(fun, EX_HANDLER_DEFAULT);
+	}
+	
+	public static <T, E extends Exception> T getSilent( UnsafeSupplier<T, E> fun ) throws ConfigException {
+		return get( fun, EX_HANDLER_SILENT );
+	}
+	
+	public static <E extends Exception> void applySilent( UnsafeVoid<E> fun ) throws ConfigException {
+		apply(fun, EX_HANDLER_SILENT);
+	}
+		
+	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun, UnsafeConsumer<Exception, ConfigException> exHandler ) throws ConfigException {
 		T res = null;
 		try {
 			res = fun.get();
 		} catch (Exception e) {
-			throw convertEx( e );
+			exHandler.accept( e );
 		}
 		return res;
 	}
 	
-	public static <E extends Exception> void apply( UnsafeVoid<E> fun ) throws ConfigException {
+	public static <E extends Exception> void apply( UnsafeVoid<E> fun, UnsafeConsumer<Exception, ConfigException> exHandler ) throws ConfigException {
 		try {
 			fun.apply();
 		} catch (Exception e) {
-			throw convertEx( e );
+			exHandler.accept( e );
 		}
 	}
 	
