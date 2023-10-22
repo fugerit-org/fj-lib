@@ -37,6 +37,18 @@ public class TestHelperIOEx {
 	}
 	
 	@Test
+	public void testApplyEXMessageOk() throws IOException {
+		boolean ok = true;
+		HelperIOException.applyWithMessage( () -> log.info( "test ok" ) , "test message" );
+		Assert.assertTrue( ok );
+	}
+
+	@Test
+	public void testGetEXMessageOk() throws IOException {
+		Assert.assertNotNull( HelperIOException.getWithMessage( () -> "test ok" , "test message" ) );
+	}
+	
+	@Test
 	public void testEx1() {
 		Assert.assertNotNull( new HelperIOException() );
 	}

@@ -7,8 +7,10 @@ import org.fugerit.java.core.cfg.ConfigException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.HelperCheck;
 
+@Slf4j
 public class TestConfigException {
 	
 	
@@ -43,6 +45,18 @@ public class TestConfigException {
 	@Test
 	public void testGetEXMessage() {
 		Assert.assertThrows( ConfigException.class ,() -> ConfigException.getWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+	}
+	
+	@Test
+	public void testApplyEXMessageOk() throws ConfigException {
+		boolean ok = true;
+		ConfigException.applyWithMessage( () -> log.info( "test ok" ) , "test message" );
+		Assert.assertTrue( ok );
+	}
+
+	@Test
+	public void testGetEXMessageOk() throws ConfigException {
+		Assert.assertNotNull( ConfigException.getWithMessage( () -> "test ok" , "test message" ) );
 	}
 	
 	@Test

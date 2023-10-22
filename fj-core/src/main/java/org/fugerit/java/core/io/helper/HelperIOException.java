@@ -63,6 +63,10 @@ public class HelperIOException extends IOException {
 	
 	public static final UnsafeConsumer<Exception, IOException> EX_HANDLER_DEFAULT = EX_HANDLER_RETHROW;
 	
+	private static UnsafeConsumer<Exception, IOException> createRethrowWithMessageExHandler( String message ) {
+		return e -> { throw convertEx( message , e); };
+	}
+	
 	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun ) throws IOException {
 		return get( fun, EX_HANDLER_DEFAULT );
 	}
@@ -80,11 +84,11 @@ public class HelperIOException extends IOException {
 	}
 		
 	public static <T, E extends Exception> T getWithMessage( UnsafeSupplier<T, E> fun, String message ) throws IOException {
-		return get( fun, e -> { throw convertEx( message , e); } );
+		return get( fun, createRethrowWithMessageExHandler( message ) );
 	}
 	
 	public static <E extends Exception> void applyWithMessage( UnsafeVoid<E> fun, String message ) throws IOException {
-		apply(fun,  e -> { throw convertEx( message , e); } );
+		apply(fun,  createRethrowWithMessageExHandler( message ) );
 	}
 	
 	public static <T, E extends Exception> T get( UnsafeSupplier<T, E> fun, UnsafeConsumer<Exception, IOException> exHandler ) throws IOException {

@@ -7,6 +7,9 @@ import org.fugerit.java.core.db.dao.DAOException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class TestDAOException {
 
 	@Test
@@ -30,6 +33,18 @@ public class TestDAOException {
 	@Test
 	public void testGetEXMessage() {
 		Assert.assertThrows( DAOException.class ,() -> DAOException.getWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+	}
+	
+	@Test
+	public void testApplyEXMessageOk() throws DAOException {
+		boolean ok = true;
+		DAOException.applyWithMessage( () -> log.info( "test ok" ) , "test message" );
+		Assert.assertTrue( ok );
+	}
+
+	@Test
+	public void testGetEXMessageOk() throws DAOException {
+		Assert.assertNotNull( DAOException.getWithMessage( () -> "test ok" , "test message" ) );
 	}
 	
 	@Test
