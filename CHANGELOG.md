@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.4.4] - 2023-10-23
+
 - applyWithMessage() and getWithMessage() special function to SafeFunction
 
 ## [8.4.3] - 2023-10-22
