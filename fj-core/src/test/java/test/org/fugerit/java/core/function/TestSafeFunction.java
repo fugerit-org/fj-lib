@@ -11,6 +11,7 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.function.SafeFunction;
+import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.xml.XMLException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -69,6 +70,34 @@ public class TestSafeFunction {
 	@Test
 	public void testGetLogGen() {
 		String res = SafeFunction.get( () -> { throw new IOException( "ex2" ); }, e -> log.warn( "Error on exception {}", e, e.getMessage() ) );
+		Assert.assertNull( res );
+	}
+	
+	@Test
+	public void testApplyWithMessage() {
+		Assert.assertThrows( ConfigRuntimeException.class , () -> SafeFunction.applyWithMessage( () -> { throw new IOException( "exApplyWithMessage" ); }, "error test" ) );
+	}
+	
+	@Test
+	public void testGetWithMessage() {
+		Assert.assertThrows( ConfigRuntimeException.class , () -> SafeFunction.getWithMessage( () -> { throw new IOException( "exGetWithMessage" ); }, "error test" ) );
+	}
+	
+	@Test
+	public void testApplyWithMessageOk() {
+		boolean ok = true;
+		SafeFunction.applyWithMessage( () -> log.info( "ok" ), "no error apply" );
+		Assert.assertTrue( ok );
+	}
+	
+	@Test
+	public void testGetWithMessageOk() {
+		Assert.assertEquals( BooleanUtils.BOOLEAN_1 , SafeFunction.getWithMessage( () -> BooleanUtils.BOOLEAN_1, "no error get" ) );
+	}
+	
+	@Test
+	public void testGetSilent() {
+		String res = SafeFunction.getSilent( () -> { throw new IOException( "exGetSilent" ); } );
 		Assert.assertNull( res );
 	}
 	

@@ -77,6 +77,10 @@ public class SafeFunction {
 	 */
 	private static final Consumer<Exception> DEFAULT_EX_CONSUMER = EX_CONSUMER_RETHROW_RTE_OR_CONVERT_CHECKED_TO_CRE;
 	
+	private static Consumer<Exception> createRethrowWithMessageExHandler( String message ) {
+		return e -> { throw new ConfigRuntimeException( message+" caused by ("+e+")" , e); };
+	}
+	
 	/**
 	 * <p>Get a value returned by an UnsafeSupplier, and convert any raised Exception</p>
 	 * 
@@ -110,18 +114,59 @@ public class SafeFunction {
 	}
 	
 	/**
+	 * <p>Return the value of an UnsafeSupplier, only logging (level WARN) any error.</p>
+	 * 
+	 * @param <T>			the returned type
+	 * @param supplier		the {@link UnsafeSupplier}  function
+	 * @return				the value evaluated by the {@link UnsafeSupplier}
+	 */
+	public static <T> T getSilent( UnsafeSupplier<T, Exception> supplier ) {
+		return get( supplier, EX_CONSUMER_LOG_WARN );
+	}
+	
+	/**
+	 * <p>Return the value of an UnsafeSupplier, converting any raised Exception to ConfigRuntimeException, a message will be prefixed to the thrown ConfigRuntimeException.</p>
+	 * 
+	 * @param <T>			the returned type
+	 * @param supplier		the {@link UnsafeSupplier}  function
+	 * @param message		the message to be prefixed to the thrown ConfigRuntimeException
+	 * @return				the value evaluated by the {@link UnsafeSupplier} 
+	 * @throws ConfigRuntimeException 	may throw ConfigRuntimeException in case of exceptions
+	 */
+	public static <T> T getWithMessage( UnsafeSupplier<T, Exception> supplier, String message ) {
+		return get( supplier, createRethrowWithMessageExHandler( message ) );
+	}
+
+	/**
 	 * <p>Apply an UnsafeVoid function, converting any raised Exception to ConfigRuntimeException.</p>
 	 * 
 	 * @param fun	the {@link UnsafeVoid} function
+	 * @throws ConfigRuntimeException 	may throw ConfigRuntimeException in case of exceptions
 	 */
 	public static void apply( UnsafeVoid<Exception> fun ) {
 		apply( fun , DEFAULT_EX_CONSUMER );
 	}
 
+	/**
+	 * <p>Apply an UnsafeVoid function, only logging (level WARN) any error.</p>
+	 * 
+	 * @param fun	the {@link UnsafeVoid} function
+	 */
 	public static void applySilent( UnsafeVoid<Exception> fun ) {
 		apply( fun , EX_CONSUMER_LOG_WARN );
 	}
 	
+	/**
+	 * <p>Apply an UnsafeVoid function, converting any raised Exception to ConfigRuntimeExceptiona, message will be prefixed to the thrown ConfigRuntimeException.</p>
+	 * 
+	 * @param fun	the {@link UnsafeVoid} function
+	 * @param message		the message to be prefixed to the thrown ConfigRuntimeException
+	 * @throws ConfigRuntimeException 	may throw ConfigRuntimeException in case of exceptions
+	 */
+	public static void applyWithMessage( UnsafeVoid<Exception> fun, String message ) {
+		apply( fun , createRethrowWithMessageExHandler( message ) );
+	}
+
 	/**
 	 * <p>Return the value provided by the supplier, handling any exception with a {@link Consumer} function.</p>
 	 * 
