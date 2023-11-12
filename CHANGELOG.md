@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- fj-bom parent set to 1.4.8
+- fj-bom parent set to 1.5.0
+
+### Fixed
+
+- javadoc generation for lombok annotated classes
 
 ## [8.4.4] - 2023-10-23
 
