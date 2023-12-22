@@ -4,6 +4,9 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class JavaVersionHelper {
 
 	private JavaVersionHelper() {}
@@ -17,6 +20,8 @@ public class JavaVersionHelper {
 	public static final int MAJOR_VERSION_JAVA_11 = 11;
 	
 	public static final int MAJOR_VERSION_JAVA_17 = 17;
+	
+	public static final int MAJOR_VERSION_JAVA_21 = 21;
 	
 	public static final int MAJOR_VERSION_FJ_CORE_REF = MAJOR_VERSION_JAVA_8;	// current reference version for fj-core library!
 	
@@ -39,11 +44,17 @@ public class JavaVersionHelper {
 				javaVersion = javaVersion.substring( REMOVE_1_X.length() );
 			}
 			int index = javaVersion.indexOf( '.' );
-			if ( index != -1 ) {
-				res = Integer.parseInt( javaVersion.substring( 0, index ) );
-				if ( res < MAJOR_VERSION_FJ_CORE_REF ) {
-					logger.info( "major version found : '{}' is lower than minimum required -> '{}'", res, MAJOR_VERSION_FJ_CORE_REF );
+			try {
+				if ( index != -1 ) {
+					res = Integer.parseInt( javaVersion.substring( 0, index ) );
+				} else {
+					res = Integer.parseInt( javaVersion );
 				}
+			} catch (Exception e) {
+				log.warn( "Error finding java version : "+e, e );
+			}
+			if ( res < MAJOR_VERSION_FJ_CORE_REF ) {
+				logger.info( "major version found : '{}' is lower than minimum required -> '{}'", res, MAJOR_VERSION_FJ_CORE_REF );
 			}
 			logger.info( "parseUniversalJavaMajorVersion -> '{}'", res );
 		}
