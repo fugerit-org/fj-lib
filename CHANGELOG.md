@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- fj-bom parent set to 1.5.1, [fix lombok-maven-plugin compatibility with java 21](https://github.com/fugerit-org/fj-bom/blob/main/CHANGELOG.md#151---2023-12-22)
+
 ## [8.4.5] - 2023-11-12
 
 ### Changed
