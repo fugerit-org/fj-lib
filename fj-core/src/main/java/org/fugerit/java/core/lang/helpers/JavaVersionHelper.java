@@ -33,9 +33,8 @@ public class JavaVersionHelper {
 	
 	public static final int UNDEFINED = -1;
 	
-	public static int parseUniversalJavaMajorVersion() {
+	public static int parseUniversalJavaMajorVersion( String javaVersion ) {
 		int res = UNDEFINED;
-		String javaVersion = System.getProperty( SYS_PROP );
 		if ( StringUtils.isEmpty( javaVersion ) ) {
 			throw new ConfigRuntimeException( "null property "+SYS_PROP );
 		} else {
@@ -59,6 +58,10 @@ public class JavaVersionHelper {
 			logger.info( "parseUniversalJavaMajorVersion -> '{}'", res );
 		}
 		return res;
+	}
+	
+	public static int parseUniversalJavaMajorVersion() {
+		return parseUniversalJavaMajorVersion( System.getProperty( SYS_PROP ) );
 	}
 	
 }
