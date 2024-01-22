@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- method one() (shortcut for getSingleResult) in interface DaoResultList
+
 ### Changed
 
 - fj-daogen set to 1.3.2

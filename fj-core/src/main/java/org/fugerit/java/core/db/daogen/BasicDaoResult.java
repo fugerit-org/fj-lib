@@ -102,13 +102,6 @@ public class BasicDaoResult<T> extends BasicResult implements DAOResultListExt<T
 		this.getList().add( value );
 	}
 	
-	/**
-	 * Return the first element in the result list.
-	 * 
-	 * Note : if the result contains more than one element raises a RuntimeException.
-	 * 
-	 * @return	the first element in the result list or null if empty
-	 */
 	@Override
 	public T getSingleResult() {
 		T res = null;
