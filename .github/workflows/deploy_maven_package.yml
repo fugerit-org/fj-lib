@@ -30,7 +30,7 @@ jobs:
     - name: Build package
       run: mvn clean install -P full,coverage,metadata
     - name: Publish package
-      run: mvn --batch-mode deploy
+      run: mvn --batch-mode deploy -P doRelease
       env:
         MAVEN_USERNAME: ${{ secrets.OSS_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.OSS_PASSWORD }}

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.4.8] - 2024-02-12
+
 ### Added
 
 - utilty FileIO.isInTmpFolder() to check if a file is in temp path
