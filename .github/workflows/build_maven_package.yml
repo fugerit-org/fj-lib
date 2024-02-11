@@ -1,12 +1,10 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+# CI with maven build and scan
+#
+# version 1.0.0
+#
+# see : https://universe.fugerit.org/src/docs/conventions/workflows/build_maven_package.html
 
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: CI maven build and sonar cloud scan
+name: CI maven build and scan
 
 on:
   # Trigger analysis when pushing in master or pull requests, and when creating
@@ -14,7 +12,8 @@ on:
   push:
     branches:
       - main
-      - branch-sonarcloud
+      - develop
+      - branch-preview
   pull_request:
     types:
       - opened
@@ -26,28 +25,31 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@main
         with:
           # Shallow clones should be disabled for a better relevancy of analysis
           fetch-depth: 0
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@main
         with:
           java-version: '17'
           distribution: 'corretto'
           cache: 'maven'
       - name: Cache Maven packages
-        uses: actions/cache@v1
+        uses: actions/cache@main
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Cache SonarCloud packages
-        uses: actions/cache@v1
+        uses: actions/cache@main
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      - uses: actions/setup-node@main
+        with:
+          node-version: 20
       - name: Maven version
         run: mvn -v
         env:
@@ -56,13 +58,33 @@ jobs:
           # SonarCloud access token should be generated from https://sonarcloud.io/account/security/
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Build and analyze
-        run: mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Pcoverage,full,metadata,sonarfugerit -Dsonar.projectKey=fugerit-org_${{github.event.repository.name}}
+        run: mvn -B clean install org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Pcoverage,full,metadata,sonarfugerit,buildreact -Dsonar.projectKey=fugerit-org_${{github.event.repository.name}}
         env:
           # Needed to get some information about the pull request, if any
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # SonarCloud access token should be generated from https://sonarcloud.io/account/security/
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # snyk
+      - name: Build a Docker image
+        run: docker build -t fj-doc-playground-quarkus fj-doc-playground-quarkus
+      - name: Run Snyk to check Docker image for vulnerabilities
+        # Snyk can be used to break the build when it detects vulnerabilities.
+        # In this case we want to upload the issues to GitHub Code Scanning
+        continue-on-error: true
+        uses: snyk/actions/docker@master
+        env:
+          # In order to use the Snyk Action you will need to have a Snyk API token.
+          # More details in https://github.com/snyk/actions#getting-your-snyk-token
+          # or you can signup for free at https://snyk.io/login
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: fj-doc-playground-quarkus
+          args: --file=fj-doc-playground-quarkus/Dockerfile
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@main
+        with:
+          sarif_file: snyk.sarif
 
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@v3.0.2
+        uses: advanced-security/maven-dependency-submission-action@main
