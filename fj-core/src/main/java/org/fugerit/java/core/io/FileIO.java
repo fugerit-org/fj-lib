@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.zip.ZipOutputStream;
 
+import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.io.file.FileFunSecure;
 import org.fugerit.java.core.io.file.ZipFileFun;
 import org.fugerit.java.core.lang.helpers.ExHandler;
@@ -24,7 +25,17 @@ import org.fugerit.java.core.util.result.ResultExHandler;
  *  @author Fugerit
  *
  */
+@Slf4j
 public class FileIO {
+
+    public static boolean isInTmpFolder( File tempFile ) throws IOException {
+        return isInTmpFolder( tempFile.getCanonicalPath() );
+    }
+    public static boolean isInTmpFolder( String tempFilePath ) throws IOException {
+        File tempDir = new File( System.getProperty( "java.io.tmpdir" ) );
+        log.info( "file -> {} (tmpdir : {})", tempFilePath, tempDir );
+        return tempFilePath.startsWith(tempDir.getCanonicalPath() );
+    }
 
 	public static boolean createFullFile( File file ) throws IOException {
 		boolean created = true;
