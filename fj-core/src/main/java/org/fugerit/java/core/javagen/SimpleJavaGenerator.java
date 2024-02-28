@@ -15,6 +15,15 @@ import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 
+	/**
+	 * Default value for publicClass property, value : true
+	 */
+	public static final boolean DEFAULT_PUBLIC_CLASS = true;
+
+	protected SimpleJavaGenerator() {
+		this.publicClass = DEFAULT_PUBLIC_CLASS;
+	}
+
 	public static final String PROP_VERSION = "gen-version";
 	public static final String PROP_AUTHOR = "gen-author";
 	public static final String PROP_CLASS_COMMENT = "gen-class-comment";
@@ -48,6 +57,8 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 	private Properties config;
 
 	private boolean noCustomComment;
+
+	private boolean publicClass;
 	
 	public boolean isNoCustomComment() {
 		return noCustomComment;
@@ -55,6 +66,14 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 
 	public void setNoCustomComment(boolean noCustomComment) {
 		this.noCustomComment = noCustomComment;
+	}
+
+	public boolean isPublicClass() {
+		return publicClass;
+	}
+
+	public void setPublicClass(boolean publicClass) {
+		this.publicClass = publicClass;
 	}
 
 	protected Properties getConfig() {
@@ -138,7 +157,7 @@ public abstract class SimpleJavaGenerator extends BasicJavaGenerator {
 			impl+= " implements "+this.implementsInterface;
 		}
 		this.beforeClass();
-		this.getWriter().println( "public "+this.getJavaStyle()+" "+this.getJavaName()+impl+" {" );
+		this.getWriter().println( (this.isPublicClass() ? "public " : "") +this.getJavaStyle()+" "+this.getJavaName()+impl+" {" );
 		this.getWriter().println();
 		this.customPartWorker( CUSTOM_CODE_START , CUSTOM_CODE_END, "\t" );
 		this.generateBody();

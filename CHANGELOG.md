@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Added publicClass attribute to SimpleJavaGenerator
+
 ## [8.4.9] - 2024-02-21
 
 ### Changed

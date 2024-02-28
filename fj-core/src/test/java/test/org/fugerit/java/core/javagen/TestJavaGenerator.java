@@ -23,5 +23,20 @@ public class TestJavaGenerator extends BasicTest {
 			this.failEx(e);
 		}
 	}
+
+	@Test
+	public void generateNoPublicClass() {
+		try {
+			NoPublicClassJavaGenerator generator = new NoPublicClassJavaGenerator();
+			generator.init();
+			generator.generate();
+			log.info( "ok : {}", generator.getContent() );
+			generator.write();
+			generator.generate();
+			Assert.assertNotNull(generator);
+		} catch (Exception e) {
+			this.failEx(e);
+		}
+	}
 	
 }
