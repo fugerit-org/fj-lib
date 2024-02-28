@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- fj-daogen-version set to 1.5.0
 - Added publicClass attribute to SimpleJavaGenerator
 
 ## [8.4.9] - 2024-02-21
