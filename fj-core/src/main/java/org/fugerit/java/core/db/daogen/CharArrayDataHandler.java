@@ -31,7 +31,7 @@ public abstract class CharArrayDataHandler {
 	
 	@Override
 	public String toString() {
-		return new String( this.getData() );
+		return String.valueOf( this.getData() );
 	}
 	
 	public static CharArrayDataHandler newHandlerPreload( Clob c ) throws DAOException {
