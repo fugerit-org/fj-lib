@@ -1,0 +1,34 @@
+[
+  {
+    "name": "org.fugerit.java.core.db.daogen.CharArrayDataHandler",
+    "methods": [
+      { "name": "toString", "parameterTypes": [] },
+      { "name": "toReader", "parameterTypes": [] },
+      { "name": "getData", "parameterTypes": [] }
+    ]
+  },
+  {
+    "name": "org.fugerit.java.core.db.daogen.PreloadCharArrayDataHandler",
+    "methods": [
+      { "name": "toString", "parameterTypes": [] },
+      { "name": "toReader", "parameterTypes": [] },
+      { "name": "getData", "parameterTypes": [] }
+    ]
+  },
+  {
+    "name": "org.fugerit.java.core.db.daogen.ByteArrayDataHandler",
+    "methods": [
+      { "name": "toString", "parameterTypes": [] },
+      { "name": "toInputStream", "parameterTypes": [] },
+      { "name": "getData", "parameterTypes": [] }
+    ]
+  },
+  {
+    "name": "org.fugerit.java.core.db.daogen.PreloadByteArrayDataHandler",
+    "methods": [
+      { "name": "toString", "parameterTypes": [] },
+      { "name": "toInputStream", "parameterTypes": [] },
+      { "name": "getData", "parameterTypes": [] }
+    ]
+  }
+]
