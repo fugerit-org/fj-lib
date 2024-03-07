@@ -7,6 +7,8 @@ import java.io.*;
 @Slf4j
 public class ObjectIO {
 
+    private ObjectIO() {}
+
     public static Object fullSerializationTest( Object value ) throws IOException {
         byte[] data = serialize(value);
         return deserialize(data);
