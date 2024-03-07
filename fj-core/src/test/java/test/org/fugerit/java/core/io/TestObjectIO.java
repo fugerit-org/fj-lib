@@ -22,5 +22,10 @@ public class TestObjectIO {
 		Assert.assertEquals( "a", test2 );
 	}
 
+	@Test
+	public void testKo() throws IOException {
+		SimpleValue val = new SimpleValue( "b" );
+		Assert.assertThrows( IOException.class, () -> ObjectIO.fullSerializationTest( val ) );
+	}
 	
 }
