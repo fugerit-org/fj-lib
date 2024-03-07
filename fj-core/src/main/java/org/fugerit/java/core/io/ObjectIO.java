@@ -1,6 +1,7 @@
 package org.fugerit.java.core.io;
 
 import lombok.extern.slf4j.Slf4j;
+import org.fugerit.java.core.io.helper.HelperIOException;
 
 import java.io.*;
 
@@ -17,10 +18,8 @@ public class ObjectIO {
     public static Object deserialize( byte[] data ) throws IOException {
         Object res = null;
         try ( ObjectInputStream ois = new ObjectInputStream( new ByteArrayInputStream( data ) ) ) {
-            res = ois.readObject();
+            res = HelperIOException.get( () -> ois.readObject() );
             log.info( "deserializeTest, read object : {}", res );
-        } catch (ClassNotFoundException e) {
-            throw new IOException( e.toString(), e );
         }
         return res;
     }
