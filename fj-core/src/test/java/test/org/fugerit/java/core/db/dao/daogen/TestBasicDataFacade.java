@@ -1,26 +1,19 @@
 package test.org.fugerit.java.core.db.dao.daogen;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
+import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.db.dao.FieldList;
-import org.fugerit.java.core.db.daogen.BasicDaoResult;
-import org.fugerit.java.core.db.daogen.BasicDataFacade;
-import org.fugerit.java.core.db.daogen.BasicWrapper;
-import org.fugerit.java.core.db.daogen.CloseableDAOContextSC;
-import org.fugerit.java.core.db.daogen.DataEntityInfo;
-import org.fugerit.java.core.db.daogen.DataEntityUtils;
-import org.fugerit.java.core.db.daogen.QueryHelper;
+import org.fugerit.java.core.db.daogen.*;
 import org.fugerit.java.core.function.SafeFunction;
 import org.junit.Assert;
 import org.junit.Test;
-
-import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 import test.org.fugerit.java.core.db.dao.ModelUser;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Slf4j
 public class TestBasicDataFacade extends TestBasicDBHelper implements Serializable {
@@ -85,8 +78,10 @@ public class TestBasicDataFacade extends TestBasicDBHelper implements Serializab
 				log.info( "test 1 : {}", userWrapper.unwrap() );
 				log.info( "test 2 : {}", userWrapper.unwrapModel() );
 				log.info( "test 3 : {}", HELPER.fullSerializationTest( userWrapper ) );
+				log.info( "test 4 : {}", userWrapper );
 				userWrapper.wrapModel( userTest );
 				Assert.assertThrows( UnsupportedOperationException.class , () -> BasicWrapper.throwUnsupported( "message" ) );
+				userWrapper.wrapModel( userTest );
 				// test DataEntityUtils
 				DataEntityUtils.unwrap( facade );
 				Assert.assertThrows( DAOException.class ,  () -> DataEntityUtils.unwrap( userTest ) );

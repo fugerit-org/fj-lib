@@ -18,7 +18,7 @@ public class ObjectIO {
     public static Object deserialize( byte[] data ) throws IOException {
         Object res = null;
         try ( ObjectInputStream ois = new ObjectInputStream( new ByteArrayInputStream( data ) ) ) {
-            res = HelperIOException.get( () -> ois.readObject() );
+            res = HelperIOException.get( ois::readObject );
             log.info( "deserializeTest, read object : {}", res );
         }
         return res;
