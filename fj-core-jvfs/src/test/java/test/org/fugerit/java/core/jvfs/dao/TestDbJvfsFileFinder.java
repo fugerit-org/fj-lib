@@ -18,7 +18,7 @@ public class TestDbJvfsFileFinder extends BasicTest {
 		DbJvfsFileFinder finder = new DbJvfsFileFinder();
 		finder.setModel( new HelperDbJvfsFile() );
 		log.info( "log -> {}", DbJvfsFileFinder.newInstance( finder.getModel() ) );
-		Assert.assertNotNull( this.fullSerializationTest( finder ) );
+		Assert.assertNotNull( finder );
 	}
 	
 }

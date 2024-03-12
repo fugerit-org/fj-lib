@@ -21,6 +21,10 @@
 	package-facade-data-impl="org.fugerit.java.core.jvfs.db.impl.facade.data"
 	factory-def="org.fugerit.java.core.jvfs.db.daogen.facade.JvfsLogicFacade"
 	factory-data-impl="org.fugerit.java.core.jvfs.db.daogen.facade.impl.JvfsDataLogicFacade"
+	package-junit4-model="org.fugerit.java.core.jvfs.db.daogen.junit4test.model"
+	dao-helper-ng-mode="enabled"
+	dao-wrapper-ng-mode="enabled"
+	dao-finder-ng-mode="enabled"
 	check-empty-interface="1"
 	>
 

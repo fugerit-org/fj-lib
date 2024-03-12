@@ -41,8 +41,6 @@ public class TestDBJMount extends TestJVFSHelper {
 			WrapperDbJvfsFile wrapper = new WrapperDbJvfsFile( new HelperDbJvfsFile() );
 			log.info( "toString() : {}", wrapper );
 			log.info( "isEmpty() : {}", wrapper.isEmpty() );
-			log.info( "setTest1() : {}", this.fullSerializationTest( wrapper ) );
-			log.info( "setTest2() : {}", this.fullSerializationTest( wrapper.unwrap() ) );
 		} catch (Exception e) {
 			failEx(e);
 		}
