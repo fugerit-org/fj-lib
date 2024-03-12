@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>8.5.3</version>
+		<version>8.5.4-SNAPSHOT</version>
 	</parent>
 
 	<name>fj-core-jvfs</name>
@@ -30,7 +30,7 @@
 	</organization>
 
 	<properties>
-		<fj-daogen-version>1.7.7</fj-daogen-version>
+		<fj-daogen-version>1.7.9</fj-daogen-version>
 		<gen.base.dir>${project.basedir}</gen.base.dir>
 		<generated.source.daogen>target/generated-sources/daogen</generated.source.daogen>
 		<javadoc-javasource-path-extra>:${generated.source.daogen}</javadoc-javasource-path-extra>
