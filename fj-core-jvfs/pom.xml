@@ -30,7 +30,7 @@
 	</organization>
 
 	<properties>
-		<fj-daogen-version>1.7.9</fj-daogen-version>
+		<fj-daogen-version>1.8.0</fj-daogen-version>
 		<gen.base.dir>${project.basedir}</gen.base.dir>
 		<generated.source.daogen>target/generated-sources/daogen</generated.source.daogen>
 		<javadoc-javasource-path-extra>:${generated.source.daogen}</javadoc-javasource-path-extra>
