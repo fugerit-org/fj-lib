@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - jvfs daogen model is not set to next generation (not serializable)
-- fj-daogen-version set to 1.7.9
+- fj-daogen-version set to 1.8.1
 - fj-bom version set to 1.6.4
 
 ## [8.5.3] - 2024-03-08
