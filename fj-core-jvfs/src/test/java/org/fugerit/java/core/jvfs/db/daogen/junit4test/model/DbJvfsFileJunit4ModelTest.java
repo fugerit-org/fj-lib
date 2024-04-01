@@ -1,5 +1,6 @@
 package org.fugerit.java.core.jvfs.db.daogen.junit4test.model;
 
+import org.fugerit.java.core.jvfs.db.daogen.def.facade.DbJvfsFileFinder;
 import org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.daogen.helper.WrapperDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
@@ -28,13 +29,13 @@ public class DbJvfsFileJunit4ModelTest {
 	private static final Logger logger = LoggerFactory.getLogger( DbJvfsFileJunit4ModelTest.class );
 
 	public void printAll( ModelDbJvfsFile current ) { 
-		 logger.info( "FILE_NAME-> {}", current.getFileName() );
-		 logger.info( "PARENT_PATH-> {}", current.getParentPath() );
-		 logger.info( "FILE_PROPS-> {}", current.getFileProps() );
-		 logger.info( "CREATION_TIME-> {}", current.getCreationTime() );
-		 logger.info( "UPDATE_TIME-> {}", current.getUpdateTime() );
-		 logger.info( "FILE_SIZE-> {}", current.getFileSize() );
-		 logger.info( "FILE_CONTENT-> {}", current.getFileContent() );
+		logger.info( "FILE_NAME-> {}", current.getFileName() );
+		logger.info( "PARENT_PATH-> {}", current.getParentPath() );
+		logger.info( "FILE_PROPS-> {}", current.getFileProps() );
+		logger.info( "CREATION_TIME-> {}", current.getCreationTime() );
+		logger.info( "UPDATE_TIME-> {}", current.getUpdateTime() );
+		logger.info( "FILE_SIZE-> {}", current.getFileSize() );
+		logger.info( "FILE_CONTENT-> {}", current.getFileContent() );
 	}
 
 	public ModelDbJvfsFile newInstance() { 
@@ -64,6 +65,11 @@ public class DbJvfsFileJunit4ModelTest {
 		this.printAll( current );
 		logger.info( "current toString() : {}", current );
 		Assert.assertNotNull( current );
+		DbJvfsFileFinder finder1 = new DbJvfsFileFinder();
+		finder1.setModel( current );
+		logger.info( "finder1.getModel() -> {}", finder1.getModel() );
+		Assert.assertNotNull( DbJvfsFileFinder.newInstance( current ) );
+		Assert.assertNotNull( finder1 );
 	}
 
 }
