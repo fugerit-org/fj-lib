@@ -1,0 +1,91 @@
+[ {
+  "name" : "org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile",
+  "methods" : [ {
+    "name" : "<init>",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileName",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getParentPath",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileProps",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getCreationTime",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getUpdateTime",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileSize",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileContent",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "isEmpty",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile",
+  "methods" : [ {
+    "name" : "<init>",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileName",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getParentPath",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileProps",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getCreationTime",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getUpdateTime",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileSize",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileContent",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "isEmpty",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "org.fugerit.java.core.jvfs.db.daogen.helper.WrapperDbJvfsFile",
+  "methods" : [ {
+    "name" : "<init>",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileName",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getParentPath",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileProps",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getCreationTime",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getUpdateTime",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileSize",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileContent",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "isEmpty",
+    "parameterTypes" : [ ]
+  } ]
+} ]
