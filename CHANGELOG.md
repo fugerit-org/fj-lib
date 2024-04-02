@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ArchiveIO addEntry utility (add a ZipEntry to a ZioOutputStream)
+
 ### Changed
 
 - jvfs daogen model is not set to next generation (not serializable)

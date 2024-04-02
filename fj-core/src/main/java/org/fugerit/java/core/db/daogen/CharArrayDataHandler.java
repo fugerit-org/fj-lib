@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.sql.Clob;
 
 import org.fugerit.java.core.db.dao.DAOException;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.StreamIO;
 
 public abstract class CharArrayDataHandler {
@@ -14,6 +15,11 @@ public abstract class CharArrayDataHandler {
 	public abstract Reader toReader();
 	
 	public abstract char[] getData();
+
+	public byte[] toBytes() {
+		char[] cData = this.getData();
+		return SafeFunction.getIfNotNull( cData, () -> String.valueOf( cData ).getBytes() );
+	}
 
 	public static CharArrayDataHandler newHandlerByte( char[] data ) throws DAOException {
 		return DAOException.get( () -> {

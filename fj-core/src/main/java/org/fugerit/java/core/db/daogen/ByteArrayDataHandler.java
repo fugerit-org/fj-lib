@@ -3,9 +3,12 @@ package org.fugerit.java.core.db.daogen;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.Blob;
 
 import org.fugerit.java.core.db.dao.DAOException;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.StreamIO;
 
 public abstract class ByteArrayDataHandler {
@@ -13,6 +16,15 @@ public abstract class ByteArrayDataHandler {
 	public abstract InputStream toInputStream();
 	
 	public abstract byte[] getData();
+
+	public char[] toChars() {
+		return toChars( StandardCharsets.UTF_8 );
+	}
+
+	public char[] toChars(Charset charset) {
+		byte[] bData = this.getData();
+		return SafeFunction.getIfNotNull( bData, () -> new String( bData, charset ).toCharArray() );
+	}
 
 	public static ByteArrayDataHandler newHandlerByte( byte[] data ) throws DAOException {
 		return DAOException.get( () -> {
