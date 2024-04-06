@@ -1,6 +1,7 @@
 package org.fugerit.java.core.lang.ex;
 
-public class CodeRuntimeException extends RuntimeException {
+
+public class CodeRuntimeException extends RuntimeException implements CodeEx {
 
 	/**
 	 * 
@@ -14,6 +15,7 @@ public class CodeRuntimeException extends RuntimeException {
 	
 	private final int code;
 
+	@Override
 	public int getCode() {
 		return code;
 	}

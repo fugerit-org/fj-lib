@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- CodeEx interface for CodeException and CodeRuntimeException
+- ExUtils to handle UnsupportedOperationException
+
 ## [8.5.4] - 2024-04-02
 
 ### ArchiveIO addEntry utility (add a ZipEntry to a ZioOutputStream)
