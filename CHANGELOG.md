@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.5.6] - 2024-05-05
+
 ### Changed
 
 - support for conversion from java.util.Date to LocalDate/LocalDateTime
