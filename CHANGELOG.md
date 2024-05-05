@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- support for conversion from LocalDate/LocalDateTime to Date/Timestamp
+
 ## [8.5.6] - 2024-05-05
 
 ### Changed

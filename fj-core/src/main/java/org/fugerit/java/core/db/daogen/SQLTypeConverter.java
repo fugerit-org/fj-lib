@@ -49,5 +49,13 @@ public class SQLTypeConverter {
 	public static LocalDateTime utilDateToLocalDateTime(java.util.Date dateToConvert) {
 		return SafeFunction.getIfNotNull( dateToConvert , () -> toZonedDateTime( dateToConvert  ).toLocalDateTime() );
 	}
+
+	public static Date localDateToSqlDate(LocalDate dateToConvert) {
+		return SafeFunction.getIfNotNull( dateToConvert , () -> java.sql.Date.valueOf(dateToConvert) );
+	}
+
+	public static Timestamp localDateTimeToTimestamp(LocalDateTime dateToConvert) {
+		return SafeFunction.getIfNotNull( dateToConvert , () -> java.sql.Timestamp.valueOf(dateToConvert) );
+	}
 	
 }
