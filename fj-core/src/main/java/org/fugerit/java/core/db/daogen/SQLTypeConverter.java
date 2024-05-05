@@ -62,7 +62,7 @@ public class SQLTypeConverter {
 		return SafeFunction.getIfNotNull( dateToConvert , () -> java.sql.Timestamp.valueOf(dateToConvert) );
 	}
 
-	public static Time localDateTimeToSqlTime(LocalTime dateToConvert) {
+	public static Time localTimeToSqlTime(LocalTime dateToConvert) {
 		return SafeFunction.getIfNotNull( dateToConvert , () -> java.sql.Time.valueOf(dateToConvert) );
 	}
 

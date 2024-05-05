@@ -51,7 +51,7 @@ public class TestSQLTypeConverter {
         LocalTime d = SQLTypeConverter.utilDateToLocalTime(Time.valueOf( TEST_HOUR+":30:00" ));
         log.info( "local time : {}", d );
         Assert.assertEquals( TEST_HOUR, d.getHour() );
-        Time t = SQLTypeConverter.localDateTimeToSqlTime( d );
+        Time t = SQLTypeConverter.localTimeToSqlTime( d );
         log.info( "time : {}", t );
         Calendar c = Calendar.getInstance();
         c.setTime(t);
