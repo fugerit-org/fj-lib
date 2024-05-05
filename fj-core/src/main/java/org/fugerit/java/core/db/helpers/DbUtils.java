@@ -25,11 +25,13 @@ public class DbUtils {
 	public static final int DB_MYSQL = 200;
 	
 	public static final int DB_ORACLE = 300;
-	
-	public static final int DB_DB2 = 400;
-	
+
 	public static final int DB_SQLSERVER = 500;
-	
+
+	public static final int DB_H2 = 600;
+
+	public static final int DB_HSQLDB = 700;
+
 	public static void close( Connection conn ) throws DAOException {
 		if ( conn != null ) {
 			try {
@@ -43,22 +45,25 @@ public class DbUtils {
 	public static int indentifyDB( String productName ) {
 		int dbType = DB_UNKNOWN;
 		String name = productName.toLowerCase();
-		log.info( "Configuring Database specific logic, driver : {}", name );
+		log.info( "Configuring Database specific logic, productName : {}", name );
 		if ( name.indexOf( "postgres" ) != -1 ) {
 			dbType = DB_POSTGRESQL;
-			log.info( "IdGenerator configured for : POSTGRESQL ({})", dbType );
+			log.info( "db type : POSTGRESQL ({})", dbType );
 		} else if ( name.indexOf( "oracle" ) != -1 ) {
 			dbType = DB_ORACLE;
-			log.info( "IdGenerator configured for : ORACLE ({})", dbType );
+			log.info( "db type : ORACLE ({})", dbType );
 		} else if ( name.indexOf( "sqlserver" ) != -1 ) {
 			dbType = DB_SQLSERVER;
-			log.info( "IdGenerator configured for : SQLSERVER ({})", dbType );
+			log.info( "db type : SQLSERVER ({})", dbType );
+		} else if ( name.indexOf( "h2" ) != -1 ) {
+			dbType = DB_H2;
+			log.info( "db type : H2 ({})", dbType );
 		} else if ( name.indexOf( "mysql" ) != -1 ) {
 			dbType = DB_MYSQL;
-			log.info( "IdGenerator configured for : MYSQL ({})", dbType );
+			log.info( "db type : MYSQL ({})", dbType );
 		} else if ( name.indexOf( "hsql" ) != -1 ) {
-			dbType = DB_POSTGRESQL;
-			log.info( "IdGenerator configured for : POSTGRESQL ({}) was ({})", dbType, name );
+			dbType = DB_HSQLDB;
+			log.info( "db type : HSQLDB ({}) was ({})", dbType, name );
 		} else {
 			log.info( "Unknown db type ({})", dbType );
 		}
@@ -66,7 +71,7 @@ public class DbUtils {
 	}
 	
 	public static int indentifyDB( Connection conn ) throws SQLException {
-		String name = conn.getMetaData().getDriverName().toLowerCase();
+		String name = conn.getMetaData().getDatabaseProductName().toLowerCase();
 		return indentifyDB( name );
 	}
 	

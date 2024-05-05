@@ -4,7 +4,7 @@ public class ExConverUtils {
 
 	private ExConverUtils() {}
 	
-	public static final String DEFAULT_CAUSE_MESSAGE = "DocException cause is";
+	public static final String DEFAULT_CAUSE_MESSAGE = "Exception cause is";
 	
 	public static String defaultMethodMessage( String method ) {
 		return "Exception during "+method;

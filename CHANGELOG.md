@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- fj-bom version set to 1.6.5
+- DBUtils.indentifyDB() now recognizes h2 (600) and hsqldb (700) databases.
+- IdGenerator for h2 is mapped to Postgres by default
+
 ## [8.5.5] - 2024-04-06
 
 ### Added
