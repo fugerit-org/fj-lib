@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.5.9] - 2024-05-05
+
 ### Fixed
 
 - typo in SQLTypeConverter.localTimeToSqlTime()
-
 
 ## [8.5.8] - 2024-05-05
 
