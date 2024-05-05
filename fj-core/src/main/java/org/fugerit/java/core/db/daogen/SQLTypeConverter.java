@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.*;
 import java.util.function.Function;
 
 import org.fugerit.java.core.function.SafeFunction;
@@ -32,6 +33,21 @@ public class SQLTypeConverter {
 	
 	public static CharArrayDataHandler clobToCharHandler( java.sql.Clob s ) throws SQLException {
 		return SafeFunction.getEx( () -> CharArrayDataHandler.newHandlerDefault( s ) , CONVERT_EX );
+	}
+
+	public static ZonedDateTime toZonedDateTime(java.util.Date dateToConvert) {
+		return SafeFunction.getIfNotNull( dateToConvert , () ->
+				new java.util.Date( dateToConvert.getTime() )
+						.toInstant()
+						.atZone(ZoneId.systemDefault()) );
+	}
+
+	public static LocalDate utilDateToLocalDate(java.util.Date dateToConvert) {
+		return SafeFunction.getIfNotNull( dateToConvert , () -> toZonedDateTime( dateToConvert  ).toLocalDate() );
+	}
+
+	public static LocalDateTime utilDateToLocalDateTime(java.util.Date dateToConvert) {
+		return SafeFunction.getIfNotNull( dateToConvert , () -> toZonedDateTime( dateToConvert  ).toLocalDateTime() );
 	}
 	
 }
