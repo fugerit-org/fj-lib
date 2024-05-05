@@ -50,12 +50,20 @@ public class SQLTypeConverter {
 		return SafeFunction.getIfNotNull( dateToConvert , () -> toZonedDateTime( dateToConvert  ).toLocalDateTime() );
 	}
 
+	public static LocalTime utilDateToLocalTime(Time dateToConvert) {
+		return SafeFunction.getIfNotNull( dateToConvert , () -> toZonedDateTime( dateToConvert  ).toLocalTime() );
+	}
+
 	public static Date localDateToSqlDate(LocalDate dateToConvert) {
 		return SafeFunction.getIfNotNull( dateToConvert , () -> java.sql.Date.valueOf(dateToConvert) );
 	}
 
-	public static Timestamp localDateTimeToTimestamp(LocalDateTime dateToConvert) {
+	public static Timestamp localDateTimeToSqlTimestamp(LocalDateTime dateToConvert) {
 		return SafeFunction.getIfNotNull( dateToConvert , () -> java.sql.Timestamp.valueOf(dateToConvert) );
 	}
-	
+
+	public static Time localDateTimeToSqlTime(LocalTime dateToConvert) {
+		return SafeFunction.getIfNotNull( dateToConvert , () -> java.sql.Time.valueOf(dateToConvert) );
+	}
+
 }
