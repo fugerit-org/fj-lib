@@ -8,9 +8,17 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class TestPropsUtils {
+
+    @Test
+    public void testDuplicatedCustom() throws IOException {
+        Collection<Map.Entry<String,String>> duplicated = PropsUtils.findDuplicatedKeys( "file://src/main/resources/core/util/props_utils/duplicated_custom.properties" ).getDuplications();
+        log.info( "duplicated count : {}, keys : {}", duplicated.size(), duplicated.stream().map( e -> e.getKey() ).collect( Collectors.toSet() ) );
+        Assert.assertNotNull( duplicated );
+    }
 
     @Test
     public void testDuplicated1File() throws IOException {
