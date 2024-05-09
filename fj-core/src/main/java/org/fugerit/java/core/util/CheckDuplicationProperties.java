@@ -11,6 +11,7 @@ import java.util.*;
  *
  * NOTE: this object has some limitations, especially it depends on current implementation of <code>load()</code> and <code>put()</code> methods.
  *
+ * since fu-core 8.6.0
  */
 public class CheckDuplicationProperties extends Properties {
 

@@ -4,6 +4,12 @@ import org.fugerit.java.core.io.helper.StreamHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+/**
+ * Properties utils
+ *
+ * since fu-core 8.6.0
+ */
 public class PropsUtils {
 
     private PropsUtils() {}
