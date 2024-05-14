@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.fugerit.java</groupId>
 		<artifactId>fj-lib</artifactId>
-		<version>8.6.1</version>
+		<version>8.6.2-SNAPSHOT</version>
 	</parent>
 
 	<name>fj-core-jvfs</name>
