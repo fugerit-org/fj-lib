@@ -2,6 +2,7 @@ package org.fugerit.java.core.util;
 
 import lombok.Getter;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -16,6 +17,34 @@ import java.util.*;
 public class CheckDuplicationProperties extends Properties {
 
     private static final long serialVersionUID = 1432652578L;
+
+    @Override
+    public synchronized int hashCode() {
+        // super class implementation is ok
+        return super.hashCode();
+    }
+
+    @Override
+    public synchronized boolean equals(Object o) {
+        // super class implementation is ok - is equals if all contained elements are equals
+        return super.equals(o);
+    }
+
+    // code added to setup a basic conditional serialization - START
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        // this class is conditionally serializable, depending on contained object
+        // special situation can be handleded using this method in future
+        out.defaultWriteObject();
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+        // this class is conditionally serializable, depending on contained object
+        // special situation can be handleded using this method in future
+        in.defaultReadObject();
+    }
+
+    // code added to setup a basic conditional serialization - END
 
     @Getter
     private Collection<Map.Entry<String, String>> duplications;

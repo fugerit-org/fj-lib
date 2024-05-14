@@ -1,9 +1,11 @@
 package test.org.fugerit.java.core.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.fugerit.java.core.util.CheckDuplicationProperties;
 import org.fugerit.java.core.util.PropsUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import test.org.fugerit.java.BasicTest;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -11,13 +13,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class TestPropsUtils {
+public class TestPropsUtils extends BasicTest {
 
     @Test
     public void testDuplicatedCustom() throws IOException {
-        Collection<Map.Entry<String,String>> duplicated = PropsUtils.findDuplicatedKeys( "file://src/main/resources/core/util/props_utils/duplicated_custom.properties" ).getDuplications();
+        CheckDuplicationProperties props = PropsUtils.findDuplicatedKeys( "file://src/main/resources/core/util/props_utils/duplicated_custom.properties" );
+        Collection<Map.Entry<String,String>> duplicated = props.getDuplications();
         log.info( "duplicated count : {}, keys : {}", duplicated.size(), duplicated.stream().map( e -> e.getKey() ).collect( Collectors.toSet() ) );
         Assert.assertNotNull( duplicated );
+        CheckDuplicationProperties obj = (CheckDuplicationProperties) this.fullSerializationTest( props );
+        Assert.assertNotNull( obj );
+        Assert.assertEquals( props, obj );
+        Assert.assertEquals( props.hashCode(), obj.hashCode() );
+        log.info( "equals : {}", props.equals( obj ) );
     }
 
     @Test
