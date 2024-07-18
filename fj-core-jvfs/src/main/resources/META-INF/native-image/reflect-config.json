@@ -1,5 +1,6 @@
 [ {
   "name" : "org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile",
+  "fields" : [ ],
   "methods" : [ {
     "name" : "<init>",
     "parameterTypes" : [ ]
@@ -30,6 +31,7 @@
   } ]
 }, {
   "name" : "org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile",
+  "fields" : [ ],
   "methods" : [ {
     "name" : "<init>",
     "parameterTypes" : [ ]
@@ -60,6 +62,7 @@
   } ]
 }, {
   "name" : "org.fugerit.java.core.jvfs.db.daogen.helper.WrapperDbJvfsFile",
+  "fields" : [ ],
   "methods" : [ {
     "name" : "<init>",
     "parameterTypes" : [ ]
