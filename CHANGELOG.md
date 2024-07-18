@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.6.4] - 2024-07-18
+
 ### Fixed
 
 - Fixed oracle jdbc adapter for MetaDataUtils
