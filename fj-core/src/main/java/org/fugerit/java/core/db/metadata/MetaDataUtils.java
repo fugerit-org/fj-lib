@@ -438,7 +438,7 @@ class OracleJdbcAdaptor extends DefaulJdbcdaptor {
 	 */
 	public OracleJdbcAdaptor(ConnectionFactory connectionFactory) {
 		super(connectionFactory, OracleJdbcAdaptor.class.getSimpleName(), 
-				"SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?", 
+				"SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=?",
 				"SELECT comments FROM all_col_comments WHERE OWNER=? AND table_name=? AND column_name=?" );
 	}
 
