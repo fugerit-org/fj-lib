@@ -155,7 +155,7 @@ public class MetaDataUtils {
 		return mode;
 	}
 	
-	private static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, JdbcAdaptor jdbcAdaptor, List<String> tableNameList, String[] types ) throws DAOException { 
+	public static DataBaseModel createModel( ConnectionFactory cf, String catalog, String schema, JdbcAdaptor jdbcAdaptor, List<String> tableNameList, String[] types ) throws DAOException {
 		return createModel( new MetaDataUtilsContext(cf, catalog, schema, jdbcAdaptor, tableNameList, types) );
 	}	
 	

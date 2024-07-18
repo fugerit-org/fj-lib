@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- MetaDataUtils.createModel with JdbcAdaptor is now public
+
 ## [8.6.2] - 2024-05-20
 
 ### Added
