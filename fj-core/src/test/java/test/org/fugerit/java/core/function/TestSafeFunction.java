@@ -25,6 +25,12 @@ public class TestSafeFunction {
 	private static final DAOException TEST_CHECKED_EX = new DAOException( "test checked" );
 	
 	private static final DAORuntimeException TEST_RUNTIME_EX = new DAORuntimeException( "test runtime" );
+
+	@Test
+	public void testGetUsingDefault() {
+		Assert.assertEquals( "2", SafeFunction.getUsingDefault( () -> null, () -> "2" ) );
+		Assert.assertEquals( "0", SafeFunction.getUsingDefault( () -> "0", () -> "1" ) );
+	}
 	
 	@Test
 	public void testFailGet() {

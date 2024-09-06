@@ -196,6 +196,25 @@ public class SafeFunction {
 		}
 		return res;
 	}
+
+	/**
+	 * <p>Return the value provided by the supplier, if null will use the alternative supplier.</p>
+	 *
+	 * @param <T>			the return type
+	 * @param supplier		the {@link UnsafeSupplier} the return value supplier
+	 * @param altSupplier	the alternative {@link UnsafeSupplier} the return value supplier
+	 * @return				the value evaluated by the supplier
+	 */
+	public static <T> T getUsingDefault( UnsafeSupplier<T, Exception> supplier, UnsafeSupplier<T, Exception> altSupplier ) {
+		return SafeFunction.get( () -> {
+			T res = supplier.get();
+			if ( res != null ) {
+				return res;
+			} else {
+				return altSupplier.get();
+			}
+		} );
+	}
 	
 	/**
 	 * <p>Apply an UnsafeVoid function, using a consumer the handle any Exception raised.</p>
