@@ -46,7 +46,7 @@ public abstract class CloseableDAOContextAbstract implements CloseableDAOContext
 		return new CloseableDAOContextAbstract() {
 			@Override
 			public Connection getConnection() throws DAOException {
-				return DAOException.get( () -> ds.getConnection() );
+				return DAOException.get( ds::getConnection );
 			}
 			@Override
 			public void close() throws Exception {
