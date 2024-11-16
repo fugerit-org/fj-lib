@@ -1,29 +1,28 @@
 [ {
   "name" : "org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile",
-  "fields" : [ ],
   "methods" : [ {
     "name" : "<init>",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getFileName",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getParentPath",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getFileProps",
     "parameterTypes" : [ ]
   }, {
     "name" : "getCreationTime",
     "parameterTypes" : [ ]
   }, {
-    "name" : "getUpdateTime",
+    "name" : "getFileContent",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileName",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileProps",
     "parameterTypes" : [ ]
   }, {
     "name" : "getFileSize",
     "parameterTypes" : [ ]
   }, {
-    "name" : "getFileContent",
+    "name" : "getParentPath",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getUpdateTime",
     "parameterTypes" : [ ]
   }, {
     "name" : "isEmpty",
@@ -31,30 +30,29 @@
   } ]
 }, {
   "name" : "org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile",
-  "fields" : [ ],
   "methods" : [ {
     "name" : "<init>",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getFileName",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getParentPath",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getFileProps",
     "parameterTypes" : [ ]
   }, {
     "name" : "getCreationTime",
     "parameterTypes" : [ ]
   }, {
-    "name" : "getUpdateTime",
+    "name" : "getFileContent",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileName",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileProps",
     "parameterTypes" : [ ]
   }, {
     "name" : "getFileSize",
     "parameterTypes" : [ ]
   }, {
-    "name" : "getFileContent",
+    "name" : "getParentPath",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getUpdateTime",
     "parameterTypes" : [ ]
   }, {
     "name" : "isEmpty",
@@ -62,30 +60,29 @@
   } ]
 }, {
   "name" : "org.fugerit.java.core.jvfs.db.daogen.helper.WrapperDbJvfsFile",
-  "fields" : [ ],
   "methods" : [ {
     "name" : "<init>",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getFileName",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getParentPath",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "getFileProps",
     "parameterTypes" : [ ]
   }, {
     "name" : "getCreationTime",
     "parameterTypes" : [ ]
   }, {
-    "name" : "getUpdateTime",
+    "name" : "getFileContent",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileName",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getFileProps",
     "parameterTypes" : [ ]
   }, {
     "name" : "getFileSize",
     "parameterTypes" : [ ]
   }, {
-    "name" : "getFileContent",
+    "name" : "getParentPath",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getUpdateTime",
     "parameterTypes" : [ ]
   }, {
     "name" : "isEmpty",
