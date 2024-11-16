@@ -69,5 +69,37 @@ public class ConfigRuntimeException extends CodeRuntimeException {
 	public static ConfigRuntimeException convertEx( Exception e ) {
 		return convertEx( ExConverUtils.DEFAULT_CAUSE_MESSAGE, e );
 	}
-	
+
+	/**
+	 * Convert the exception to ConfigRuntimeException
+	 *
+	 * RuntimeException are left unchanged
+	 *
+	 * @param baseMessage	the base message
+	 * @param e				the exception
+	 * @return				the runtime exception
+	 */
+	public static RuntimeException convertToRuntimeEx( String baseMessage, Exception e ) {
+		RuntimeException res = null;
+		if ( e instanceof RuntimeException ) {
+			res = (RuntimeException)e;
+		} else {
+			res = new ConfigRuntimeException( ExConverUtils.defaultMessage(baseMessage, e), e );
+		}
+		return res;
+	}
+
+
+	/**
+	 * Convert the exception to ConfigRuntimeException
+	 *
+	 * RuntimeException are left unchanged
+	 *
+	 * @param e				the exception
+	 * @return				the runtime exception
+	 */
+	public static RuntimeException convertToRuntimeEx( Exception e ) {
+		return convertToRuntimeEx( ExConverUtils.DEFAULT_CAUSE_MESSAGE, e );
+	}
+
 }

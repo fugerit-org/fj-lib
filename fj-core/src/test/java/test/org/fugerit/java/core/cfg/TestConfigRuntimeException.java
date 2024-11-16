@@ -45,6 +45,17 @@ public class TestConfigRuntimeException {
 	public void testEx7() {
 		Assert.assertNotNull( ConfigRuntimeException.convertExMethod( "e" , new SQLException( "f" ) ) );
 	}
+
+	@Test
+	public void testEx21() {
+		Assert.assertNotNull( ConfigRuntimeException.convertToRuntimeEx( new ConfigRuntimeException( "y" ) ) );
+	}
+
+
+	@Test
+	public void testEx22() {
+		Assert.assertNotNull( ConfigRuntimeException.convertToRuntimeEx( new IOException( "z" ) ) );
+	}
 	
 	@Test
 	public void testEx8() {
