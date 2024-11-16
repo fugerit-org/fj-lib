@@ -18,6 +18,9 @@ import org.fugerit.java.core.db.connect.ConnectionFactoryImpl;
 import org.fugerit.java.core.db.connect.DbcpConnectionFactory;
 import org.fugerit.java.core.db.connect.SingleConnectionFactory;
 import org.fugerit.java.core.db.dao.DAOException;
+import org.fugerit.java.core.db.daogen.CloseableDAOContext;
+import org.fugerit.java.core.db.daogen.CloseableDAOContextAbstract;
+import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.xml.dom.DOMIO;
@@ -170,6 +173,28 @@ public class TestConnectionFactory extends BasicTest {
 	public void testCFDirect3() throws Exception {
 		boolean ok = this.worker( ConnectionFactoryImpl.newInstance( new org.hsqldb.jdbcDriver(), "jdbc:hsqldb:mem:base_db_direct3", "testuser", "testp" ) );
 		Assert.assertTrue(ok);
+	}
+
+	@Test
+	public void testDaoContextOnDS() {
+		Assert.assertTrue( SafeFunction.get( () -> {
+			try (CloseableDAOContext context = CloseableDAOContextAbstract.newCloseableDAOContextDS(this.createDS());
+				 Connection conn = context.getConnection()) {
+				return Boolean.TRUE;
+			}
+		}));
+	}
+
+	@Test
+	public void testDaoContextOnCF()  {
+		Assert.assertTrue( SafeFunction.get( () -> {
+			try (CloseableDAOContext context = CloseableDAOContextAbstract.newCloseableDAOContextCF(
+					ConnectionFactoryImpl.newInstance( new org.hsqldb.jdbcDriver(), "jdbc:hsqldb:mem:base_db_daocontext1", "testuser", "testp" )
+						);
+				 Connection conn = context.getConnection()) {
+				return Boolean.TRUE;
+			}
+		}));
 	}
 	
 }

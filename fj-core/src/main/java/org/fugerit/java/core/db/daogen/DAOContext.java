@@ -7,6 +7,6 @@ import org.fugerit.java.core.lang.helpers.AttributesHolder;
 
 public interface DAOContext extends AttributesHolder {
 
-	public Connection getConnection() throws DAOException;
+	Connection getConnection() throws DAOException;
 
 }
