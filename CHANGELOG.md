@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.6.6] - 2024-11-17
+
 ### Changed
 
 - Added method ConfigRuntimeException.convertToRuntimeEx()
