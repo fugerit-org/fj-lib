@@ -39,7 +39,8 @@ public class DbJvfsFileJunit4ModelTest {
 	}
 
 	public ModelDbJvfsFile newInstance() { 
-		WrapperDbJvfsFile current = new WrapperDbJvfsFile( new HelperDbJvfsFile() );
+		ModelDbJvfsFile model = new HelperDbJvfsFile();
+		WrapperDbJvfsFile current = new WrapperDbJvfsFile( model );
 		Assert.assertTrue( current.isEmpty() );
 		current.setFileName("1");
 		Assert.assertFalse( current.isEmpty() );
