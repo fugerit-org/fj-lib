@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Added 'ubuntu-24.04-arm' runner to compatibility workdlow
+- Added 'ubuntu-24.04-arm' runner to compatibility workflow
 
 ## [8.6.6] - 2024-11-17
 
