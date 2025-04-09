@@ -29,6 +29,10 @@ public class XMLFactorySAX {
     public static SAXParser makeSAXParser(boolean val, boolean nsa) throws XMLException {
         return (newInstance(val, nsa).newSAXParser());
     }
+
+    public static SAXParser makeSAXParserSecure(boolean val, boolean nsa) throws XMLException {
+        return (newInstanceSecure(val, nsa).newSAXParser());
+    }
     
     public SAXParser newSAXParser() throws XMLException {
     	return SafeFunction.getEx( () -> this.factory.newSAXParser(), XMLException.CONVERT_FUN );
@@ -36,19 +40,44 @@ public class XMLFactorySAX {
     
     public static XMLFactorySAX newInstance() throws XMLException {
         return newInstance(false, false);
-    }    
+    }
+
+    public static XMLFactorySAX newInstanceSecure() throws XMLException {
+        return newInstanceSecure(false);
+    }
     
     public static XMLFactorySAX newInstance(boolean validating) throws XMLException {
         return newInstance(validating, false);
     }
-    
+
+    public static XMLFactorySAX newInstanceSecure(boolean validating) throws XMLException {
+        return newInstanceSecure(validating, false);
+    }
+
+    public static SAXParserFactory disableExternalEntity(SAXParserFactory saxFac) throws XMLException {
+        return XMLException.get( () -> {
+            saxFac.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            saxFac.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            saxFac.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            saxFac.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            saxFac.setXIncludeAware(false);
+            return saxFac;
+        } );
+    }
+
+    private static SAXParserFactory init( boolean validating, boolean namespaceAware ) {
+        SAXParserFactory saxFac = SAXParserFactory.newInstance();
+        saxFac.setValidating(validating);
+        saxFac.setNamespaceAware(namespaceAware);
+        return saxFac;
+    }
+
+    public static XMLFactorySAX newInstanceSecure(boolean validating, boolean namespaceAware) throws XMLException {
+        return new XMLFactorySAX( disableExternalEntity( init( validating, namespaceAware ) ) );
+    }
+
     public static XMLFactorySAX newInstance(boolean validating, boolean namespaceAware) throws XMLException {
-    	return XMLException.get( () -> {
-    		SAXParserFactory saxFac = SAXParserFactory.newInstance();
-            saxFac.setValidating(validating);
-            saxFac.setNamespaceAware(namespaceAware);
-            return new XMLFactorySAX(saxFac);
-    	} );
+        return new XMLFactorySAX( init( validating, namespaceAware ) );
     }
     
     public void setValidating(boolean val) {
