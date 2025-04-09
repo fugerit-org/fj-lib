@@ -76,7 +76,7 @@ public class XMLFactorySAX {
         return new XMLFactorySAX( disableExternalEntity( init( validating, namespaceAware ) ) );
     }
 
-    public static XMLFactorySAX newInstance(boolean validating, boolean namespaceAware) throws XMLException {
+    public static XMLFactorySAX newInstance(boolean validating, boolean namespaceAware) {
         return new XMLFactorySAX( init( validating, namespaceAware ) );
     }
     
