@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- XMLFactorySAX.newInstanceSecure() disabling external entities <https://github.com/fugerit-org/fj-lib/issues/87>
+
 ### Changed
 
 - Added 'ubuntu-24.04-arm' runner to compatibility workdlow

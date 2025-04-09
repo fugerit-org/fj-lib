@@ -28,6 +28,14 @@ public class TestXmlFactorySAX {
 		boolean ok = this.worker( XMLFactorySAX.newInstance() );
 		Assert.assertTrue(ok);
 	}
+
+	@Test
+	public void testSecure() throws XMLException {
+		Assert.assertNotNull( XMLFactorySAX.makeSAXParserSecure( true, true ) );
+		Assert.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure() ) );
+		Assert.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure( true ) ) );
+		Assert.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure( true, true ) ) );
+	}
 	
 	@Test
 	public void test2() throws XMLException {

@@ -29,6 +29,10 @@ public class XMLFactorySAX {
     public static SAXParser makeSAXParser(boolean val, boolean nsa) throws XMLException {
         return (newInstance(val, nsa).newSAXParser());
     }
+
+    public static SAXParser makeSAXParserSecure(boolean val, boolean nsa) throws XMLException {
+        return (newInstanceSecure(val, nsa).newSAXParser());
+    }
     
     public SAXParser newSAXParser() throws XMLException {
     	return SafeFunction.getEx( () -> this.factory.newSAXParser(), XMLException.CONVERT_FUN );
@@ -36,19 +40,58 @@ public class XMLFactorySAX {
     
     public static XMLFactorySAX newInstance() throws XMLException {
         return newInstance(false, false);
-    }    
+    }
+
+    public static XMLFactorySAX newInstanceSecure() throws XMLException {
+        return newInstanceSecure(false);
+    }
     
     public static XMLFactorySAX newInstance(boolean validating) throws XMLException {
         return newInstance(validating, false);
     }
-    
+
+    public static XMLFactorySAX newInstanceSecure(boolean validating) throws XMLException {
+        return newInstanceSecure(validating, false);
+    }
+
+    public static XMLFactorySAX newInstanceSecure(boolean validating, boolean namespaceAware) throws XMLException {
+        return newInstance( validating, namespaceAware, Boolean.TRUE );
+    }
+
     public static XMLFactorySAX newInstance(boolean validating, boolean namespaceAware) throws XMLException {
-    	return XMLException.get( () -> {
-    		SAXParserFactory saxFac = SAXParserFactory.newInstance();
-            saxFac.setValidating(validating);
-            saxFac.setNamespaceAware(namespaceAware);
-            return new XMLFactorySAX(saxFac);
-    	} );
+        return newInstance( validating, namespaceAware, Boolean.FALSE );
+    }
+
+    /**
+     * Creates a new XMLFactorySAX wrapping a javax.xml.parsers.SAXParserFactory
+     *
+     * if the secure flag is set, the external entities will be disabled :
+     *
+         factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+         factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+         factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+         factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+     *
+     * @param validating        to set the XMLFactorySAX as validating
+     * @param namespaceAware    to set the XMLFactorySAX as namespaceAware
+     * @param secure            to set the XMLFactorySAX as secure (external entities disabled)
+     * @return                  the new configured XMLFactorySAX
+     * @throws XMLException     in case any issue arise
+     */
+    public static XMLFactorySAX newInstance(boolean validating, boolean namespaceAware, boolean secure) throws XMLException {
+        return XMLException.get( () -> {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setValidating(validating);
+            factory.setNamespaceAware(namespaceAware);
+            if ( secure ) {
+                factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+                factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+                factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+                factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+                factory.setXIncludeAware(false);
+            }
+            return new XMLFactorySAX( factory );
+        } );
     }
     
     public void setValidating(boolean val) {
