@@ -37,6 +37,9 @@ import lombok.extern.slf4j.Slf4j;
 	}}</pre>
  * 
  * <p>So this way it is possible to separate the exception handling from the actual software logic. (useful to reduce testing coverage too).</p>
+ *
+ * NOTE : a simple usage Proof Of Concept is provided in class
+ * 	https://github.com/fugerit-org/fj-lib/blob/main/fj-core/src/test/java/test/org/fugerit/java/core/function/TestPOCSafeFunction.java
  * 
  */
 @Slf4j
