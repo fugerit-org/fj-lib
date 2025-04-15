@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /*
  * Abstract : this test class shows why and how to use the method in utility class:
