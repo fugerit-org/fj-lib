@@ -28,10 +28,32 @@ import org.fugerit.java.core.util.result.ResultExHandler;
 @Slf4j
 public class FileIO {
 
+    /**
+     * Creates a new File from a base dir and file name.
+     *
+     * If the baseDir is null, only file name is used.
+     *
+     * @param baseDir   the parent folder
+     * @param fileName  the file name
+     * @return  the File
+     */
     public static File newFile( String baseDir, String fileName ) {
         return baseDir == null ?  new File( fileName ) :new File( baseDir, fileName );
     }
 
+    /**
+     * Creates a new File from a base dir and file name.
+     *
+     * If the baseDir is null, only file name is used.
+     *
+     * Optionally mustAlreadyExists flag can be set.
+     *
+     * @param baseDir   the parent folder
+     * @param fileName  the file name
+     * @param mustAlreadyExists true if final file existence should be checked (if the path does not exist a IOException is thrown)
+     * @return  the File
+     * @throws IOException  in case of issues
+     */
     public static File newFile( String baseDir, String fileName, boolean mustAlreadyExists ) throws IOException {
         File file =  newFile( baseDir, fileName );
         if ( mustAlreadyExists && !file.exists() ) {
