@@ -38,7 +38,7 @@ public class TestFileIO {
     public void testCreateFullFile() throws IOException {
         String baseDir0 = "target";
         String baseDir1 = "target/path/";
-        String fileName = "not-exists.txt";
+        String fileName = "not-exists-alt.txt";
         String fileNameExists = "classes";
         File file0 = FileIO.newFile( baseDir0, fileName );
         File file1 = FileIO.newFile( baseDir1, fileName );
