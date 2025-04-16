@@ -50,7 +50,6 @@ public class FileIO {
     }
 
 	public static boolean createFullFile( File file ) throws IOException {
-		boolean created = Boolean.TRUE;
 		if ( file.exists() ) {
 			return Boolean.FALSE;
 		} else {

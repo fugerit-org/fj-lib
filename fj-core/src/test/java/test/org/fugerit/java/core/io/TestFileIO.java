@@ -47,6 +47,7 @@ public class TestFileIO {
         file1.delete();
         file1.getParentFile().delete();
         file2.delete();
+        Assert.assertTrue( FileIO.createFullFile( new File( baseDir1 ) ) );
         Assert.assertTrue( FileIO.createFullFile( file0 ) );
         Assert.assertTrue( FileIO.createFullFile( file1 ) );
         Assert.assertFalse( FileIO.createFullFile( file0 ) );
