@@ -28,6 +28,18 @@ import org.fugerit.java.core.util.result.ResultExHandler;
 @Slf4j
 public class FileIO {
 
+    public static File newFile( String baseDir, String fileName ) {
+        return baseDir == null ?  new File( fileName ) :new File( baseDir, fileName );
+    }
+
+    public static File newFile( String baseDir, String fileName, boolean mustAlreadyExists ) throws IOException {
+        File file =  newFile( baseDir, fileName );
+        if ( mustAlreadyExists && !file.exists() ) {
+            throw new IOException( String.format( "File [%s] does not exist", file.getCanonicalPath() ) );
+        }
+        return file;
+    }
+
     public static boolean isInTmpFolder( File tempFile ) throws IOException {
         return isInTmpFolder( tempFile.getCanonicalPath() );
     }
