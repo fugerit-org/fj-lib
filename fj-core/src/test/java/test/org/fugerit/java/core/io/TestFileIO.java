@@ -36,7 +36,7 @@ public class TestFileIO {
 
     @Test
     public void testCreateFullFile() throws IOException {
-        String baseDir0 = "target";
+        String baseDir0 = "target/";
         String baseDir1 = "target/path/";
         String fileName = "not-exists-alt.txt";
         String fileNameExists = "classes";
@@ -47,11 +47,11 @@ public class TestFileIO {
         file1.delete();
         file1.getParentFile().delete();
         file2.delete();
-        Assert.assertTrue( FileIO.createFullFile( new File( baseDir1 ) ) );
         Assert.assertTrue( FileIO.createFullFile( file0 ) );
         Assert.assertTrue( FileIO.createFullFile( file1 ) );
         Assert.assertFalse( FileIO.createFullFile( file0 ) );
         Assert.assertFalse( FileIO.createFullFile( file2 ) );
+        Assert.assertFalse( FileIO.createFullFile( new File( baseDir1 ) ) );
     }
 
 }
