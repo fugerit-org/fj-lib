@@ -50,18 +50,17 @@ public class FileIO {
     }
 
 	public static boolean createFullFile( File file ) throws IOException {
-		boolean created = true;
+		boolean created = Boolean.TRUE;
 		if ( file.exists() ) {
-			created = false;
+			return Boolean.FALSE;
 		} else {
 			if ( file.isDirectory() ) {
-				created = file.mkdirs();
+				return file.mkdirs();
 			} else {
 				file.getParentFile().mkdirs();
-				created = file.createNewFile();
+				return file.createNewFile();
 			}
 		}
-		return created;
 	}
 	
     /*
