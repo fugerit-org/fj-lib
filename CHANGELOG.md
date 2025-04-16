@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- FileIO.newFile() create utility init a new File <https://github.com/fugerit-org/fj-lib/issues/90>
+
 ## [8.6.7] - 2025-05-09
 
 ### Added

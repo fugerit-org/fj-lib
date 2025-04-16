@@ -28,6 +28,40 @@ import org.fugerit.java.core.util.result.ResultExHandler;
 @Slf4j
 public class FileIO {
 
+    /**
+     * Creates a new File from a base dir and file name.
+     *
+     * If the baseDir is null, only file name is used.
+     *
+     * @param baseDir   the parent folder
+     * @param fileName  the file name
+     * @return  the File
+     */
+    public static File newFile( String baseDir, String fileName ) {
+        return baseDir == null ?  new File( fileName ) :new File( baseDir, fileName );
+    }
+
+    /**
+     * Creates a new File from a base dir and file name.
+     *
+     * If the baseDir is null, only file name is used.
+     *
+     * Optionally mustAlreadyExists flag can be set.
+     *
+     * @param baseDir   the parent folder
+     * @param fileName  the file name
+     * @param mustAlreadyExists true if final file existence should be checked (if the path does not exist a IOException is thrown)
+     * @return  the File
+     * @throws IOException  in case of issues
+     */
+    public static File newFile( String baseDir, String fileName, boolean mustAlreadyExists ) throws IOException {
+        File file =  newFile( baseDir, fileName );
+        if ( mustAlreadyExists && !file.exists() ) {
+            throw new IOException( String.format( "File [%s] does not exist", file.getCanonicalPath() ) );
+        }
+        return file;
+    }
+
     public static boolean isInTmpFolder( File tempFile ) throws IOException {
         return isInTmpFolder( tempFile.getCanonicalPath() );
     }
@@ -38,18 +72,16 @@ public class FileIO {
     }
 
 	public static boolean createFullFile( File file ) throws IOException {
-		boolean created = true;
 		if ( file.exists() ) {
-			created = false;
+			return Boolean.FALSE;
 		} else {
 			if ( file.isDirectory() ) {
-				created = file.mkdirs();
+				return file.mkdirs();
 			} else {
 				file.getParentFile().mkdirs();
-				created = file.createNewFile();
+				return file.createNewFile();
 			}
 		}
-		return created;
 	}
 	
     /*
