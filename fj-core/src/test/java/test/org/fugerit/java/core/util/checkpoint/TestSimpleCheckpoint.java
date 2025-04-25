@@ -5,10 +5,10 @@ import org.fugerit.java.core.util.checkpoint.SimpleCheckpoint;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class TestSimpleCheckpoint {
+class TestSimpleCheckpoint {
 
     @Test
-    public void testCheckpoint() {
+    void testCheckpoint() {
         SimpleCheckpoint checkpoint = new SimpleCheckpoint();
         log.info( "testCheckpoint 1 {}ms", checkpoint.getDiffMillis() );
         log.info( "testCheckpoint 2 {}ms", checkpoint.getFormatTimeDiffMillis() );

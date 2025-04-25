@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestCheckpoints extends BasicTest {
+class TestCheckpoints extends BasicTest {
 
 	private Checkpoints generate( int size ) {
 		Checkpoints cp = Checkpoints.newInstance();

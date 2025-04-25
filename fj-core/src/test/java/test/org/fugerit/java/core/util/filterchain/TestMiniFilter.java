@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestMiniFilter extends BasicTest {
+class TestMiniFilter extends BasicTest {
 
 	private static final Logger logger = LoggerFactory.getLogger( TestMiniFilter.class );
 	

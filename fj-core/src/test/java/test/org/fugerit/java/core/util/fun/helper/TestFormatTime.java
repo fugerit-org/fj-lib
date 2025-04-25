@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestFormatTime {
+class TestFormatTime {
 
 	private String worker( StringFormat<Number> format ) {
 		String res = format.convert( 1000 ); 

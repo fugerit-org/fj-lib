@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestSortedReadProperties extends BasicTest {
+class TestSortedReadProperties extends BasicTest {
 
     private static final Logger logger = LoggerFactory.getLogger( TestSortedReadProperties.class );
 
