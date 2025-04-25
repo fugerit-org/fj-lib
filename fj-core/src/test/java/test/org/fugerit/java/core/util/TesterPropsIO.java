@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.fugerit.java.core.util.PropsIO;
 import org.junit.jupiter.api.Test;
 
-public class TesterPropsIO {
+class TesterPropsIO {
 
 	public static final String PROP_TEST_KEY = "TestPropKey1";
 	

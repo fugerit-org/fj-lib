@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TesterPropsIOSubProps {
+class TesterPropsIOSubProps {
 
 	public static final String PROP_TEST_KEY = "TestPropKey1";
 	

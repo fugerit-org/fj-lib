@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestHelperI18N {
+class TestHelperI18N {
 
 	public static final String LANG_EN = "en";
 	

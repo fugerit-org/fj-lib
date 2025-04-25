@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestValidatorCatalog extends BasicTest {
+class TestValidatorCatalog extends BasicTest {
 
 	private static final String CONFIG_PATH = "cl://core/validator/validator-catalog-test.xml";
 

@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class TestPropsUtils extends BasicTest {
+class TestPropsUtils extends BasicTest {
 
     @Test
     public void testDuplicatedCustom() throws IOException {

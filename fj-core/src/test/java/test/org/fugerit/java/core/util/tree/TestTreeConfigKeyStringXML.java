@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestTreeConfigKeyStringXML extends BasicTest {
+class TestTreeConfigKeyStringXML extends BasicTest {
 
 	private static final String CONF_PATH = "core/util/tree/tree-test.xml";
 	

@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestResult {
+class TestResult {
 
 	private static Integer[] DATA_SET = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	

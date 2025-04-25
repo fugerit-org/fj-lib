@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestBinaryCalc extends BasicTest {
+class TestBinaryCalc extends BasicTest {
 	
 	@Test
 	void hexToLongFF() {
