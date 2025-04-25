@@ -33,12 +33,12 @@ public class TestSelectHelperSimple extends TestAddressSelectHelper {
 	}
 	
 	@Test
-	public void testQuerySelectSimplePostgres() {
+	void testQuerySelectSimplePostgres() {
 		testQueryHelperSimple( "PGS"  );
 	}
 	
 	@Test
-	public void testQuerySelectSimpleOracle() {
+	void testQuerySelectSimpleOracle() {
 		testQueryHelperSimple( "ORA" );
 	}
 	

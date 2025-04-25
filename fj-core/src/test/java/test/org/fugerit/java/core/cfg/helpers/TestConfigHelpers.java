@@ -23,13 +23,13 @@ import lombok.extern.slf4j.Slf4j;
 public class TestConfigHelpers {
 
 	@Test
-	public void testUnsafeHelper() throws ConfigException {
+	void testUnsafeHelper() throws ConfigException {
 		UnsafeHelper.handleUnsafe( new IOException( "a" ) , UnsafeHelper.UNSAFE_TRUE ); 
 		Assertions.assertThrows( Exception.class, () -> UnsafeHelper.handleUnsafe( new IOException( "a" ) , UnsafeHelper.UNSAFE_FALSE ) );
 	}
 	
 	@Test
-	public void testConfigurableObject() throws ConfigException, IOException, XMLException {
+	void testConfigurableObject() throws ConfigException, IOException, XMLException {
 		XMLConfigurableObject cfg = XMLConfigurableObject.DO_NOTHING;
 		cfg.configure( (Element) null );
 		Assertions.assertNotNull( cfg );

@@ -29,42 +29,42 @@ public class TestDefaultHandler {
 	}
 	
 	@Test
-	public void defaultHandlerTest0() {
+	void defaultHandlerTest0() {
 		DefaultHandlerComp dh = new DefaultHandlerComp();
 		boolean ok = this.worker(dh);
 		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest1() {
+	void defaultHandlerTest1() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_CH );
 		boolean ok = this.worker(dh);
 		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest2() {
+	void defaultHandlerTest2() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_DH );
 		boolean ok = this.worker(dh);
 		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest3() {
+	void defaultHandlerTest3() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
 		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest4() {
+	void defaultHandlerTest4() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_ER );
 		boolean ok = this.worker(dh);
 		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest5() {
+	void defaultHandlerTest5() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_ER, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
@@ -72,7 +72,7 @@ public class TestDefaultHandler {
 	}
 	
 	@Test
-	public void defaultHandlerTest6() {
+	void defaultHandlerTest6() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_ER, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
@@ -80,7 +80,7 @@ public class TestDefaultHandler {
 	}
 	
 	@Test
-	public void defaultHandlerTest7() {
+	void defaultHandlerTest7() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
@@ -88,7 +88,7 @@ public class TestDefaultHandler {
 	}
 	
 	@Test
-	public void defaultHandlerTest8() {
+	void defaultHandlerTest8() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_ER );
 		boolean ok = this.worker(dh);
@@ -96,7 +96,7 @@ public class TestDefaultHandler {
 	}
 	
 	@Test
-	public void defaultHandlerTestFinal() throws SAXException {
+	void defaultHandlerTestFinal() throws SAXException {
 		DefaultHandlerComp dh = new DefaultHandlerComp();
 		DTDHandlerWrapper dtdDtdHandlerWrapper = new DTDHandlerWrapper( DefaultHandlerComp.DEFAULT_DH );
 		dh.setWrappedContentHandler( DefaultHandlerComp.DEFAULT_CH );
@@ -116,7 +116,7 @@ public class TestDefaultHandler {
 	}
 	
 	@Test
-	public void defaultHandlerTestKo() {
+	void defaultHandlerTestKo() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( new EntityResolver() {
 			@Override
 			public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {

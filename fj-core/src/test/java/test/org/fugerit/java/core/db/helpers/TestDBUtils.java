@@ -36,7 +36,7 @@ public class TestDBUtils extends BasicTest {
 	}
 
 	@Test
-	public void testH2() {
+	void testH2() {
 		SafeFunction.apply( () -> {
 			ConnectionFactory cf = ConnectionFactoryImpl.newInstance( "org.h2.Driver",
 					"jdbc:h2:mem:default", "user_h2", "pass_h2" );
@@ -45,7 +45,7 @@ public class TestDBUtils extends BasicTest {
 	}
 
 	@Test
-	public void testHsqldb() {
+	void testHsqldb() {
 		SafeFunction.apply( () -> {
 			ConnectionFactory cf = ConnectionFactoryImpl.newInstance( "org.hsqldb.jdbc.JDBCDriver",
 					"jdbc:hsqldb:mem:dbutils_test", "user_hsqldb", "pass_hsqldb" );

@@ -11,7 +11,7 @@ import test.org.fugerit.java.BasicTest;
 public class TestPageInfoDB extends BasicTest {
 
 	@Test
-	public void testPI() {
+	void testPI() {
 		PageInfoDB info = new PageInfoDB( 3, 5, "test asc" );
 		log.info( "info : {} -> {}", info, info.getOrder() );
 		Assertions.assertNotNull( info );

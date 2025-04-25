@@ -30,7 +30,7 @@ public class TestDAOUtilsNG extends TestBasicDBHelper {
 	private static final String DEF_USER = "user1";
 
 	@Test
-	public void testDefaultLoadResultNG() {
+	void testDefaultLoadResultNG() {
 		DAORuntimeException.apply( () -> {
 			List<ModelUser> list = new ArrayList<>();
 			try ( Connection conn = newConnection();
@@ -73,7 +73,7 @@ public class TestDAOUtilsNG extends TestBasicDBHelper {
 	}
 
 	@Test
-	public void testDAOUtilsNGLoadMethods() {
+	void testDAOUtilsNGLoadMethods() {
 		OpDAO<ModelUser> opDaoQueryAll = OpDAO.newQueryOp( QUERY_DEF , ModelUser.RSE );
 		DAORuntimeException.apply( () -> {
 			try ( Connection conn = newConnection() ) {
@@ -117,7 +117,7 @@ public class TestDAOUtilsNG extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testDAOUtilsNG() {
+	void testDAOUtilsNG() {
 		OpDAO<ModelUser> opDaoQueryAll = OpDAO.newQueryOp( QUERY_DEF , ModelUser.RSE );
 		FieldList flUsername = new FieldList();
 		flUsername.addField( DEF_USER );

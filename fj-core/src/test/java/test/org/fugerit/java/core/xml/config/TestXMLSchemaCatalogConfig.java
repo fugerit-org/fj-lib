@@ -41,7 +41,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	private static XMLSchemaCatalogConfig catalog = loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config.xml" );
 		
 	@Test
-	public void testLoad() {
+	void testLoad() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			Assertions.assertNotNull( XMLSchemaCatalogConfig.loadConfigSchema( is ) );
 		} catch (Exception e) {
@@ -50,7 +50,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void testValidateOK() {
+	void testValidateOK() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validate(result, new StreamSource( is ), SCHEMA_ID_DEFAULT );
@@ -61,7 +61,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void testValidateSaxOK() {
+	void testValidateSaxOK() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validate(result, new SAXSource( new InputSource( is ) ), SCHEMA_ID_DEFAULT );
@@ -72,7 +72,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void testValidateCacheOK() {
+	void testValidateCacheOK() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validateCacheSchema(result, new StreamSource( is ), SCHEMA_ID_DEFAULT );
@@ -83,7 +83,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void testValidateSaxCacheOK() {
+	void testValidateSaxCacheOK() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validateCacheSchema(result, new SAXSource( new InputSource( is ) ), SCHEMA_ID_DEFAULT );
@@ -94,7 +94,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void testValidateKo() {
+	void testValidateKo() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_KO ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validate(result, new StreamSource( is ), SCHEMA_ID_DEFAULT );
@@ -105,7 +105,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void testValidateXsdsSaxOK() {
+	void testValidateXsdsSaxOK() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			Source[] xsds = catalog.getXsds( SCHEMA_ID_DEFAULT );
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
@@ -117,7 +117,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void testValidateXsdsOK() {
+	void testValidateXsdsOK() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			Source[] xsds = XMLSchemaCatalogConfig.getXsds( XMLSchemaCatalogConfig.ATT_TAG_MODULE_CONF_MODE_FILE, 
 					"src/test/resources/core/xml/config/xml_schema_catalog/xsds", catalog.getDataList( SCHEMA_ID_DEFAULT ) );
@@ -130,7 +130,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void testSerialization() {
+	void testSerialization() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			XMLSchemaCatalogConfig loadedCatalog = (XMLSchemaCatalogConfig)this.fullSerializationTest( catalog );
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
@@ -142,21 +142,21 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	}
 	
 	@Test
-	public void activateValidation() {
+	void activateValidation() {
 		XMLSchemaCatalogConfig current = loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config_fail1.xml" );
 		logger.info( "activateValidation() catalog loaded : {}", current );
 		Assertions.assertNotNull( current );
 	}
 	
 	@Test
-	public void newInstanceException() {
+	void newInstanceException() {
 		Assertions.assertThrows( ConfigRuntimeException.class , () -> {
 			loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config_fail2.xml" );
 		});
 	}
 	
 	@Test
-	public void newInstanceExceptionDuplicate() {
+	void newInstanceExceptionDuplicate() {
 		Assertions.assertThrows( ConfigRuntimeException.class , () -> {
 			loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config_fail3.xml" );
 		});

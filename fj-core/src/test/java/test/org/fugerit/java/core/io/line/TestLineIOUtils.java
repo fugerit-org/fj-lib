@@ -27,7 +27,7 @@ public class TestLineIOUtils {
 	private static final int EXPECTED_SIZE = 9;
 	
 	@Test
-	public void testLineReadStream() throws IOException {
+	void testLineReadStream() throws IOException {
 		try ( InputStream is = new FileInputStream( TEST_FILE_PATH ) ) {
 			List<String> lines = LineIOUtils.readLines( is );
 			Assertions.assertEquals( EXPECTED_SIZE , lines.size() );
@@ -35,7 +35,7 @@ public class TestLineIOUtils {
 	}
 	
 	@Test
-	public void testLineReadReader() throws IOException {
+	void testLineReadReader() throws IOException {
 		try ( Reader is = new FileReader( TEST_FILE_PATH ) ) {
 			List<String> lines = LineIOUtils.readLines( is );
 			Assertions.assertEquals( EXPECTED_SIZE , lines.size() );
@@ -43,7 +43,7 @@ public class TestLineIOUtils {
 	}
 	
 	@Test
-	public void testLineReadFile() throws IOException {
+	void testLineReadFile() throws IOException {
 		List<String> lines = LineIOUtils.readLines( new File( TEST_FILE_PATH ) );
 		lines.stream().forEach( s -> log.info( "current line -> {}", s ) );
 		String[] array = LineIOUtils.toLines(lines);
@@ -63,7 +63,7 @@ public class TestLineIOUtils {
 	}
 	
 	@Test
-	public void testCreateLineReader() throws IOException {
+	void testCreateLineReader() throws IOException {
 		try ( Reader is = new FileReader( TEST_FILE_PATH );
 				LineReader reader = LineIOUtils.createLineReader( is ) ) {
 			int count = this.testLineReader(reader);
@@ -72,7 +72,7 @@ public class TestLineIOUtils {
 	}
 	
 	@Test
-	public void testCreateLineBufferedReader() throws IOException {
+	void testCreateLineBufferedReader() throws IOException {
 		try ( Reader is = new BufferedReader( new FileReader( TEST_FILE_PATH ) );
 				LineReader reader = LineIOUtils.createLineReader( is ) ) {
 			int count = this.testLineReader(reader);
@@ -81,7 +81,7 @@ public class TestLineIOUtils {
 	}
 	
 	@Test
-	public void testCreateLineReaderStream() throws IOException {
+	void testCreateLineReaderStream() throws IOException {
 		try ( InputStream is = new FileInputStream( TEST_FILE_PATH );
 				LineReader reader = LineIOUtils.createLineReader( is ) ) {
 			int count = this.testLineReader(reader);
@@ -103,7 +103,7 @@ public class TestLineIOUtils {
 	}
 	
 	@Test
-	public void testCreateLineWriter() throws IOException {
+	void testCreateLineWriter() throws IOException {
 		try ( StringWriter w = new StringWriter();
 				LineWriter writer = LineIOUtils.createLineWriter( w ) ) {
 			int count = this.testLineWriter(writer);
@@ -112,7 +112,7 @@ public class TestLineIOUtils {
 	}
 	
 	@Test
-	public void testCreateLineWriterStream() throws IOException {
+	void testCreateLineWriterStream() throws IOException {
 		try ( ByteArrayOutputStream w = new ByteArrayOutputStream();
 				LineWriter writer = LineIOUtils.createLineWriter( w ) ) {
 			int count = this.testLineWriter(writer);

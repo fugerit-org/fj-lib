@@ -10,14 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 public class TestMavenProps {
 
 	@Test
-	public void testMavenOk() {
+	void testMavenOk() {
 		String prop = MavenProps.getPropery( "org.fugerit.java", "fj-core", "artifactId" );
 		log.info( "version {}", prop );
 		Assertions.assertEquals( "fj-core" , prop );
 	}
 	
 	@Test
-	public void testMavenKo() {
+	void testMavenKo() {
 		String prop = MavenProps.getPropery( "org.fugerit.java.no.exists", "fj-core", "artifactId" );
 		log.info( "version {}", prop );
 		Assertions.assertNull( prop );

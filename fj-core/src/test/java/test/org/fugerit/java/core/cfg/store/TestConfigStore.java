@@ -63,7 +63,7 @@ public class TestConfigStore extends BasicTest {
 	private static final String PATH_PROPS = "src/test/resources/core/util/collection/test_store_1.properties";
 	
 	@Test
-	public void testRead() {
+	void testRead() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( new File( PATH_PROPS ) ) ) {
 			ConfigStoreDefault configStore = ConfigStoreProps.read( is );
@@ -76,7 +76,7 @@ public class TestConfigStore extends BasicTest {
 	}
 	
 	@Test
-	public void testReadKo() {
+	void testReadKo() {
 		boolean ok = false;
 		try ( InputStream is = new FailInputStream() ) {
 			ConfigStoreDefault configStore = ConfigStoreProps.read( is );
@@ -90,7 +90,7 @@ public class TestConfigStore extends BasicTest {
 	}
 	
 	@Test
-	public void testOperation() {
+	void testOperation() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( new File( PATH_PROPS ) ) ) {
 			ConfigStoreDefault configStore = ConfigStoreProps.read( is );
@@ -107,7 +107,7 @@ public class TestConfigStore extends BasicTest {
 	}
 
 	@Test
-	public void testGetConfigProps() {
+	void testGetConfigProps() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( new File( PATH_PROPS ) ) ) {
 			ConfigStoreProps configStore = (ConfigStoreProps)ConfigStoreProps.read( is );
@@ -119,7 +119,7 @@ public class TestConfigStore extends BasicTest {
 	}
 	
 	@Test
-	public void testToProperties() {
+	void testToProperties() {
 		Properties props = ConfigStoreUtils.toProperties( ADD_MAP );
 		log.info( "toProperties : {}", props );
 		Assertions.assertEquals( ADD_MAP.getKeySet().size() , props.keySet().size() );

@@ -18,7 +18,7 @@ import test.org.fugerit.java.BasicTest;
 public class TestDAOItems extends BasicTest {
 
 	@Test
-	public void testBasicIdFinder() throws IOException {
+	void testBasicIdFinder() throws IOException {
 		BigDecimal value = BigDecimal.valueOf( 10L );
 		BaseIdFinder finder = new BaseIdFinder();
 		finder.setId( value );
@@ -29,7 +29,7 @@ public class TestDAOItems extends BasicTest {
 	}
 	
 	@Test
-	public void testBasicDaoResult() throws IOException {
+	void testBasicDaoResult() throws IOException {
 		BigDecimal value = BigDecimal.valueOf( 10L );
 		BasicDaoResult<BigDecimal> item = new BasicDaoResult<>();
 		item.setSingleResult( value );

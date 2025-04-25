@@ -17,7 +17,7 @@ import test.org.fugerit.java.helpers.FailHelper;
 public class TestLogUtils {
 
 	@Test
-	public void testLogUtilsBuild() {
+	void testLogUtilsBuild() {
 		StringBuilder builder = new StringBuilder();
 		LogUtils.appendPropDefault(builder, "key", "value" );
 		log.info( "result {}", builder );
@@ -25,7 +25,7 @@ public class TestLogUtils {
 	}
 	
 	@Test
-	public void testLogUtilsAppendable() {
+	void testLogUtilsAppendable() {
 		Appendable builder = new StringBuilder();
 		LogUtils.appendPropDefault(builder, "key", "value" );
 		log.info( "result {}", builder );
@@ -33,7 +33,7 @@ public class TestLogUtils {
 	}
 	
 	@Test
-	public void testLogUtilsAppendableFail() {
+	void testLogUtilsAppendableFail() {
 		Appendable builder = new Appendable() {
 			@Override
 			public Appendable append(CharSequence csq, int start, int end) throws IOException {
@@ -57,21 +57,21 @@ public class TestLogUtils {
 	}
 	
 	@Test
-	public void testWrap() {
+	void testWrap() {
 		LogObject obj = LogUtils.wrap( log );
 		obj.getLogger().info( "wrap ok!" );
 		Assertions.assertNotNull( obj );
 	}
 	
 	@Test
-	public void testBasicLogObject() {
+	void testBasicLogObject() {
 		LogObject obj = new BasicLogObject();
 		obj.getLogger().info( "BasicLogObject OK!" );
 		Assertions.assertNotNull( obj );
 	}
 	
 	@Test
-	public void testLogFacade() {
+	void testLogFacade() {
 		LogFacade.getLog().info( "LogFacade OK!" );
 		LogFacade.handleWarn( new IOException( "a" ) );
 		LogFacade.handleError( new IOException( "b" ) );

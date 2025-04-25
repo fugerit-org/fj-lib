@@ -77,81 +77,81 @@ public class TestClassHelper extends BasicTest {
 	}	
 	
 	@Test
-	public void testNewInstanceOk() {
+	void testNewInstanceOk() {
 		boolean ok = this.testNewInstanceWorker( TestClassHelper.class.getName(), false );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testNewInstanceClassNotFoundException() {
+	void testNewInstanceClassNotFoundException() {
 		boolean ok = this.testNewInstanceWorker( TestClassHelper.class.getName()+"NotExist", true );
 		Assertions.assertTrue( ok );
 	}
 
 	@Test
-	public void testNewInstanceConfigException() {
+	void testNewInstanceConfigException() {
 		boolean ok = this.testNewInstanceWorker( TestPrivateConstructor.class.getName(), true );
 		Assertions.assertTrue( ok );
 	}
 
 	@Test
-	public void testNewInstanceNoSuchMethodException() {
+	void testNewInstanceNoSuchMethodException() {
 		boolean ok = this.testNewInstanceWorker( TestNoDefaultConstructor.class.getName(), true );
 		Assertions.assertTrue( ok );
 	}
 
 	
 	@Test
-	public void testLoadFromDefaultClassLoaderOk() {
+	void testLoadFromDefaultClassLoaderOk() {
 		boolean ok = this.testLoadFromDefaultClassLoaderWorker( PATH_TXT_OK, false );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderOk1() {
+	void testLoadFromClassLoaderOk1() {
 		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, TestClassHelper.class );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderOk2() {
+	void testLoadFromClassLoaderOk2() {
 		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, ClassHelper.class );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderOk3() {
+	void testLoadFromClassLoaderOk3() {
 		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, null );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromDefaultClassLoaderko() {
+	void testLoadFromDefaultClassLoaderko() {
 		boolean ok = this.testLoadFromDefaultClassLoaderWorker( PATH_TXT_KO, true );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderko1() {
+	void testLoadFromClassLoaderko1() {
 		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_KO, true, TestClassHelper.class );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderKo2() {
+	void testLoadFromClassLoaderKo2() {
 		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_KO, true, ClassHelper.class );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testToFullClassName() {
+	void testToFullClassName() {
 		String name = ClassHelper.toFullClassName( new TestClassHelper() );
 		log.info( "tesToFullClassName {}", name );
 		Assertions.assertEquals( TestClassHelper.class.getName(), name );
 	}
 	
 	@Test
-	public void testToSimpleClassName() {
+	void testToSimpleClassName() {
 		String name = ClassHelper.toSimpleClassName( new TestClassHelper() );
 		log.info( "testToSimpleClassName {}", name );
 		Assertions.assertEquals( TestClassHelper.class.getSimpleName() , name );

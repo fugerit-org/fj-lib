@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class TestDAOResult {
 	
 	@Test
-	public void testOne() {
+	void testOne() {
 		BasicDaoResult<String> test = new BasicDaoResult<>();
 		Assertions.assertNull( test.one() );
 	}

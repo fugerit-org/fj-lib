@@ -10,7 +10,7 @@ import test.org.fugerit.java.BasicTest;
 public class TestJavaGenerator extends BasicTest {
 	
 	@Test
-	public void generate() {
+	void generate() {
 		try {
 			CheckJavaGenerator generator = new CheckJavaGenerator();	
 			generator.init();
@@ -25,7 +25,7 @@ public class TestJavaGenerator extends BasicTest {
 	}
 
 	@Test
-	public void generateNoPublicClass() {
+	void generateNoPublicClass() {
 		try {
 			NoPublicClassJavaGenerator generator = new NoPublicClassJavaGenerator();
 			generator.init();

@@ -29,7 +29,7 @@ public class TestDAOUtils extends TestBasicDBHelper {
 	private static final String DEF_USER = "user1";
 	
 	@Test
-	public void testDAOUtilsNG() {
+	void testDAOUtilsNG() {
 		DAORuntimeException.apply( () -> {
 			try ( Connection conn = newConnection() ) {
 				DAOUtils utils = new DAOUtils( new BasicDAOFactory( connFactory() ) );

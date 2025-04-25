@@ -27,7 +27,7 @@ public class TestTreeConfigKeyStringXML extends BasicTest {
 	}
 	
 	@Test
-	public void testConfig() {
+	void testConfig() {
 		try {
 			TestTreeConfig config = TestTreeConfig.load( CONF_PATH );	
 			this.findWorker( config, "1" );
@@ -40,7 +40,7 @@ public class TestTreeConfigKeyStringXML extends BasicTest {
 	}	
 	
 	@Test
-	public void testConfigKo() throws Exception {
+	void testConfigKo() throws Exception {
 		try {
 			TestTreeConfig config = TestTreeConfig.load( CONF_PATH_KO );	
 			fail( "This code should not be reached : "+config );
@@ -50,7 +50,7 @@ public class TestTreeConfigKeyStringXML extends BasicTest {
 	}	
 	
 	@Test
-	public void testConfigMultipleRoot() throws Exception {
+	void testConfigMultipleRoot() throws Exception {
 		try {
 			TestTreeConfig config = TestTreeConfig.load( CONF_PATH_MULTIPLE_ROOT );
 			fail( "This code should not be reached : "+config );

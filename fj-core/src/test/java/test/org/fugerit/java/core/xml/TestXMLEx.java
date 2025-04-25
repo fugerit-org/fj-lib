@@ -14,7 +14,7 @@ public class TestXMLEx {
 	private static final Exception EX_TEST = new IOException( "junit test scenario" );
 	
 	@Test
-	public void testCreate() {
+	void testCreate() {
 		Assertions.assertNotNull( new XMLException() );
 		Assertions.assertNotNull( new XMLException( "a" ) );
 		Assertions.assertNotNull( new XMLException( new IOException( "b" ) ) );
@@ -25,12 +25,12 @@ public class TestXMLEx {
 	}
 
 	@Test
-	public void testApplyEX() {
+	void testApplyEX() {
 		Assertions.assertThrows( XMLException.class ,() -> XMLException.apply( () -> { throw EX_TEST; } ) );
 	}
 
 	@Test
-	public void testGetEX() {
+	void testGetEX() {
 		Assertions.assertThrows( XMLException.class ,() -> XMLException.get( () -> { throw EX_TEST; } ) );
 	}
 	

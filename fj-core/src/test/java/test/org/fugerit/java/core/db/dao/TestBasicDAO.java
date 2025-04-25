@@ -45,7 +45,7 @@ public class TestBasicDAO extends TestBasicDBHelper {
 	private static final String USERNAME_TEST = "user1";
 	
 	@Test
-	public void testBasicDAO() {
+	void testBasicDAO() {
 		SafeFunction.apply( () -> {
 			try ( ConnectionFactoryCloseable cf = this.connFactory() ) {
 				BasicDAOFactory bdf = new BasicDAOFactory( cf );

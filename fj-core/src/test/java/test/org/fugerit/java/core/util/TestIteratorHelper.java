@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TestIteratorHelper {
 
 	@Test
-	public void testSafeIterator() {
+	void testSafeIterator() {
 		List<String> list = new ArrayList<String>( Arrays.asList( "1", "2", "3" ) );	// creates test list
 		Iterator<String> it = list.iterator();
 		// test iterator 1

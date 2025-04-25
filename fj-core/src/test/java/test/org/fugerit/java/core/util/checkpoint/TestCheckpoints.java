@@ -22,14 +22,14 @@ public class TestCheckpoints extends BasicTest {
 	}
 	
 	@Test
-	public void testPrintInfo() {
+	void testPrintInfo() {
 		Checkpoints cp = this.generate( 4 );
 		assertTrue( ( cp != null ) );
 		cp.printInfo();
 	}
 	
 	@Test
-	public void testPrettyPrintInfo() {
+	void testPrettyPrintInfo() {
 		Checkpoints cp = this.generate( 4 );
 		assertTrue( ( cp != null ) );
 		cp.prettyPrintInfo();

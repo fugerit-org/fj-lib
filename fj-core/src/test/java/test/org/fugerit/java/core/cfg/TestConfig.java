@@ -12,7 +12,7 @@ public class TestConfig {
 
 	
 	@Test
-	public void testClose() throws ConfigException {
+	void testClose() throws ConfigException {
 		// close config exception
 		CloseHelper.close( (Closeable)null );
 		CloseHelper.close( (AutoCloseable)null );

@@ -55,7 +55,7 @@ public class TestFieldList extends TestBasicDBHelper {
 			+ "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 	
 	@Test
-	public void testFiledList() {
+	void testFiledList() {
 		DAORuntimeException.apply(() -> {
 			BigDecimal value = BigDecimal.valueOf( 1 );
 			FieldList fl = new FieldList();

@@ -62,13 +62,13 @@ public class TestRSE extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testRSEString() throws SQLException {
+	void testRSEString() throws SQLException {
 		String result = this.worker( "SELECT username FROM fugerit.user WHERE username = ?" , TEST_USERNAME, StringRSE.DEFAULT, "username" );
 		Assertions.assertEquals( "user1" , result );
 	}
 	
 	@Test
-	public void testRSEBigDecimal() throws SQLException {
+	void testRSEBigDecimal() throws SQLException {
 		BigDecimal result = this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, BigDecimalRSE.DEFAULT, "state" );
 		Assertions.assertEquals( BigDecimal.valueOf( TEST_STATE ) , result );
 		// test convert method
@@ -81,25 +81,25 @@ public class TestRSE extends TestBasicDBHelper {
 	}
 
 	@Test
-	public void testRSEDouble() throws SQLException {
+	void testRSEDouble() throws SQLException {
 		Double result = this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, DoubleRSE.DEFAULT, "state" );
 		Assertions.assertEquals( Double.valueOf( TEST_STATE ) , result );
 	}
 	
 	@Test
-	public void testRSEInteger() throws SQLException {
+	void testRSEInteger() throws SQLException {
 		Integer result = this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, IntegerRSE.DEFAULT, "state" );
 		Assertions.assertEquals( Integer.valueOf( TEST_STATE ) , result );
 	}
 	
 	@Test
-	public void testRSELong() throws SQLException {
+	void testRSELong() throws SQLException {
 		Long result = this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, LongRSE.DEFAULT, "state" );
 		Assertions.assertEquals( Long.valueOf( TEST_STATE ) , result );
 	}
 	
 	@Test
-	public void testRSEFail() throws SQLException {
+	void testRSEFail() throws SQLException {
 		SingleColumnRSE<Long> rse = new SingleColumnRSE<Long>() {	
 			@Override
 			protected Long convert(Object o) {
@@ -115,7 +115,7 @@ public class TestRSE extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testSingleColumn() {
+	void testSingleColumn() {
 		boolean ok = false;
 		this.worker( new StringRSE( 1 ) );
 		this.worker( new StringRSE( "test" ) );
@@ -124,7 +124,7 @@ public class TestRSE extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testOptionItemRSE() throws SQLException {
+	void testOptionItemRSE() throws SQLException {
 		OptionItem result1 = this.worker( "SELECT username FROM fugerit.user WHERE username = ?" , TEST_USERNAME, OptionItemRSE.getInstance( "username" ), null );
 		Assertions.assertEquals( TEST_USERNAME , result1.getValue() );
 		OptionItemRSE rse = OptionItemRSE.getInstance( "state", "username" );
@@ -135,7 +135,7 @@ public class TestRSE extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testPropertyReusableRSE() throws SQLException {
+	void testPropertyReusableRSE() throws SQLException {
 		PropertyRSE rse = PropertyRSE.newReusableRSE();
 		Properties result = this.worker( "SELECT username, state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, rse, null );
 		log.info( "result : {}", result );
@@ -143,7 +143,7 @@ public class TestRSE extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testPropertyCachingRSE() throws SQLException {
+	void testPropertyCachingRSE() throws SQLException {
 		PropertyRSE rse = PropertyRSE.newAutoCachingMetadataRSE();
 		Properties result = this.worker( "SELECT username, state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, rse, null );
 		Assertions.assertEquals( TEST_USERNAME , result.getProperty( "USERNAME" ) );
@@ -152,7 +152,7 @@ public class TestRSE extends TestBasicDBHelper {
 	private static final String SIMPLE_QUERY = "SELECT * FROM fugerit.user";
 	
 	@Test
-	public void tesConnectionFacade() throws Exception {
+	void tesConnectionFacade() throws Exception {
 		try ( ConnectionFactoryCloseable cf = ConnectionFactoryImpl.wrap( 
 				ConnectionFactoryImpl.newInstance( PropsIO.loadFromClassLoaderSafe( TestBasicDBHelper.DEFAULT_DB_CONN_PATH ) ) ) ) {
 			try ( Connection conn = cf.getConnection();  

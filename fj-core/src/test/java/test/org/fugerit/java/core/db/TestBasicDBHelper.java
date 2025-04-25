@@ -16,7 +16,7 @@ public class TestBasicDBHelper extends MemTestDBHelper {
 	}
 	
 	@Test
-	public void testFail() {
+	void testFail() {
 		Assertions.assertThrows( Exception.class , () -> { 
 			MemTestDBHelper.initWorker( "fail-test", "script.sql" ); 
 		} );

@@ -20,7 +20,7 @@ public class TestBindingHelper extends BindingHelperDefault {
 	private static final long serialVersionUID = 6082079779742598082L;
 
 	@Test
-	public void testBindingHelperInitTo1() throws BindingException {
+	void testBindingHelperInitTo1() throws BindingException {
 		BindingContext context = new BindingContext();
 		BindingFieldConfig fieldConfig = new BindingFieldConfig();
 		BindingConfig bindingConfig = new BindingConfig();
@@ -34,7 +34,7 @@ public class TestBindingHelper extends BindingHelperDefault {
 	}
 	
 	@Test
-	public void testBindingHelperInitTo2() throws BindingException {
+	void testBindingHelperInitTo2() throws BindingException {
 		BindingContext context = new BindingContext();
 		BindingFieldConfig fieldConfig = new BindingFieldConfig();
 		BindingConfig bindingConfig = new BindingConfig();

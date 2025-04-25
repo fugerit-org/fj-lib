@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class TestEncodingCheck {
 
 	@Test
-	public void testEnc() throws IOException {
+	void testEnc() throws IOException {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/xml/dtd/test-content-handler.xml" ) ) {
 			boolean ok = EncodingCheck.checkEncoding( is , StandardCharsets.UTF_8.name() );
 			Assertions.assertTrue(ok);
@@ -23,7 +23,7 @@ public class TestEncodingCheck {
 	}
 	
 	@Test
-	public void testEncBytes() throws IOException {
+	void testEncBytes() throws IOException {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/xml/dtd/test-content-handler.xml" ) ) {
 			boolean ok = EncodingCheck.checkEncoding( StreamIO.readBytes(is) , StandardCharsets.UTF_8.name() );
 			Assertions.assertTrue(ok);
@@ -31,7 +31,7 @@ public class TestEncodingCheck {
 	}
 	
 	@Test
-	public void testEncByteWrong() throws IOException {
+	void testEncByteWrong() throws IOException {
 		String fileName = "src/test/resources/core/io/enc/test_no_utf8.gz";
 		try  ( InputStream is = new GZIPInputStream( new FileInputStream( fileName ) ) ) {
 			boolean ok = EncodingCheck.checkEncoding( StreamIO.readBytes(is) , StandardCharsets.UTF_8.name() );

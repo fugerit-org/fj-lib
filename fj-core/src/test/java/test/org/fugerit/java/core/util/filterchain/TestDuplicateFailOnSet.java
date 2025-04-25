@@ -15,7 +15,7 @@ public class TestDuplicateFailOnSet {
 	private static final String CONF_PATH_DUPLICATE_FAIL_ON_SET = "core/util/filterchain/minifilter-test-duplicate-fail-on-set.xml";
 	
 	@Test
-	public void testDuplicate() {
+	void testDuplicate() {
 		logger.info(  "**********************************************" );
 		logger.info(  "**********************************************" );
 		logger.info(  "*          TEST DUPLICATE                    *" );

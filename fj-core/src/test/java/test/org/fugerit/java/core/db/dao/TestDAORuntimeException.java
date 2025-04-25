@@ -9,47 +9,47 @@ import org.junit.jupiter.api.Test;
 public class TestDAORuntimeException {
 	
 	@Test
-	public void testApply() {
+	void testApply() {
 		Assertions.assertThrows( DAORuntimeException.class ,() -> DAORuntimeException.apply( () -> { throw new SQLException( "junit test scenario" ); } ) );
 	}
 
 	@Test
-	public void testGet() {
+	void testGet() {
 		Assertions.assertThrows( DAORuntimeException.class ,() -> DAORuntimeException.get( () -> { throw new SQLException( "junit test scenario" ); } ) );
 	}
 	
 	@Test
-	public void testEx1() {
+	void testEx1() {
 		Assertions.assertNotNull( new DAORuntimeException() );
 	}
 	
 	@Test
-	public void testEx2() {
+	void testEx2() {
 		Assertions.assertNotNull( new DAORuntimeException( "a" ) );
 	}
 	
 	@Test
-	public void testEx3() {
+	void testEx3() {
 		Assertions.assertNotNull( new DAORuntimeException( new SQLException( "b" ) ) );
 	}
 	
 	@Test
-	public void testEx4() {
+	void testEx4() {
 		Assertions.assertNotNull( new DAORuntimeException( "c", new SQLException( "d" ) ) );
 	}
 	
 	@Test
-	public void testEx5() {
+	void testEx5() {
 		Assertions.assertNotNull( DAORuntimeException.convertEx( "e" , new SQLException( "f" ) ) );
 	}
 	
 	@Test
-	public void testEx6() {
+	void testEx6() {
 		Assertions.assertNotNull( DAORuntimeException.convertEx( "g" , new DAORuntimeException( "g" ) ) );
 	}
 	
 	@Test
-	public void testEx7() {
+	void testEx7() {
 		Assertions.assertNotNull( DAORuntimeException.convertExMethod( "e" , new SQLException( "f" ) ) );
 	}
 	

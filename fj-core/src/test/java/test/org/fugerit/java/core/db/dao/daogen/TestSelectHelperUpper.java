@@ -36,12 +36,12 @@ public class TestSelectHelperUpper extends TestAddressSelectHelper {
 	}
 	
 	@Test
-	public void testQuerySelectIgnoreCasePostgres() {
+	void testQuerySelectIgnoreCasePostgres() {
 		testQueryHelperIgnoreCase( "PGS"  );
 	}
 	
 	@Test
-	public void testQuerySelectgnoreCaseOracle() {
+	void testQuerySelectgnoreCaseOracle() {
 		testQueryHelperIgnoreCase( "ORA" );
 	}
 	

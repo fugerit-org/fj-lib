@@ -11,7 +11,7 @@ public class TestVersionUtils {
 	private static final String VERSION_STRING = "test 1.0.0 2023-09-08";
 	
 	@Test
-	public void testModuleVersion() {
+	void testModuleVersion() {
 		VersionUtils.registerModule( NAME , HelperVersion.class.getName() );
 		VersionUtils.registerModule( "not-loaded" , "test.not.Loaded" );
 		VersionUtils.registerModule( "wrong-type" , "test.org.fugerit.java.core.cfg.TestVersionUtils" );

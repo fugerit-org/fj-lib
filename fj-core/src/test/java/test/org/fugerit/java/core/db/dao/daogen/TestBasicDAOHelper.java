@@ -16,7 +16,7 @@ import test.org.fugerit.java.core.db.TestBasicDBHelper;
 public class TestBasicDAOHelper extends TestBasicDBHelper {
 
 	@Test
-	public void testHelpersCreation() {
+	void testHelpersCreation() {
 		SafeFunction.apply( () -> {
 			try ( CloseableDAOContextSC context =  new CloseableDAOContextSC( newConnection() ) ) {
 				BasicDAOHelper<String> helper = new BasicDAOHelper<String>( context );

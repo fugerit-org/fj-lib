@@ -46,7 +46,7 @@ public class TestDOMIO extends BasicTest {
 	};
 	
 	@Test
-	public void testNewDocumentBuilderFactoryFail() {
+	void testNewDocumentBuilderFactoryFail() {
 		boolean ok = false;
 		try {
 			Properties features = new Properties();
@@ -61,7 +61,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testNewDocumentBuilderFactoryOk() {
+	void testNewDocumentBuilderFactoryOk() {
 		boolean ok = false;
 		try {
 			Properties features = new Properties();
@@ -77,7 +77,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testNewUnsafeDocumentBuilderFactory() {
+	void testNewUnsafeDocumentBuilderFactory() {
 		DocumentBuilderFactory dbf = DOMIO.newDocumentBuilderFactory( true );
 		log.info( "DOMIO.newDocumentBuilderFactory -> {}", dbf );
 		Assertions.assertNotNull( dbf );
@@ -85,14 +85,14 @@ public class TestDOMIO extends BasicTest {
 	
 	
 	@Test
-	public void testNewSafeDocumentBuilderFactory() {
+	void testNewSafeDocumentBuilderFactory() {
 		DocumentBuilderFactory dbf = DOMIO.newSafeDocumentBuilderFactory();
 		log.info( "DOMIO.newSafeDocumentBuilderFactory -> {}", dbf );
 		Assertions.assertNotNull( dbf );
 	}
 	
 	@Test
-	public void testLoadDOMDocString() {
+	void testLoadDOMDocString() {
 		boolean ok = false;
 		try {
 			ok = DOMIO.loadDOMDoc( FileIO.readString( new File( XML_TEST_PATH ) ) ) != null;
@@ -103,7 +103,7 @@ public class TestDOMIO extends BasicTest {
 	}
 
 	@Test
-	public void testLoadDOMDocSource() {
+	void testLoadDOMDocSource() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( new InputSource(is) ) != null;
@@ -114,7 +114,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceNsa() {
+	void testLoadDOMDocSourceNsa() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( new InputSource(is), true ) != null;
@@ -125,7 +125,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceEr() {
+	void testLoadDOMDocSourceEr() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( new InputSource(is), ENTITY_RESOLVER ) != null;
@@ -136,7 +136,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceErNsa() {
+	void testLoadDOMDocSourceErNsa() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( new InputSource(is), ENTITY_RESOLVER, true ) != null;
@@ -147,7 +147,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocStream() {
+	void testLoadDOMDocStream() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( is ) != null;
@@ -158,7 +158,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocReader() {
+	void testLoadDOMDocReader() {
 		boolean ok = false;
 		try ( Reader reader = new InputStreamReader( new FileInputStream( XML_TEST_PATH ) ) ) {
 			ok = DOMIO.loadDOMDoc( reader ) != null;
@@ -169,7 +169,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocNsaReader() {
+	void testLoadDOMDocNsaReader() {
 		boolean ok = false;
 		try ( Reader reader = new InputStreamReader( new FileInputStream( XML_TEST_PATH ) ) ) {
 			ok = DOMIO.loadDOMDoc( reader, false ) != null;
@@ -180,7 +180,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocFile() {
+	void testLoadDOMDocFile() {
 		boolean ok = false;
 		try {
 			ok = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) ) != null;
@@ -191,7 +191,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocNsaFile() {
+	void testLoadDOMDocNsaFile() {
 		boolean ok = false;
 		try {
 			ok = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ), false ) != null;
@@ -202,7 +202,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocStringFail() {
+	void testLoadDOMDocStringFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( FileIO.readString( new File( XML_TEST_PATH_KO ) ) );
@@ -214,7 +214,7 @@ public class TestDOMIO extends BasicTest {
 	}	
 	
 	@Test
-	public void testLoadDOMDocSourceFail() {
+	void testLoadDOMDocSourceFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( new InputSource(is) );
@@ -226,7 +226,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceErFail() {
+	void testLoadDOMDocSourceErFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( new InputSource(is), ENTITY_RESOLVER );
@@ -238,7 +238,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceErNsaFail() {
+	void testLoadDOMDocSourceErNsaFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( new InputSource(is), ENTITY_RESOLVER, true );
@@ -250,7 +250,7 @@ public class TestDOMIO extends BasicTest {
 	}	
 	
 	@Test
-	public void testLoadDOMDocSourceNsaFail() {
+	void testLoadDOMDocSourceNsaFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( new InputSource(is), false );
@@ -262,7 +262,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocStreamFail() {
+	void testLoadDOMDocStreamFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( is );
@@ -274,7 +274,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocReaderFail() {
+	void testLoadDOMDocReaderFail() {
 		boolean ok = false;
 		try ( Reader reader = new InputStreamReader( new FileInputStream( XML_TEST_PATH_KO ) ) ) {
 			DOMIO.loadDOMDoc( reader );
@@ -286,7 +286,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocFileFail() {
+	void testLoadDOMDocFileFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( new File( XML_TEST_PATH_KO ) );
@@ -298,7 +298,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocReaderNsaFail() {
+	void testLoadDOMDocReaderNsaFail() {
 		boolean ok = false;
 		try ( Reader reader = new InputStreamReader( new FileInputStream( XML_TEST_PATH_KO ) ) ) {
 			DOMIO.loadDOMDoc( reader, false );
@@ -310,7 +310,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocFileNsaFail() {
+	void testLoadDOMDocFileNsaFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( new File( XML_TEST_PATH_KO ), false );
@@ -322,7 +322,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocFileNotFoundFail() {
+	void testLoadDOMDocFileNotFoundFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( new File( "fadsfasfdasdas" ) );
@@ -334,7 +334,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testLoadDOMDocFileNsaNotFoundFail() {
+	void testLoadDOMDocFileNsaNotFoundFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( new File( "fadsfasfdasdas" ), false );
@@ -346,7 +346,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMIndentResult() {
+	void testWriteDOMIndentResult() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -361,7 +361,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMIndentResultFailIOExepction() {
+	void testWriteDOMIndentResultFailIOExepction() {
 		boolean ok = false;
 		try ( FailOutputStream os = new FailOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -374,7 +374,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMIndentResultFail() {
+	void testWriteDOMIndentResultFail() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH_KO ) );
@@ -389,7 +389,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMIndentWriter() {
+	void testWriteDOMIndentWriter() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -404,7 +404,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMIndentStream() {
+	void testWriteDOMIndentStream() {
 		boolean ok = false;
 		try ( ByteArrayOutputStream os = new ByteArrayOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -419,7 +419,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMWriter() {
+	void testWriteDOMWriter() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -434,7 +434,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMResult() {
+	void testWriteDOMResult() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -449,7 +449,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMStream() {
+	void testWriteDOMStream() {
 		boolean ok = false;
 		try ( ByteArrayOutputStream os = new ByteArrayOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -464,7 +464,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMStreamFail() {
+	void testWriteDOMStreamFail() {
 		boolean ok = false;
 		try ( ByteArrayOutputStream os = new ByteArrayOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH_KO ) );
@@ -477,7 +477,7 @@ public class TestDOMIO extends BasicTest {
 	}
 	
 	@Test
-	public void testWriteDOMStreamFailStream() {
+	void testWriteDOMStreamFailStream() {
 		boolean ok = false;
 		try ( OutputStream os = new FailOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );

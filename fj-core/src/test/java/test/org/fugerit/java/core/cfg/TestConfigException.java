@@ -15,52 +15,52 @@ public class TestConfigException {
 	
 	
 	@Test
-	public void testApplySilent() throws ConfigException {
+	void testApplySilent() throws ConfigException {
 		boolean ok = true;
 		ConfigException.applySilent( () -> { throw new IOException( "junit test scenario" ); } );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testGetSilent() throws ConfigException {
+	void testGetSilent() throws ConfigException {
 		Object result = ConfigException.getSilent( () -> { throw new IOException( "junit test scenario" ); } );
 		Assertions.assertNull( result );
 	}
 	
 	@Test
-	public void testApplyEX() {
+	void testApplyEX() {
 		Assertions.assertThrows( ConfigException.class ,() -> ConfigException.apply( () -> { throw new IOException( "junit test scenario" ); } ) );
 	}
 
 	@Test
-	public void testGetEX() {
+	void testGetEX() {
 		Assertions.assertThrows( ConfigException.class ,() -> ConfigException.get( () -> { throw new IOException( "junit test scenario" ); } ) );
 	}
 	
 	@Test
-	public void testApplyEXMessage() {
+	void testApplyEXMessage() {
 		Assertions.assertThrows( ConfigException.class ,() -> ConfigException.applyWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
 	}
 
 	@Test
-	public void testGetEXMessage() {
+	void testGetEXMessage() {
 		Assertions.assertThrows( ConfigException.class ,() -> ConfigException.getWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
 	}
 	
 	@Test
-	public void testApplyEXMessageOk() throws ConfigException {
+	void testApplyEXMessageOk() throws ConfigException {
 		boolean ok = true;
 		ConfigException.applyWithMessage( () -> log.info( "test ok" ) , "test message" );
 		Assertions.assertTrue( ok );
 	}
 
 	@Test
-	public void testGetEXMessageOk() throws ConfigException {
+	void testGetEXMessageOk() throws ConfigException {
 		Assertions.assertNotNull( ConfigException.getWithMessage( () -> "test ok" , "test message" ) );
 	}
 	
 	@Test
-	public void testApply() throws ConfigException {
+	void testApply() throws ConfigException {
 		HelperCheck check = new HelperCheck();
 		Assertions.assertNotEquals( HelperCheck.TEST_S1 , check.getField1() );
 		ConfigException.apply( () -> check.setField1( HelperCheck.TEST_S1 ) );
@@ -68,67 +68,67 @@ public class TestConfigException {
 	}
 
 	@Test
-	public void testGet() throws ConfigException {
+	void testGet() throws ConfigException {
 		Assertions.assertEquals( "test", ConfigException.get( () -> "test" ) );
 	}
 	
 	@Test
-	public void testEx1() {
+	void testEx1() {
 		Assertions.assertNotNull( new ConfigException() );
 	}
 	
 	@Test
-	public void testEx2() {
+	void testEx2() {
 		Assertions.assertNotNull( new ConfigException( "a" ) );
 	}
 	
 	@Test
-	public void testEx3() {
+	void testEx3() {
 		Assertions.assertNotNull( new ConfigException( new SQLException( "b" ) ) );
 	}
 	
 	@Test
-	public void testEx4() {
+	void testEx4() {
 		Assertions.assertNotNull( new ConfigException( "c", new SQLException( "d" ) ) );
 	}
 	
 	@Test
-	public void testEx5() {
+	void testEx5() {
 		Assertions.assertNotNull( ConfigException.convertEx( "e" , new SQLException( "f" ) ) );
 	}
 	
 	@Test
-	public void testEx6() {
+	void testEx6() {
 		Assertions.assertNotNull( ConfigException.convertEx( "g" , new ConfigException( "g" ) ) );
 	}
 	
 	@Test
-	public void testEx7() {
+	void testEx7() {
 		Assertions.assertNotNull( ConfigException.convertExMethod( "e" , new SQLException( "f" ) ) );
 	}
 	
 	@Test
-	public void testEx8() {
+	void testEx8() {
 		Assertions.assertNotNull( new ConfigException( 1 ) );
 	}
 	
 	@Test
-	public void testEx9() {
+	void testEx9() {
 		Assertions.assertNotNull( new ConfigException( "h", 2 ) );
 	}
 	
 	@Test
-	public void testEx10() {
+	void testEx10() {
 		Assertions.assertNotNull( new ConfigException( "i", new ConfigException( "l" ), 3 ) );
 	}
 	
 	@Test
-	public void testEx11() {
+	void testEx11() {
 		Assertions.assertNotNull( new ConfigException( new ConfigException( "m" ), 4 ) );
 	}
 	
 	@Test
-	public void testEx12() throws ConfigException {
+	void testEx12() throws ConfigException {
 		Assertions.assertThrows( ConfigException.class, () -> ConfigException.stadardExceptionWrapping( new IOException( "n" ) ) );
 	}
 	

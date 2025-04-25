@@ -11,7 +11,7 @@ public class TestScriptFacade extends MemDBTestBase {
 	}
 
 	@Test
-	public void testSelect01() {
+	void testSelect01() {
 		boolean ok = false;
 		try {
 			this.simpleTestSelectWorker( "SELECT * FROM fugerit.user" );	
@@ -23,7 +23,7 @@ public class TestScriptFacade extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testSelect02() {
+	void testSelect02() {
 		boolean ok = false;
 		try {
 			this.simpleTestSelectWorker( "SELECT * FROM fugerit.address" );	

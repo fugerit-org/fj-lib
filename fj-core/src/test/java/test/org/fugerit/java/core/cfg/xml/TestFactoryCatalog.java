@@ -58,7 +58,7 @@ public class TestFactoryCatalog extends BasicTest {
 	}
 	
 	@Test
-	public void testOk() {
+	void testOk() {
 		try {
 			FactoryCatalog loadedCatalog = (FactoryCatalog)this.fullSerializationTest(catalog);
 			ConfigTester tester = new ConfigTester( "default-catalog", loadedCatalog );
@@ -69,7 +69,7 @@ public class TestFactoryCatalog extends BasicTest {
 	}
 		
 	@Test
-	public void testKo() {
+	void testKo() {
 		Assertions.assertNotNull( new ConfigTester( "error-catalog", catalog ) );
 	}
 	

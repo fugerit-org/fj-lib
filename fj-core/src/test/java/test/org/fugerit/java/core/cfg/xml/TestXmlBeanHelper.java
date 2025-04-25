@@ -49,7 +49,7 @@ public class TestXmlBeanHelper extends BasicTest {
 	}
 	
 	@Test
-	public void testTextValyeType() {
+	void testTextValyeType() {
 		SafeFunction.apply( () -> {
 			try ( Reader reader = new StringReader( "<config>test1</config>" ) ) {
 				Document doc = DOMIO.loadDOMDoc( reader );
@@ -64,7 +64,7 @@ public class TestXmlBeanHelper extends BasicTest {
 	}
 	
 	@Test
-	public void testSetFromElement() {
+	void testSetFromElement() {
 		SafeFunction.apply( () -> {
 			try ( Reader reader = new StringReader( "<config>test1</config>" ) ) {
 				Document doc = DOMIO.loadDOMDoc( reader );
@@ -78,37 +78,37 @@ public class TestXmlBeanHelper extends BasicTest {
 	}
 	
 	@Test
-	public void testSetFromAttributes() {
+	void testSetFromAttributes() {
 		boolean set = this.setWorker( "<config field1='test1'/>" , XmlBeanHelper.MODE_XML_ATTRIBUTES, true );
 		Assertions.assertTrue( set );
 	}
 	
 	@Test
-	public void testSetFromAttributesFull() {
+	void testSetFromAttributesFull() {
 		boolean set = this.setWorker( "<config field1='test1'/>" , XmlBeanHelper.MODE_XML_FULL, true );
 		Assertions.assertTrue( set );
 	}
 	
 	@Test
-	public void testSetFromElements() {
+	void testSetFromElements() {
 		boolean set = this.setWorker( "<config><field1>test1</field1></config>" , XmlBeanHelper.MODE_XML_ELEMENTS, true );
 		Assertions.assertTrue( set );
 	}
 	
 	@Test
-	public void testSetFromElementsFull() {
+	void testSetFromElementsFull() {
 		boolean set = this.setWorker( "<config><field1>test1</field1></config>" , XmlBeanHelper.MODE_XML_FULL, true );
 		Assertions.assertTrue( set );
 	}
 	
 	@Test
-	public void testSetFromAttributesFail() {
+	void testSetFromAttributesFail() {
 		boolean set = this.setWorker( "<config fieldDoesNotExist='test1'/>" , XmlBeanHelper.MODE_XML_ATTRIBUTES, false  );
 		Assertions.assertFalse( set );
 	}
 	
 	@Test
-	public void testSetFromElementsFAil() {
+	void testSetFromElementsFAil() {
 		boolean set = this.setWorker( "<config><fieldDoesNotExist>test1</fieldDoesNotExist></config>" , XmlBeanHelper.MODE_XML_ELEMENTS, false  );
 		Assertions.assertFalse( set );
 	}

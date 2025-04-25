@@ -57,13 +57,13 @@ public class TestPropertyCatalog extends BasicTest {
 	}
 	
 	@Test
-	public void testinit() throws Exception {
+	void testinit() throws Exception {
 		boolean ok = this.testWorker(CATALOG);
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testSerialization() {
+	void testSerialization() {
 		try {
 			PropertyCatalog deserializedValue = (PropertyCatalog) this.fullSerializationTest(CATALOG);
 			boolean ok = this.testWorker(deserializedValue);

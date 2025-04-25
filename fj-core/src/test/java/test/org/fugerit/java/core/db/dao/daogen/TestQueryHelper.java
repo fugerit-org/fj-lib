@@ -19,7 +19,7 @@ public class TestQueryHelper {
 	private static final String TABLE_NAME = "fugert.user";
 	
 	@Test
-	public void testQueryHelper() {
+	void testQueryHelper() {
 		QueryHelper helper = new QueryHelper( TABLE_NAME , new FieldList() );
 		helper.openPara();
 		helper.appendWithSpace( "1=1" );
@@ -29,7 +29,7 @@ public class TestQueryHelper {
 	}
 	
 	@Test
-	public void testUpdateHelper() {
+	void testUpdateHelper() {
 		UpdateHelper helper = new UpdateHelper( TABLE_NAME , new FieldList() );
 		Assertions.assertThrows( ConfigRuntimeException.class , helper::getQueryContent );
 		helper.addSetParam( "username" , "user1" );
@@ -42,7 +42,7 @@ public class TestQueryHelper {
 	}
 	
 	@Test
-	public void testDeleteHelper() {
+	void testDeleteHelper() {
 		DeleteHelper helper = new DeleteHelper( TABLE_NAME , new FieldList() );
 		Assertions.assertThrows( ConfigRuntimeException.class , helper::getQueryContent );
 		helper.andWhereParam( "username" , "user1" );
@@ -52,7 +52,7 @@ public class TestQueryHelper {
 	}
 	
 	@Test
-	public void testInsertHelper() {
+	void testInsertHelper() {
 		InsertHelper helper = new InsertHelper( TABLE_NAME , new FieldList() );
 		helper.addParam( "username" , "user1" );
 		helper.addParam( "id" , DAOID.valueOf( 1 ) );
@@ -62,7 +62,7 @@ public class TestQueryHelper {
 	}
 	
 	@Test
-	public void testSelectHelper1() {
+	void testSelectHelper1() {
 		SelectHelper helper = new SelectHelper( TABLE_NAME , new FieldList() );
 		helper.addNullComparison( "username", SelectHelper.COMPARE_EQUAL, false );
 		helper.addNullComparison( "id", SelectHelper.COMPARE_EQUAL, true );
@@ -74,14 +74,14 @@ public class TestQueryHelper {
 	}
 	
 	@Test
-	public void testSelectHelper2() {
+	void testSelectHelper2() {
 		SelectHelper helper = new SelectHelper( TABLE_NAME , new FieldList() );
 		helper.addOrderBy( "field4" );
 		Assertions.assertNotNull( helper.getQueryContent() );
 	}
 	
 	@Test
-	public void testSelectHelper3() {
+	void testSelectHelper3() {
 		SelectHelper helper =  SelectHelper.newCustomSelectHelper(TABLE_NAME, new FieldList(), false, "" );
 		helper.addOrderBy( null );
 		helper.addOrderBy( "f1", SelectHelper.ORDER_ASC );

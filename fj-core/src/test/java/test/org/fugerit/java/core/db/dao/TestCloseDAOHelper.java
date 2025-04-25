@@ -14,7 +14,7 @@ import test.org.fugerit.java.core.db.TestBasicDBHelper;
 public class TestCloseDAOHelper extends TestBasicDBHelper {
 
 	@Test
-	public void testClose1() {
+	void testClose1() {
 		DAORuntimeException.apply( () -> {
 			boolean ok = false;
 			try ( Connection conn = newConnection() ) {
@@ -26,7 +26,7 @@ public class TestCloseDAOHelper extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testClose2() {
+	void testClose2() {
 		DAORuntimeException.apply( () -> {
 			boolean ok = false;
 			try ( Connection conn = newConnection() ) {
@@ -43,7 +43,7 @@ public class TestCloseDAOHelper extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testClose3() {
+	void testClose3() {
 		DAORuntimeException.apply( () -> {
 			boolean ok = false;
 			CloseDAOHelper.close( (AutoCloseable)null );
@@ -53,7 +53,7 @@ public class TestCloseDAOHelper extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testClose4() {
+	void testClose4() {
 		DAORuntimeException.apply( () -> {
 			boolean ok = false;
 			CloseDAOHelper.close( (Closeable)null );

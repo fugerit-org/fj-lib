@@ -23,35 +23,35 @@ public class TestDAOID extends BasicTest {
 	private static final DAOID DAOID_VALUE = DAOID.valueOf( LONG_VALUE );
 	
 	@Test
-	public void testValueFromByte() {
+	void testValueFromByte() {
 		DAOID id = DAOID.valueOf( BYTE_VALUE );
 		log.info( "value : {}", id );
 		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 	
 	@Test
-	public void testValueFromShort() {
+	void testValueFromShort() {
 		DAOID id = DAOID.valueOf( SHORT_VALUE );
 		log.info( "value : {}", id );
 		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 
 	@Test
-	public void testValueFromInt() {
+	void testValueFromInt() {
 		DAOID id = DAOID.valueOf( INT_VALUE );
 		log.info( "value : {}", id );
 		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 	
 	@Test
-	public void testValueFromLong() {
+	void testValueFromLong() {
 		DAOID id = DAOID.valueOf( LONG_VALUE );
 		log.info( "value : {}", id );
 		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 	
 	@Test
-	public void testValueFromString() {
+	void testValueFromString() {
 		DAOID id = DAOID.valueOf( STRING_VALUE );
 		log.info( "value : {}", id );
 		Assertions.assertEquals( DAOID_VALUE , id );
@@ -59,14 +59,14 @@ public class TestDAOID extends BasicTest {
 	
 	
 	@Test
-	public void testValueOfNullZeroNull() {
+	void testValueOfNullZeroNull() {
 		DAOID id = DAOID.valueOfNullZero( 0 );
 		log.info( "value : {}", id );
 		Assertions.assertNull( id );
 	}
 	
 	@Test
-	public void testValueOfNullZero() {
+	void testValueOfNullZero() {
 		DAOID id = DAOID.valueOfNullZero( LONG_VALUE );
 		log.info( "value : {}", id );
 		Assertions.assertEquals( DAOID_VALUE , id );
@@ -74,7 +74,7 @@ public class TestDAOID extends BasicTest {
 	
 	
 	@Test
-	public void testPrint() {
+	void testPrint() {
 		log.info( "byteValue : {}", DAOID_VALUE.byteValue() );
 		log.info( "shortValue : {}", DAOID_VALUE.shortValue() );
 		log.info( "intValue : {}", DAOID_VALUE.intValue() );
@@ -86,7 +86,7 @@ public class TestDAOID extends BasicTest {
 	}
 	
 	@Test
-	public void testHashCode() {
+	void testHashCode() {
 		Assertions.assertEquals( DAOID_VALUE.hashCode() , DAOID.valueOf( STRING_VALUE ).hashCode() );
 	}
 	

@@ -19,7 +19,7 @@ public class TesterPropsIOSubProps {
 	private static final long EXPECTED_SUB_PROPS_SIZE = 2;
 	
 	@Test
-	public void testReadFromClassLoader() {
+	void testReadFromClassLoader() {
 		try {
 			Properties props = PropsIO.loadFromClassLoader( "core/util/test-props-io-prefix.properties" );
 			logger.info( "full props -> {}", props );

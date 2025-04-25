@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 public class TestDOMProperty {
 
 	@Test
-	public void testFill() throws IOException, XMLException, DOMException, ConfigException {
+	void testFill() throws IOException, XMLException, DOMException, ConfigException {
 		Properties props = new Properties();
 		String key = "key1";
 		String oldValue = "oldValue" ;

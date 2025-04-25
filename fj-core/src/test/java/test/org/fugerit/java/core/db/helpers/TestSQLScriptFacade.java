@@ -19,7 +19,7 @@ import test.org.fugerit.java.core.db.TestBasicDBHelper;
 public class TestSQLScriptFacade extends TestBasicDBHelper {
 
 	@Test
-	public void testReadScripts() {
+	void testReadScripts() {
 		SafeFunction.apply( () -> {
 			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "test/memdb/base_db_init.sql" ) ) {
 				String script = StreamIO.readString( is );

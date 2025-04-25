@@ -59,7 +59,7 @@ public class TestErrorHandler extends BasicTest {
 	}
 	
 	@Test
-	public void testWrapper() throws SAXException {
+	void testWrapper() throws SAXException {
 		// test ErrorHandlerWrapper
 		ErrorHandlerWrapper handler = new ErrorHandlerWrapper( new DoNothingErrorHandler() );
 		boolean ok = this.worker(handler);
@@ -87,7 +87,7 @@ public class TestErrorHandler extends BasicTest {
 	}
 	
 	@Test
-	public void testSaxStore() throws SAXException {
+	void testSaxStore() throws SAXException {
 		SAXErrorHandlerStore handler = new SAXErrorHandlerStore();
 		boolean ok = this.worker(handler);
 		log.info( "fatals size : {}", handler.getFatalSize() );
@@ -101,14 +101,14 @@ public class TestErrorHandler extends BasicTest {
 	}
 	
 	@Test
-	public void testSaxFail() throws SAXException {
+	void testSaxFail() throws SAXException {
 		SAXErrorHandlerFail handler = SAXErrorHandlerFail.newInstanceStoreOnly();
 		boolean ok = this.worker(handler);
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testSaxFailFatal() throws SAXException {
+	void testSaxFailFatal() throws SAXException {
 		SAXErrorHandlerFail handler = SAXErrorHandlerFail.newInstanceFailOnAnyErrorStoreWarnings();
 		Assertions.assertThrows( SAXParseException.class , () -> 
 			handler.fatalError(  this.newSPE( "newInstanceFailOnAnyErrorIgnoreWarnings fatal" ) ) );
@@ -117,14 +117,14 @@ public class TestErrorHandler extends BasicTest {
 	}
 	
 	@Test
-	public void testSaxFailError() throws SAXException {
+	void testSaxFailError() throws SAXException {
 		SAXErrorHandlerFail handler = SAXErrorHandlerFail.newInstanceFailOnFatalErrorStoreOthers();
 		Assertions.assertThrows( SAXParseException.class , () -> 
 			handler.fatalError(  this.newSPE( "newInstanceFailOnFatalErrorStoreOthers fatal" ) ) );
 	}
 	
 	@Test
-	public void testSaxFailAll() throws SAXException {
+	void testSaxFailAll() throws SAXException {
 		SAXErrorHandlerFail handler = SAXErrorHandlerFail.newInstanceFailOnAnyErrorIgnoreWarnings();
 		handler.warning( this.newSPE( "newInstanceFailOnAnyErrorStoreWarnings warning" ) );
 		Assertions.assertThrows( SAXParseException.class , () -> 

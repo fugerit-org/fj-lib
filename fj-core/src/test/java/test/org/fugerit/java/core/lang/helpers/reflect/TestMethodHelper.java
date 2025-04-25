@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class TestMethodHelper {
 
 	@Test
-	public void testFoundMethod() {
+	void testFoundMethod() {
 		String id = "test-id";
 		ListMapConfig<String> list = new ListMapConfig<String>();
 		list.setId( id );
@@ -18,7 +18,7 @@ public class TestMethodHelper {
 	}
 	
 	@Test
-	public void testNotFoundMethod() {
+	void testNotFoundMethod() {
 		ListMapConfig<String> list = new ListMapConfig<String>();
 		Assertions.assertThrows( ConfigRuntimeException.class , () ->  MethodHelper.invokeGetter(  list , "notExists" ) );
 	}

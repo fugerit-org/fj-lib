@@ -63,7 +63,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testIdentify() {
+	void testIdentify() {
 		String[] products = TestBasicDBHelper.PRODUCT_NAME_STRING;
 		for ( int k=0; k<products.length; k++ ) {
 			int code = DbUtils.indentifyDB( products[k] );
@@ -72,7 +72,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testPopstgresSequence() {
+	void testPopstgresSequence() {
 		PostgresqlSeqIdGenerator idGenerator = new PostgresqlSeqIdGenerator();
 		idGenerator.setAutoCloseConnection( true );
 		boolean ok = testSequenceWorker( "PGS" , SEQ_NAME , idGenerator, null );
@@ -80,13 +80,13 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testOracleSequence() {
+	void testOracleSequence() {
 		boolean ok = testSequenceWorker( "ORA" , SEQ_NAME , new OracleSeqIdGenerator(), null );
 		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void testMySqlSequence() {
+	void testMySqlSequence() {
 		String prepareSql = "CREATE TABLE "+SEQ_NAME+" (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))";
 		boolean ok = testSequenceWorker( "MYS" , "fugerit.seq_test" , new MysqlSeqIdGenerator( "CALL IDENTITY()" ), prepareSql );
 		Assertions.assertTrue(ok);
@@ -94,7 +94,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testSqlServer() {
+	void testSqlServer() {
 		SqlServerSeqIdGenerator idGenerator = new SqlServerSeqIdGenerator( s -> "SELECT nextval('"+s+"')" );
 		boolean ok = testSequenceWorker( "MSS" , SEQ_NAME , idGenerator, null );
 		SqlServerSeqIdGenerator.createSequenceQuery( SEQ_NAME );	// invocation test
@@ -102,7 +102,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testFacade1() {
+	void testFacade1() {
 		DAOID id = SafeFunction.get( () -> {
 			try (Connection conn = this.getConnection();
 					Statement stm = conn.createStatement() ) {
@@ -116,7 +116,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testFacade2() {
+	void testFacade2() {
 		DAOID id = SafeFunction.get( () -> {
 			try (Connection conn = this.getConnection();
 					CloseableDAOContext context = new CloseableDAOContextSC( conn );
@@ -131,7 +131,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testGeneric() {
+	void testGeneric() {
 		DAOID id = SafeFunction.get( () -> {
 			try (Connection conn = this.getConnection();
 					Statement stm = conn.createStatement() ) {
@@ -149,14 +149,14 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testSqlServerFail() {
+	void testSqlServerFail() {
 		SqlServerSeqIdGenerator idGenerator = new SqlServerSeqIdGenerator() ;
 		idGenerator.setSequenceName(SEQ_NAME);
 		Assertions.assertThrows( Exception.class , () -> testSequenceWorker( "MSS" , SEQ_NAME , idGenerator, null ) );
 	}
 	
 	@Test
-	public void testBasic() throws ConfigException, IOException, XMLException {
+	void testBasic() throws ConfigException, IOException, XMLException {
 		BasicIdGenerator idGenerator = new BasicIdGenerator() {	
 			@Override
 			public DAOID generateId(Connection conn) throws DAOException {
@@ -177,7 +177,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testBasicSeq() throws ConfigException, IOException, XMLException {
+	void testBasicSeq() throws ConfigException, IOException, XMLException {
 		BasicSeqIdGenerator idGenerator = new BasicSeqIdGenerator() {
 
 			@Override

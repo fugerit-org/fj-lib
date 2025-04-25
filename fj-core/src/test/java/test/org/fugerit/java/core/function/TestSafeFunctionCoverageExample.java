@@ -20,14 +20,14 @@ public class TestSafeFunctionCoverageExample {
 	}
 	
 	@Test
-	public void testClassic() {
+	void testClassic() {
 		SafeFunctionCoverageExample exampleImpl = new SafeFunctionCoverageExampleClassicImpl();
 		Assertions.assertTrue( this.testWorker(exampleImpl) );
 		Assertions.assertThrows( ConfigRuntimeException.class , () -> exampleImpl.error(INPUT_ERROR) );
 	}
 	
 	@Test
-	public void testSafe() {
+	void testSafe() {
 		SafeFunctionCoverageExample exampleImpl = new SafeFunctionCoverageExampleSafeImpl();
 		Assertions.assertTrue( this.testWorker(exampleImpl) );
 		Assertions.assertThrows( ConfigRuntimeException.class , () -> exampleImpl.error(INPUT_ERROR) );

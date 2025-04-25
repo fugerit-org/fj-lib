@@ -37,19 +37,19 @@ public class TestSearchDOM {
 	}
 	
 	@Test
-	public void testSearchDOM() throws XMLException, IOException {
+	void testSearchDOM() throws XMLException, IOException {
 		boolean ok = this.worker( SearchDOM.newInstance() );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testSearchDOMAlt1() throws XMLException, IOException {
+	void testSearchDOMAlt1() throws XMLException, IOException {
 		boolean ok = this.worker( SearchDOM.newInstance( true, true ) );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testSearchDOMAlt2() throws XMLException, IOException {
+	void testSearchDOMAlt2() throws XMLException, IOException {
 		boolean ok = this.worker( SearchDOM.newInstance( false, false ) );
 		Assertions.assertTrue( ok );
 	}

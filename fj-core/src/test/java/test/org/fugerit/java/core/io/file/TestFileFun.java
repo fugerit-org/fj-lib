@@ -80,13 +80,13 @@ public class TestFileFun extends BasicTest {
 	}
 	
 	@Test
-	public void testFun() {
+	void testFun() {
 		boolean ok = this.worker( "target/file_fun", "src/test/resources/core/xml/dtd" );
 		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void testAlt() throws IOException {
+	void testAlt() throws IOException {
 		try ( FileFun fun =  AbstractFileFun.newFileFun( f -> log.info( "worker : {}", f )) ) {
 			FileFunWrapper wrapper = new FileFunWrapper(fun);
 			FileFunSecure secure = new FileFunSecure(wrapper, new ExHandlerDefault());
@@ -98,7 +98,7 @@ public class TestFileFun extends BasicTest {
 	}
 	
 	@Test
-	public void testZip() throws IOException {
+	void testZip() throws IOException {
 		boolean ok = false;
 		File sourceDir = new File( "src/test/resources/core/xml/dtd" );
 		try ( ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( new File( "target/zip_fun_test.zip" ) ) );

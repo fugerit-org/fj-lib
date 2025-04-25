@@ -27,13 +27,13 @@ public class TestSafeFunction {
 	private static final DAORuntimeException TEST_RUNTIME_EX = new DAORuntimeException( "test runtime" );
 
 	@Test
-	public void testGetUsingDefault() {
+	void testGetUsingDefault() {
 		Assertions.assertEquals( "2", SafeFunction.getUsingDefault( () -> null, () -> "2" ) );
 		Assertions.assertEquals( "0", SafeFunction.getUsingDefault( () -> "0", () -> "1" ) );
 	}
 	
 	@Test
-	public void testFailGet() {
+	void testFailGet() {
 		Assertions.assertThrows(ConfigRuntimeException.class, () -> {
 			SafeFunction.get( () -> {
 				if ( FailHelper.DO_FAIL ) {
@@ -46,7 +46,7 @@ public class TestSafeFunction {
 	}
 	
 	@Test
-	public void testFailGetGen() {
+	void testFailGetGen() {
 		Assertions.assertThrows(XMLException.class, () -> {
 			SafeFunction.getEx( () -> {
 				if ( FailHelper.DO_FAIL ) {
@@ -59,14 +59,14 @@ public class TestSafeFunction {
 	}
 	
 	@Test
-	public void testFailApplyGen() {
+	void testFailApplyGen() {
 		Assertions.assertThrows(ConfigRuntimeException.class, () -> {
 			SafeFunction.apply( () -> { throw new IOException( "ex" ); } );
 		});
 	}
 	
 	@Test
-	public void testApplyLogGen() {
+	void testApplyLogGen() {
 		boolean ok = false;
 		SafeFunction.apply( () -> { throw new IOException( "ex1" ); }, e -> log.warn( "Error on exception {}", e, e.getMessage() ) );
 		ok = true;
@@ -74,41 +74,41 @@ public class TestSafeFunction {
 	}
 	
 	@Test
-	public void testGetLogGen() {
+	void testGetLogGen() {
 		String res = SafeFunction.get( () -> { throw new IOException( "ex2" ); }, e -> log.warn( "Error on exception {}", e, e.getMessage() ) );
 		Assertions.assertNull( res );
 	}
 	
 	@Test
-	public void testApplyWithMessage() {
+	void testApplyWithMessage() {
 		Assertions.assertThrows( ConfigRuntimeException.class , () -> SafeFunction.applyWithMessage( () -> { throw new IOException( "exApplyWithMessage" ); }, "error test" ) );
 	}
 	
 	@Test
-	public void testGetWithMessage() {
+	void testGetWithMessage() {
 		Assertions.assertThrows( ConfigRuntimeException.class , () -> SafeFunction.getWithMessage( () -> { throw new IOException( "exGetWithMessage" ); }, "error test" ) );
 	}
 	
 	@Test
-	public void testApplyWithMessageOk() {
+	void testApplyWithMessageOk() {
 		boolean ok = true;
 		SafeFunction.applyWithMessage( () -> log.info( "ok" ), "no error apply" );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testGetWithMessageOk() {
+	void testGetWithMessageOk() {
 		Assertions.assertEquals( BooleanUtils.BOOLEAN_1 , SafeFunction.getWithMessage( () -> BooleanUtils.BOOLEAN_1, "no error get" ) );
 	}
 	
 	@Test
-	public void testGetSilent() {
+	void testGetSilent() {
 		String res = SafeFunction.getSilent( () -> { throw new IOException( "exGetSilent" ); } );
 		Assertions.assertNull( res );
 	}
 	
 	@Test
-	public void testGetWithDefaultLogGen() {
+	void testGetWithDefaultLogGen() {
 		String res = SafeFunction.getWithDefault( () -> { throw new IOException( "ex3" ); }, e -> { 
 			log.warn( "Error on exception {}", e, e.getMessage() );
 			return "default-string";
@@ -117,7 +117,7 @@ public class TestSafeFunction {
 	}
 	
 	@Test
-	public void testApplyOnCondition() {
+	void testApplyOnCondition() {
 		boolean ok = SafeFunction.applyOnCondition( () -> false , () -> log.info( "do nothing" ) );
 		Assertions.assertFalse( ok );
 		ok = SafeFunction.applyIfNotNull( null , () -> log.info( "do nothing" ) );
@@ -125,7 +125,7 @@ public class TestSafeFunction {
 	}
 
 	@Test
-	public void testGetOnCondition() {
+	void testGetOnCondition() {
 		String res = SafeFunction.getOnCondition( () -> Boolean.FALSE , () -> "a" );
 		Assertions.assertNull( res );
 		res = SafeFunction.getIfNotNull( null , () -> "b" );
@@ -142,14 +142,14 @@ public class TestSafeFunction {
 	}
 	
 	@Test
-	public void testExHandler() {
+	void testExHandler() {
 		Assertions.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_LOG_WARN, false ) );
 		Assertions.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_TRACE_WARN, false ) );
 		Assertions.assertTrue( this.testExHandlerWorker( SafeFunction.EX_CONSUMER_THROW_CONFIG_RUNTIME, true ) );
 	}
 	
 	@Test
-	public void testExHandlerThrowConfigRuntime() {
+	void testExHandlerThrowConfigRuntime() {
 		Assertions.assertThrows( ConfigRuntimeException.class , 
 				() -> SafeFunction.EX_CONSUMER_THROW_CONFIG_RUNTIME.accept( TEST_RUNTIME_EX ) );
 		Assertions.assertThrows( ConfigRuntimeException.class , 
@@ -157,7 +157,7 @@ public class TestSafeFunction {
 	}
 	
 	@Test
-	public void testExHandlerThrowConfigRuntimeRethrowRTE() {
+	void testExHandlerThrowConfigRuntimeRethrowRTE() {
 		Assertions.assertThrows( TEST_RUNTIME_EX.getClass() , 
 				() -> SafeFunction.EX_CONSUMER_RETHROW_RTE_OR_CONVERT_CHECKED_TO_CRE.accept( TEST_RUNTIME_EX ) );
 		Assertions.assertThrows( ConfigRuntimeException.class , 
@@ -185,7 +185,7 @@ public class TestSafeFunction {
 	}
 	
 	@Test
-	public void testExample() {
+	void testExample() {
 		String resClassic = this.testExampleToOneLineClassic();
 		String resSafeFunction = this.testExampleToOneLineSafeFunction();
 		Assertions.assertEquals( resClassic, resSafeFunction );

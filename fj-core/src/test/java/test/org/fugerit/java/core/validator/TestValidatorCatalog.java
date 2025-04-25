@@ -29,7 +29,7 @@ public class TestValidatorCatalog extends BasicTest {
 	}
 	
 	@Test
-	public void testSerialization() {
+	void testSerialization() {
 		try {
 			ValidatorCatalog loadedCatalog = (ValidatorCatalog) this.fullSerializationTest( catalog );
 			ValidatorResult result = new ValidatorResult();
@@ -80,17 +80,17 @@ public class TestValidatorCatalog extends BasicTest {
 	}
 	
 	@Test
-	public void testRegexValidator001_EN() {
+	void testRegexValidator001_EN() {
 		this.testRegexValidator001( Locale.UK );
 	}
 	
 	@Test
-	public void testRegexValidator001_IT() {
+	void testRegexValidator001_IT() {
 		this.testRegexValidator001( Locale.ITALY );
 	}
 	
 	@Test
-	public void testNumberValidator001_EN() {
+	void testNumberValidator001_EN() {
 		Locale l = Locale.UK;
 		ValidatorResult result = new ValidatorResult();
 		Properties params = new Properties();
@@ -102,7 +102,7 @@ public class TestValidatorCatalog extends BasicTest {
 	}
 	
 	@Test
-	public void testNumberValidator001_IT() {
+	void testNumberValidator001_IT() {
 		Locale l = Locale.ITALY;
 		ValidatorResult result = new ValidatorResult();
 		Properties params = new Properties();

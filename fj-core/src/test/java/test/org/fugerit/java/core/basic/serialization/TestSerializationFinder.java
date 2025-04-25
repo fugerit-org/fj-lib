@@ -10,7 +10,7 @@ import test.org.fugerit.java.BasicTest;
 public class TestSerializationFinder extends BasicTest {
 
 	@Test
-	public void testOkSerialization() {
+	void testOkSerialization() {
 		try {
 			long value = 1979L;
 			GenericIdFinder<DAOID> finder = new GenericIdFinder<>();
@@ -25,7 +25,7 @@ public class TestSerializationFinder extends BasicTest {
 	}
 	
 	@Test
-	public void testFailSerialization() {
+	void testFailSerialization() {
 		boolean ok = false;
 		try {
 			long value = 1979L;

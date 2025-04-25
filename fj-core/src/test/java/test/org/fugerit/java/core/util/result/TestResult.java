@@ -54,14 +54,14 @@ public class TestResult {
 	}
 	
 	@Test
-	public void testBasicResult() {
+	void testBasicResult() {
 		BasicResult result = new BasicResult( Result.RESULT_CODE_OK );
 		boolean ok = this.testResultWorker(result);
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testPagedResultVirtual() {
+	void testPagedResultVirtual() {
 		PagedResult<Integer> result = DefaultPagedResult.newPagedResult( 10, DATA.size(), 0, DATA );
 		boolean ok = this.testPagedResultWorker(result);
 		Assertions.assertTrue( ok );
@@ -70,7 +70,7 @@ public class TestResult {
 	}
 	
 	@Test
-	public void testPagedResult() {
+	void testPagedResult() {
 		PagedResult<Integer> result = DefaultPagedResult.newPagedResult( 3, DATA.size(), 0, DATA, 3, DATA.size(), "test" );
 		boolean ok = this.testPagedResultWorker(result);
 		Assertions.assertTrue( ok );
@@ -92,41 +92,41 @@ public class TestResult {
 	}
 	
 	@Test
-	public void testPagedResultFull3() {
+	void testPagedResultFull3() {
 		int perPage = 3;
 		int currentPage = this.testPagedResultFullWorker(perPage, DATA);
 		Assertions.assertEquals( 4 , currentPage );	
 	}
 	
 	@Test
-	public void testPagedResultFull5() {
+	void testPagedResultFull5() {
 		int perPage = 5;
 		int currentPage = this.testPagedResultFullWorker(perPage, DATA);
 		Assertions.assertEquals( 2 , currentPage );	
 	}
 	
 	@Test
-	public void testPagedResultAlt() {
+	void testPagedResultAlt() {
 		PagedResult<Integer> result = DefaultPagedResult.newPagedResult( 3, DATA.size(), 1, DATA );
 		boolean ok = this.testPagedResultWorker(result);
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testPagedResultKo() {
+	void testPagedResultKo() {
 		PagedResult<Integer> result = DefaultPagedResult.newPagedResult( Result.RESULT_CODE_KO );
 		boolean ok = this.testPagedResultWorker(result);
 		Assertions.assertFalse( ok );
 	}
 	
 	@Test
-	public void testConstants() {
+	void testConstants() {
 		Assertions.assertEquals( PagedResult.ELEMENT_COUNT_UNAVAILABLE, Integer.valueOf( -1 ) );
 		Assertions.assertFalse( AbstractPagedResult.DEFAULT_SUPPORT_VIRTUAL_PAGING );
 	}
 	
 	@Test
-	public void testVirtualFinder() {
+	void testVirtualFinder() {
 		DefaultVirtualFinder finder = new DefaultVirtualFinder( 5, 0, 10, 0, "TEST" );
 		log.info( "finder.getSearchVirtualKey : {}", finder.getSearchVirtualKey() );
 		log.info( "finder.getCurrentPage : {}", finder.getCurrentPage() );
@@ -139,14 +139,14 @@ public class TestResult {
 	}
 	
 	@Test
-	public void testVirtualFinderFail() {
+	void testVirtualFinderFail() {
 		DefaultVirtualFinder finder = new DefaultVirtualFinder( 5, 0 );
 		log.info( "finder.isVirtualPagingUsed : {}", finder.isVirtualPagingUsed() );
 		Assertions.assertThrows( UnsupportedOperationException.class , () -> finder.getSearchVirtualKey() );
 	}
 	
 	@Test
-	public void testVirtualCache() {
+	void testVirtualCache() {
 		VirtualPageCache<Integer> cache = new VirtualPageCache<>();
 		int perPage = 3;
 		int elementCount = DATA.size();
@@ -155,12 +155,12 @@ public class TestResult {
 	}
 
 	@Test
-	public void testResultHelper() {
+	void testResultHelper() {
 		Assertions.assertEquals( 1 , ResultHelper.createList( "a" ).size() );
 	}
 
 	@Test
-	public void testPageInfo() {
+	void testPageInfo() {
 		PageInfo info = new PageInfo( 1 , 10 );
 		Assertions.assertEquals( 1 , info.getNumber() );
 		Assertions.assertEquals( 10 , info.getSize() );

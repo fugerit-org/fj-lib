@@ -18,7 +18,7 @@ public class TestFieldHelper {
 	}
 	
 	@Test
-	public void testSetField() {
+	void testSetField() {
 		CheckBean bean = new CheckBean();
 		Assertions.assertNull( bean.getField1() );
 		FieldHelper.setField(bean, "field1", TEST_VALUE, true);

@@ -21,7 +21,7 @@ public class TestConfigProvider extends AbstractConfigurableObject {
 	private static final long serialVersionUID = 134123432L;
 
 	@Test
-	public void testConfigProvider() throws ConfigException, IOException {
+	void testConfigProvider() throws ConfigException, IOException {
 		ConfigProviderWrapper wrapper = new ConfigProviderWrapper(); // will wrap around a DefaultConfigProvider
 		wrapper.readConfiguration( StreamHelper.MODE_CLASSLOADER , "core/cfg/xml/factory-catalog-test.xml" );
 		log.info( "unwrap : {}", wrapper.unwrap() );

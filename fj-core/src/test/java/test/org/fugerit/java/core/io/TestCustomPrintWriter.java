@@ -18,7 +18,7 @@ public class TestCustomPrintWriter {
 	}
 	
 	@Test
-	public void test() {
+	void test() {
 		SafeFunction.apply( () -> {
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new ByteArrayOutputStream() ) ) {
 				boolean ok = this.worker(writer);

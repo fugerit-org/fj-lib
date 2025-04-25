@@ -40,7 +40,7 @@ public class TestMemDBTestBase extends MemDBTestBase {
 	}
 	
 	@Test
-	public void simpleTest01() {
+	void simpleTest01() {
 		try ( Statement stm = this.getConnection().createStatement() ) {
 			execute(stm, "CREATE SCHEMA TEST");
 			execute(stm, "CREATE TABLE TEST.TEST_01 ( id bigint NOT NULL )");

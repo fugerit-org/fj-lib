@@ -14,7 +14,7 @@ import test.org.fugerit.java.BasicTest;
 public class TestStreamIO extends BasicTest {
 	
 	@Test
-	public void testStreamIO() {
+	void testStreamIO() {
 		try {
 			String path = "core/util/filterchain/minifilter-test-config.xml";
 			InputStream is = ClassHelper.loadFromDefaultClassLoader( path );

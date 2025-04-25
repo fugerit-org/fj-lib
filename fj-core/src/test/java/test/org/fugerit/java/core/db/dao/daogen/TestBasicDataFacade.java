@@ -25,7 +25,7 @@ public class TestBasicDataFacade extends TestBasicDBHelper implements Serializab
 	private static final String TABLE_NAME = "fugerit.user";
 	
 	@Test
-	public void testBasicDataFacade1() {
+	void testBasicDataFacade1() {
 		
 		SafeFunction.apply( () -> {
 			try ( CloseableDAOContextSC context =  new CloseableDAOContextSC( newConnection() ) ) {
@@ -53,7 +53,7 @@ public class TestBasicDataFacade extends TestBasicDBHelper implements Serializab
 	}
 
 	@Test
-	public void testBasicDataFacade2() {
+	void testBasicDataFacade2() {
 		SafeFunction.apply( () -> {
 			try ( CloseableDAOContextSC context =  new CloseableDAOContextSC( newConnection() ) ) {
 				// advance feature features

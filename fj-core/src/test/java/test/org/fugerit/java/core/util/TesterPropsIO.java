@@ -12,7 +12,7 @@ public class TesterPropsIO {
 	public static final String PROP_TEST_KEY = "TestPropKey1";
 	
 	@Test
-	public void testReadFromClassLoader() {
+	void testReadFromClassLoader() {
 		try {
 			Properties props = PropsIO.loadFromClassLoader( "core/util/test-props.io.properties" );
 			String testValue = props.getProperty( PROP_TEST_KEY );

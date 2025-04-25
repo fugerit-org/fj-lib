@@ -38,7 +38,7 @@ public class TestMisc extends TestBasicDBHelper {
 	};
 	
 	@Test
-	public void testSimpleServiceProvider() {
+	void testSimpleServiceProvider() {
 		SafeFunction.apply(() -> {
 			CustomSimpleServiceProvider provider = new CustomSimpleServiceProvider();
 			try ( CloseableDAOContext context = provider.newDefaultContext() ) {
@@ -75,7 +75,7 @@ public class TestMisc extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testSQLTypeConverter() {
+	void testSQLTypeConverter() {
 		SafeFunction.apply(() -> {
 			try ( Connection conn = newConnection() ) {
 				Clob clob = LobHelper.createClob( conn , CharArrayDataHandler.newHandlerByte( "c".toCharArray() ) );
@@ -93,7 +93,7 @@ public class TestMisc extends TestBasicDBHelper {
 	}
 	
 	@Test
-	public void testBasicHelper() {
+	void testBasicHelper() {
 		SafeFunction.apply(() -> {
 			Assertions.assertThrows( UnsupportedOperationException.class , () -> BasicHelper.throwUnsupported( "text" ) );
 		});

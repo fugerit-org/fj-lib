@@ -32,7 +32,7 @@ public class TestDOMClean {
 	}
 	
 	@Test
-	public void testClean1() throws IOException, XMLException {
+	void testClean1() throws IOException, XMLException {
 		String testFile = INPUT_FILE_XML;
 		File outFile =  new File( "target", "cleaned_a_"+testFile );
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/xml/dom/"+testFile );
@@ -44,7 +44,7 @@ public class TestDOMClean {
 	}
 	
 	@Test
-	public void testClean2() throws IOException, XMLException {
+	void testClean2() throws IOException, XMLException {
 		String testFile = "dom_clean1.xml";
 		File outFile =  new File( "target", "cleaned_b_"+testFile );
 		this.testWorker(testFile, outFile, TransformerConfig.newIndentConfig( 5 ));
@@ -52,7 +52,7 @@ public class TestDOMClean {
 	}
 	
 	@Test
-	public void testClean3() throws IOException, XMLException {
+	void testClean3() throws IOException, XMLException {
 		String testFile = "dom_clean1.xml";
 		File outFile =  new File( "target", "cleaned_c_"+testFile );
 		this.testWorker(testFile, outFile, TransformerConfig.newConfig().indentNo().omitXmlDeclarationNo());

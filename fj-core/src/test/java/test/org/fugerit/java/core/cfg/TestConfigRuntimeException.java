@@ -12,73 +12,73 @@ public class TestConfigRuntimeException {
 	private static final IOException TEST_IO_EX = new IOException( "test io ex" );
 	
 	@Test
-	public void testEx1() {
+	void testEx1() {
 		Assertions.assertNotNull( new ConfigRuntimeException() );
 	}
 	
 	@Test
-	public void testEx2() {
+	void testEx2() {
 		Assertions.assertNotNull( new ConfigRuntimeException( "a" ) );
 	}
 	
 	@Test
-	public void testEx3() {
+	void testEx3() {
 		Assertions.assertNotNull( new ConfigRuntimeException( new SQLException( "b" ) ) );
 	}
 	
 	@Test
-	public void testEx4() {
+	void testEx4() {
 		Assertions.assertNotNull( new ConfigRuntimeException( "c", new SQLException( "d" ) ) );
 	}
 	
 	@Test
-	public void testEx5() {
+	void testEx5() {
 		Assertions.assertNotNull( ConfigRuntimeException.convertEx( "e" , new SQLException( "f" ) ) );
 	}
 	
 	@Test
-	public void testEx6() {
+	void testEx6() {
 		Assertions.assertNotNull( ConfigRuntimeException.convertEx( "g" , new ConfigRuntimeException( "g" ) ) );
 	}
 	
 	@Test
-	public void testEx7() {
+	void testEx7() {
 		Assertions.assertNotNull( ConfigRuntimeException.convertExMethod( "e" , new SQLException( "f" ) ) );
 	}
 
 	@Test
-	public void testEx21() {
+	void testEx21() {
 		Assertions.assertNotNull( ConfigRuntimeException.convertToRuntimeEx( new ConfigRuntimeException( "y" ) ) );
 	}
 
 
 	@Test
-	public void testEx22() {
+	void testEx22() {
 		Assertions.assertNotNull( ConfigRuntimeException.convertToRuntimeEx( new IOException( "z" ) ) );
 	}
 	
 	@Test
-	public void testEx8() {
+	void testEx8() {
 		Assertions.assertNotNull( new ConfigRuntimeException( 1 ) );
 	}
 	
 	@Test
-	public void testEx9() {
+	void testEx9() {
 		Assertions.assertNotNull( new ConfigRuntimeException( "h", 2 ) );
 	}
 	
 	@Test
-	public void testEx10() {
+	void testEx10() {
 		Assertions.assertNotNull( new ConfigRuntimeException( "i", new ConfigRuntimeException( "l" ), 3 ) );
 	}
 	
 	@Test
-	public void testEx11() {
+	void testEx11() {
 		Assertions.assertNotNull( new ConfigRuntimeException( new ConfigRuntimeException( "m" ), 4 ) );
 	}
 	
 	@Test
-	public void testEx12() throws ConfigRuntimeException {
+	void testEx12() throws ConfigRuntimeException {
 		Assertions.assertThrows( ConfigRuntimeException.class, () -> ConfigRuntimeException.stadardExceptionWrapping( TEST_IO_EX ) );
 	}
 	

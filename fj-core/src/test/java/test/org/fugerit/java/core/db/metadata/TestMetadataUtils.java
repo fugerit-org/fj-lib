@@ -23,7 +23,7 @@ import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
 public class TestMetadataUtils extends MemDBTestBase {
 	
 	@Test
-	public void testDatabaseMetadata() {
+	void testDatabaseMetadata() {
 		SafeFunction.apply( () -> {
 			boolean ok = false;
 			ConnectionFactory cf = new SingleConnectionFactory( this.getConnection() );
@@ -52,7 +52,7 @@ public class TestMetadataUtils extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testDatabaseMetadataAlt() {
+	void testDatabaseMetadataAlt() {
 		SafeFunction.apply( () -> {
 			try ( ConnectionFactoryCloseable cf =  ConnectionFactoryImpl.wrap( new SingleConnectionFactory( this.getConnection() ) ) ) {
 				Assertions.assertNotNull( MetaDataUtils.createModel( cf, MetaDataUtils.typesAll() ) );
@@ -61,7 +61,7 @@ public class TestMetadataUtils extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testDatabaseMetadataConsts() {
+	void testDatabaseMetadataConsts() {
 		Assertions.assertEquals( MetaDataUtils.TYPE_TABLE , MetaDataUtils.typesAll()[0]);
 		Assertions.assertEquals( MetaDataUtils.TYPE_VIEW , MetaDataUtils.typesAll()[1]);
 		Assertions.assertEquals( MetaDataUtils.TYPE_TABLE , MetaDataUtils.typesTable()[0]);
@@ -70,7 +70,7 @@ public class TestMetadataUtils extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testDatabaseMetadataAdatpor() {
+	void testDatabaseMetadataAdatpor() {
 		SafeFunction.apply( () -> {
 			try ( ConnectionFactoryCloseable cf =  ConnectionFactoryImpl.wrap( new SingleConnectionFactory( this.getConnection() ) ) ) {
 				

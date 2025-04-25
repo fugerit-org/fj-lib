@@ -36,7 +36,7 @@ public class TestFixedFieldFileConfig extends BasicTest {
 	}
 	
 	@Test
-	public void checkDescriptor() {
+	void checkDescriptor() {
 		boolean ok = false;
 		try {
 			FixedFieldFileDescriptor descriptor = config.getFileDescriptor( "testFixedValidator" );

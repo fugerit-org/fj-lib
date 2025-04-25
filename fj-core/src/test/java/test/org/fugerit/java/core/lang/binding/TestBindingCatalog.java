@@ -101,32 +101,32 @@ public class TestBindingCatalog {
 	}
 	
 	@Test
-	public void bind001() {
+	void bind001() {
 		this.bind001WOrker( "binding-01" );
 	}
 	
 	@Test
-	public void bind001Def() {
+	void bind001Def() {
 		this.bind001WOrker( "binding-01-default" );
 	}
 	
 	@Test
-	public void bind002Def() {
+	void bind002Def() {
 		this.bind002WOrker( "binding-02-default" );
 	}
 
 	@Test
-	public void bind003() {
+	void bind003() {
 		this.bind003WOrker( "binding-03" );
 	}
 	
 	@Test
-	public void bind004() {
+	void bind004() {
 		this.bind004WOrker( "binding-04" );
 	}	
 
 	@Test
-	public void bind005() {
+	void bind005() {
 		this.bind003WOrker( "binding-05" );
 	}	
 	

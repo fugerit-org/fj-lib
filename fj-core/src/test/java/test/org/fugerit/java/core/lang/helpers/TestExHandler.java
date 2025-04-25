@@ -21,7 +21,7 @@ public class TestExHandler {
 	}
 	
 	@Test
-	public void testResultExHandler() {
+	void testResultExHandler() {
 		ResultExHandler handler = new ResultExHandler();
 		handler.setResult( new Result() );
 		log.info( "test : {}", handler.getResult() );
@@ -30,7 +30,7 @@ public class TestExHandler {
 	}
 	
 	@Test
-	public void testResultExHandlerAlt() {
+	void testResultExHandlerAlt() {
 		org.fugerit.java.core.util.result.ResultExHandler handler = new org.fugerit.java.core.util.result.ResultExHandler();
 		handler.setResult( new Result() );
 		log.info( "test : {}", handler.getResult() );

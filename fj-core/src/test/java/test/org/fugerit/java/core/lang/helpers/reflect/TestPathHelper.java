@@ -51,42 +51,42 @@ public class TestPathHelper extends BasicTest {
 	}
 	
 	@Test
-	public void test001_A() {
+	void test001_A() {
 		testLookupWorker( TEST_CASE_001 , "kid.idTwo", false, PathHelper.CONTINUE_ON_NULL, EXPECTED_RESULT_VALUE );
 	}
 	
 	@Test
-	public void test001_B() {
+	void test001_B() {
 		testLookupWorker( TEST_CASE_001 , "getKid.getIdTwo", true, PathHelper.CONTINUE_ON_NULL, EXPECTED_RESULT_VALUE );
 	}
 	
 	@Test
-	public void test002_A() {
+	void test002_A() {
 		testLookupWorker( TEST_CASE_002 , "kid.idTwo", false, PathHelper.CONTINUE_ON_NULL, EXPECTED_RESULT_EXCEPTION );
 	}
 	
 	@Test
-	public void test002_B() {
+	void test002_B() {
 		testLookupWorker( TEST_CASE_002 , "kid", false, PathHelper.CONTINUE_ON_NULL, EXPECTED_RESULT_NULL );
 	}
 	
 	@Test
-	public void test002_C() {
+	void test002_C() {
 		testLookupWorker( TEST_CASE_002 , "kid.idTwo", false, PathHelper.EXIT_ON_NULL, EXPECTED_RESULT_NULL );
 	}
 	
 	@Test
-	public void test002_D() {
+	void test002_D() {
 		testLookupWorker( TEST_CASE_002 , "kidTest", false, PathHelper.EXIT_ON_NULL, EXPECTED_RESULT_EXCEPTION );
 	}
 	
 	@Test
-	public void test003_A() {
+	void test003_A() {
 		testLookupWorker( TEST_CASE_003 , "kid.idTwo", false, PathHelper.CONTINUE_ON_NULL, EXPECTED_RESULT_EXCEPTION );
 	}
 	
 	@Test
-	public void test003_B() {
+	void test003_B() {
 		testLookupWorker( TEST_CASE_003 , "kid.idTwo", false, PathHelper.EXIT_ON_NULL, EXPECTED_RESULT_NULL );
 	}
 	

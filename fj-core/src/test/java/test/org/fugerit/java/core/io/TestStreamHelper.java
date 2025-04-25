@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 public class TestStreamHelper {
 
 	@Test
-	public void testStreamHelper() {
+	void testStreamHelper() {
 		SafeFunction.apply( () -> {
 			Assertions.assertNotNull( new SimpleValue<Boolean>() );
 			Assertions.assertFalse( StreamHelper.closeSafe( (InputStream) null ) );

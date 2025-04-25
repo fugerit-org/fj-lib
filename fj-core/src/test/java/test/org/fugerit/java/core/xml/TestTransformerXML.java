@@ -26,14 +26,14 @@ public class TestTransformerXML extends BasicTest {
 	private static final String SAMPLE_XLST_FAIL = "<xsl:styleshee version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\"></xsl:stylesheet>";
 	
 	@Test
-	public void newSafeTransformerFactory() {
+	void newSafeTransformerFactory() {
 		TransformerFactory factory = TransformerXML.newSafeTransformerFactory();
 		log.info( "factory -> {}", factory );
 		Assertions.assertNotNull( factory );
 	}
 	
 	@Test
-	public void newSafeTransformerFactoryFail() {
+	void newSafeTransformerFactoryFail() {
 		boolean ok = false;
 		try {
 			Properties features = new Properties();
@@ -47,7 +47,7 @@ public class TestTransformerXML extends BasicTest {
 	}
 	
 	@Test
-	public void newSafeTransformerFactoryFeature() {
+	void newSafeTransformerFactoryFeature() {
 		Properties features = new Properties();
 		features.setProperty( XMLConstants.FEATURE_SECURE_PROCESSING , BooleanUtils.BOOLEAN_FALSE );
 		TransformerFactory factory = TransformerXML.newSafeTransformerFactory( features );
@@ -56,7 +56,7 @@ public class TestTransformerXML extends BasicTest {
 	}
 	
 	@Test
-	public void newTransformer() {
+	void newTransformer() {
 		boolean ok = false;
 		try {
 			Transformer transformer = TransformerXML.newTransformer();
@@ -69,7 +69,7 @@ public class TestTransformerXML extends BasicTest {
 	}
 	
 	@Test
-	public void newTransformerConfig() {
+	void newTransformerConfig() {
 		boolean ok = false;
 		try {
 			Transformer transformer = TransformerXML.newTransformerWithConfig( TransformerConfig.newIndentConfig(null) );
@@ -82,7 +82,7 @@ public class TestTransformerXML extends BasicTest {
 	}
 	
 	@Test
-	public void newTransformerSource() {
+	void newTransformerSource() {
 		boolean ok = false;
 		try ( StringReader reader = new StringReader( SAMPLE_XLST ) ) {
 			Transformer transformer = TransformerXML.newTransformer( new StreamSource( reader ) );
@@ -95,7 +95,7 @@ public class TestTransformerXML extends BasicTest {
 	}
 	
 	@Test
-	public void newTransformerSourceFail() {
+	void newTransformerSourceFail() {
 		boolean ok = false;
 		try ( StringReader reader = new StringReader( SAMPLE_XLST_FAIL ) ) {
 			Transformer transformer = TransformerXML.newTransformer( new StreamSource( reader ) );

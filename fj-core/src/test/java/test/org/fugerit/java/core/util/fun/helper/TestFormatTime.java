@@ -18,21 +18,21 @@ public class TestFormatTime {
 	}
 	
 	@Test
-	public void test1() {
+	void test1() {
 		MillisToSecondsFormat format = new MillisToSecondsFormat();
 		log.info( "getAppend() : {}", format.getAppend() );
 		Assertions.assertEquals( "1.000" , this.worker(format) );
 	}
 	
 	@Test
-	public void test2() {
+	void test2() {
 		MillisToSecondsFormat format = new MillisToSecondsFormat( "s" );
 		log.info( "getAppend() : {}", format.getAppend() );
 		Assertions.assertEquals( "1.000s" , this.worker(format) );
 	}
 	
 	@Test
-	public void test3() {
+	void test3() {
 		FormatTime format = new FormatTime( "yyyy-MM-dd" );
 		Assertions.assertEquals( "1970-01-01" , this.worker( format ) );
 	}

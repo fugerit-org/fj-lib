@@ -40,7 +40,7 @@ public class TestContentHandler {
 	}
 	
 	@Test
-	public void testContentHandlerWrapper() throws IOException, XMLException, SAXException {
+	void testContentHandlerWrapper() throws IOException, XMLException, SAXException {
 		ContentHandlerWrapper handler = new ContentHandlerWrapper( new DoNothingContentHandler() );
 		boolean ok = this.worker(PATH_OK, handler);
 		Assertions.assertTrue(ok);

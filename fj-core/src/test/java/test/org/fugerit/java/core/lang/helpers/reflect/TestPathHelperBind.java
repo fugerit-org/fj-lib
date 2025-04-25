@@ -12,7 +12,7 @@ import test.org.fugerit.java.BasicTest;
 public class TestPathHelperBind extends BasicTest {
 	
 	@Test
-	public void bind001() {
+	void bind001() {
 		try {
 			long testIdTwo = 2;
 			long testIdTwoBind = 3;

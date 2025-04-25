@@ -33,7 +33,7 @@ public class TestCleanXML {
 	}
 	
 	@Test
-	public void testClean() throws IOException {
+	void testClean() throws IOException {
 		// prepare test data
 		File sourceBase = new File( "src/test/resources/core/xml/dtd" );
 		File fileBase = new File( "target/dtd" );

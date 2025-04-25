@@ -42,28 +42,28 @@ public class TestHelperI18N {
 	}
 
 	@Test
-	public void testSimpleProperty1() {
+	void testSimpleProperty1() {
 		String key = "test.prop.1"; // test.prop.1 is available for both languages
 		this.testHelper( "Test property 1", LANG_DEF,  key );
 		this.testHelper( "Proprietà test 1", LANG_ALT[0],  key );
 	}
 	
 	@Test
-	public void testSimpleProperty2() {
+	void testSimpleProperty2() {
 		String key = "test.prop.2";	// test.prop.2 is available only for default language
 		this.testHelper( "Test property 2", LANG_DEF,  key );
 		this.testHelper( "Test property 2", LANG_ALT[0],  key );
 	}
 	
 	@Test
-	public void testSimpleProperty3() {
+	void testSimpleProperty3() {
 		String key = "test.prop.3";	// test.prop.3 is available only for default language
 		this.testHelper( null, LANG_DEF, key  );
 		this.testHelper( "Proprietà test 3", LANG_ALT[0], key );
 	}
 	
 	@Test
-	public void testComplexProperty1() {
+	void testComplexProperty1() {
 		String key = "test.complex.prop.1";	// contains a integer param and a i18n param
 		String keyParam = "test.param.1";	// the key for the i18n param
 		this.testHelper( "Complex property 1 -> simple parameter : 3 and i18n parameter : (ParamI18N value)", 
@@ -73,7 +73,7 @@ public class TestHelperI18N {
 	}
 	
 	@Test
-	public void testComplexProperty1Alt() {
+	void testComplexProperty1Alt() {
 		String key = "test.complex.prop.1";	// contains a integer param and a i18n param
 		String keyParam = "test.param.1.alt";	// the key for the i18n param
 		this.testHelper( "Complex property 1 -> simple parameter : 3 and i18n parameter : (ParamI18N value alternative bundle)", 
