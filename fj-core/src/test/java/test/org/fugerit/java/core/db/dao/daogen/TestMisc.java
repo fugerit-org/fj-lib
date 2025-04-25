@@ -20,8 +20,8 @@ import org.fugerit.java.core.db.daogen.SQLTypeConverter;
 import org.fugerit.java.core.db.daogen.SimpleServiceProvider;
 import org.fugerit.java.core.db.daogen.SimpleServiceResult;
 import org.fugerit.java.core.function.SafeFunction;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
@@ -42,18 +42,18 @@ public class TestMisc extends TestBasicDBHelper {
 		SafeFunction.apply(() -> {
 			CustomSimpleServiceProvider provider = new CustomSimpleServiceProvider();
 			try ( CloseableDAOContext context = provider.newDefaultContext() ) {
-				Assert.assertEquals( "b" , context.getAttribute( "a" ) );
+				Assertions.assertEquals( "b" , context.getAttribute( "a" ) );
 			}
 			SimpleServiceResult<List<String>> resultList = new SimpleServiceResult<>();
-			Assert.assertNull( provider.createResponseFromList(resultList) );
+			Assertions.assertNull( provider.createResponseFromList(resultList) );
 			List<String> list = new ArrayList<String>();
 			resultList.setContent(list);
 			resultList.getContent().add( "a" );
-			Assert.assertNotNull( provider.createResponseFromList(resultList) );
+			Assertions.assertNotNull( provider.createResponseFromList(resultList) );
 			SimpleServiceResult<String> resultObject = new SimpleServiceResult<>();
-			Assert.assertNull( provider.createResponseFromObject( resultObject ) );
+			Assertions.assertNull( provider.createResponseFromObject( resultObject ) );
 			resultObject.setContent( "b" );
-			Assert.assertNotNull( provider.createResponseFromObject( resultObject ) );
+			Assertions.assertNotNull( provider.createResponseFromObject( resultObject ) );
 			provider.createResultFromList(resultList);
 			provider.createResultFromObject(resultObject);
 			provider.defaultConvertToUtilDate( null );
@@ -63,14 +63,14 @@ public class TestMisc extends TestBasicDBHelper {
 			resultObject.addInfoDefaultOK();
 			resultList.addInfoMultipleResult();
 			resultObject.addInfoNoDataFound();
-			Assert.assertThrows( DAOException.class , () -> SimpleServiceProvider.throwDAOException( new IOException( "a" ) ) );
-			Assert.assertEquals( SimpleServiceResult.DEFAULT_OK , 	SimpleServiceResult.newDefaultResult( "e" ).getResult() );
-			Assert.assertEquals( SimpleServiceResult.DEFAULT_OK , 	SimpleServiceResult.newDefaultResult( list ).getResult() );
-			Assert.assertEquals( SimpleServiceResult.DEFAULT_KO , 	SimpleServiceResult.newDefaultResult( null ).getResult() );
-			Assert.assertEquals( SimpleServiceResult.DEFAULT_KO , 	SimpleServiceResult.newDefaultResult( new ArrayList<String>() ).getResult() );
+			Assertions.assertThrows( DAOException.class , () -> SimpleServiceProvider.throwDAOException( new IOException( "a" ) ) );
+			Assertions.assertEquals( SimpleServiceResult.DEFAULT_OK , 	SimpleServiceResult.newDefaultResult( "e" ).getResult() );
+			Assertions.assertEquals( SimpleServiceResult.DEFAULT_OK , 	SimpleServiceResult.newDefaultResult( list ).getResult() );
+			Assertions.assertEquals( SimpleServiceResult.DEFAULT_KO , 	SimpleServiceResult.newDefaultResult( null ).getResult() );
+			Assertions.assertEquals( SimpleServiceResult.DEFAULT_KO , 	SimpleServiceResult.newDefaultResult( new ArrayList<String>() ).getResult() );
 			resultObject.setResult( SimpleServiceResult.DEFAULT_OK );
-			Assert.assertEquals( SimpleServiceResult.DEFAULT_OK , resultObject.getResult() );
-			Assert.assertNotNull( new SimpleServiceResult<String>( SimpleServiceResult.DEFAULT_OK ) );
+			Assertions.assertEquals( SimpleServiceResult.DEFAULT_OK , resultObject.getResult() );
+			Assertions.assertNotNull( new SimpleServiceResult<String>( SimpleServiceResult.DEFAULT_OK ) );
 		});
 	}
 	
@@ -80,14 +80,14 @@ public class TestMisc extends TestBasicDBHelper {
 			try ( Connection conn = newConnection() ) {
 				Clob clob = LobHelper.createClob( conn , CharArrayDataHandler.newHandlerByte( "c".toCharArray() ) );
 				Blob blob = LobHelper.createBlob( conn , ByteArrayDataHandler.newHandlerByte( "b".getBytes() ) );
-				Assert.assertNotNull( clob );
-				Assert.assertNotNull( blob );
-				Assert.assertNotNull( SQLTypeConverter.utilDateToSqlDate( new Date() ) );
-				Assert.assertNotNull( SQLTypeConverter.utilDateToSqlTime( new Date() ) );
-				Assert.assertNotNull( SQLTypeConverter.utilDateToSqlTimestamp( new Date() ) );
-				Assert.assertNotNull( SQLTypeConverter.clobToCharHandler( clob ) );
-				Assert.assertNotNull( SQLTypeConverter.blobToByteHandler( blob ) );
-				Assert.assertTrue( SQLTypeConverter.CONVERT_EX.apply( new IOException( "text" ) ) instanceof SQLException );
+				Assertions.assertNotNull( clob );
+				Assertions.assertNotNull( blob );
+				Assertions.assertNotNull( SQLTypeConverter.utilDateToSqlDate( new Date() ) );
+				Assertions.assertNotNull( SQLTypeConverter.utilDateToSqlTime( new Date() ) );
+				Assertions.assertNotNull( SQLTypeConverter.utilDateToSqlTimestamp( new Date() ) );
+				Assertions.assertNotNull( SQLTypeConverter.clobToCharHandler( clob ) );
+				Assertions.assertNotNull( SQLTypeConverter.blobToByteHandler( blob ) );
+				Assertions.assertTrue( SQLTypeConverter.CONVERT_EX.apply( new IOException( "text" ) ) instanceof SQLException );
 			}
 		});
 	}
@@ -95,7 +95,7 @@ public class TestMisc extends TestBasicDBHelper {
 	@Test
 	public void testBasicHelper() {
 		SafeFunction.apply(() -> {
-			Assert.assertThrows( UnsupportedOperationException.class , () -> BasicHelper.throwUnsupported( "text" ) );
+			Assertions.assertThrows( UnsupportedOperationException.class , () -> BasicHelper.throwUnsupported( "text" ) );
 		});
 	}
 	

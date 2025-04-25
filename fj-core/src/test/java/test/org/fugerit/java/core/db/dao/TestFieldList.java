@@ -16,9 +16,9 @@ import org.fugerit.java.core.db.daogen.ByteArrayDataHandler;
 import org.fugerit.java.core.db.daogen.CharArrayDataHandler;
 import org.fugerit.java.core.db.helpers.BlobData;
 import org.fugerit.java.core.db.helpers.DAOID;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
@@ -27,7 +27,7 @@ import test.org.fugerit.java.core.db.TestBasicDBHelper;
 @Slf4j
 public class TestFieldList extends TestBasicDBHelper {
 
-	@BeforeClass
+	@BeforeAll
 	public static void init() {
 		TestBasicDBHelper.init();
 	}
@@ -76,14 +76,14 @@ public class TestFieldList extends TestBasicDBHelper {
 			fl.addNullField( Types.INTEGER );
 			fl.addField( ByteArrayDataHandler.newHandlerByte( "b".getBytes() ) );
 			fl.addField( CharArrayDataHandler.newHandlerByte( "c".toCharArray() ) );
-			Assert.assertNotNull( new BasicTest().fullSerializationTest( fl ) );
+			Assertions.assertNotNull( new BasicTest().fullSerializationTest( fl ) );
 			fl.newField( value.intValue(), Types.INTEGER );
 			// print tests
 			fl.getList().stream().forEach( c -> log.info( "current field {}", c ) );
 			// set tests
 			try ( Connection conn = TestBasicDBHelper.newConnection() ) {
-				Assert.assertFalse( DAOUtilsNG.execute( conn , OpDAO.newExecuteOp( TEST_TABLE ) ) );
-				Assert.assertNotEquals( 0 , DAOUtilsNG.update(conn, OpDAO.newExecuteOp( INSERT_SQL , fl ) ) );
+				Assertions.assertFalse( DAOUtilsNG.execute( conn , OpDAO.newExecuteOp( TEST_TABLE ) ) );
+				Assertions.assertNotEquals( 0 , DAOUtilsNG.update(conn, OpDAO.newExecuteOp( INSERT_SQL , fl ) ) );
 			}
 			// final tests field factory
 			FieldFactory ff = new FieldFactory();

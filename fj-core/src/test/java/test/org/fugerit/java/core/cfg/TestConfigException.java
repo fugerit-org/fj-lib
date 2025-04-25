@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.fugerit.java.core.cfg.ConfigException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.HelperCheck;
@@ -18,118 +18,118 @@ public class TestConfigException {
 	public void testApplySilent() throws ConfigException {
 		boolean ok = true;
 		ConfigException.applySilent( () -> { throw new IOException( "junit test scenario" ); } );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testGetSilent() throws ConfigException {
 		Object result = ConfigException.getSilent( () -> { throw new IOException( "junit test scenario" ); } );
-		Assert.assertNull( result );
+		Assertions.assertNull( result );
 	}
 	
 	@Test
 	public void testApplyEX() {
-		Assert.assertThrows( ConfigException.class ,() -> ConfigException.apply( () -> { throw new IOException( "junit test scenario" ); } ) );
+		Assertions.assertThrows( ConfigException.class ,() -> ConfigException.apply( () -> { throw new IOException( "junit test scenario" ); } ) );
 	}
 
 	@Test
 	public void testGetEX() {
-		Assert.assertThrows( ConfigException.class ,() -> ConfigException.get( () -> { throw new IOException( "junit test scenario" ); } ) );
+		Assertions.assertThrows( ConfigException.class ,() -> ConfigException.get( () -> { throw new IOException( "junit test scenario" ); } ) );
 	}
 	
 	@Test
 	public void testApplyEXMessage() {
-		Assert.assertThrows( ConfigException.class ,() -> ConfigException.applyWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+		Assertions.assertThrows( ConfigException.class ,() -> ConfigException.applyWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
 	}
 
 	@Test
 	public void testGetEXMessage() {
-		Assert.assertThrows( ConfigException.class ,() -> ConfigException.getWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
+		Assertions.assertThrows( ConfigException.class ,() -> ConfigException.getWithMessage( () -> { throw new IOException( "junit test scenario" ); }, "test message" ) );
 	}
 	
 	@Test
 	public void testApplyEXMessageOk() throws ConfigException {
 		boolean ok = true;
 		ConfigException.applyWithMessage( () -> log.info( "test ok" ) , "test message" );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 
 	@Test
 	public void testGetEXMessageOk() throws ConfigException {
-		Assert.assertNotNull( ConfigException.getWithMessage( () -> "test ok" , "test message" ) );
+		Assertions.assertNotNull( ConfigException.getWithMessage( () -> "test ok" , "test message" ) );
 	}
 	
 	@Test
 	public void testApply() throws ConfigException {
 		HelperCheck check = new HelperCheck();
-		Assert.assertNotEquals( HelperCheck.TEST_S1 , check.getField1() );
+		Assertions.assertNotEquals( HelperCheck.TEST_S1 , check.getField1() );
 		ConfigException.apply( () -> check.setField1( HelperCheck.TEST_S1 ) );
-		Assert.assertEquals( HelperCheck.TEST_S1 , check.getField1() );
+		Assertions.assertEquals( HelperCheck.TEST_S1 , check.getField1() );
 	}
 
 	@Test
 	public void testGet() throws ConfigException {
-		Assert.assertEquals( "test", ConfigException.get( () -> "test" ) );
+		Assertions.assertEquals( "test", ConfigException.get( () -> "test" ) );
 	}
 	
 	@Test
 	public void testEx1() {
-		Assert.assertNotNull( new ConfigException() );
+		Assertions.assertNotNull( new ConfigException() );
 	}
 	
 	@Test
 	public void testEx2() {
-		Assert.assertNotNull( new ConfigException( "a" ) );
+		Assertions.assertNotNull( new ConfigException( "a" ) );
 	}
 	
 	@Test
 	public void testEx3() {
-		Assert.assertNotNull( new ConfigException( new SQLException( "b" ) ) );
+		Assertions.assertNotNull( new ConfigException( new SQLException( "b" ) ) );
 	}
 	
 	@Test
 	public void testEx4() {
-		Assert.assertNotNull( new ConfigException( "c", new SQLException( "d" ) ) );
+		Assertions.assertNotNull( new ConfigException( "c", new SQLException( "d" ) ) );
 	}
 	
 	@Test
 	public void testEx5() {
-		Assert.assertNotNull( ConfigException.convertEx( "e" , new SQLException( "f" ) ) );
+		Assertions.assertNotNull( ConfigException.convertEx( "e" , new SQLException( "f" ) ) );
 	}
 	
 	@Test
 	public void testEx6() {
-		Assert.assertNotNull( ConfigException.convertEx( "g" , new ConfigException( "g" ) ) );
+		Assertions.assertNotNull( ConfigException.convertEx( "g" , new ConfigException( "g" ) ) );
 	}
 	
 	@Test
 	public void testEx7() {
-		Assert.assertNotNull( ConfigException.convertExMethod( "e" , new SQLException( "f" ) ) );
+		Assertions.assertNotNull( ConfigException.convertExMethod( "e" , new SQLException( "f" ) ) );
 	}
 	
 	@Test
 	public void testEx8() {
-		Assert.assertNotNull( new ConfigException( 1 ) );
+		Assertions.assertNotNull( new ConfigException( 1 ) );
 	}
 	
 	@Test
 	public void testEx9() {
-		Assert.assertNotNull( new ConfigException( "h", 2 ) );
+		Assertions.assertNotNull( new ConfigException( "h", 2 ) );
 	}
 	
 	@Test
 	public void testEx10() {
-		Assert.assertNotNull( new ConfigException( "i", new ConfigException( "l" ), 3 ) );
+		Assertions.assertNotNull( new ConfigException( "i", new ConfigException( "l" ), 3 ) );
 	}
 	
 	@Test
 	public void testEx11() {
-		Assert.assertNotNull( new ConfigException( new ConfigException( "m" ), 4 ) );
+		Assertions.assertNotNull( new ConfigException( new ConfigException( "m" ), 4 ) );
 	}
 	
 	@Test
 	public void testEx12() throws ConfigException {
-		Assert.assertThrows( ConfigException.class, () -> ConfigException.stadardExceptionWrapping( new IOException( "n" ) ) );
+		Assertions.assertThrows( ConfigException.class, () -> ConfigException.stadardExceptionWrapping( new IOException( "n" ) ) );
 	}
 	
 }

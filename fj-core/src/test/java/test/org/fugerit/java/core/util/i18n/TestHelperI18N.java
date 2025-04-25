@@ -3,9 +3,9 @@ package test.org.fugerit.java.core.util.i18n;
 import org.fugerit.java.core.util.i18n.BundleMapI18N;
 import org.fugerit.java.core.util.i18n.HelperI18N;
 import org.fugerit.java.core.util.i18n.ParamI18N;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,22 +24,21 @@ public class TestHelperI18N {
 	private static final String CONF_PATH = "core.util.i18n.test";
 	
 	private static final String CONF_PATH_PARAM = "core.util.i18n.param";
-	
-	private HelperI18N helper;
-	
-	private HelperI18N helperParam;
-	
 
-	@Before
+	private HelperI18N helper;
+
+	private HelperI18N helperParam;
+
+	@BeforeEach
 	public void init() {
 		this.helper = BundleMapI18N.newHelperI18N( CONF_PATH, LANG_DEF, LANG_ALT );
 		this.helperParam = BundleMapI18N.newHelperI18N( CONF_PATH_PARAM, LANG_DEF, LANG_ALT );
 	}
-	
+
 	private void testHelper( String expectedValue, String lang, String key, Object... params ) {
 		String value = this.helper.getString( lang , key, params );
 		logger.info( "key:{} , lang:{} -> {}", lang, key, value );
-		Assert.assertEquals( "Value different for key : "+key+", lang : "+lang , expectedValue, value );
+		Assertions.assertEquals(  expectedValue, value, "Value different for key : "+key+", lang : "+lang );
 	}
 
 	@Test

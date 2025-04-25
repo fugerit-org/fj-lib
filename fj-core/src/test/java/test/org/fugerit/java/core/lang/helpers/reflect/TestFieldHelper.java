@@ -2,8 +2,8 @@ package test.org.fugerit.java.core.lang.helpers.reflect;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.lang.helpers.reflect.FieldHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +20,13 @@ public class TestFieldHelper {
 	@Test
 	public void testSetField() {
 		CheckBean bean = new CheckBean();
-		Assert.assertNull( bean.getField1() );
+		Assertions.assertNull( bean.getField1() );
 		FieldHelper.setField(bean, "field1", TEST_VALUE, true);
-		Assert.assertEquals( TEST_VALUE , FieldHelper.getField(bean, "field1", true) );
+		Assertions.assertEquals( TEST_VALUE , FieldHelper.getField(bean, "field1", true) );
 		FieldHelper.setField(bean, "field2", TEST_VALUE);
-		Assert.assertEquals( TEST_VALUE , FieldHelper.getField(bean, "field2") );
-		Assert.assertThrows( ConfigRuntimeException.class , () -> FieldHelper.setField(bean, "field1", TEST_VALUE) );
-		Assert.assertThrows( ConfigRuntimeException.class , () -> FieldHelper.getField(bean, "field1") );
+		Assertions.assertEquals( TEST_VALUE , FieldHelper.getField(bean, "field2") );
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> FieldHelper.setField(bean, "field1", TEST_VALUE) );
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> FieldHelper.getField(bean, "field1") );
 	}
 	
 }

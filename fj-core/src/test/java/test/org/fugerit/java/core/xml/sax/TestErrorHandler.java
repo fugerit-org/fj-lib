@@ -11,8 +11,8 @@ import org.fugerit.java.core.xml.sax.dh.ExDefaultHandler;
 import org.fugerit.java.core.xml.sax.eh.DoNothingErrorHandler;
 import org.fugerit.java.core.xml.sax.eh.ErrorHandlerWrapper;
 import org.fugerit.java.core.xml.sax.eh.ResultErrorHandler;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -63,7 +63,7 @@ public class TestErrorHandler extends BasicTest {
 		// test ErrorHandlerWrapper
 		ErrorHandlerWrapper handler = new ErrorHandlerWrapper( new DoNothingErrorHandler() );
 		boolean ok = this.worker(handler);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 		// test ResultErrorHandler
 		SAXParseResult saxParseResult = new SAXParseResult();
 		ResultErrorHandler result = new ResultErrorHandler( saxParseResult );
@@ -72,18 +72,18 @@ public class TestErrorHandler extends BasicTest {
 		log.info( "fatal : {}", saxParseResult.getSAXFatal( 0 ) );
 		log.info( "error : {}", saxParseResult.getSAXError( 0 ) );
 		log.info( "warning : {}", saxParseResult.getSAXWarning( 0 ) );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 		// test ResultExHandler
 		result.setHandler( new ResultExHandler( new SAXParseResult() ) );
 		ok = this.worker( result );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 		ExHandler exHandler = result.getHandler();
-		Assert.assertNotNull( exHandler );
+		Assertions.assertNotNull( exHandler );
 		// test ExDefaultHandler
 		ExDefaultHandler exDefaultHandler = new ExDefaultHandler( new ResultExHandler( new SAXParseResult() ) );
 		ok = this.worker( exDefaultHandler );
-		Assert.assertTrue( ok );
-		Assert.assertNotNull( exDefaultHandler.getHandler() );
+		Assertions.assertTrue( ok );
+		Assertions.assertNotNull( exDefaultHandler.getHandler() );
 	}
 	
 	@Test
@@ -97,29 +97,29 @@ public class TestErrorHandler extends BasicTest {
 		log.info( "warnings size : {}", handler.getWarningSize() );
 		this.print( handler.getWarnings() , "WARNINGS" );
 		log.info( "all errors size : {}", handler.getAllErrorsSize() );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testSaxFail() throws SAXException {
 		SAXErrorHandlerFail handler = SAXErrorHandlerFail.newInstanceStoreOnly();
 		boolean ok = this.worker(handler);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testSaxFailFatal() throws SAXException {
 		SAXErrorHandlerFail handler = SAXErrorHandlerFail.newInstanceFailOnAnyErrorStoreWarnings();
-		Assert.assertThrows( SAXParseException.class , () -> 
+		Assertions.assertThrows( SAXParseException.class , () -> 
 			handler.fatalError(  this.newSPE( "newInstanceFailOnAnyErrorIgnoreWarnings fatal" ) ) );
-		Assert.assertThrows( SAXParseException.class , () -> 
+		Assertions.assertThrows( SAXParseException.class , () -> 
 			handler.error(  this.newSPE( "newInstanceFailOnAnyErrorIgnoreWarnings error" ) ) );		
 	}
 	
 	@Test
 	public void testSaxFailError() throws SAXException {
 		SAXErrorHandlerFail handler = SAXErrorHandlerFail.newInstanceFailOnFatalErrorStoreOthers();
-		Assert.assertThrows( SAXParseException.class , () -> 
+		Assertions.assertThrows( SAXParseException.class , () -> 
 			handler.fatalError(  this.newSPE( "newInstanceFailOnFatalErrorStoreOthers fatal" ) ) );
 	}
 	
@@ -127,9 +127,9 @@ public class TestErrorHandler extends BasicTest {
 	public void testSaxFailAll() throws SAXException {
 		SAXErrorHandlerFail handler = SAXErrorHandlerFail.newInstanceFailOnAnyErrorIgnoreWarnings();
 		handler.warning( this.newSPE( "newInstanceFailOnAnyErrorStoreWarnings warning" ) );
-		Assert.assertThrows( SAXParseException.class , () -> 
+		Assertions.assertThrows( SAXParseException.class , () -> 
 			handler.fatalError( this.newSPE( "newInstanceFailOnAnyErrorStoreWarnings fatal" ) ) );
-		Assert.assertThrows( SAXParseException.class , () -> 
+		Assertions.assertThrows( SAXParseException.class , () -> 
 			handler.error( this.newSPE( "newInstanceFailOnAnyErrorStoreWarnings error" ) ) );
 	}
 	

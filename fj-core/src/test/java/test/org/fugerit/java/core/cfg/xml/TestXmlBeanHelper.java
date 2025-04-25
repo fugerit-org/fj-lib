@@ -7,8 +7,8 @@ import org.fugerit.java.core.cfg.xml.TextValueType;
 import org.fugerit.java.core.cfg.xml.XmlBeanHelper;
 import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.xml.dom.DOMIO;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -36,12 +36,12 @@ public class TestXmlBeanHelper extends BasicTest {
 				Document doc = DOMIO.loadDOMDoc( reader );
 				Element root = doc.getDocumentElement();
 				XmlBeanCheck check = new XmlBeanCheck();
-				Assert.assertNull( check.getField1() );
+				Assertions.assertNull( check.getField1() );
 				boolean set = XmlBeanHelper.setFromElementSafe( check, root, mode );
 				if ( expectedSet ) {
-					Assert.assertEquals( TEST_VALUE , check.getField1() );	
+					Assertions.assertEquals( TEST_VALUE , check.getField1() );	
 				} else {
-					Assert.assertNull( check.getField1() );	
+					Assertions.assertNull( check.getField1() );	
 				}
 				return set;
 			}	
@@ -55,10 +55,10 @@ public class TestXmlBeanHelper extends BasicTest {
 				Document doc = DOMIO.loadDOMDoc( reader );
 				Element root = doc.getDocumentElement();
 				XmlBeanText check = new XmlBeanText();
-				Assert.assertNull( check.getTextValue() );
+				Assertions.assertNull( check.getTextValue() );
 				boolean set = XmlBeanHelper.setFromElementSafe( check, root, XmlBeanHelper.MODE_XML_FULL );
-				Assert.assertEquals( TEST_VALUE , check.getTextValue() );	
-				Assert.assertTrue( set );
+				Assertions.assertEquals( TEST_VALUE , check.getTextValue() );	
+				Assertions.assertTrue( set );
 			}	
 		} );
 	}
@@ -70,9 +70,9 @@ public class TestXmlBeanHelper extends BasicTest {
 				Document doc = DOMIO.loadDOMDoc( reader );
 				Element root = doc.getDocumentElement();
 				XmlBeanText check = new XmlBeanText();
-				Assert.assertNull( check.getTextValue() );
+				Assertions.assertNull( check.getTextValue() );
 				XmlBeanHelper.setFromElement( check, root );
-				Assert.assertEquals( TEST_VALUE , check.getTextValue() );	
+				Assertions.assertEquals( TEST_VALUE , check.getTextValue() );	
 			}	
 		} );
 	}
@@ -80,37 +80,37 @@ public class TestXmlBeanHelper extends BasicTest {
 	@Test
 	public void testSetFromAttributes() {
 		boolean set = this.setWorker( "<config field1='test1'/>" , XmlBeanHelper.MODE_XML_ATTRIBUTES, true );
-		Assert.assertTrue( set );
+		Assertions.assertTrue( set );
 	}
 	
 	@Test
 	public void testSetFromAttributesFull() {
 		boolean set = this.setWorker( "<config field1='test1'/>" , XmlBeanHelper.MODE_XML_FULL, true );
-		Assert.assertTrue( set );
+		Assertions.assertTrue( set );
 	}
 	
 	@Test
 	public void testSetFromElements() {
 		boolean set = this.setWorker( "<config><field1>test1</field1></config>" , XmlBeanHelper.MODE_XML_ELEMENTS, true );
-		Assert.assertTrue( set );
+		Assertions.assertTrue( set );
 	}
 	
 	@Test
 	public void testSetFromElementsFull() {
 		boolean set = this.setWorker( "<config><field1>test1</field1></config>" , XmlBeanHelper.MODE_XML_FULL, true );
-		Assert.assertTrue( set );
+		Assertions.assertTrue( set );
 	}
 	
 	@Test
 	public void testSetFromAttributesFail() {
 		boolean set = this.setWorker( "<config fieldDoesNotExist='test1'/>" , XmlBeanHelper.MODE_XML_ATTRIBUTES, false  );
-		Assert.assertFalse( set );
+		Assertions.assertFalse( set );
 	}
 	
 	@Test
 	public void testSetFromElementsFAil() {
 		boolean set = this.setWorker( "<config><fieldDoesNotExist>test1</fieldDoesNotExist></config>" , XmlBeanHelper.MODE_XML_ELEMENTS, false  );
-		Assert.assertFalse( set );
+		Assertions.assertFalse( set );
 	}
 	
 }

@@ -1,11 +1,11 @@
 package test.org.fugerit.java.core.lang.helpers.reflect;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.math.BigDecimal;
 
 import org.fugerit.java.core.lang.helpers.reflect.PathHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 

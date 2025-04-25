@@ -4,8 +4,8 @@ import org.fugerit.java.core.xml.FeatureUtils;
 import org.fugerit.java.core.xml.XMLException;
 import org.fugerit.java.core.xml.sax.XMLFactorySAX;
 import org.fugerit.java.core.xml.sax.dh.DefaultHandlerComp;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,9 +15,9 @@ public class TestXmlFactorySAX {
 	private boolean worker( XMLFactorySAX factory ) throws XMLException {
 		boolean ok = factory != null;
 		if ( ok ) {
-			Assert.assertNotNull( factory.newSAXParser() );
-			Assert.assertNotNull( factory.newXMLValidator() );
-			Assert.assertNotNull( factory.newXMLValidator( DefaultHandlerComp.DEFAULT_ER ) );
+			Assertions.assertNotNull( factory.newSAXParser() );
+			Assertions.assertNotNull( factory.newXMLValidator() );
+			Assertions.assertNotNull( factory.newXMLValidator( DefaultHandlerComp.DEFAULT_ER ) );
 			log.info( "isNamespaceAware {}, isValidating {}", factory.isNamespaceAware(), factory.isValidating() );
 		}
 		return ok;
@@ -26,27 +26,27 @@ public class TestXmlFactorySAX {
 	@Test
 	public void test1() throws XMLException {
 		boolean ok = this.worker( XMLFactorySAX.newInstance() );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 
 	@Test
 	public void testSecure() throws XMLException {
-		Assert.assertNotNull( XMLFactorySAX.makeSAXParserSecure( true, true ) );
-		Assert.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure() ) );
-		Assert.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure( true ) ) );
-		Assert.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure( true, true ) ) );
+		Assertions.assertNotNull( XMLFactorySAX.makeSAXParserSecure( true, true ) );
+		Assertions.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure() ) );
+		Assertions.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure( true ) ) );
+		Assertions.assertTrue( this.worker( XMLFactorySAX.newInstanceSecure( true, true ) ) );
 	}
 	
 	@Test
 	public void test2() throws XMLException {
 		boolean ok = this.worker( XMLFactorySAX.newInstance( true ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void test3() throws XMLException {
 		boolean ok = this.worker( XMLFactorySAX.newInstance( false ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -58,14 +58,14 @@ public class TestXmlFactorySAX {
 		factory.setFeature( FeatureUtils.EXTERNAL_PARAMETER_ENTITIES, false );
 		log.info( "feature {} - {}", FeatureUtils.EXTERNAL_GENERAL_ENTITIES, factory.getFeature( FeatureUtils.EXTERNAL_GENERAL_ENTITIES ) );
 		boolean ok = this.worker( factory );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void testEx() throws XMLException {
 		XMLFactorySAX factory = XMLFactorySAX.newInstance();
-		Assert.assertThrows( XMLException.class, () -> factory.getFeature( "test" ) );
-		Assert.assertThrows( XMLException.class, () -> factory.setFeature( "test", true ) );
+		Assertions.assertThrows( XMLException.class, () -> factory.getFeature( "test" ) );
+		Assertions.assertThrows( XMLException.class, () -> factory.setFeature( "test", true ) );
 	}
 	
 }

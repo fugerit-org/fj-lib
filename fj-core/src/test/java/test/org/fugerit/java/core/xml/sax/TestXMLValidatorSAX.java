@@ -15,8 +15,8 @@ import org.fugerit.java.core.xml.sax.er.ByteArrayEntityResolver;
 import org.fugerit.java.core.xml.sax.er.CharArrayEntityResolver;
 import org.fugerit.java.core.xml.sax.er.DoNothingEntityResolver;
 import org.fugerit.java.core.xml.sax.er.EntityResolverWrapper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -74,62 +74,62 @@ public class TestXMLValidatorSAX extends BasicTest {
 	@Test
 	public void testAbstractValidatorStringXml() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertNotNull( validator.validateXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) );
+		Assertions.assertNotNull( validator.validateXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorStringValid() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertTrue( validator.isValidaXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) );
+		Assertions.assertTrue( validator.isValidaXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorStringValidResult() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertTrue( validator.validateXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ), new SAXParseResult() ) );
+		Assertions.assertTrue( validator.validateXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ), new SAXParseResult() ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorCharXml() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertNotNull( validator.validateXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ).toCharArray() ) );
+		Assertions.assertNotNull( validator.validateXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ).toCharArray() ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorCharValid() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertTrue( validator.isValidaXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ).toCharArray() ) );
+		Assertions.assertTrue( validator.isValidaXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ).toCharArray() ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorCharValidResult() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertTrue( validator.validateXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ).toCharArray(), new SAXParseResult() ) );
+		Assertions.assertTrue( validator.validateXML( StreamIO.readString( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ).toCharArray(), new SAXParseResult() ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorByteXml() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertNotNull( validator.validateXML( StreamIO.readBytes( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) );
+		Assertions.assertNotNull( validator.validateXML( StreamIO.readBytes( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorBytesValid() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertTrue( validator.isValidaXML( StreamIO.readBytes( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) );
+		Assertions.assertTrue( validator.isValidaXML( StreamIO.readBytes( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorBytesValidResult() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
-		Assert.assertTrue( validator.validateXML( StreamIO.readBytes( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ), new SAXParseResult() ) );
+		Assertions.assertTrue( validator.validateXML( StreamIO.readBytes( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ), new SAXParseResult() ) );
 	}
 	
 	@Test
 	public void testAbstractValidatorStreamXml() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStream source =  ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) {
-			Assert.assertNotNull( validator.validateXML( source ) );	
+			Assertions.assertNotNull( validator.validateXML( source ) );	
 		}
 	}
 	
@@ -137,7 +137,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 	public void testAbstractValidatorStreamValid() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStream source =  ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) {
-			Assert.assertTrue( validator.isValidaXML( source ) );	
+			Assertions.assertTrue( validator.isValidaXML( source ) );	
 		}
 	}
 	
@@ -145,7 +145,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 	public void testAbstractValidatorStreamValidResult() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStream source =  ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) {
-			Assert.assertTrue( validator.validateXML( source, new SAXParseResult() ) );	
+			Assertions.assertTrue( validator.validateXML( source, new SAXParseResult() ) );	
 		}
 	}
 	
@@ -153,7 +153,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 	public void testAbstractValidatorReaderXml() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStreamReader source = new InputStreamReader( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) {
-			Assert.assertNotNull( validator.validateXML( source ) );	
+			Assertions.assertNotNull( validator.validateXML( source ) );	
 		}
 	}
 	
@@ -161,7 +161,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 	public void testAbstractValidatorReaderValid() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStreamReader source = new InputStreamReader( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) {
-			Assert.assertTrue( validator.isValidaXML( source ) );	
+			Assertions.assertTrue( validator.isValidaXML( source ) );	
 		}
 	}
 	
@@ -169,7 +169,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 	public void testAbstractValidatorReaderValidResult() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStreamReader source = new InputStreamReader( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) {
-			Assert.assertTrue( validator.validateXML( source, new SAXParseResult() ) );	
+			Assertions.assertTrue( validator.validateXML( source, new SAXParseResult() ) );	
 		}
 	}
 	
@@ -177,7 +177,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 	public void testAbstractValidatorSourceXml() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStreamReader source = new InputStreamReader( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) {
-			Assert.assertNotNull( validator.validateXML( new InputSource( source ) ) );	
+			Assertions.assertNotNull( validator.validateXML( new InputSource( source ) ) );	
 		}
 	}
 	
@@ -185,7 +185,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 	public void testAbstractValidatorSourceValid() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStreamReader source = new InputStreamReader( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) {
-			Assert.assertTrue( validator.isValidaXML( new InputSource( source ) ) );	
+			Assertions.assertTrue( validator.isValidaXML( new InputSource( source ) ) );	
 		}
 	}
 	
@@ -193,20 +193,20 @@ public class TestXMLValidatorSAX extends BasicTest {
 	public void testAbstractValidatorSourceValidResult() throws XMLException, IOException {
 		XMLValidatorSAX validator = XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER, true );
 		try ( InputStreamReader source = new InputStreamReader( ClassHelper.loadFromDefaultClassLoader( PATH_OK ) ) ) {
-			Assert.assertTrue( validator.validateXML( new InputSource( source ), new SAXParseResult() ) );	
+			Assertions.assertTrue( validator.validateXML( new InputSource( source ), new SAXParseResult() ) );	
 		}
 	}
 	
 	@Test
 	public void testValidationOk1() throws XMLException, IOException {
 		boolean valid = this.validateWorker(DTD_DEFAULT_RESOLVER,PATH_OK);
-		Assert.assertTrue(valid);
+		Assertions.assertTrue(valid);
 	}
 	
 	@Test
 	public void testValidationKo1() throws XMLException, IOException {
 		boolean valid = this.validateWorker(DTD_DEFAULT_RESOLVER,PATH_KO);
-		Assert.assertFalse(valid);
+		Assertions.assertFalse(valid);
 	}
 	
 	@Test
@@ -214,7 +214,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 		EntityResolverWrapper er = new EntityResolverWrapper(DTD_DEFAULT_RESOLVER);
 		er.setWrappedEntityResolver(DTD_DEFAULT_RESOLVER_ALT);
 		boolean valid = this.validateWorker(er,PATH_OK);
-		Assert.assertTrue(valid);
+		Assertions.assertTrue(valid);
 	}
 	
 	@Test
@@ -227,7 +227,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 		    }
 		};
 		boolean valid = this.validateWorker(er,PATH_OK);
-		Assert.assertTrue(valid);
+		Assertions.assertTrue(valid);
 	}
 	
 	@Test
@@ -240,7 +240,7 @@ public class TestXMLValidatorSAX extends BasicTest {
 		    }
 		};
 		boolean valid = this.validateWorker(er,PATH_OK_PUBLICID);
-		Assert.assertTrue(valid);
+		Assertions.assertTrue(valid);
 	}
 	
 	@Test
@@ -253,12 +253,12 @@ public class TestXMLValidatorSAX extends BasicTest {
 		    }
 		};
 		boolean valid = this.validateWorker(er,PATH_OK_PUBLICID);
-		Assert.assertTrue(valid);
+		Assertions.assertTrue(valid);
 	}
 	
 	@Test
 	public void testEntityResolverWrapper5() throws XMLException, IOException {
-		Assert.assertThrows( Exception.class , () -> this.validateWorker(new DoNothingEntityResolver(),PATH_OK) );
+		Assertions.assertThrows( Exception.class , () -> this.validateWorker(new DoNothingEntityResolver(),PATH_OK) );
 	}
 	
 	@Test
@@ -271,15 +271,15 @@ public class TestXMLValidatorSAX extends BasicTest {
 		    }
 		};
 		boolean valid = this.validateWorker(er,PATH_OK);
-		Assert.assertTrue(valid);
+		Assertions.assertTrue(valid);
 	}
 	
 	@Test
 	public void testNewInstance() throws XMLException {
-		Assert.assertNotNull( XMLValidatorSAX.newInstance() );
-		Assert.assertNotNull( XMLValidatorSAX.newInstance( true ) );
-		Assert.assertNotNull( XMLValidatorSAX.newInstance( false ) );
-		Assert.assertNotNull( XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER ) );
+		Assertions.assertNotNull( XMLValidatorSAX.newInstance() );
+		Assertions.assertNotNull( XMLValidatorSAX.newInstance( true ) );
+		Assertions.assertNotNull( XMLValidatorSAX.newInstance( false ) );
+		Assertions.assertNotNull( XMLValidatorSAX.newInstance( DTD_DEFAULT_RESOLVER ) );
 	}
 	
 }

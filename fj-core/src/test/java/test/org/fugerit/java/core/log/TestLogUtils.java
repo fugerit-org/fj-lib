@@ -7,8 +7,8 @@ import org.fugerit.java.core.log.BasicLogObject;
 import org.fugerit.java.core.log.LogFacade;
 import org.fugerit.java.core.log.LogObject;
 import org.fugerit.java.core.log.LogUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.helpers.FailHelper;
@@ -21,7 +21,7 @@ public class TestLogUtils {
 		StringBuilder builder = new StringBuilder();
 		LogUtils.appendPropDefault(builder, "key", "value" );
 		log.info( "result {}", builder );
-		Assert.assertEquals( "key=value" , builder.toString() );
+		Assertions.assertEquals( "key=value" , builder.toString() );
 	}
 	
 	@Test
@@ -29,7 +29,7 @@ public class TestLogUtils {
 		Appendable builder = new StringBuilder();
 		LogUtils.appendPropDefault(builder, "key", "value" );
 		log.info( "result {}", builder );
-		Assert.assertEquals( "key=value" , builder.toString() );
+		Assertions.assertEquals( "key=value" , builder.toString() );
 	}
 	
 	@Test
@@ -53,21 +53,21 @@ public class TestLogUtils {
 				return null;
 			}
 		};
-		Assert.assertThrows( ConfigRuntimeException.class , () -> LogUtils.appendProp(builder, "key", "value", ",", "test_") );
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> LogUtils.appendProp(builder, "key", "value", ",", "test_") );
 	}
 	
 	@Test
 	public void testWrap() {
 		LogObject obj = LogUtils.wrap( log );
 		obj.getLogger().info( "wrap ok!" );
-		Assert.assertNotNull( obj );
+		Assertions.assertNotNull( obj );
 	}
 	
 	@Test
 	public void testBasicLogObject() {
 		LogObject obj = new BasicLogObject();
 		obj.getLogger().info( "BasicLogObject OK!" );
-		Assert.assertNotNull( obj );
+		Assertions.assertNotNull( obj );
 	}
 	
 	@Test
@@ -77,7 +77,7 @@ public class TestLogUtils {
 		LogFacade.handleError( new IOException( "b" ) );
 		LogFacade.handleWarn( log, new IOException( "c" ) );
 		LogFacade.handleError( log, new IOException( "d" ) );
-		Assert.assertNotNull( LogFacade.newLogger( new TestLogUtils() ) );
+		Assertions.assertNotNull( LogFacade.newLogger( new TestLogUtils() ) );
 	}
 	
 }

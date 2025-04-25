@@ -8,8 +8,8 @@ import org.fugerit.java.core.db.daogen.QueryHelper;
 import org.fugerit.java.core.db.daogen.SelectHelper;
 import org.fugerit.java.core.db.daogen.UpdateHelper;
 import org.fugerit.java.core.db.helpers.DAOID;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,30 +25,30 @@ public class TestQueryHelper {
 		helper.appendWithSpace( "1=1" );
 		helper.closePara();
 		log.info( "query : {}", helper.getQueryContent() );
-		Assert.assertNotNull( helper.getQueryContent() );
+		Assertions.assertNotNull( helper.getQueryContent() );
 	}
 	
 	@Test
 	public void testUpdateHelper() {
 		UpdateHelper helper = new UpdateHelper( TABLE_NAME , new FieldList() );
-		Assert.assertThrows( ConfigRuntimeException.class , helper::getQueryContent );
+		Assertions.assertThrows( ConfigRuntimeException.class , helper::getQueryContent );
 		helper.addSetParam( "username" , "user1" );
 		helper.addSetParam( "id" , DAOID.valueOf( 1 ) );
 		helper.addSetParam( "field" , null );
 		helper.andWhereParam( "username" , "user1" );
 		helper.andWhereParam( "id" , DAOID.valueOf( 1 ) );
 		log.info( "query : {}", helper.getQueryContent() );
-		Assert.assertNotNull( helper.getQueryContent() );
+		Assertions.assertNotNull( helper.getQueryContent() );
 	}
 	
 	@Test
 	public void testDeleteHelper() {
 		DeleteHelper helper = new DeleteHelper( TABLE_NAME , new FieldList() );
-		Assert.assertThrows( ConfigRuntimeException.class , helper::getQueryContent );
+		Assertions.assertThrows( ConfigRuntimeException.class , helper::getQueryContent );
 		helper.andWhereParam( "username" , "user1" );
 		helper.andWhereParam( "id" , DAOID.valueOf( 1 ) );
 		log.info( "query : {}", helper.getQueryContent() );
-		Assert.assertNotNull( helper.getQueryContent() );
+		Assertions.assertNotNull( helper.getQueryContent() );
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class TestQueryHelper {
 		helper.addParam( "id" , DAOID.valueOf( 1 ) );
 		helper.addParam( "age", null );		// not added as it is null
 		log.info( "query : {}", helper.getQueryContent() );
-		Assert.assertNotNull( helper.getQueryContent() );
+		Assertions.assertNotNull( helper.getQueryContent() );
 	}
 	
 	@Test
@@ -70,14 +70,14 @@ public class TestQueryHelper {
 		helper.orLikeParam( "field2" , "1" );
 		helper.andLikeParam( "field3" , "1" );
 		helper.addOrderBy( "username", SelectHelper.ORDER_ASC );
-		Assert.assertNotNull( helper.getQueryContent() );
+		Assertions.assertNotNull( helper.getQueryContent() );
 	}
 	
 	@Test
 	public void testSelectHelper2() {
 		SelectHelper helper = new SelectHelper( TABLE_NAME , new FieldList() );
 		helper.addOrderBy( "field4" );
-		Assert.assertNotNull( helper.getQueryContent() );
+		Assertions.assertNotNull( helper.getQueryContent() );
 	}
 	
 	@Test
@@ -86,8 +86,8 @@ public class TestQueryHelper {
 		helper.addOrderBy( null );
 		helper.addOrderBy( "f1", SelectHelper.ORDER_ASC );
 		helper.addOrderBy( "f2", SelectHelper.ORDER_DESC );
-		Assert.assertFalse( helper.addParam( "username", null, null, null, null ) );
-		Assert.assertNotNull( helper.getQueryContent() );
+		Assertions.assertFalse( helper.addParam( "username", null, null, null, null ) );
+		Assertions.assertNotNull( helper.getQueryContent() );
 	}
 	
 }

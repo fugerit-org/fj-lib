@@ -12,8 +12,8 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.xml.config.FugeritXmlSchemaCatalogConfig;
 import org.fugerit.java.core.xml.config.XMLSchemaCatalogConfig;
 import org.fugerit.java.core.xml.sax.SAXErrorHandlerStore;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.InputSource;
 
 import test.org.fugerit.java.BasicTest;
@@ -43,7 +43,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	@Test
 	public void testLoad() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
-			Assert.assertNotNull( XMLSchemaCatalogConfig.loadConfigSchema( is ) );
+			Assertions.assertNotNull( XMLSchemaCatalogConfig.loadConfigSchema( is ) );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -54,7 +54,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validate(result, new StreamSource( is ), SCHEMA_ID_DEFAULT );
-			Assert.assertEquals( 0, result.getAllErrorsSize() );
+			Assertions.assertEquals( 0, result.getAllErrorsSize() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -65,7 +65,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validate(result, new SAXSource( new InputSource( is ) ), SCHEMA_ID_DEFAULT );
-			Assert.assertEquals( 0, result.getAllErrorsSize() );
+			Assertions.assertEquals( 0, result.getAllErrorsSize() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -76,7 +76,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validateCacheSchema(result, new StreamSource( is ), SCHEMA_ID_DEFAULT );
-			Assert.assertEquals( 0, result.getAllErrorsSize() );
+			Assertions.assertEquals( 0, result.getAllErrorsSize() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -87,7 +87,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_OK ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validateCacheSchema(result, new SAXSource( new InputSource( is ) ), SCHEMA_ID_DEFAULT );
-			Assert.assertEquals( 0, result.getAllErrorsSize() );
+			Assertions.assertEquals( 0, result.getAllErrorsSize() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -98,7 +98,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( PATH_XML_KO ) ) {
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			catalog.validate(result, new StreamSource( is ), SCHEMA_ID_DEFAULT );
-			Assert.assertNotEquals( 0, result.getAllErrorsSize() );
+			Assertions.assertNotEquals( 0, result.getAllErrorsSize() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -110,7 +110,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 			Source[] xsds = catalog.getXsds( SCHEMA_ID_DEFAULT );
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			XMLSchemaCatalogConfig.validateWorker(result, new SAXSource( new InputSource( is ) ), xsds );
-			Assert.assertEquals( 0, result.getAllErrorsSize() );
+			Assertions.assertEquals( 0, result.getAllErrorsSize() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -123,7 +123,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 					"src/test/resources/core/xml/config/xml_schema_catalog/xsds", catalog.getDataList( SCHEMA_ID_DEFAULT ) );
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			XMLSchemaCatalogConfig.validateWorker(result, new StreamSource( is ), xsds );
-			Assert.assertEquals( 0, result.getAllErrorsSize() );
+			Assertions.assertEquals( 0, result.getAllErrorsSize() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -135,7 +135,7 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 			XMLSchemaCatalogConfig loadedCatalog = (XMLSchemaCatalogConfig)this.fullSerializationTest( catalog );
 			SAXErrorHandlerStore result = new SAXErrorHandlerStore();
 			loadedCatalog.validate(result, new StreamSource( is ), SCHEMA_ID_DEFAULT );
-			Assert.assertEquals( 0, result.getAllErrorsSize() );
+			Assertions.assertEquals( 0, result.getAllErrorsSize() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}		
@@ -145,19 +145,19 @@ public class TestXMLSchemaCatalogConfig extends BasicTest {
 	public void activateValidation() {
 		XMLSchemaCatalogConfig current = loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config_fail1.xml" );
 		logger.info( "activateValidation() catalog loaded : {}", current );
-		Assert.assertNotNull( current );
+		Assertions.assertNotNull( current );
 	}
 	
 	@Test
 	public void newInstanceException() {
-		Assert.assertThrows( ConfigRuntimeException.class , () -> {
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> {
 			loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config_fail2.xml" );
 		});
 	}
 	
 	@Test
 	public void newInstanceExceptionDuplicate() {
-		Assert.assertThrows( ConfigRuntimeException.class , () -> {
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> {
 			loadCatalogSafe( "core/xml/config/xml_schema_catalog/schema-validator-config_fail3.xml" );
 		});
 	}

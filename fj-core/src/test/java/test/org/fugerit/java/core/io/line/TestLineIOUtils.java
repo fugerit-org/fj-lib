@@ -14,8 +14,8 @@ import java.util.List;
 import org.fugerit.java.core.io.line.LineIOUtils;
 import org.fugerit.java.core.io.line.LineReader;
 import org.fugerit.java.core.io.line.LineWriter;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +30,7 @@ public class TestLineIOUtils {
 	public void testLineReadStream() throws IOException {
 		try ( InputStream is = new FileInputStream( TEST_FILE_PATH ) ) {
 			List<String> lines = LineIOUtils.readLines( is );
-			Assert.assertEquals( EXPECTED_SIZE , lines.size() );
+			Assertions.assertEquals( EXPECTED_SIZE , lines.size() );
 		} 
 	}
 	
@@ -38,7 +38,7 @@ public class TestLineIOUtils {
 	public void testLineReadReader() throws IOException {
 		try ( Reader is = new FileReader( TEST_FILE_PATH ) ) {
 			List<String> lines = LineIOUtils.readLines( is );
-			Assert.assertEquals( EXPECTED_SIZE , lines.size() );
+			Assertions.assertEquals( EXPECTED_SIZE , lines.size() );
 		} 
 	}
 	
@@ -47,7 +47,7 @@ public class TestLineIOUtils {
 		List<String> lines = LineIOUtils.readLines( new File( TEST_FILE_PATH ) );
 		lines.stream().forEach( s -> log.info( "current line -> {}", s ) );
 		String[] array = LineIOUtils.toLines(lines);
-		Assert.assertEquals( EXPECTED_SIZE , array.length );
+		Assertions.assertEquals( EXPECTED_SIZE , array.length );
 	}
 	
 	private int testLineReader( LineReader reader ) throws IOException {
@@ -67,7 +67,7 @@ public class TestLineIOUtils {
 		try ( Reader is = new FileReader( TEST_FILE_PATH );
 				LineReader reader = LineIOUtils.createLineReader( is ) ) {
 			int count = this.testLineReader(reader);
-			Assert.assertEquals( EXPECTED_SIZE , count );
+			Assertions.assertEquals( EXPECTED_SIZE , count );
 		} 
 	}
 	
@@ -76,7 +76,7 @@ public class TestLineIOUtils {
 		try ( Reader is = new BufferedReader( new FileReader( TEST_FILE_PATH ) );
 				LineReader reader = LineIOUtils.createLineReader( is ) ) {
 			int count = this.testLineReader(reader);
-			Assert.assertEquals( EXPECTED_SIZE , count );
+			Assertions.assertEquals( EXPECTED_SIZE , count );
 		} 
 	}
 	
@@ -85,7 +85,7 @@ public class TestLineIOUtils {
 		try ( InputStream is = new FileInputStream( TEST_FILE_PATH );
 				LineReader reader = LineIOUtils.createLineReader( is ) ) {
 			int count = this.testLineReader(reader);
-			Assert.assertEquals( EXPECTED_SIZE , count );
+			Assertions.assertEquals( EXPECTED_SIZE , count );
 		} 
 	}
 	
@@ -107,7 +107,7 @@ public class TestLineIOUtils {
 		try ( StringWriter w = new StringWriter();
 				LineWriter writer = LineIOUtils.createLineWriter( w ) ) {
 			int count = this.testLineWriter(writer);
-			Assert.assertEquals( TEST_LINES.length , count );
+			Assertions.assertEquals( TEST_LINES.length , count );
 		}
 	}
 	
@@ -116,7 +116,7 @@ public class TestLineIOUtils {
 		try ( ByteArrayOutputStream w = new ByteArrayOutputStream();
 				LineWriter writer = LineIOUtils.createLineWriter( w ) ) {
 			int count = this.testLineWriter(writer);
-			Assert.assertEquals( TEST_LINES.length , count );
+			Assertions.assertEquals( TEST_LINES.length , count );
 		}
 	}
 	

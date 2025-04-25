@@ -1,11 +1,11 @@
 package test.org.fugerit.java.core.cfg.xml;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.fugerit.java.core.cfg.xml.PropertyCatalog;
 import org.fugerit.java.core.cfg.xml.PropertyHolder;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
@@ -59,7 +59,7 @@ public class TestPropertyCatalog extends BasicTest {
 	@Test
 	public void testinit() throws Exception {
 		boolean ok = this.testWorker(CATALOG);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -67,7 +67,7 @@ public class TestPropertyCatalog extends BasicTest {
 		try {
 			PropertyCatalog deserializedValue = (PropertyCatalog) this.fullSerializationTest(CATALOG);
 			boolean ok = this.testWorker(deserializedValue);
-			Assert.assertTrue( ok );
+			Assertions.assertTrue( ok );
 		} catch (Exception e) {
 			this.failEx(e);
 		}

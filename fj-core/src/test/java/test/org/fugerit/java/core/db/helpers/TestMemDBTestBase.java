@@ -1,12 +1,11 @@
 package test.org.fugerit.java.core.db.helpers;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import org.junit.Test;
-import org.junit.runner.notification.RunListener;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ public class TestMemDBTestBase extends MemDBTestBase {
 		super();
 	}
 
-	protected static final Logger logger = LoggerFactory.getLogger(RunListener.class);
+	protected static final Logger logger = LoggerFactory.getLogger(MemDBTestBase.class);
 
 	public void execute( Statement stm, String sql ) throws Exception {
 		logger.info( "Execute : "+sql+" START!" );

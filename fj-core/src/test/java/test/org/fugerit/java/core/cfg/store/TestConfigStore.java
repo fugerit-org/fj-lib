@@ -14,8 +14,8 @@ import org.fugerit.java.core.cfg.store.helper.ConfigStoreDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreMapDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreProps;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class TestConfigStore extends BasicTest {
         } catch (Exception e) {
             throw new ConfigRuntimeException( e );
         }
-        Assert.assertTrue( ok );
+        Assertions.assertTrue( ok );
     }
 
 	private static final String PATH_PROPS = "src/test/resources/core/util/collection/test_store_1.properties";
@@ -72,7 +72,7 @@ public class TestConfigStore extends BasicTest {
 		} catch (IOException e) {
 			failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -86,7 +86,7 @@ public class TestConfigStore extends BasicTest {
 		} catch (IOException e) {
 			failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -103,7 +103,7 @@ public class TestConfigStore extends BasicTest {
 		} catch (IOException e) {
 			failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 
 	@Test
@@ -115,14 +115,14 @@ public class TestConfigStore extends BasicTest {
 		} catch (IOException e) {
 			failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testToProperties() {
 		Properties props = ConfigStoreUtils.toProperties( ADD_MAP );
 		log.info( "toProperties : {}", props );
-		Assert.assertEquals( ADD_MAP.getKeySet().size() , props.keySet().size() );
+		Assertions.assertEquals( ADD_MAP.getKeySet().size() , props.keySet().size() );
 	}
     
 }

@@ -8,8 +8,8 @@ import org.fugerit.java.core.cfg.helpers.AbstractConfigurableObject;
 import org.fugerit.java.core.cfg.provider.ConfigProviderFacade;
 import org.fugerit.java.core.cfg.provider.ConfigProviderWrapper;
 import org.fugerit.java.core.io.helper.StreamHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Element;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +27,14 @@ public class TestConfigProvider extends AbstractConfigurableObject {
 		log.info( "unwrap : {}", wrapper.unwrap() );
 		log.info( "unwrapModel : {}", wrapper.unwrapModel() );
 		log.info( "toString : {}", wrapper );
-		Assert.assertThrows( ConfigException.class , () ->  wrapper.readConfiguration( null , "path/not/exists.xml" ) );
+		Assertions.assertThrows( ConfigException.class , () ->  wrapper.readConfiguration( null , "path/not/exists.xml" ) );
 		TestConfigProvider caller = new TestConfigProvider();
 		ConfigProviderFacade.getInstance().registerByCaller( caller, wrapper );
-		Assert.assertNotNull( ConfigProviderFacade.getInstance().getProviderByCaller(caller) );
-		Assert.assertNotNull( ConfigProviderFacade.getInstance().getProviderByName( caller.getClass().getName() ) );
+		Assertions.assertNotNull( ConfigProviderFacade.getInstance().getProviderByCaller(caller) );
+		Assertions.assertNotNull( ConfigProviderFacade.getInstance().getProviderByName( caller.getClass().getName() ) );
 		ConfigProviderFacade.setDefaultProvider(wrapper);
 		ConfigProviderFacade.getInstance().findAndSetConfigProvider( caller.getClass().getName() , caller );
-		Assert.assertNotNull( new BasicTest().fullSerializationTest( wrapper ) );
+		Assertions.assertNotNull( new BasicTest().fullSerializationTest( wrapper ) );
 	}
 
 	@Override

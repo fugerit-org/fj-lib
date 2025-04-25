@@ -12,8 +12,8 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.xml.TransformerConfig;
 import org.fugerit.java.core.xml.TransformerXML;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
@@ -29,7 +29,7 @@ public class TestTransformerXML extends BasicTest {
 	public void newSafeTransformerFactory() {
 		TransformerFactory factory = TransformerXML.newSafeTransformerFactory();
 		log.info( "factory -> {}", factory );
-		Assert.assertNotNull( factory );
+		Assertions.assertNotNull( factory );
 	}
 	
 	@Test
@@ -43,7 +43,7 @@ public class TestTransformerXML extends BasicTest {
 		} catch (ConfigRuntimeException e) {
 			ok = true;
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -52,7 +52,7 @@ public class TestTransformerXML extends BasicTest {
 		features.setProperty( XMLConstants.FEATURE_SECURE_PROCESSING , BooleanUtils.BOOLEAN_FALSE );
 		TransformerFactory factory = TransformerXML.newSafeTransformerFactory( features );
 		log.info( "factory -> {}", factory );
-		Assert.assertNotNull( factory );
+		Assertions.assertNotNull( factory );
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ public class TestTransformerXML extends BasicTest {
 		} catch (Exception e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ public class TestTransformerXML extends BasicTest {
 		} catch (Exception e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -91,7 +91,7 @@ public class TestTransformerXML extends BasicTest {
 		} catch (Exception e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -103,7 +103,7 @@ public class TestTransformerXML extends BasicTest {
 		} catch (Exception e) {
 			ok = true;
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 }

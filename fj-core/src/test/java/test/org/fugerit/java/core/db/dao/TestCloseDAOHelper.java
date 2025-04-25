@@ -6,8 +6,8 @@ import java.sql.Connection;
 
 import org.fugerit.java.core.db.dao.CloseDAOHelper;
 import org.fugerit.java.core.db.dao.DAORuntimeException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
@@ -21,7 +21,7 @@ public class TestCloseDAOHelper extends TestBasicDBHelper {
 				CloseDAOHelper.close( conn );
 				ok = true;
 			}	
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 		} );
 	}
 	
@@ -37,7 +37,7 @@ public class TestCloseDAOHelper extends TestBasicDBHelper {
 					}
 				} );
 				ok = true;
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}	
 		} );
 	}
@@ -48,7 +48,7 @@ public class TestCloseDAOHelper extends TestBasicDBHelper {
 			boolean ok = false;
 			CloseDAOHelper.close( (AutoCloseable)null );
 			ok = true;
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 		} );
 	}
 	
@@ -58,7 +58,7 @@ public class TestCloseDAOHelper extends TestBasicDBHelper {
 			boolean ok = false;
 			CloseDAOHelper.close( (Closeable)null );
 			ok = true;
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 		} );
 	}
 	

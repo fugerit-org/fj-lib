@@ -1,6 +1,6 @@
 package test.org.fugerit.java.core.validator;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Locale;
 import java.util.Properties;
@@ -10,8 +10,8 @@ import org.fugerit.java.core.util.PropertyEntry;
 import org.fugerit.java.core.validator.ValidatorCatalog;
 import org.fugerit.java.core.validator.ValidatorDate;
 import org.fugerit.java.core.validator.ValidatorResult;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
@@ -36,7 +36,7 @@ public class TestValidatorCatalog extends BasicTest {
 			String label = "test label 1 (valid)";
 			String value = "test value one";
 			boolean valid = loadedCatalog.validate( "testRegexValidator" , result, Locale.ENGLISH, label, value, label, new Properties() );
-			Assert.assertTrue(valid);
+			Assertions.assertTrue(valid);
 		} catch (Exception e) {
 			this.failEx(e);
 		}

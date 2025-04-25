@@ -6,8 +6,8 @@ import org.fugerit.java.core.lang.binding.BindingException;
 import org.fugerit.java.core.lang.binding.BindingFieldConfig;
 import org.fugerit.java.core.lang.binding.BindingHelperDefault;
 import org.fugerit.java.core.lang.binding.BindingHelperInitTo;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +30,7 @@ public class TestBindingHelper extends BindingHelperDefault {
 		ModelTestBindingTwo to = new ModelTestBindingTwo();
 		BindingHelperInitTo.DEFAULT.bind(context, bindingConfig, fieldConfig, from, to);
 		log.info( "to.fieldTwo : {}", to.getFieldTwo() );
-		Assert.assertNotNull( to.getFieldTwo() );
+		Assertions.assertNotNull( to.getFieldTwo() );
 	}
 	
 	@Test
@@ -45,7 +45,7 @@ public class TestBindingHelper extends BindingHelperDefault {
 		ModelTestBindingTwo to = new ModelTestBindingTwo();
 		BindingHelperInitTo.DEFAULT.bind(context, bindingConfig, fieldConfig, from, to);
 		log.info( "to.testHelperTwo : {}", to.getTestHelperTwo() );
-		Assert.assertNotNull( to.getTestHelperTwo() );
+		Assertions.assertNotNull( to.getTestHelperTwo() );
 	}
 	
 }

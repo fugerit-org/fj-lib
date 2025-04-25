@@ -1,12 +1,11 @@
 package test.org.fugerit.java.core.db.helpers;
 
-import org.junit.BeforeClass;
-
+import org.junit.jupiter.api.BeforeAll;
 import test.org.fugerit.java.MemDBJunitBase;
 
 public class MemDBTestBase extends MemDBJunitBase {
 
-	@BeforeClass
+	@BeforeAll
 	public static void init() {
     	MemDBHelper.init();
 	}

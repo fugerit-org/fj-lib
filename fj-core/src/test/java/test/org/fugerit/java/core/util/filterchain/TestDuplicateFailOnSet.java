@@ -1,10 +1,10 @@
 package test.org.fugerit.java.core.util.filterchain;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.fugerit.java.core.util.filterchain.MiniFilterConfig;
 import org.fugerit.java.core.util.filterchain.MiniFilterMap;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

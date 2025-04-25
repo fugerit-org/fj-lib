@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.daogen.CharArrayDataHandler;
 import org.fugerit.java.core.io.ArchiveIO;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -19,8 +19,8 @@ public class TestCharArrayDataHandler {
     @Test
     public void testCharArrayDataHandler() throws DAOException, IOException {
         CharArrayDataHandler ch = CharArrayDataHandler.newHandlerByte( TEST_STRING.toCharArray() );
-        Assert.assertEquals( TEST_STRING, ch.toString() );
-        Assert.assertEquals( TEST_STRING, new String( ch.toBytes() ) );
+        Assertions.assertEquals( TEST_STRING, ch.toString() );
+        Assertions.assertEquals( TEST_STRING, new String( ch.toBytes() ) );
         try (ZipOutputStream zos = new ZipOutputStream( new ByteArrayOutputStream())) {
             ArchiveIO.addEntry( "test.txt", zos, ch );
         }

@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.fugerit.java.core.lang.helpers.ExHandler;
 import org.fugerit.java.core.lang.helpers.Result;
 import org.fugerit.java.core.lang.helpers.ResultExHandler;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ public class TestExHandler {
 		handler.setResult( new Result() );
 		log.info( "test : {}", handler.getResult() );
 		boolean ok = this.worker(handler);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -35,7 +35,7 @@ public class TestExHandler {
 		handler.setResult( new Result() );
 		log.info( "test : {}", handler.getResult() );
 		boolean ok = this.worker(handler);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 }

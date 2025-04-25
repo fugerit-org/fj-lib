@@ -8,8 +8,8 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.xml.XMLException;
 import org.fugerit.java.core.xml.dom.DOMIO;
 import org.fugerit.java.core.xml.dom.SearchDOM;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -39,19 +39,19 @@ public class TestSearchDOM {
 	@Test
 	public void testSearchDOM() throws XMLException, IOException {
 		boolean ok = this.worker( SearchDOM.newInstance() );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testSearchDOMAlt1() throws XMLException, IOException {
 		boolean ok = this.worker( SearchDOM.newInstance( true, true ) );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testSearchDOMAlt2() throws XMLException, IOException {
 		boolean ok = this.worker( SearchDOM.newInstance( false, false ) );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 }

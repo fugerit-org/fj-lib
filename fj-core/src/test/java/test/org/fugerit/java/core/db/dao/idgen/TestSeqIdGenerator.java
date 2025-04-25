@@ -25,8 +25,8 @@ import org.fugerit.java.core.db.helpers.DAOID;
 import org.fugerit.java.core.db.helpers.DbUtils;
 import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.xml.XMLException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
@@ -67,7 +67,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 		String[] products = TestBasicDBHelper.PRODUCT_NAME_STRING;
 		for ( int k=0; k<products.length; k++ ) {
 			int code = DbUtils.indentifyDB( products[k] );
-			Assert.assertNotEquals( -1 , code );
+			Assertions.assertNotEquals( -1 , code );
 		}
 	}
 	
@@ -76,21 +76,21 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 		PostgresqlSeqIdGenerator idGenerator = new PostgresqlSeqIdGenerator();
 		idGenerator.setAutoCloseConnection( true );
 		boolean ok = testSequenceWorker( "PGS" , SEQ_NAME , idGenerator, null );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void testOracleSequence() {
 		boolean ok = testSequenceWorker( "ORA" , SEQ_NAME , new OracleSeqIdGenerator(), null );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void testMySqlSequence() {
 		String prepareSql = "CREATE TABLE "+SEQ_NAME+" (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id))";
 		boolean ok = testSequenceWorker( "MYS" , "fugerit.seq_test" , new MysqlSeqIdGenerator( "CALL IDENTITY()" ), prepareSql );
-		Assert.assertTrue(ok);
-		Assert.assertNotNull( new MysqlSeqIdGenerator() ); // test default constructor
+		Assertions.assertTrue(ok);
+		Assertions.assertNotNull( new MysqlSeqIdGenerator() ); // test default constructor
 	}
 	
 	@Test
@@ -98,7 +98,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 		SqlServerSeqIdGenerator idGenerator = new SqlServerSeqIdGenerator( s -> "SELECT nextval('"+s+"')" );
 		boolean ok = testSequenceWorker( "MSS" , SEQ_NAME , idGenerator, null );
 		SqlServerSeqIdGenerator.createSequenceQuery( SEQ_NAME );	// invocation test
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -112,7 +112,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 				return idGenerator.generateId();
 			}
 		} );
-		Assert.assertNotNull( id );
+		Assertions.assertNotNull( id );
 	}
 	
 	@Test
@@ -127,7 +127,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 				return idGenerator.generateId();
 			}
 		} );
-		Assert.assertNotNull( id );
+		Assertions.assertNotNull( id );
 	}
 	
 	@Test
@@ -138,21 +138,21 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 				String sqlSyntax = "SET DATABASE SQL SYNTAX PGS TRUE";
 				stm.execute( sqlSyntax );
 				GenericSeqIdGenerator idGenerator = new GenericSeqIdGenerator();
-				Assert.assertThrows( ConfigException.class , () -> idGenerator.configure( new Properties() ) );
+				Assertions.assertThrows( ConfigException.class , () -> idGenerator.configure( new Properties() ) );
 				idGenerator.setConnectionFactory( new SingleConnectionFactory( conn ) );
-				Assert.assertThrows( ConfigException.class , () -> idGenerator.configure( new Properties() ) );
+				Assertions.assertThrows( ConfigException.class , () -> idGenerator.configure( new Properties() ) );
 				idGenerator.configure( getConfiguration() );
 				return idGenerator.generateId();
 			}
 		} );
-		Assert.assertNotNull( id );
+		Assertions.assertNotNull( id );
 	}
 	
 	@Test
 	public void testSqlServerFail() {
 		SqlServerSeqIdGenerator idGenerator = new SqlServerSeqIdGenerator() ;
 		idGenerator.setSequenceName(SEQ_NAME);
-		Assert.assertThrows( Exception.class , () -> testSequenceWorker( "MSS" , SEQ_NAME , idGenerator, null ) );
+		Assertions.assertThrows( Exception.class , () -> testSequenceWorker( "MSS" , SEQ_NAME , idGenerator, null ) );
 	}
 	
 	@Test
@@ -173,7 +173,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 			idGenerator.configureXML(source);
 		}
 		idGenerator.setAutoCloseConnection( true );
-		Assert.assertTrue(idGenerator.isAutoCloseConnection());
+		Assertions.assertTrue(idGenerator.isAutoCloseConnection());
 	}
 	
 	@Test
@@ -190,7 +190,7 @@ public class TestSeqIdGenerator extends MemDBTestBase {
 		};
 		idGenerator.configure( getConfiguration() );
 		idGenerator.setAutoCloseConnection( true );
-		Assert.assertTrue(idGenerator.isAutoCloseConnection());
+		Assertions.assertTrue(idGenerator.isAutoCloseConnection());
 	}
 	
 }

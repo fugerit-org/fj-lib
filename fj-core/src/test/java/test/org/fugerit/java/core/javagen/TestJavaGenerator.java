@@ -1,7 +1,7 @@
 package test.org.fugerit.java.core.javagen;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
@@ -18,7 +18,7 @@ public class TestJavaGenerator extends BasicTest {
 			log.info( "ok : {}", generator.getContent() );
 			generator.write();
 			generator.generate();
-			Assert.assertNotNull(generator);
+			Assertions.assertNotNull(generator);
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -33,7 +33,7 @@ public class TestJavaGenerator extends BasicTest {
 			log.info( "ok : {}", generator.getContent() );
 			generator.write();
 			generator.generate();
-			Assert.assertNotNull(generator);
+			Assertions.assertNotNull(generator);
 		} catch (Exception e) {
 			this.failEx(e);
 		}

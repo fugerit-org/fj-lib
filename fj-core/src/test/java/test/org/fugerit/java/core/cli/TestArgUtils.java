@@ -3,8 +3,8 @@ package test.org.fugerit.java.core.cli;
 import java.util.Properties;
 
 import org.fugerit.java.core.cli.ArgUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,35 +29,35 @@ public class TestArgUtils {
 	public void test1() {
 		Properties params = ArgUtils.getArgs( ARGS, true, false );
 		log.info( "params : {}", params );
-		Assert.assertEquals( TEST_PARAM_VALUE , params.getProperty( TEST_PARAM_NAME ) );
+		Assertions.assertEquals( TEST_PARAM_VALUE , params.getProperty( TEST_PARAM_NAME ) );
 	}
 	
 	@Test
 	public void test2() {
 		Properties params = ArgUtils.getArgs( ARGS, true, true );
 		log.info( "params : {}", params );
-		Assert.assertEquals( TEST_PARAM_VALUE , params.getProperty( TEST_PARAM_NAME ) );
+		Assertions.assertEquals( TEST_PARAM_VALUE , params.getProperty( TEST_PARAM_NAME ) );
 	}
 	
 	@Test
 	public void test3() {
 		Properties params = ArgUtils.getArgs( ARGS );
 		log.info( "params : {}", params );
-		Assert.assertEquals( TEST_PARAM_VALUE , params.getProperty( TEST_PARAM_NAME ) );
+		Assertions.assertEquals( TEST_PARAM_VALUE , params.getProperty( TEST_PARAM_NAME ) );
 	}
 	
 	@Test
 	public void test4() {
 		Properties params = ArgUtils.getArgs( ARGS, false, false );
 		log.info( "params : {}", params );
-		Assert.assertNull( params.getProperty( TEST_PARAM_NAME ) );
+		Assertions.assertNull( params.getProperty( TEST_PARAM_NAME ) );
 	}
 	
 	@Test
 	public void testAlt() {
 		Properties params = ArgUtils.getArgs( ARGS_ALT, false, false );
 		log.info( "params : {}", params );
-		Assert.assertNull( params.getProperty( TEST_PARAM_NAME ) );
+		Assertions.assertNull( params.getProperty( TEST_PARAM_NAME ) );
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class TestArgUtils {
 		String[] args = { "test" };
 		Properties params = ArgUtils.getArgs( args, false, false );
 		log.info( "params : {}", params );
-		Assert.assertNull( params.getProperty( TEST_PARAM_NAME ) );
+		Assertions.assertNull( params.getProperty( TEST_PARAM_NAME ) );
 	}
 	
 }

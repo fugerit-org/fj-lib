@@ -11,8 +11,8 @@ import org.fugerit.java.core.xml.TransformerConfig;
 import org.fugerit.java.core.xml.XMLException;
 import org.fugerit.java.core.xml.XMLWhiteSpaceRemove;
 import org.fugerit.java.core.xml.dom.DOMIO;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class TestDOMClean {
 			Document doc = DOMIO.loadDOMDoc( is );
 			XMLWhiteSpaceRemove.cleanBlankNodesIndent2(doc, writer);
 		}
-		Assert.assertTrue( outFile.exists() );
+		Assertions.assertTrue( outFile.exists() );
 	}
 	
 	@Test
@@ -48,7 +48,7 @@ public class TestDOMClean {
 		String testFile = "dom_clean1.xml";
 		File outFile =  new File( "target", "cleaned_b_"+testFile );
 		this.testWorker(testFile, outFile, TransformerConfig.newIndentConfig( 5 ));
-		Assert.assertTrue( outFile.exists() );
+		Assertions.assertTrue( outFile.exists() );
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class TestDOMClean {
 		String testFile = "dom_clean1.xml";
 		File outFile =  new File( "target", "cleaned_c_"+testFile );
 		this.testWorker(testFile, outFile, TransformerConfig.newConfig().indentNo().omitXmlDeclarationNo());
-		Assert.assertTrue( outFile.exists() );
+		Assertions.assertTrue( outFile.exists() );
 	}
 	
 }

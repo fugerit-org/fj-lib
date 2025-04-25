@@ -19,8 +19,8 @@ import org.fugerit.java.core.io.FileIO;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.xml.XMLException;
 import org.fugerit.java.core.xml.dom.DOMIO;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -57,7 +57,7 @@ public class TestDOMIO extends BasicTest {
 			log.warn( "Exception OK : {}", e.toString() );
 			ok = true;
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -73,14 +73,14 @@ public class TestDOMIO extends BasicTest {
 		} catch (ConfigRuntimeException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testNewUnsafeDocumentBuilderFactory() {
 		DocumentBuilderFactory dbf = DOMIO.newDocumentBuilderFactory( true );
 		log.info( "DOMIO.newDocumentBuilderFactory -> {}", dbf );
-		Assert.assertNotNull( dbf );
+		Assertions.assertNotNull( dbf );
 	}
 	
 	
@@ -88,7 +88,7 @@ public class TestDOMIO extends BasicTest {
 	public void testNewSafeDocumentBuilderFactory() {
 		DocumentBuilderFactory dbf = DOMIO.newSafeDocumentBuilderFactory();
 		log.info( "DOMIO.newSafeDocumentBuilderFactory -> {}", dbf );
-		Assert.assertNotNull( dbf );
+		Assertions.assertNotNull( dbf );
 	}
 	
 	@Test
@@ -99,7 +99,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 
 	@Test
@@ -110,7 +110,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -121,7 +121,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -132,7 +132,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -143,7 +143,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -154,7 +154,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -165,7 +165,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -176,7 +176,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -187,7 +187,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -198,7 +198,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -210,7 +210,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}	
 	
 	@Test
@@ -222,7 +222,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -234,7 +234,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -246,7 +246,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}	
 	
 	@Test
@@ -258,7 +258,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -270,7 +270,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -282,7 +282,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -294,7 +294,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -306,7 +306,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -318,7 +318,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -330,7 +330,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -342,7 +342,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -357,7 +357,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -370,7 +370,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -385,7 +385,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -400,7 +400,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -415,7 +415,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -430,7 +430,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -445,7 +445,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -460,7 +460,7 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -473,7 +473,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
@@ -486,7 +486,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 		
 }

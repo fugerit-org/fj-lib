@@ -12,8 +12,8 @@ import org.fugerit.java.core.util.result.PagedResult;
 import org.fugerit.java.core.util.result.Result;
 import org.fugerit.java.core.util.result.ResultHelper;
 import org.fugerit.java.core.util.result.VirtualPageCache;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,23 +57,23 @@ public class TestResult {
 	public void testBasicResult() {
 		BasicResult result = new BasicResult( Result.RESULT_CODE_OK );
 		boolean ok = this.testResultWorker(result);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testPagedResultVirtual() {
 		PagedResult<Integer> result = DefaultPagedResult.newPagedResult( 10, DATA.size(), 0, DATA );
 		boolean ok = this.testPagedResultWorker(result);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 		ok = this.testPagedResultWorker( result.getVirtualPage( 0 ) );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testPagedResult() {
 		PagedResult<Integer> result = DefaultPagedResult.newPagedResult( 3, DATA.size(), 0, DATA, 3, DATA.size(), "test" );
 		boolean ok = this.testPagedResultWorker(result);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 
 	private int testPagedResultFullWorker( int perPage, List<Integer> data ) {
@@ -95,34 +95,34 @@ public class TestResult {
 	public void testPagedResultFull3() {
 		int perPage = 3;
 		int currentPage = this.testPagedResultFullWorker(perPage, DATA);
-		Assert.assertEquals( 4 , currentPage );	
+		Assertions.assertEquals( 4 , currentPage );	
 	}
 	
 	@Test
 	public void testPagedResultFull5() {
 		int perPage = 5;
 		int currentPage = this.testPagedResultFullWorker(perPage, DATA);
-		Assert.assertEquals( 2 , currentPage );	
+		Assertions.assertEquals( 2 , currentPage );	
 	}
 	
 	@Test
 	public void testPagedResultAlt() {
 		PagedResult<Integer> result = DefaultPagedResult.newPagedResult( 3, DATA.size(), 1, DATA );
 		boolean ok = this.testPagedResultWorker(result);
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	public void testPagedResultKo() {
 		PagedResult<Integer> result = DefaultPagedResult.newPagedResult( Result.RESULT_CODE_KO );
 		boolean ok = this.testPagedResultWorker(result);
-		Assert.assertFalse( ok );
+		Assertions.assertFalse( ok );
 	}
 	
 	@Test
 	public void testConstants() {
-		Assert.assertEquals( PagedResult.ELEMENT_COUNT_UNAVAILABLE, Integer.valueOf( -1 ) );
-		Assert.assertFalse( AbstractPagedResult.DEFAULT_SUPPORT_VIRTUAL_PAGING );
+		Assertions.assertEquals( PagedResult.ELEMENT_COUNT_UNAVAILABLE, Integer.valueOf( -1 ) );
+		Assertions.assertFalse( AbstractPagedResult.DEFAULT_SUPPORT_VIRTUAL_PAGING );
 	}
 	
 	@Test
@@ -135,14 +135,14 @@ public class TestResult {
 		log.info( "finder.getRealPerPage : {}", finder.getRealPerPage() );
 		log.info( "finder.isVirtualPagingUsed : {}", finder.isVirtualPagingUsed() );
 		log.info( "finder : {}", finder );
-		Assert.assertNotNull( finder );
+		Assertions.assertNotNull( finder );
 	}
 	
 	@Test
 	public void testVirtualFinderFail() {
 		DefaultVirtualFinder finder = new DefaultVirtualFinder( 5, 0 );
 		log.info( "finder.isVirtualPagingUsed : {}", finder.isVirtualPagingUsed() );
-		Assert.assertThrows( UnsupportedOperationException.class , () -> finder.getSearchVirtualKey() );
+		Assertions.assertThrows( UnsupportedOperationException.class , () -> finder.getSearchVirtualKey() );
 	}
 	
 	@Test
@@ -151,19 +151,19 @@ public class TestResult {
 		int perPage = 3;
 		int elementCount = DATA.size();
 		cache.addPageToCache( DefaultPagedResult.newPagedResult( perPage, elementCount, 0, DATA, 3, DATA.size(), "test" ) );
-		Assert.assertNotNull( cache.getCachedPage( new DefaultVirtualFinder(perPage, elementCount, 3, DATA.size(), "test" ) ) );
+		Assertions.assertNotNull( cache.getCachedPage( new DefaultVirtualFinder(perPage, elementCount, 3, DATA.size(), "test" ) ) );
 	}
 
 	@Test
 	public void testResultHelper() {
-		Assert.assertEquals( 1 , ResultHelper.createList( "a" ).size() );
+		Assertions.assertEquals( 1 , ResultHelper.createList( "a" ).size() );
 	}
 
 	@Test
 	public void testPageInfo() {
 		PageInfo info = new PageInfo( 1 , 10 );
-		Assert.assertEquals( 1 , info.getNumber() );
-		Assert.assertEquals( 10 , info.getSize() );
+		Assertions.assertEquals( 1 , info.getNumber() );
+		Assertions.assertEquals( 10 , info.getSize() );
 	}
 	
 }

@@ -1,6 +1,6 @@
 package test.org.fugerit.java.core.lang.binding;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -9,7 +9,7 @@ import javax.xml.datatype.DatatypeFactory;
 
 import org.fugerit.java.core.lang.binding.BindingCatalogConfig;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

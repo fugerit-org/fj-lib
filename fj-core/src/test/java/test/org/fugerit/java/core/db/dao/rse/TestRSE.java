@@ -24,8 +24,8 @@ import org.fugerit.java.core.db.dao.rse.StringRSE;
 import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.util.collection.OptionItem;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
@@ -64,13 +64,13 @@ public class TestRSE extends TestBasicDBHelper {
 	@Test
 	public void testRSEString() throws SQLException {
 		String result = this.worker( "SELECT username FROM fugerit.user WHERE username = ?" , TEST_USERNAME, StringRSE.DEFAULT, "username" );
-		Assert.assertEquals( "user1" , result );
+		Assertions.assertEquals( "user1" , result );
 	}
 	
 	@Test
 	public void testRSEBigDecimal() throws SQLException {
 		BigDecimal result = this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, BigDecimalRSE.DEFAULT, "state" );
-		Assert.assertEquals( BigDecimal.valueOf( TEST_STATE ) , result );
+		Assertions.assertEquals( BigDecimal.valueOf( TEST_STATE ) , result );
 		// test convert method
 		BigDecimalRSE tester = new BigDecimalRSE() {
 			public String toString() {
@@ -83,19 +83,19 @@ public class TestRSE extends TestBasicDBHelper {
 	@Test
 	public void testRSEDouble() throws SQLException {
 		Double result = this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, DoubleRSE.DEFAULT, "state" );
-		Assert.assertEquals( Double.valueOf( TEST_STATE ) , result );
+		Assertions.assertEquals( Double.valueOf( TEST_STATE ) , result );
 	}
 	
 	@Test
 	public void testRSEInteger() throws SQLException {
 		Integer result = this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, IntegerRSE.DEFAULT, "state" );
-		Assert.assertEquals( Integer.valueOf( TEST_STATE ) , result );
+		Assertions.assertEquals( Integer.valueOf( TEST_STATE ) , result );
 	}
 	
 	@Test
 	public void testRSELong() throws SQLException {
 		Long result = this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, LongRSE.DEFAULT, "state" );
-		Assert.assertEquals( Long.valueOf( TEST_STATE ) , result );
+		Assertions.assertEquals( Long.valueOf( TEST_STATE ) , result );
 	}
 	
 	@Test
@@ -106,7 +106,7 @@ public class TestRSE extends TestBasicDBHelper {
 				return null;
 			}
 		};
-		Assert.assertThrows( DAORuntimeException.class , () -> this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, rse, "state" ) );
+		Assertions.assertThrows( DAORuntimeException.class , () -> this.worker( "SELECT state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, rse, "state" ) );
 	}
 	
 	private <T> void worker( SingleColumnRSE<T> rse ) {
@@ -120,17 +120,17 @@ public class TestRSE extends TestBasicDBHelper {
 		this.worker( new StringRSE( 1 ) );
 		this.worker( new StringRSE( "test" ) );
 		ok = true;
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void testOptionItemRSE() throws SQLException {
 		OptionItem result1 = this.worker( "SELECT username FROM fugerit.user WHERE username = ?" , TEST_USERNAME, OptionItemRSE.getInstance( "username" ), null );
-		Assert.assertEquals( TEST_USERNAME , result1.getValue() );
+		Assertions.assertEquals( TEST_USERNAME , result1.getValue() );
 		OptionItemRSE rse = OptionItemRSE.getInstance( "state", "username" );
 		OptionItem result2 = this.worker( "SELECT username, state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, rse, null );
-		Assert.assertEquals( String.valueOf( TEST_STATE ) , result2.getValue() );
-		Assert.assertEquals( TEST_USERNAME , result2.getLabel() );
+		Assertions.assertEquals( String.valueOf( TEST_STATE ) , result2.getValue() );
+		Assertions.assertEquals( TEST_USERNAME , result2.getLabel() );
 		log.info( "result2 label field : {}, value field : {}", rse.getLabelField(), rse.getValueField() );
 	}
 	
@@ -139,14 +139,14 @@ public class TestRSE extends TestBasicDBHelper {
 		PropertyRSE rse = PropertyRSE.newReusableRSE();
 		Properties result = this.worker( "SELECT username, state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, rse, null );
 		log.info( "result : {}", result );
-		Assert.assertEquals( TEST_USERNAME , result.getProperty( "USERNAME" ) );
+		Assertions.assertEquals( TEST_USERNAME , result.getProperty( "USERNAME" ) );
 	}
 	
 	@Test
 	public void testPropertyCachingRSE() throws SQLException {
 		PropertyRSE rse = PropertyRSE.newAutoCachingMetadataRSE();
 		Properties result = this.worker( "SELECT username, state FROM fugerit.user WHERE username = ?" , TEST_USERNAME, rse, null );
-		Assert.assertEquals( TEST_USERNAME , result.getProperty( "USERNAME" ) );
+		Assertions.assertEquals( TEST_USERNAME , result.getProperty( "USERNAME" ) );
 	}
 	
 	private static final String SIMPLE_QUERY = "SELECT * FROM fugerit.user";
@@ -165,23 +165,23 @@ public class TestRSE extends TestBasicDBHelper {
 			try ( Connection conn = cf.getConnection();  
 					Statement stm = conn.createStatement(); 
 					ResultSet rs = stm.executeQuery( SIMPLE_QUERY ) ) {
-				Assert.assertTrue( ConnectionFacade.closeLoose(conn, stm, rs) );
+				Assertions.assertTrue( ConnectionFacade.closeLoose(conn, stm, rs) );
 			}
 			try ( Connection conn = cf.getConnection();  
 					Statement stm = conn.createStatement() ) {
-				Assert.assertFalse( ConnectionFacade.closeLoose(conn, stm, null) );
+				Assertions.assertFalse( ConnectionFacade.closeLoose(conn, stm, null) );
 			}
 			try ( Connection conn = cf.getConnection() ) {
-				Assert.assertFalse( ConnectionFacade.closeLoose(conn, null, null) );
+				Assertions.assertFalse( ConnectionFacade.closeLoose(conn, null, null) );
 			}
-			Assert.assertFalse( ConnectionFacade.closeLoose(null, null, null) );
+			Assertions.assertFalse( ConnectionFacade.closeLoose(null, null, null) );
 			try ( Connection conn = cf.getConnection();  
 					Statement stm = conn.createStatement() ) {
-				Assert.assertTrue( ConnectionFacade.closeLoose(conn, stm) );
+				Assertions.assertTrue( ConnectionFacade.closeLoose(conn, stm) );
 			}
-			Assert.assertFalse( ConnectionFacade.closeLoose(null, null) );
+			Assertions.assertFalse( ConnectionFacade.closeLoose(null, null) );
 			try ( Connection conn = cf.getConnection() ) {
-				Assert.assertFalse( ConnectionFacade.closeLoose(conn, null) );
+				Assertions.assertFalse( ConnectionFacade.closeLoose(conn, null) );
 			}
 		}
 	}

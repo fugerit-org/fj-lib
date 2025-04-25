@@ -15,8 +15,8 @@ import org.fugerit.java.core.db.metadata.MetaDataUtils;
 import org.fugerit.java.core.db.metadata.TableId;
 import org.fugerit.java.core.db.metadata.TableModel;
 import org.fugerit.java.core.function.SafeFunction;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
 
@@ -47,7 +47,7 @@ public class TestMetadataUtils extends MemDBTestBase {
 				}
 			}
 			ok = true;
-			Assert.assertTrue( ok );
+			Assertions.assertTrue( ok );
 		} );
 	}
 	
@@ -55,18 +55,18 @@ public class TestMetadataUtils extends MemDBTestBase {
 	public void testDatabaseMetadataAlt() {
 		SafeFunction.apply( () -> {
 			try ( ConnectionFactoryCloseable cf =  ConnectionFactoryImpl.wrap( new SingleConnectionFactory( this.getConnection() ) ) ) {
-				Assert.assertNotNull( MetaDataUtils.createModel( cf, MetaDataUtils.typesAll() ) );
+				Assertions.assertNotNull( MetaDataUtils.createModel( cf, MetaDataUtils.typesAll() ) );
 			}
 		} );
 	}
 	
 	@Test
 	public void testDatabaseMetadataConsts() {
-		Assert.assertEquals( MetaDataUtils.TYPE_TABLE , MetaDataUtils.typesAll()[0]);
-		Assert.assertEquals( MetaDataUtils.TYPE_VIEW , MetaDataUtils.typesAll()[1]);
-		Assert.assertEquals( MetaDataUtils.TYPE_TABLE , MetaDataUtils.typesTable()[0]);
-		Assert.assertEquals( MetaDataUtils.TYPE_TABLE , MetaDataUtils.typesDefault()[0]);
-		Assert.assertEquals( MetaDataUtils.TYPE_VIEW , MetaDataUtils.typesView()[0]);
+		Assertions.assertEquals( MetaDataUtils.TYPE_TABLE , MetaDataUtils.typesAll()[0]);
+		Assertions.assertEquals( MetaDataUtils.TYPE_VIEW , MetaDataUtils.typesAll()[1]);
+		Assertions.assertEquals( MetaDataUtils.TYPE_TABLE , MetaDataUtils.typesTable()[0]);
+		Assertions.assertEquals( MetaDataUtils.TYPE_TABLE , MetaDataUtils.typesDefault()[0]);
+		Assertions.assertEquals( MetaDataUtils.TYPE_VIEW , MetaDataUtils.typesView()[0]);
 	}
 	
 	@Test
@@ -77,7 +77,7 @@ public class TestMetadataUtils extends MemDBTestBase {
 				JdbcAdaptor mysqlAdaptor = MetaDataUtils.getDefaultAdaptorFor( "mysql" , cf );
 				logger.info( "mysqlAdaptor {}", mysqlAdaptor );
 				JdbcAdaptor oracleAdaptor = MetaDataUtils.getDefaultAdaptorFor( "oracle" , cf );
-				Assert.assertNotNull( oracleAdaptor );
+				Assertions.assertNotNull( oracleAdaptor );
 				// setup data
 				DAOUtilsNG.execute( cf.getConnection() , OpDAO.newExecuteOp( 
 						"CREATE TABLE all_col_comments ( owner VARCHAR(32), " +
@@ -86,15 +86,15 @@ public class TestMetadataUtils extends MemDBTestBase {
 				// test found
 				TableId tableId = new TableId( "user", "fugerit", null );
 				String comment1 = oracleAdaptor.getColumnComment( tableId, "id" );
-				Assert.assertEquals( "user id" , comment1 );
+				Assertions.assertEquals( "user id" , comment1 );
 				String comment2 = oracleAdaptor.getColumnComment( tableId, "not exists" );
-				Assert.assertEquals( "" , comment2 );
-				Assert.assertNotNull( mysqlAdaptor );
+				Assertions.assertEquals( "" , comment2 );
+				Assertions.assertNotNull( mysqlAdaptor );
 				JdbcAdaptor adaptor = MetaDataUtils.getDefaultAdaptorFor( "postgres" , cf );
 				logger.info( "jdbcAdatpror default {}", adaptor );
-				Assert.assertNotNull( adaptor );
-				Assert.assertEquals( "", adaptor.getColumnComment( null , null ) );
-				Assert.assertEquals( "", adaptor.getTableComment( null ) );
+				Assertions.assertNotNull( adaptor );
+				Assertions.assertEquals( "", adaptor.getColumnComment( null , null ) );
+				Assertions.assertEquals( "", adaptor.getTableComment( null ) );
 				
 			}
 		} );

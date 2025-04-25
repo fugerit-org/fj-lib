@@ -1,8 +1,8 @@
 package test.org.fugerit.java.core.util.mvn;
 
 import org.fugerit.java.core.util.mvn.MavenProps;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,14 +13,14 @@ public class TestMavenProps {
 	public void testMavenOk() {
 		String prop = MavenProps.getPropery( "org.fugerit.java", "fj-core", "artifactId" );
 		log.info( "version {}", prop );
-		Assert.assertEquals( "fj-core" , prop );
+		Assertions.assertEquals( "fj-core" , prop );
 	}
 	
 	@Test
 	public void testMavenKo() {
 		String prop = MavenProps.getPropery( "org.fugerit.java.no.exists", "fj-core", "artifactId" );
 		log.info( "version {}", prop );
-		Assert.assertNull( prop );
+		Assertions.assertNull( prop );
 	}
 	
 }

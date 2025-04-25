@@ -1,12 +1,12 @@
 package test.org.fugerit.java.core.util.checkpoint;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 
 import org.awaitility.Awaitility;
 import org.fugerit.java.core.util.checkpoint.Checkpoints;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 

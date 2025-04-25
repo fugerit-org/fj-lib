@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.fugerit.java.core.util.IteratorHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,14 +25,14 @@ public class TestIteratorHelper {
 			String current = myIt.next();
 			log.info( "current : {}", current );
 		}
-		Assert.assertThrows( NoSuchElementException.class , myIt::next );
+		Assertions.assertThrows( NoSuchElementException.class , myIt::next );
 		// test iterator 2
 		Iterator<String> it2 = list.iterator();
 		Iterator<String> myIt2 = IteratorHelper.createSimpleIterator(it2::hasNext, it2::next);
 		if ( myIt2.hasNext() ) {
 			String current = myIt2.next();
 			log.info( "current : {}", current );
-			Assert.assertThrows( UnsupportedOperationException.class , myIt2::remove );
+			Assertions.assertThrows( UnsupportedOperationException.class , myIt2::remove );
 		}
 		// test iterator 3
 		Iterator<String> it3 = list.iterator();

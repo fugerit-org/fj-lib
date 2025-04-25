@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class TestConfigRuntimeException {
 	
@@ -13,73 +13,73 @@ public class TestConfigRuntimeException {
 	
 	@Test
 	public void testEx1() {
-		Assert.assertNotNull( new ConfigRuntimeException() );
+		Assertions.assertNotNull( new ConfigRuntimeException() );
 	}
 	
 	@Test
 	public void testEx2() {
-		Assert.assertNotNull( new ConfigRuntimeException( "a" ) );
+		Assertions.assertNotNull( new ConfigRuntimeException( "a" ) );
 	}
 	
 	@Test
 	public void testEx3() {
-		Assert.assertNotNull( new ConfigRuntimeException( new SQLException( "b" ) ) );
+		Assertions.assertNotNull( new ConfigRuntimeException( new SQLException( "b" ) ) );
 	}
 	
 	@Test
 	public void testEx4() {
-		Assert.assertNotNull( new ConfigRuntimeException( "c", new SQLException( "d" ) ) );
+		Assertions.assertNotNull( new ConfigRuntimeException( "c", new SQLException( "d" ) ) );
 	}
 	
 	@Test
 	public void testEx5() {
-		Assert.assertNotNull( ConfigRuntimeException.convertEx( "e" , new SQLException( "f" ) ) );
+		Assertions.assertNotNull( ConfigRuntimeException.convertEx( "e" , new SQLException( "f" ) ) );
 	}
 	
 	@Test
 	public void testEx6() {
-		Assert.assertNotNull( ConfigRuntimeException.convertEx( "g" , new ConfigRuntimeException( "g" ) ) );
+		Assertions.assertNotNull( ConfigRuntimeException.convertEx( "g" , new ConfigRuntimeException( "g" ) ) );
 	}
 	
 	@Test
 	public void testEx7() {
-		Assert.assertNotNull( ConfigRuntimeException.convertExMethod( "e" , new SQLException( "f" ) ) );
+		Assertions.assertNotNull( ConfigRuntimeException.convertExMethod( "e" , new SQLException( "f" ) ) );
 	}
 
 	@Test
 	public void testEx21() {
-		Assert.assertNotNull( ConfigRuntimeException.convertToRuntimeEx( new ConfigRuntimeException( "y" ) ) );
+		Assertions.assertNotNull( ConfigRuntimeException.convertToRuntimeEx( new ConfigRuntimeException( "y" ) ) );
 	}
 
 
 	@Test
 	public void testEx22() {
-		Assert.assertNotNull( ConfigRuntimeException.convertToRuntimeEx( new IOException( "z" ) ) );
+		Assertions.assertNotNull( ConfigRuntimeException.convertToRuntimeEx( new IOException( "z" ) ) );
 	}
 	
 	@Test
 	public void testEx8() {
-		Assert.assertNotNull( new ConfigRuntimeException( 1 ) );
+		Assertions.assertNotNull( new ConfigRuntimeException( 1 ) );
 	}
 	
 	@Test
 	public void testEx9() {
-		Assert.assertNotNull( new ConfigRuntimeException( "h", 2 ) );
+		Assertions.assertNotNull( new ConfigRuntimeException( "h", 2 ) );
 	}
 	
 	@Test
 	public void testEx10() {
-		Assert.assertNotNull( new ConfigRuntimeException( "i", new ConfigRuntimeException( "l" ), 3 ) );
+		Assertions.assertNotNull( new ConfigRuntimeException( "i", new ConfigRuntimeException( "l" ), 3 ) );
 	}
 	
 	@Test
 	public void testEx11() {
-		Assert.assertNotNull( new ConfigRuntimeException( new ConfigRuntimeException( "m" ), 4 ) );
+		Assertions.assertNotNull( new ConfigRuntimeException( new ConfigRuntimeException( "m" ), 4 ) );
 	}
 	
 	@Test
 	public void testEx12() throws ConfigRuntimeException {
-		Assert.assertThrows( ConfigRuntimeException.class, () -> ConfigRuntimeException.stadardExceptionWrapping( TEST_IO_EX ) );
+		Assertions.assertThrows( ConfigRuntimeException.class, () -> ConfigRuntimeException.stadardExceptionWrapping( TEST_IO_EX ) );
 	}
 	
 }

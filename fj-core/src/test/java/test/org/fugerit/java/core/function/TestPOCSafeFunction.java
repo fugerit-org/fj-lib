@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.function.UnsafeVoid;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -116,9 +116,9 @@ public class TestPOCSafeFunction {
     @Test
     public void testSafeFunctionApply() {
         // classical try catch
-        Assert.assertThrows( ConfigRuntimeException.class, this::applyTryCatch );
+        Assertions.assertThrows( ConfigRuntimeException.class, this::applyTryCatch );
         // safe function
-        Assert.assertThrows( ConfigRuntimeException.class, this::applySafeFunction );
+        Assertions.assertThrows( ConfigRuntimeException.class, this::applySafeFunction );
     }
 
     public boolean getTryCatch() {
@@ -144,9 +144,9 @@ public class TestPOCSafeFunction {
     @Test
     public void testSafeFunctionGet() {
         // classical try catch
-        Assert.assertThrows( ConfigRuntimeException.class, this::getTryCatch );
+        Assertions.assertThrows( ConfigRuntimeException.class, this::getTryCatch );
         // safe function
-        Assert.assertThrows( ConfigRuntimeException.class, this::getSafeFunction );
+        Assertions.assertThrows( ConfigRuntimeException.class, this::getSafeFunction );
     }
 
     /*

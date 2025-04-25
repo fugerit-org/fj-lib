@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.fugerit.java.core.xml.sax.dh.DefaultHandlerComp;
 import org.fugerit.java.core.xml.sax.dtd.DTDHandlerWrapper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -32,35 +32,35 @@ public class TestDefaultHandler {
 	public void defaultHandlerTest0() {
 		DefaultHandlerComp dh = new DefaultHandlerComp();
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void defaultHandlerTest1() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_CH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void defaultHandlerTest2() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_DH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void defaultHandlerTest3() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
 	public void defaultHandlerTest4() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_ER );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -68,7 +68,7 @@ public class TestDefaultHandler {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_ER, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class TestDefaultHandler {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_ER, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -84,7 +84,7 @@ public class TestDefaultHandler {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -92,7 +92,7 @@ public class TestDefaultHandler {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_ER );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -112,7 +112,7 @@ public class TestDefaultHandler {
 		dh.unparsedEntityDecl( "m", "n", "o", "p" );
 		dh.fatalError( null );
 		dh.warning( null );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -126,7 +126,7 @@ public class TestDefaultHandler {
 				return null;
 			}
 		} );
-		Assert.assertThrows( SAXException.class , () -> dh.resolveEntity(null, null) );
+		Assertions.assertThrows( SAXException.class , () -> dh.resolveEntity(null, null) );
 	}
 	
 }

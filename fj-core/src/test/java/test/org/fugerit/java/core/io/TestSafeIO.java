@@ -3,8 +3,8 @@ package test.org.fugerit.java.core.io;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.io.SafeIO;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.helpers.io.InputStreamFail;
 
@@ -15,23 +15,23 @@ public class TestSafeIO {
 	@Test
 	public void testStringOk() {
 		String res = SafeIO.readStringStream( () -> ClassHelper.loadFromDefaultClassLoader(PATH_OK) );
-		Assert.assertNotNull( res );
+		Assertions.assertNotNull( res );
 	}
 	
 	@Test
 	public void testBytesOk() {
 		byte[] res = SafeIO.readBytes( () -> ClassHelper.loadFromDefaultClassLoader(PATH_OK) );
-		Assert.assertNotNull( res );
+		Assertions.assertNotNull( res );
 	}
 	
 	@Test
 	public void testStringKo() {
-		Assert.assertThrows( ConfigRuntimeException.class , () -> SafeIO.readStringStream( () -> new InputStreamFail() ) );
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> SafeIO.readStringStream( () -> new InputStreamFail() ) );
 	}
 	
 	@Test
 	public void testBytesKo() {
-		Assert.assertThrows( ConfigRuntimeException.class , () -> SafeIO.readBytes( () -> new InputStreamFail() ) );
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> SafeIO.readBytes( () -> new InputStreamFail() ) );
 	}
 	
 }

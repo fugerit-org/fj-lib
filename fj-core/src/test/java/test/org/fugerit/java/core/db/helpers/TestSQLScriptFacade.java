@@ -9,8 +9,8 @@ import org.fugerit.java.core.db.helpers.SQLScriptReader;
 import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
@@ -28,7 +28,7 @@ public class TestSQLScriptFacade extends TestBasicDBHelper {
 				for ( int k=0; k<res.length; k++ ) {
 					log.info( "current {} -> {}", k, res[k] );
 				}
-				Assert.assertNotEquals( 0 , res.length );
+				Assertions.assertNotEquals( 0 , res.length );
 				// test sql script
 				try ( SQLScriptReader reader = new SQLScriptReader( new ByteArrayInputStream( "SELECT * FROM fugerit.user;".getBytes() ) );
 						Connection conn = newConnection() ) {

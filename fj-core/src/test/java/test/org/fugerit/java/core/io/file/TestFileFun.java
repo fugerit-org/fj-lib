@@ -17,8 +17,8 @@ import org.fugerit.java.core.io.file.FileFunWrapper;
 import org.fugerit.java.core.io.file.ZipArchiveDirFileFun;
 import org.fugerit.java.core.io.file.ZipFileFun;
 import org.fugerit.java.core.lang.helpers.ExHandlerDefault;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
@@ -82,7 +82,7 @@ public class TestFileFun extends BasicTest {
 	@Test
 	public void testFun() {
 		boolean ok = this.worker( "target/file_fun", "src/test/resources/core/xml/dtd" );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
@@ -92,7 +92,7 @@ public class TestFileFun extends BasicTest {
 			FileFunSecure secure = new FileFunSecure(wrapper, new ExHandlerDefault());
 			boolean ok = this.worker( secure );	
 			log.info( "secure wrapped : {}", secure.getWrappedFileFun() );
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 			FileFunSecure.apply( new ExHandlerDefault() ,  () -> new IOException( "TEST" ) );
 		}
 	}
@@ -106,7 +106,7 @@ public class TestFileFun extends BasicTest {
 			fun.handleFile( sourceDir.listFiles()[0] );
 			ok = true;
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 }

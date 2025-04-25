@@ -1,6 +1,6 @@
 package test.org.fugerit.java.core.lang.helpers.filter;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.fugerit.java.core.lang.helpers.filter.FilterApplyDefault;
 import org.fugerit.java.core.lang.helpers.filter.FilterFacade;
 import org.fugerit.java.core.lang.helpers.filter.FilterInfo;
 import org.fugerit.java.core.lang.helpers.filter.FilterInfoDefault;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelOne;

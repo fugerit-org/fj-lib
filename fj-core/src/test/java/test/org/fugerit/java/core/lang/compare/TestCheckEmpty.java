@@ -1,9 +1,9 @@
 package test.org.fugerit.java.core.lang.compare;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.fugerit.java.core.lang.compare.CheckEmptyHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 

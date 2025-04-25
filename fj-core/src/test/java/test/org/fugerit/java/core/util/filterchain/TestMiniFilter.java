@@ -1,7 +1,7 @@
 package test.org.fugerit.java.core.util.filterchain;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +16,8 @@ import org.fugerit.java.core.util.filterchain.MiniFilterContext;
 import org.fugerit.java.core.util.filterchain.MiniFilterData;
 import org.fugerit.java.core.util.filterchain.MiniFilterDebug;
 import org.fugerit.java.core.util.filterchain.MiniFilterMap;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,7 +120,7 @@ public class TestMiniFilter extends BasicTest {
 			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader(CONF_PATH) ) {
 				MiniFilterConfig config = new MiniFilterConfig();
 				MiniFilterMap map = MiniFilterConfig.loadConfigMap( is , config );
-				Assert.assertNotNull( map );
+				Assertions.assertNotNull( map );
 			}	
 		} );
 	}	
@@ -133,7 +133,7 @@ public class TestMiniFilter extends BasicTest {
 					PrintWriter writer = new PrintWriter(buffer)) {
 				MiniFilterDebug.dumpConfig( writer , is );
 				String debugText = buffer.toString();
-				Assert.assertNotEquals( 0 , debugText.length() );
+				Assertions.assertNotEquals( 0 , debugText.length() );
 				logger.info( "debug {}", debugText );
 			}	
 		} );
