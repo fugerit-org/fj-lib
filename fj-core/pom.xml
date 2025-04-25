@@ -99,6 +99,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 		    <groupId>com.github.h-thurow</groupId>
 		    <artifactId>simple-jndi</artifactId>
 		    <version>0.25.0</version>
