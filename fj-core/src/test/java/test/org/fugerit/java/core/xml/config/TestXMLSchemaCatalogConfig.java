@@ -18,7 +18,7 @@ import org.xml.sax.InputSource;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestXMLSchemaCatalogConfig extends BasicTest {
+class TestXMLSchemaCatalogConfig extends BasicTest {
 
 	private static final String SCHEMA_ID_DEFAULT = "current";	// default schema catalog id
 	

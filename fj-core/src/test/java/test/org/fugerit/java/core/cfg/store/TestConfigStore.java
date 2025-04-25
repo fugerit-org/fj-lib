@@ -24,7 +24,7 @@ import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.testhelpers.FailInputStream;
 
 @Slf4j
-public class TestConfigStore extends BasicTest {
+class TestConfigStore extends BasicTest {
 
     private static final Logger logger = LoggerFactory.getLogger( TestConfigStore.class );
 

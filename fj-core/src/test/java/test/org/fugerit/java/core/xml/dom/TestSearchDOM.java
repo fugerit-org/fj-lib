@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestSearchDOM {
+class TestSearchDOM {
 
 	private boolean worker( SearchDOM search ) throws XMLException, IOException {
 		boolean ok = false;

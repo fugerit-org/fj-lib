@@ -31,7 +31,7 @@ import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.testhelpers.FailOutputStream;
 
 @Slf4j
-public class TestDOMIO extends BasicTest {
+class TestDOMIO extends BasicTest {
 
 	private static final String XML_TEST_PATH = "src/test/resources/core/cfg/xml/property-catalog-test.xml";
 	

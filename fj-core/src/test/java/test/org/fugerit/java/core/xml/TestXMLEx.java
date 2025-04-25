@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestXMLEx {
+class TestXMLEx {
 
 	private static final Exception EX_TEST = new IOException( "junit test scenario" );
 	

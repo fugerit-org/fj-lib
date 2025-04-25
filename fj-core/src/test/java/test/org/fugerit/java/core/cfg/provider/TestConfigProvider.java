@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestConfigProvider extends AbstractConfigurableObject {
+class TestConfigProvider extends AbstractConfigurableObject {
 
 	private static final long serialVersionUID = 134123432L;
 

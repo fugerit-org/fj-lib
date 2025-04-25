@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestContentHandler {
+class TestContentHandler {
 
 	private static final String PATH_OK = "core/xml/dtd/test-content-handler.xml";
 	

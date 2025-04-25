@@ -21,12 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestFactoryCatalog extends BasicTest {
+class TestFactoryCatalog extends BasicTest {
 
 	private static FactoryCatalog catalog;
 	
 	@BeforeAll
-	public static void init() {
+	static void init() {
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/cfg/xml/factory-catalog-test.xml" ) ) {
 			catalog = new FactoryCatalog();
 			GenericListCatalogConfig.load( is , catalog );

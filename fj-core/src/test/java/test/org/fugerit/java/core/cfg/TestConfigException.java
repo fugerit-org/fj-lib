@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.HelperCheck;
 
 @Slf4j
-public class TestConfigException {
+class TestConfigException {
 	
 	
 	@Test

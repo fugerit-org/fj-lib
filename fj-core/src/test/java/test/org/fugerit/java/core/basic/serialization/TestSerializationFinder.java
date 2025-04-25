@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import test.org.fugerit.java.BasicTest;
 
-public class TestSerializationFinder extends BasicTest {
+class TestSerializationFinder extends BasicTest {
 
 	@Test
 	void testOkSerialization() {

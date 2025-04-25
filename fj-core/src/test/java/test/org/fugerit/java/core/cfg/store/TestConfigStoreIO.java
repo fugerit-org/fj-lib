@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestConfigStoreIO {
+class TestConfigStoreIO {
 
     private static final Logger logger = LoggerFactory.getLogger( TestConfigStoreIO.class );
 

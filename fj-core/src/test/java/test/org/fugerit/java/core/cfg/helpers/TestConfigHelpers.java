@@ -20,7 +20,7 @@ import org.w3c.dom.Element;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestConfigHelpers {
+class TestConfigHelpers {
 
 	@Test
 	void testUnsafeHelper() throws ConfigException {

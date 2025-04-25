@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.helpers.FailHelper;
 
 @Slf4j
-public class TestDefaultHandler {
+class TestDefaultHandler {
 
 	private boolean worker( DefaultHandler dh ) {
 		log.info( "default handler -> {}", dh );

@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestErrorHandler extends BasicTest {
+class TestErrorHandler extends BasicTest {
 
 	private Locator newLocator( int row, int col ) {
 		return new LocatorImpl() {

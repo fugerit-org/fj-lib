@@ -18,7 +18,7 @@ import org.w3c.dom.Document;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestDOMClean {
+class TestDOMClean {
 
 	private static final String INPUT_FILE_XML = "dom_clean1.xml";
 	

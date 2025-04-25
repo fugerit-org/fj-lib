@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestTransformerXML extends BasicTest {
+class TestTransformerXML extends BasicTest {
 	
 	private static final String SAMPLE_XLST = "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\"></xsl:stylesheet>";
 	

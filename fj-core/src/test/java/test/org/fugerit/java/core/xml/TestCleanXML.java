@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.helpers.io.ReaderFail;
 
 @Slf4j
-public class TestCleanXML {
+class TestCleanXML {
 
 	private void copy( File sourceBase, File fileBase ) throws FileNotFoundException, IOException {
 		for ( File current : sourceBase.listFiles( f -> f.isFile() ) ) {

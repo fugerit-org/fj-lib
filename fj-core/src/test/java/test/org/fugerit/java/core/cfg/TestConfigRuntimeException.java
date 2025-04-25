@@ -7,7 +7,7 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestConfigRuntimeException {
+class TestConfigRuntimeException {
 	
 	private static final IOException TEST_IO_EX = new IOException( "test io ex" );
 	

@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestXMLValidatorSAX extends BasicTest {
+class TestXMLValidatorSAX extends BasicTest {
 
 	private static final String PATH_OK = "core/xml/dtd/doc-ok.xml";
 	

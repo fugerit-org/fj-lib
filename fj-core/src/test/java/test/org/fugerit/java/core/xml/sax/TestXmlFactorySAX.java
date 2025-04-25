@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestXmlFactorySAX {
+class TestXmlFactorySAX {
 
 	private boolean worker( XMLFactorySAX factory ) throws XMLException {
 		boolean ok = factory != null;
