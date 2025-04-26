@@ -12,9 +12,10 @@ import org.junit.jupiter.api.Test;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
+import test.org.fugerit.java.core.db.dao.ModelUser;
 
 @Slf4j
-public class TestClassHelper extends BasicTest {
+class TestClassHelper extends BasicTest {
 
 	private static final String PATH_TXT_OK = "core/test_test.txt";
 	
@@ -78,13 +79,13 @@ public class TestClassHelper extends BasicTest {
 	
 	@Test
 	void testNewInstanceOk() {
-		boolean ok = this.testNewInstanceWorker( TestClassHelper.class.getName(), false );
+		boolean ok = this.testNewInstanceWorker( ModelUser.class.getName(), false );
 		Assertions.assertTrue( ok );
 	}
 	
 	@Test
 	void testNewInstanceClassNotFoundException() {
-		boolean ok = this.testNewInstanceWorker( TestClassHelper.class.getName()+"NotExist", true );
+		boolean ok = this.testNewInstanceWorker( ModelUser.class.getName()+"NotExist", true );
 		Assertions.assertTrue( ok );
 	}
 
@@ -109,7 +110,7 @@ public class TestClassHelper extends BasicTest {
 	
 	@Test
 	void testLoadFromClassLoaderOk1() {
-		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, TestClassHelper.class );
+		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, ModelUser.class );
 		Assertions.assertTrue( ok );
 	}
 	
@@ -133,7 +134,7 @@ public class TestClassHelper extends BasicTest {
 	
 	@Test
 	void testLoadFromClassLoaderko1() {
-		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_KO, true, TestClassHelper.class );
+		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_KO, true, ModelUser.class );
 		Assertions.assertTrue( ok );
 	}
 	
@@ -145,16 +146,16 @@ public class TestClassHelper extends BasicTest {
 	
 	@Test
 	void testToFullClassName() {
-		String name = ClassHelper.toFullClassName( new TestClassHelper() );
+		String name = ClassHelper.toFullClassName( new ModelUser() );
 		log.info( "tesToFullClassName {}", name );
-		Assertions.assertEquals( TestClassHelper.class.getName(), name );
+		Assertions.assertEquals( ModelUser.class.getName(), name );
 	}
 	
 	@Test
 	void testToSimpleClassName() {
-		String name = ClassHelper.toSimpleClassName( new TestClassHelper() );
+		String name = ClassHelper.toSimpleClassName( new ModelUser() );
 		log.info( "testToSimpleClassName {}", name );
-		Assertions.assertEquals( TestClassHelper.class.getSimpleName() , name );
+		Assertions.assertEquals( ModelUser.class.getSimpleName() , name );
 	}
 	
 }
