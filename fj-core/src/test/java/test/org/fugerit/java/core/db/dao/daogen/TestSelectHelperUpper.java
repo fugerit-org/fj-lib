@@ -9,7 +9,7 @@ import org.fugerit.java.core.db.daogen.SelectHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestSelectHelperUpper extends TestAddressSelectHelper {
+class TestSelectHelperUpper extends TestAddressSelectHelper {
 	
 	protected void testQueryHelperIgnoreCase( String syntax ) {
 		try ( CloseableDAOContext context = new CloseableDAOContextSC( this.getConnection() ) ) {

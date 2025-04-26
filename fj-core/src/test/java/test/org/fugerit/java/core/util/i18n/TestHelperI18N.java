@@ -30,7 +30,7 @@ class TestHelperI18N {
 	private HelperI18N helperParam;
 
 	@BeforeEach
-	public void init() {
+	void init() {
 		this.helper = BundleMapI18N.newHelperI18N( CONF_PATH, LANG_DEF, LANG_ALT );
 		this.helperParam = BundleMapI18N.newHelperI18N( CONF_PATH_PARAM, LANG_DEF, LANG_ALT );
 	}

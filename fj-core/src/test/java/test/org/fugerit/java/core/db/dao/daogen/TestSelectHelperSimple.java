@@ -9,7 +9,7 @@ import org.fugerit.java.core.db.daogen.SelectHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestSelectHelperSimple extends TestAddressSelectHelper {
+class TestSelectHelperSimple extends TestAddressSelectHelper {
 	
 	
 	protected void testQueryHelperSimple( String syntax ) {

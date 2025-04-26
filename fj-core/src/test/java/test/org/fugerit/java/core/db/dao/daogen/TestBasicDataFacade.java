@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Slf4j
-public class TestBasicDataFacade extends TestBasicDBHelper implements Serializable {
+class TestBasicDataFacade extends TestBasicDBHelper implements Serializable {
 
 	private static final long serialVersionUID = 2428066303144473612L;
 

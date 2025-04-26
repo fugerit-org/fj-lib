@@ -48,7 +48,7 @@ class TestCleanXML {
 	}
 	
 	@Test 
-	public void testFailClean() throws IOException {
+	 void testFailClean() throws IOException {
 		try ( Reader reader = new ReaderFail();
 				Writer writer = new StringWriter() ) {
 			Assertions.assertThrows( ConfigRuntimeException.class , () -> XMLClean.cleanStream( reader, writer ) );
@@ -56,7 +56,7 @@ class TestCleanXML {
 	}
 	
 	@Test 
-	public void testFailFolder() throws IOException {
+	 void testFailFolder() throws IOException {
 		try ( Reader reader = new ReaderFail();
 				Writer writer = new StringWriter() ) {
 			Assertions.assertThrows( ConfigRuntimeException.class , () -> XMLClean.cleanFolder(null, null) );
@@ -64,7 +64,7 @@ class TestCleanXML {
 	}
 	
 	@Test 
-	public void testCleanString() throws IOException {
+	 void testCleanString() throws IOException {
 		Assertions.assertNotNull( XMLClean.cleanXML( "test" ) );
 	}
 	

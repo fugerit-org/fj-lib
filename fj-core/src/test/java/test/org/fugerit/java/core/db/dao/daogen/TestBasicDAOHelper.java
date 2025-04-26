@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
-public class TestBasicDAOHelper extends TestBasicDBHelper {
+class TestBasicDAOHelper extends TestBasicDBHelper {
 
 	@Test
 	void testHelpersCreation() {
