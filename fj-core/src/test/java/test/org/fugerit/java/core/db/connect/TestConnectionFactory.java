@@ -33,7 +33,7 @@ import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
-public class TestConnectionFactory extends BasicTest {
+class TestConnectionFactory extends BasicTest {
 
 	private static final String JNDI_DS_NAME = "java:/comp/env/datasource/ds";
 	

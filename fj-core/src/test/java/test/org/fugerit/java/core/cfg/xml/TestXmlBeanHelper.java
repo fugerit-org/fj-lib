@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 import test.org.fugerit.java.BasicTest;
 
-public class TestXmlBeanHelper extends BasicTest {
+class TestXmlBeanHelper extends BasicTest {
 
 	public static final String TEST_VALUE = "test1";
 	

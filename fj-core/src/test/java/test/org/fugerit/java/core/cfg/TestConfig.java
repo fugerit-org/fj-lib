@@ -8,7 +8,7 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestConfig {
+class TestConfig {
 
 	
 	@Test

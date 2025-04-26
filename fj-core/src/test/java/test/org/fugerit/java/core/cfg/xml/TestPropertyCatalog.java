@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestPropertyCatalog extends BasicTest {
+class TestPropertyCatalog extends BasicTest {
 
 	private static final PropertyCatalog CATALOG = PropertyCatalog.loadConfigSafe( "cl://core/cfg/xml/property-catalog-test.xml" );
 	
