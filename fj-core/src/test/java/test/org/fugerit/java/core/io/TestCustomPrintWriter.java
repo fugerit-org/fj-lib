@@ -8,7 +8,7 @@ import org.fugerit.java.core.io.helper.CustomPrintWriter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestCustomPrintWriter {
+class TestCustomPrintWriter {
 
 	private boolean worker( CustomPrintWriter writer ) {
 		boolean ok = false;

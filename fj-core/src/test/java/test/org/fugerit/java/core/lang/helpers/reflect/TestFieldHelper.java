@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import lombok.Getter;
 import lombok.Setter;
 
-public class TestFieldHelper {
+class TestFieldHelper {
 
 	private static final String TEST_VALUE = "test1";
 	

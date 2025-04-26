@@ -65,7 +65,7 @@ import java.util.function.Consumer;
  *
  */
 @Slf4j
-public class TestPOCSafeFunction {
+class TestPOCSafeFunction {
 
     /*
      * simple function to use as the body of this class's scenarios

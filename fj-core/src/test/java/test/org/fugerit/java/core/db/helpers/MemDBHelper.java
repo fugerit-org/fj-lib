@@ -4,7 +4,7 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.test.db.helper.MemTestDBHelper;
 import org.junit.jupiter.api.BeforeAll;
 
-public class MemDBHelper extends MemTestDBHelper {
+class MemDBHelper extends MemTestDBHelper {
 
 	public static final String DEFAULT_DB_CONN_PATH = "test/memdb/base-db-conn.properties";
 	public static final String DEFAULT_DB_INIT_PATH = "test/memdb/base_db_init.sql";

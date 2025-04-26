@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestCloseDAOHelper extends TestBasicDBHelper {
+class TestCloseDAOHelper extends TestBasicDBHelper {
 
 	@Test
 	void testClose1() {

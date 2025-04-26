@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestJavaGenerator extends BasicTest {
+class TestJavaGenerator extends BasicTest {
 	
 	@Test
 	void generate() {

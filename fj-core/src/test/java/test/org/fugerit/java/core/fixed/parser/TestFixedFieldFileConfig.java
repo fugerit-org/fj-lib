@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestFixedFieldFileConfig extends BasicTest {
+class TestFixedFieldFileConfig extends BasicTest {
 
 	private static FixedFieldFileConfig config = null;
 	

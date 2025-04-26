@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
-public class TestDAOUtilsNG extends TestBasicDBHelper {
+class TestDAOUtilsNG extends TestBasicDBHelper {
 
 	private static final String QUERY_DEF = "SELECT * FROM fugerit.user";
 	

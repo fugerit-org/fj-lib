@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestMemDBTestBase extends MemDBTestBase {
+class TestMemDBTestBase extends MemDBTestBase {
 
 	public TestMemDBTestBase() throws Exception {
 		super();

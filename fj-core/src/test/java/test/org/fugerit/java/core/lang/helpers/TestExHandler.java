@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestExHandler {
+class TestExHandler {
 
 	private boolean worker( ExHandler handler ) {
 		handler.fatal( new IOException( "fatal" ) );

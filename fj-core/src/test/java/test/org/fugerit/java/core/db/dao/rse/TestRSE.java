@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
-public class TestRSE extends TestBasicDBHelper {
+class TestRSE extends TestBasicDBHelper {
 
 	private static final String TEST_USERNAME = "user1";
 	

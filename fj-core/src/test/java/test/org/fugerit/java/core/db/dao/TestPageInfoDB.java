@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestPageInfoDB extends BasicTest {
+class TestPageInfoDB extends BasicTest {
 
 	@Test
 	void testPI() {

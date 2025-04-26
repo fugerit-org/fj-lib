@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-public class TestObjectIO {
+class TestObjectIO {
 
 	@Test
 	void testStringOk() throws IOException {

@@ -32,7 +32,7 @@ import test.org.fugerit.java.core.db.TestBasicDBHelper;
 import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
 import test.org.fugerit.java.helpers.FailHelper;
 
-public class TestSeqIdGenerator extends MemDBTestBase {
+class TestSeqIdGenerator extends MemDBTestBase {
 
 	private static final String SEQ_NAME = "fugerit.seq_test";
 	

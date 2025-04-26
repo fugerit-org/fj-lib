@@ -6,7 +6,7 @@ import org.fugerit.java.core.lang.helpers.reflect.MethodHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestMethodHelper {
+class TestMethodHelper {
 
 	@Test
 	void testFoundMethod() {

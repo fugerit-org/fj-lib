@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.helpers.io.InputStreamFail;
 
-public class TestSafeIO {
+class TestSafeIO {
 
 	private static final String PATH_OK = "core/xml/dtd/doc-1-0.dtd";
 	

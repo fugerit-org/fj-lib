@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestFileFun extends BasicTest {
+class TestFileFun extends BasicTest {
 
 	private boolean worker( String testPath, String sourcePath ) {
 		boolean ok = false;

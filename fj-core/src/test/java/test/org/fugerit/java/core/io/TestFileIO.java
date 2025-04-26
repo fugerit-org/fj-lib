@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 
-public class TestFileIO {
+class TestFileIO {
 
     @Test
     public void testIsInTmpFolderOk() throws IOException  {

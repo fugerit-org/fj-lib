@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class TestIdFinderNG {
+class TestIdFinderNG {
 
     private static final long TEST = 1000L;
 

@@ -17,7 +17,7 @@ import org.fugerit.java.core.io.helper.StreamHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestStreamHelper {
+class TestStreamHelper {
 
 	@Test
 	void testStreamHelper() {

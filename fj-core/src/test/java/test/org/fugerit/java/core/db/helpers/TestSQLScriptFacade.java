@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
-public class TestSQLScriptFacade extends TestBasicDBHelper {
+class TestSQLScriptFacade extends TestBasicDBHelper {
 
 	@Test
 	void testReadScripts() {

@@ -16,7 +16,7 @@ import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelOne;
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo;
 
-public class TestPathHelper extends BasicTest {
+class TestPathHelper extends BasicTest {
 	
 	private static final TestModelOne TEST_CASE_001 = new TestModelOne( new BigDecimal( 1 ), "value 001_1", new TestModelTwo( new BigDecimal( 2 ), "value 001_2" )  );
 	

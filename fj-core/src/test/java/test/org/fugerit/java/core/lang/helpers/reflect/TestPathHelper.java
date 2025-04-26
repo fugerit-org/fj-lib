@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestPathHelper extends BasicTest {
+class TestPathHelper extends BasicTest {
 	
 	private static final int EXPECTED_RESULT_EXCEPTION = 1;
 	private static final int EXPECTED_RESULT_NULL = 2;

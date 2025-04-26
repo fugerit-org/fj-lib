@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.zip.ZipOutputStream;
 
 @Slf4j
-public class TestCharArrayDataHandler {
+class TestCharArrayDataHandler {
 
     private static final String TEST_STRING = "test";
 

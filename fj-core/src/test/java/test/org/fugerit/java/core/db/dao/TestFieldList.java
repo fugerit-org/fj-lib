@@ -25,7 +25,7 @@ import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
-public class TestFieldList extends TestBasicDBHelper {
+class TestFieldList extends TestBasicDBHelper {
 
 	@BeforeAll
 	public static void init() {

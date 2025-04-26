@@ -5,7 +5,7 @@ import org.fugerit.java.core.util.result.Result;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestCodeEx implements CodeEx {
+class TestCodeEx implements CodeEx {
 
     private int code = Result.RESULT_CODE_OK;
 

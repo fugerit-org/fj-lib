@@ -4,7 +4,7 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestSafeFunctionCoverageExample {
+class TestSafeFunctionCoverageExample {
 
 	private static final SafeFunctionCoverageExampleInput INPUT = SafeFunctionCoverageExampleInput.newInput( "test" );
 	

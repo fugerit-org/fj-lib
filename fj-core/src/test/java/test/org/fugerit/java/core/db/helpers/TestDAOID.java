@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestDAOID extends BasicTest {
+class TestDAOID extends BasicTest {
 
 	private static final byte BYTE_VALUE = 42;
 	

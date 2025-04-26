@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.helpers.MemDBTestBase;
 
-public class TestMetadataUtils extends MemDBTestBase {
+class TestMetadataUtils extends MemDBTestBase {
 	
 	@Test
 	void testDatabaseMetadata() {

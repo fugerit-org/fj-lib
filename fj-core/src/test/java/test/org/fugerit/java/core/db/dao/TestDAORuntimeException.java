@@ -6,7 +6,7 @@ import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestDAORuntimeException {
+class TestDAORuntimeException {
 	
 	@Test
 	void testApply() {

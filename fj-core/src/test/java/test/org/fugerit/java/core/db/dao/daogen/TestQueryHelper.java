@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestQueryHelper {
+class TestQueryHelper {
 
 	private static final String TABLE_NAME = "fugert.user";
 	

@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestBasicDAO extends TestBasicDBHelper {
+class TestBasicDAO extends TestBasicDBHelper {
 
 	private ConnectionFactoryCloseable connFactory() {
 		return ConnectionFactoryImpl.wrap( new ConnectionFactoryImpl() {	

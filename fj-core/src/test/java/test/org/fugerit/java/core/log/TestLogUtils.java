@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.helpers.FailHelper;
 
 @Slf4j
-public class TestLogUtils {
+class TestLogUtils {
 
 	@Test
 	void testLogUtilsBuild() {

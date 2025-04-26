@@ -16,7 +16,7 @@ import java.time.temporal.TemporalField;
 import java.util.Calendar;
 
 @Slf4j
-public class TestSQLTypeConverter {
+class TestSQLTypeConverter {
 
     private static final int TEST_YEAR = 2024;
 

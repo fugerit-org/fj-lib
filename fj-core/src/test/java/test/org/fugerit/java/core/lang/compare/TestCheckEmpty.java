@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestCheckEmpty extends BasicTest {
+class TestCheckEmpty extends BasicTest {
 	
 	public static boolean EMPTY = true;
 	

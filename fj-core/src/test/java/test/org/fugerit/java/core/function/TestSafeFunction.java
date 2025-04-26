@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.helpers.FailHelper;
 
 @Slf4j
-public class TestSafeFunction {
+class TestSafeFunction {
 
 	private static final DAOException TEST_CHECKED_EX = new DAOException( "test checked" );
 	

@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestMisc extends TestBasicDBHelper {
+class TestMisc extends TestBasicDBHelper {
 
 	class CustomSimpleServiceProvider extends SimpleServiceProvider<String> {	
 		private static final long serialVersionUID = 89245089543485253L;

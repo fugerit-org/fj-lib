@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestDAOUtils extends TestBasicDBHelper {
+class TestDAOUtils extends TestBasicDBHelper {
 
 	private ConnectionFactoryCloseable connFactory() {
 		return ConnectionFactoryImpl.wrap( new ConnectionFactoryImpl() {	

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestPathHelperBind extends BasicTest {
+class TestPathHelperBind extends BasicTest {
 	
 	@Test
 	void bind001() {

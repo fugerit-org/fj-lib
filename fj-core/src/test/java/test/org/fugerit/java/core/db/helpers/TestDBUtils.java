@@ -19,7 +19,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 @Slf4j
-public class TestDBUtils extends BasicTest {
+class TestDBUtils extends BasicTest {
 
 	private int testWorker( ConnectionFactory cf ) {
 		return SafeFunction.get( () -> {

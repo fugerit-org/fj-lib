@@ -12,7 +12,7 @@ import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestEncodingCheck {
+class TestEncodingCheck {
 
 	@Test
 	void testEnc() throws IOException {

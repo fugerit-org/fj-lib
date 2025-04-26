@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestStreamIO extends BasicTest {
+class TestStreamIO extends BasicTest {
 	
 	@Test
 	void testStreamIO() {

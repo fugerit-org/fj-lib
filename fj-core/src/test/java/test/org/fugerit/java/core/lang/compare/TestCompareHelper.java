@@ -4,7 +4,7 @@ import org.fugerit.java.core.lang.compare.CompareHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestCompareHelper {
+class TestCompareHelper {
 
 	@Test
 	void testCompareEquals1() {

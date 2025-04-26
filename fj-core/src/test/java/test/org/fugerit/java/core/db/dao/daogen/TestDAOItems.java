@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestDAOItems extends BasicTest {
+class TestDAOItems extends BasicTest {
 
 	@Test
 	void testBasicIdFinder() throws IOException {

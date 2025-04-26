@@ -4,7 +4,7 @@ import org.fugerit.java.core.db.daogen.BasicDaoResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class TestDAOResult {
+class TestDAOResult {
 	
 	@Test
 	void testOne() {

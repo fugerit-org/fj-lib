@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestLineIOUtils {
+class TestLineIOUtils {
 
 	private static final String TEST_FILE_PATH = "src/test/resources/core/db/base-db-conn.properties";
 	

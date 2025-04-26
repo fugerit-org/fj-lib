@@ -12,7 +12,7 @@ import test.org.fugerit.java.core.db.dao.ModelUser;
 import java.io.NotSerializableException;
 
 @Slf4j
-public class TestBasicWrapperNG {
+class TestBasicWrapperNG {
 
     private static final BasicTest HELPER = new BasicTest();
 
