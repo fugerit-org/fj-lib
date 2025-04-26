@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class TestExUtils {
 
     @Test
-    public void testExUtils() {
+    void testExUtils() {
         Assertions.assertThrows( UnsupportedOperationException.class, () -> ExUtils.THROW_UNSUPPORTED.accept( "test1()" ) );
         ExUtils.WARN_UNSUPPORTED.accept( "test2()" );
     }

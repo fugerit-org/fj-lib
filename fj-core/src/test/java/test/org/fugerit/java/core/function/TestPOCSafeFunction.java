@@ -114,7 +114,7 @@ class TestPOCSafeFunction {
      * And a org.fugerit.java.core.cfg.ConfigRuntimeException is checked to be thrown.
      */
     @Test
-    public void testSafeFunctionApply() {
+    void testSafeFunctionApply() {
         // classical try catch
         Assertions.assertThrows( ConfigRuntimeException.class, this::applyTryCatch );
         // safe function
@@ -142,7 +142,7 @@ class TestPOCSafeFunction {
      * And a org.fugerit.java.core.cfg.ConfigRuntimeException is checked to be thrown.
      */
     @Test
-    public void testSafeFunctionGet() {
+    void testSafeFunctionGet() {
         // classical try catch
         Assertions.assertThrows( ConfigRuntimeException.class, this::getTryCatch );
         // safe function
@@ -156,7 +156,7 @@ class TestPOCSafeFunction {
      * And the thrown IO Exception is just logged with no further handling
      */
     @Test
-    public void testSafeFunctionApplySilent() {
+    void testSafeFunctionApplySilent() {
         // classical try catch
         try {
             SCENARIO.apply();
@@ -174,7 +174,7 @@ class TestPOCSafeFunction {
      * And a custom exception handling is applied.
      */
     @Test
-    public void testSafeFunctionApplyCustomHandling() {
+    void testSafeFunctionApplyCustomHandling() {
         // classical try catch
         try {
             SCENARIO.apply();

@@ -22,7 +22,7 @@ class TestSortedReadProperties extends BasicTest {
     private static final Logger logger = LoggerFactory.getLogger( TestSortedReadProperties.class );
 
     @Test
-    public void test1() {
+    void test1() {
     	boolean ok = false;
         try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/util/collection/test_store_1.properties" );
         		FileOutputStream fos = new FileOutputStream( new File( "target/test_sorted_properties.properties" ) ) ) {

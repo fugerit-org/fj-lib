@@ -16,7 +16,7 @@ class TestConfigStoreIO {
     private static final Logger logger = LoggerFactory.getLogger( TestConfigStoreIO.class );
 
     @Test
-    public void test1() {
+    void test1() {
     	boolean ok = false;
         try {
             ConfigStoreIO configStoreIO = new ConfigStoreIO( "fj-core_test" );

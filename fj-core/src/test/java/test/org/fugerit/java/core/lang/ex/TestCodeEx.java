@@ -15,7 +15,7 @@ class TestCodeEx implements CodeEx {
     }
 
     @Test
-    public void testCodeEx() {
+    void testCodeEx() {
         TestCodeEx codeEx = new TestCodeEx();
         Assertions.assertNull( codeEx.getMessage() );
         Assertions.assertNull( codeEx.getCause() );

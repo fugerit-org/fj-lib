@@ -43,7 +43,7 @@ class TestConfigStore extends BasicTest {
     }
     
     @Test
-    public void test1() {
+    void test1() {
     	boolean ok = false;
         try (InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/util/collection/test_store_1.properties" );
         		FileOutputStream fos = new FileOutputStream( new File( "target/test_config_store_props.properties" ) )) {

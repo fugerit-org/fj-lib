@@ -13,7 +13,7 @@ class TestLibHelper {
     private static final String LLP = "java.library.path";
 
     @Test
-    public void testCount0() throws IOException {
+    void testCount0() throws IOException {
         File libraryPath = new File( "src/test/resources/core/lang/lib_helper" );
         String llPath = System.getProperty( LLP );
         System.setProperty( LLP, llPath+File.pathSeparator+libraryPath.getCanonicalPath() );

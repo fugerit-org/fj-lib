@@ -11,7 +11,7 @@ class TestIdFinderNG {
     private static final long TEST = 1000L;
 
     @Test
-    public void testIdFinderNg() {
+    void testIdFinderNg() {
         IdFinderNG finder = new IdFinderNG();
         finder.setId( TEST );
         log.info( "finder : {}", finder );

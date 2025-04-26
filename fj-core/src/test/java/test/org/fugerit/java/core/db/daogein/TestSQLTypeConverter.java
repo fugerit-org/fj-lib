@@ -23,7 +23,7 @@ class TestSQLTypeConverter {
     private static final int TEST_HOUR = 11;
 
     @Test
-    public void testLocalDate() {
+    void testLocalDate() {
         LocalDate d = SQLTypeConverter.utilDateToLocalDate(Date.valueOf( TEST_YEAR+"-05-05" ));
         log.info( "local date : {}", d );
         Assertions.assertEquals( TEST_YEAR, d.getYear() );
@@ -35,7 +35,7 @@ class TestSQLTypeConverter {
     }
 
     @Test
-    public void testLocalDateTime() {
+    void testLocalDateTime() {
         LocalDateTime d = SQLTypeConverter.utilDateToLocalDateTime(Timestamp.valueOf( TEST_YEAR+"-05-05 "+TEST_HOUR+":30:00.000" ));
         log.info( "local date time : {}", d );
         Assertions.assertEquals( TEST_YEAR, d.getYear() );
@@ -47,7 +47,7 @@ class TestSQLTypeConverter {
     }
 
     @Test
-    public void testLocalTime() {
+    void testLocalTime() {
         LocalTime d = SQLTypeConverter.utilDateToLocalTime(Time.valueOf( TEST_HOUR+":30:00" ));
         log.info( "local time : {}", d );
         Assertions.assertEquals( TEST_HOUR, d.getHour() );

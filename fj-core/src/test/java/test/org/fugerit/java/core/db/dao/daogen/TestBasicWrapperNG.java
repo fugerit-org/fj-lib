@@ -17,7 +17,7 @@ class TestBasicWrapperNG {
     private static final BasicTest HELPER = new BasicTest();
 
     @Test
-    public void testBasicWrapperNG() {
+    void testBasicWrapperNG() {
         SafeFunction.apply( () -> {
             ModelUser userTest = new ModelUser();
             // wrapper ng

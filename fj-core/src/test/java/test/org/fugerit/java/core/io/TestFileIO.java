@@ -10,18 +10,18 @@ import java.io.IOException;
 class TestFileIO {
 
     @Test
-    public void testIsInTmpFolderOk() throws IOException  {
+    void testIsInTmpFolderOk() throws IOException  {
         Assertions.assertTrue(FileIO.isInTmpFolder( new File( System.getProperty( "java.io.tmpdir" ) ) ));
     }
 
 
     @Test
-    public void testIsInTmpFolderKo() throws IOException  {
+    void testIsInTmpFolderKo() throws IOException  {
         Assertions.assertFalse(FileIO.isInTmpFolder( new File( "/" ) ));
     }
 
     @Test
-    public void testNewFile() throws IOException {
+    void testNewFile() throws IOException {
         String baseDir = "target/";
         String fileName = "not-exists.txt";
         String fileNameExists = "classes";
@@ -35,7 +35,7 @@ class TestFileIO {
 
 
     @Test
-    public void testCreateFullFile() throws IOException {
+    void testCreateFullFile() throws IOException {
         String baseDir0 = "target/";
         String baseDir1 = "target/path/";
         String fileName = "not-exists-alt.txt";

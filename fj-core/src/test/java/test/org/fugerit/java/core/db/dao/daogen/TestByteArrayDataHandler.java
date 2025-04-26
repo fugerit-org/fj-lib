@@ -18,7 +18,7 @@ class TestByteArrayDataHandler {
     private static final String TEST_STRING = "test";
 
     @Test
-    public void testByteArrayDataHandler() throws DAOException, IOException {
+    void testByteArrayDataHandler() throws DAOException, IOException {
         ByteArrayDataHandler ch = ByteArrayDataHandler.newHandlerByte( TEST_STRING.getBytes() );
         Assertions.assertEquals( TEST_STRING, ch.toString() );
         Assertions.assertEquals( TEST_STRING, String.valueOf( ch.toChars() ) );
