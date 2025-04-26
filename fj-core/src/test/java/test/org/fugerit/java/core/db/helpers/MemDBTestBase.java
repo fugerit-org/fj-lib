@@ -6,7 +6,7 @@ import test.org.fugerit.java.MemDBJunitBase;
 public class MemDBTestBase extends MemDBJunitBase {
 
 	@BeforeAll
-	public static void init() {
+	 static void init() {
     	MemDBHelper.init();
 	}
 	

@@ -28,7 +28,7 @@ import test.org.fugerit.java.core.db.TestBasicDBHelper;
 class TestFieldList extends TestBasicDBHelper {
 
 	@BeforeAll
-	public static void init() {
+	static void initTest() {
 		TestBasicDBHelper.init();
 	}
 	

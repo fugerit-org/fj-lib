@@ -20,7 +20,7 @@ class TestFixedFieldFileConfig extends BasicTest {
 	private static FixedFieldFileConfig config = null;
 	
 	@BeforeAll
-	public static void readConfig() {
+	 static void readConfig() {
 		boolean ok = false;
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/fixed/fixed-file-config.xml" ) ) {
 			config = FixedFieldFileConfig.parseConfig( is );
