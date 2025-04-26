@@ -17,7 +17,7 @@ import test.org.fugerit.java.core.lang.helpers.reflect.TestModelOne;
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelThree;
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo;
 
-public class TestBindingCatalog {
+class TestBindingCatalog {
 
 	private static final Logger logger = LoggerFactory.getLogger( TestBindingCatalog.class );
 	

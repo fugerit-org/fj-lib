@@ -3,8 +3,9 @@ package test.org.fugerit.java.core.cfg;
 import org.fugerit.java.core.cfg.VersionUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import test.org.fugerit.java.core.db.dao.ModelUser;
 
-public class TestVersionUtils {
+class TestVersionUtils {
 
 	private static final String NAME = HelperVersion.NAME;
 	
@@ -14,7 +15,7 @@ public class TestVersionUtils {
 	void testModuleVersion() {
 		VersionUtils.registerModule( NAME , HelperVersion.class.getName() );
 		VersionUtils.registerModule( "not-loaded" , "test.not.Loaded" );
-		VersionUtils.registerModule( "wrong-type" , "test.org.fugerit.java.core.cfg.TestVersionUtils" );
+		VersionUtils.registerModule( "wrong-type" , ModelUser.class.getName() );
 		Assertions.assertEquals( VERSION_STRING, VersionUtils.getVersionString( NAME ) );
 		Assertions.assertEquals( VersionUtils.CODE_01_NOT_FOUND, VersionUtils.getVersionString( "not-registered" ) );
 		Assertions.assertEquals( "[02] Class module isn't loaded : (test.not.Loaded) - java.lang.ClassNotFoundException: test.not.Loaded", VersionUtils.getVersionString( "not-loaded" ) );
