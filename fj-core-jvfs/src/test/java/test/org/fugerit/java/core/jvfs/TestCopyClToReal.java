@@ -4,12 +4,12 @@ import java.io.File;
 
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.file.RealJMount;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TestCopyClToReal extends TestJVFSHelper {
+class TestCopyClToReal extends TestJVFSHelper {
 
 	@Test
-	public void testCopy03() {
+	 void testCopy03() {
 		try  {
 			File dest = new File( "target/test_copy_02" );
 			JVFS from = TestJMountHelper.getClassLoaderJVFSDefault();

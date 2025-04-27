@@ -21,7 +21,7 @@
 	package-facade-data-impl="org.fugerit.java.core.jvfs.db.impl.facade.data"
 	factory-def="org.fugerit.java.core.jvfs.db.daogen.facade.JvfsLogicFacade"
 	factory-data-impl="org.fugerit.java.core.jvfs.db.daogen.facade.impl.JvfsDataLogicFacade"
-	package-junit4-model="org.fugerit.java.core.jvfs.db.daogen.junit4test.model"
+	package-junit5-model="org.fugerit.java.core.jvfs.db.daogen.junit5test.model"
 	graalvm-reflect-config="META-INF/native-image/reflect-config.json"
 	dao-helper-ng-mode="enabled"
 	dao-wrapper-ng-mode="enabled"

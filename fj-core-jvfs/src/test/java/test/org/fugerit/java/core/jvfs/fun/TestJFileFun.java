@@ -8,18 +8,18 @@ import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.fun.JFileFunResult;
 import org.fugerit.java.core.jvfs.fun.JFileFunSafe;
 import org.fugerit.java.core.util.result.ResultExHandler;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.jvfs.TestJMountHelper;
 import test.org.fugerit.java.core.jvfs.TestJVFSHelper;
 
 @Slf4j
-public class TestJFileFun extends TestJVFSHelper {
+class TestJFileFun extends TestJVFSHelper {
 
 	@Test
-	public void testFun() throws IOException {
+	 void testFun() throws IOException {
 		File dest = new File( "target/test_fun_01" );
 		log.info( "create dest dir : {} -> {}", dest, dest.mkdirs() );
 		JVFS jvfs =  TestJMountHelper.getRealJVFSDefault();
@@ -29,7 +29,7 @@ public class TestJFileFun extends TestJVFSHelper {
 		result.reset();
 		log.info( "result {}", result.getResult() );
 		JFileFun fail = f -> { throw new IOException( "fail : "+f ); };
-		Assert.assertThrows( IOException.class , () -> fail.handle( jvfs.getRoot() ) );
+		Assertions.assertThrows( IOException.class , () -> fail.handle( jvfs.getRoot() ) );
 		JFileFunSafe safe = new JFileFunSafe( fail , new ResultExHandler() );
 		safe.handle( jvfs.getRoot() );
 	}

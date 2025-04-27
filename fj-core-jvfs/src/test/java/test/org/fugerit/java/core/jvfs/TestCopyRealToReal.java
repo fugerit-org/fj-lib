@@ -5,12 +5,12 @@ import java.io.IOException;
 
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.file.RealJMount;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TestCopyRealToReal extends TestJVFSHelper {
+class TestCopyRealToReal extends TestJVFSHelper {
 
 	@Test
-	public void testCopy01() {
+	 void testCopy01() {
 		try {
 			File dest = new File( "target/test_copy_01" );
 			logger.info( "create dest dir : {} -> {}", dest, dest.mkdirs() );

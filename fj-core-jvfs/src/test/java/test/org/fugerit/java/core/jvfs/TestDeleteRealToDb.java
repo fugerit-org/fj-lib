@@ -6,14 +6,14 @@ import java.io.IOException;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.db.JMountDaogenDB;
 import org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.jvfs.db.helper.MemJvfsDBHelper;
 
-public class TestDeleteRealToDb extends TestJVFSHelper {
+class TestDeleteRealToDb extends TestJVFSHelper {
 
 	@Test
-	public void testDelete01() {
+	 void testDelete01() {
 		try {
 			File dest = new File( "target/test_delete_01" );
 			logger.info( "create dest dir : {} -> {}", dest, dest.mkdirs() );

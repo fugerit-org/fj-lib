@@ -10,17 +10,17 @@ import org.fugerit.java.core.jvfs.db.JMountDaogenDB;
 import org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.daogen.helper.WrapperDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.core.jvfs.db.helper.MemJvfsDBHelper;
 
 @Slf4j
-public class TestDBJMount extends TestJVFSHelper {
+class TestDBJMount extends TestJVFSHelper {
 
 	@Test
-	public void testInitMemDB() {
+	 void testInitMemDB() {
 		try  {
 			String tableName = "FUGERIT.ALT2_DB_JVFS_FILE";
 			DataEntityDbJvfsFileFacade facade = DataEntityDbJvfsFileFacade.newInstanceWithTable(tableName);
@@ -32,10 +32,10 @@ public class TestDBJMount extends TestJVFSHelper {
 			this.tryDumpTestDb( facade );
 			JFile newFile = jvfs.getJFile( "/test-mount/core-jvfs/JMountDaogenDB_renamed.md" );
 			boolean testRename = testFile.rename( newFile );
-			Assert.assertTrue( testRename );
+			Assertions.assertTrue( testRename );
 			JFile newDir = jvfs.getJFile( "/core-jvfs-renamed/" );
 			boolean testRenameDir = testFile.getParent().rename( newDir );
-			Assert.assertTrue( testRenameDir );
+			Assertions.assertTrue( testRenameDir );
 			this.tryDumpTestDb( facade );
 			log.info( "toString() : {}", testFile );
 			WrapperDbJvfsFile wrapper = new WrapperDbJvfsFile( new HelperDbJvfsFile() );
