@@ -3,24 +3,24 @@ package test.org.fugerit.java.core.lang.helpers.reflect;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.xml.ListMapConfig;
 import org.fugerit.java.core.lang.helpers.reflect.MethodHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class TestMethodHelper {
+class TestMethodHelper {
 
 	@Test
-	public void testFoundMethod() {
+	void testFoundMethod() {
 		String id = "test-id";
 		ListMapConfig<String> list = new ListMapConfig<String>();
 		list.setId( id );
 		String foundId = (String) MethodHelper.invokeGetter(  list , "id" );
-		Assert.assertEquals( id , foundId );
+		Assertions.assertEquals( id , foundId );
 	}
 	
 	@Test
-	public void testNotFoundMethod() {
+	void testNotFoundMethod() {
 		ListMapConfig<String> list = new ListMapConfig<String>();
-		Assert.assertThrows( ConfigRuntimeException.class , () ->  MethodHelper.invokeGetter(  list , "notExists" ) );
+		Assertions.assertThrows( ConfigRuntimeException.class , () ->  MethodHelper.invokeGetter(  list , "notExists" ) );
 	}
 	
 }

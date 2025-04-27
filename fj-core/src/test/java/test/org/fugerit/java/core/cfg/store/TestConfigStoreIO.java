@@ -6,17 +6,17 @@ import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreIO;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreMapDefault;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestConfigStoreIO {
+class TestConfigStoreIO {
 
     private static final Logger logger = LoggerFactory.getLogger( TestConfigStoreIO.class );
 
     @Test
-    public void test1() {
+    void test1() {
     	boolean ok = false;
         try {
             ConfigStoreIO configStoreIO = new ConfigStoreIO( "fj-core_test" );
@@ -30,7 +30,7 @@ public class TestConfigStoreIO {
         } catch (Exception e) {
             throw new ConfigRuntimeException( e );
         }
-        Assert.assertTrue( ok );
+        Assertions.assertTrue( ok );
     }
 
 }

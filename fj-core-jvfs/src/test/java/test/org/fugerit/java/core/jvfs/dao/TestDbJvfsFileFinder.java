@@ -4,21 +4,21 @@ import java.io.IOException;
 
 import org.fugerit.java.core.jvfs.db.daogen.def.facade.DbJvfsFileFinder;
 import org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestDbJvfsFileFinder extends BasicTest {
+class TestDbJvfsFileFinder extends BasicTest {
 
 	@Test
-	public void testFinder() throws IOException {
+	 void testFinder() throws IOException {
 		DbJvfsFileFinder finder = new DbJvfsFileFinder();
 		finder.setModel( new HelperDbJvfsFile() );
 		log.info( "log -> {}", DbJvfsFileFinder.newInstance( finder.getModel() ) );
-		Assert.assertNotNull( finder );
+		Assertions.assertNotNull( finder );
 	}
 	
 }

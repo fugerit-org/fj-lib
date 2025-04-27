@@ -1,14 +1,14 @@
 package test.org.fugerit.java.core.db.helpers;
 
 import org.fugerit.java.core.db.helpers.DAOID;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestDAOID extends BasicTest {
+class TestDAOID extends BasicTest {
 
 	private static final byte BYTE_VALUE = 42;
 	
@@ -23,58 +23,58 @@ public class TestDAOID extends BasicTest {
 	private static final DAOID DAOID_VALUE = DAOID.valueOf( LONG_VALUE );
 	
 	@Test
-	public void testValueFromByte() {
+	void testValueFromByte() {
 		DAOID id = DAOID.valueOf( BYTE_VALUE );
 		log.info( "value : {}", id );
-		Assert.assertEquals( DAOID_VALUE , id );
+		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 	
 	@Test
-	public void testValueFromShort() {
+	void testValueFromShort() {
 		DAOID id = DAOID.valueOf( SHORT_VALUE );
 		log.info( "value : {}", id );
-		Assert.assertEquals( DAOID_VALUE , id );
+		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 
 	@Test
-	public void testValueFromInt() {
+	void testValueFromInt() {
 		DAOID id = DAOID.valueOf( INT_VALUE );
 		log.info( "value : {}", id );
-		Assert.assertEquals( DAOID_VALUE , id );
+		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 	
 	@Test
-	public void testValueFromLong() {
+	void testValueFromLong() {
 		DAOID id = DAOID.valueOf( LONG_VALUE );
 		log.info( "value : {}", id );
-		Assert.assertEquals( DAOID_VALUE , id );
+		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 	
 	@Test
-	public void testValueFromString() {
+	void testValueFromString() {
 		DAOID id = DAOID.valueOf( STRING_VALUE );
 		log.info( "value : {}", id );
-		Assert.assertEquals( DAOID_VALUE , id );
+		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 	
 	
 	@Test
-	public void testValueOfNullZeroNull() {
+	void testValueOfNullZeroNull() {
 		DAOID id = DAOID.valueOfNullZero( 0 );
 		log.info( "value : {}", id );
-		Assert.assertNull( id );
+		Assertions.assertNull( id );
 	}
 	
 	@Test
-	public void testValueOfNullZero() {
+	void testValueOfNullZero() {
 		DAOID id = DAOID.valueOfNullZero( LONG_VALUE );
 		log.info( "value : {}", id );
-		Assert.assertEquals( DAOID_VALUE , id );
+		Assertions.assertEquals( DAOID_VALUE , id );
 	}
 	
 	
 	@Test
-	public void testPrint() {
+	void testPrint() {
 		log.info( "byteValue : {}", DAOID_VALUE.byteValue() );
 		log.info( "shortValue : {}", DAOID_VALUE.shortValue() );
 		log.info( "intValue : {}", DAOID_VALUE.intValue() );
@@ -82,12 +82,12 @@ public class TestDAOID extends BasicTest {
 		log.info( "floatValue : {}", DAOID_VALUE.floatValue() );
 		log.info( "doubleValue : {}", DAOID_VALUE.doubleValue() );
 		log.info( "toString : {}", DAOID_VALUE.toString() );
-		Assert.assertEquals( STRING_VALUE, DAOID_VALUE.toString() );
+		Assertions.assertEquals( STRING_VALUE, DAOID_VALUE.toString() );
 	}
 	
 	@Test
-	public void testHashCode() {
-		Assert.assertEquals( DAOID_VALUE.hashCode() , DAOID.valueOf( STRING_VALUE ).hashCode() );
+	void testHashCode() {
+		Assertions.assertEquals( DAOID_VALUE.hashCode() , DAOID.valueOf( STRING_VALUE ).hashCode() );
 	}
 	
 }

@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.fugerit.java.core.xml.sax.dh.DefaultHandlerComp;
 import org.fugerit.java.core.xml.sax.dtd.DTDHandlerWrapper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.helpers.FailHelper;
 
 @Slf4j
-public class TestDefaultHandler {
+class TestDefaultHandler {
 
 	private boolean worker( DefaultHandler dh ) {
 		log.info( "default handler -> {}", dh );
@@ -29,74 +29,74 @@ public class TestDefaultHandler {
 	}
 	
 	@Test
-	public void defaultHandlerTest0() {
+	void defaultHandlerTest0() {
 		DefaultHandlerComp dh = new DefaultHandlerComp();
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest1() {
+	void defaultHandlerTest1() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_CH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest2() {
+	void defaultHandlerTest2() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_DH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest3() {
+	void defaultHandlerTest3() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest4() {
+	void defaultHandlerTest4() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( DefaultHandlerComp.DEFAULT_ER );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest5() {
+	void defaultHandlerTest5() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_ER, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest6() {
+	void defaultHandlerTest6() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_ER, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest7() {
+	void defaultHandlerTest7() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_EH );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTest8() {
+	void defaultHandlerTest8() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( 
 				DefaultHandlerComp.DEFAULT_CH, DefaultHandlerComp.DEFAULT_DH, DefaultHandlerComp.DEFAULT_ER );
 		boolean ok = this.worker(dh);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTestFinal() throws SAXException {
+	void defaultHandlerTestFinal() throws SAXException {
 		DefaultHandlerComp dh = new DefaultHandlerComp();
 		DTDHandlerWrapper dtdDtdHandlerWrapper = new DTDHandlerWrapper( DefaultHandlerComp.DEFAULT_DH );
 		dh.setWrappedContentHandler( DefaultHandlerComp.DEFAULT_CH );
@@ -112,11 +112,11 @@ public class TestDefaultHandler {
 		dh.unparsedEntityDecl( "m", "n", "o", "p" );
 		dh.fatalError( null );
 		dh.warning( null );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void defaultHandlerTestKo() {
+	void defaultHandlerTestKo() {
 		DefaultHandlerComp dh = new DefaultHandlerComp( new EntityResolver() {
 			@Override
 			public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
@@ -126,7 +126,7 @@ public class TestDefaultHandler {
 				return null;
 			}
 		} );
-		Assert.assertThrows( SAXException.class , () -> dh.resolveEntity(null, null) );
+		Assertions.assertThrows( SAXException.class , () -> dh.resolveEntity(null, null) );
 	}
 	
 }

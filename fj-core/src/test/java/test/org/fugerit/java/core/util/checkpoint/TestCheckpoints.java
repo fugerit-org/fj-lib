@@ -1,16 +1,16 @@
 package test.org.fugerit.java.core.util.checkpoint;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 
 import org.awaitility.Awaitility;
 import org.fugerit.java.core.util.checkpoint.Checkpoints;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestCheckpoints extends BasicTest {
+class TestCheckpoints extends BasicTest {
 
 	private Checkpoints generate( int size ) {
 		Checkpoints cp = Checkpoints.newInstance();
@@ -22,14 +22,14 @@ public class TestCheckpoints extends BasicTest {
 	}
 	
 	@Test
-	public void testPrintInfo() {
+	void testPrintInfo() {
 		Checkpoints cp = this.generate( 4 );
 		assertTrue( ( cp != null ) );
 		cp.printInfo();
 	}
 	
 	@Test
-	public void testPrettyPrintInfo() {
+	void testPrettyPrintInfo() {
 		Checkpoints cp = this.generate( 4 );
 		assertTrue( ( cp != null ) );
 		cp.prettyPrintInfo();

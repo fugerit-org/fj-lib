@@ -5,7 +5,7 @@
 
 	<binding-helper-list>
 		<!-- all of those helper are available even if not declared -->
-		<binding-helper id="test-helper" type="test.org.fugerit.java.core.lang.binding.TestBindingHelper"/>
+		<binding-helper id="test-helper" type="test.org.fugerit.java.core.lang.binding.BindingHelper"/>
 	</binding-helper-list>
 
 	<!-- case 01 full binding configuration -->

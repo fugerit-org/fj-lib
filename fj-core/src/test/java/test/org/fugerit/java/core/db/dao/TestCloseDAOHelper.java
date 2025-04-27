@@ -6,27 +6,27 @@ import java.sql.Connection;
 
 import org.fugerit.java.core.db.dao.CloseDAOHelper;
 import org.fugerit.java.core.db.dao.DAORuntimeException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestCloseDAOHelper extends TestBasicDBHelper {
+class TestCloseDAOHelper extends TestBasicDBHelper {
 
 	@Test
-	public void testClose1() {
+	void testClose1() {
 		DAORuntimeException.apply( () -> {
 			boolean ok = false;
 			try ( Connection conn = newConnection() ) {
 				CloseDAOHelper.close( conn );
 				ok = true;
 			}	
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 		} );
 	}
 	
 	@Test
-	public void testClose2() {
+	void testClose2() {
 		DAORuntimeException.apply( () -> {
 			boolean ok = false;
 			try ( Connection conn = newConnection() ) {
@@ -37,28 +37,28 @@ public class TestCloseDAOHelper extends TestBasicDBHelper {
 					}
 				} );
 				ok = true;
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}	
 		} );
 	}
 	
 	@Test
-	public void testClose3() {
+	void testClose3() {
 		DAORuntimeException.apply( () -> {
 			boolean ok = false;
 			CloseDAOHelper.close( (AutoCloseable)null );
 			ok = true;
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 		} );
 	}
 	
 	@Test
-	public void testClose4() {
+	void testClose4() {
 		DAORuntimeException.apply( () -> {
 			boolean ok = false;
 			CloseDAOHelper.close( (Closeable)null );
 			ok = true;
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 		} );
 	}
 	

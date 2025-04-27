@@ -17,8 +17,8 @@ import org.fugerit.java.core.jvfs.db.impl.facade.data.DataEntityDbJvfsFileFacade
 import org.fugerit.java.core.jvfs.util.JFileUtilCP;
 import org.fugerit.java.core.jvfs.util.JFileUtilRM;
 import org.fugerit.java.core.lang.helpers.StringUtils;
-import org.junit.BeforeClass;
 
+import org.junit.jupiter.api.BeforeAll;
 import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.jvfs.db.helper.MemJvfsDBHelper;
 
@@ -26,7 +26,7 @@ public class TestJVFSHelper extends BasicTest {
 
 	protected  EntityDbJvfsFileFacade facade = DataEntityDbJvfsFileFacade.newInstanceWithPrefix( "FUGERIT." );
 	
-	@BeforeClass
+	@BeforeAll
 	public static void init() {
     	MemJvfsDBHelper.init();
 	}

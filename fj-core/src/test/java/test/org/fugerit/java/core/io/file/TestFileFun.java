@@ -17,14 +17,14 @@ import org.fugerit.java.core.io.file.FileFunWrapper;
 import org.fugerit.java.core.io.file.ZipArchiveDirFileFun;
 import org.fugerit.java.core.io.file.ZipFileFun;
 import org.fugerit.java.core.lang.helpers.ExHandlerDefault;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
 
 @Slf4j
-public class TestFileFun extends BasicTest {
+class TestFileFun extends BasicTest {
 
 	private boolean worker( String testPath, String sourcePath ) {
 		boolean ok = false;
@@ -80,25 +80,25 @@ public class TestFileFun extends BasicTest {
 	}
 	
 	@Test
-	public void testFun() {
+	void testFun() {
 		boolean ok = this.worker( "target/file_fun", "src/test/resources/core/xml/dtd" );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void testAlt() throws IOException {
+	void testAlt() throws IOException {
 		try ( FileFun fun =  AbstractFileFun.newFileFun( f -> log.info( "worker : {}", f )) ) {
 			FileFunWrapper wrapper = new FileFunWrapper(fun);
 			FileFunSecure secure = new FileFunSecure(wrapper, new ExHandlerDefault());
 			boolean ok = this.worker( secure );	
 			log.info( "secure wrapped : {}", secure.getWrappedFileFun() );
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 			FileFunSecure.apply( new ExHandlerDefault() ,  () -> new IOException( "TEST" ) );
 		}
 	}
 	
 	@Test
-	public void testZip() throws IOException {
+	void testZip() throws IOException {
 		boolean ok = false;
 		File sourceDir = new File( "src/test/resources/core/xml/dtd" );
 		try ( ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( new File( "target/zip_fun_test.zip" ) ) );
@@ -106,7 +106,7 @@ public class TestFileFun extends BasicTest {
 			fun.handleFile( sourceDir.listFiles()[0] );
 			ok = true;
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 }

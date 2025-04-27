@@ -1,7 +1,7 @@
 package test.org.fugerit.java.core.util.filterchain;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,14 +16,14 @@ import org.fugerit.java.core.util.filterchain.MiniFilterContext;
 import org.fugerit.java.core.util.filterchain.MiniFilterData;
 import org.fugerit.java.core.util.filterchain.MiniFilterDebug;
 import org.fugerit.java.core.util.filterchain.MiniFilterMap;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestMiniFilter extends BasicTest {
+class TestMiniFilter extends BasicTest {
 
 	private static final Logger logger = LoggerFactory.getLogger( TestMiniFilter.class );
 	
@@ -65,47 +65,47 @@ public class TestMiniFilter extends BasicTest {
 	}
 	
 	@Test
-	public void testChainBaseContinue() {
+	void testChainBaseContinue() {
 		this.testWorker( "chain-base-continue" );
 	}
 	
 	@Test
-	public void testChainBaseSkip() {
+	void testChainBaseSkip() {
 		this.testWorker( "chain-base-skip" );
 	}
 	
 	@Test
-	public void testChainBaseAll() {
+	void testChainBaseAll() {
 		this.testWorker( "chain-base-all" );
 	}
 	
 	@Test
-	public void testChainBaseNotFound() {
+	void testChainBaseNotFound() {
 		this.testWorker( "chain-base-notfound", true );
 	}
 
 	@Test
-	public void testChainBaseLoadSafe00() {
+	void testChainBaseLoadSafe00() {
 		this.testWorker( "chain-base-loadsafe-00" );
 	}
 	
 	@Test
-	public void testChainBaseLoadSafe01() {
+	void testChainBaseLoadSafe01() {
 		this.testWorker( "chain-base-loadsafe-01" );
 	}
 	
 	@Test
-	public void testChainModule01() {
+	void testChainModule01() {
 		this.testWorker( "chain-module01-test-01" );
 	}	
 	
 	@Test
-	public void testChainModule02() {
+	void testChainModule02() {
 		this.testWorker( "chain-module02-test-01" );
 	}	
 	
 	@Test
-	public void testSerialization() {
+	void testSerialization() {
 		try {
 			MiniFilterConfig deserializedValue = (MiniFilterConfig) this.fullSerializationTest(CONFIG);
 			this.testWorker( deserializedValue, "chain-module01-test-01", false );
@@ -115,32 +115,32 @@ public class TestMiniFilter extends BasicTest {
 	}	
 	
 	@Test
-	public void testLoadMap() {
+	void testLoadMap() {
 		runTestEx( () -> {
 			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader(CONF_PATH) ) {
 				MiniFilterConfig config = new MiniFilterConfig();
 				MiniFilterMap map = MiniFilterConfig.loadConfigMap( is , config );
-				Assert.assertNotNull( map );
+				Assertions.assertNotNull( map );
 			}	
 		} );
 	}	
 	
 	@Test
-	public void testDebug() {
+	void testDebug() {
 		runTestEx( () -> {
 			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader(CONF_PATH);
 					StringWriter buffer = new StringWriter();
 					PrintWriter writer = new PrintWriter(buffer)) {
 				MiniFilterDebug.dumpConfig( writer , is );
 				String debugText = buffer.toString();
-				Assert.assertNotEquals( 0 , debugText.length() );
+				Assertions.assertNotEquals( 0 , debugText.length() );
 				logger.info( "debug {}", debugText );
 			}	
 		} );
 	}	
 	
 	@Test
-	public void testPrintConfig() {
+	void testPrintConfig() {
 		logger.info(  "**********************************************" );
 		logger.info(  "**********************************************" );
 		Iterator<String> it = CONFIG.getIdSet().iterator();
@@ -155,7 +155,7 @@ public class TestMiniFilter extends BasicTest {
 	}		
 	
 	@Test
-	public void testDuplicate() {
+	void testDuplicate() {
 		logger.info(  "**********************************************" );
 		logger.info(  "**********************************************" );
 		logger.info(  "*          TEST DUPLICATE                    *" );

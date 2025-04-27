@@ -1,23 +1,27 @@
 package test.org.fugerit.java.core.db;
 
 import org.fugerit.java.test.db.helper.MemTestDBHelper;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class TestBasicDBHelper extends MemTestDBHelper {
 
 	public static final String DEFAULT_DB_CONN_PATH = "test/memdb/base-db-conn.properties";
 	public static final String DEFAULT_DB_INIT_PATH = "test/memdb/base_db_init.sql";
-	
-	@BeforeClass
+
 	public static void init() {
 		MemTestDBHelper.init( DEFAULT_DB_CONN_PATH ,  DEFAULT_DB_INIT_PATH );
 	}
+
+	@BeforeAll
+	static void initTest() {
+		init();
+	}
 	
 	@Test
-	public void testFail() {
-		Assert.assertThrows( Exception.class , () -> { 
+	void testFail() {
+		Assertions.assertThrows( Exception.class , () -> { 
 			MemTestDBHelper.initWorker( "fail-test", "script.sql" ); 
 		} );
 	}

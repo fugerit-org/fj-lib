@@ -4,49 +4,49 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.fugerit.java.tool.RunToolException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class TestRunToolException {
+class TestRunToolException {
 
 	@Test
-	public void testEx1() {
-		Assert.assertNotNull( new RunToolException() );
+	void testEx1() {
+		Assertions.assertNotNull( new RunToolException() );
 	}
 	
 	@Test
-	public void testEx2() {
-		Assert.assertNotNull( new RunToolException( "a" ) );
+	void testEx2() {
+		Assertions.assertNotNull( new RunToolException( "a" ) );
 	}
 	
 	@Test
-	public void testEx3() {
-		Assert.assertNotNull( new RunToolException( new SQLException( "b" ) ) );
+	void testEx3() {
+		Assertions.assertNotNull( new RunToolException( new SQLException( "b" ) ) );
 	}
 	
 	@Test
-	public void testEx4() {
-		Assert.assertNotNull( new RunToolException( "c", new SQLException( "d" ) ) );
+	void testEx4() {
+		Assertions.assertNotNull( new RunToolException( "c", new SQLException( "d" ) ) );
 	}
 	
 	@Test
-	public void testEx12() throws RunToolException {
-		Assert.assertThrows( RunToolException.class, () -> RunToolException.stadardExceptionWrapping( new IOException( "n" ) ) );
+	void testEx12() throws RunToolException {
+		Assertions.assertThrows( RunToolException.class, () -> RunToolException.stadardExceptionWrapping( new IOException( "n" ) ) );
 	}
 	
 	@Test
-	public void testEx5() {
-		Assert.assertNotNull( RunToolException.convertEx( "e" , new SQLException( "f" ) ) );
+	void testEx5() {
+		Assertions.assertNotNull( RunToolException.convertEx( "e" , new SQLException( "f" ) ) );
 	}
 	
 	@Test
-	public void testEx6() {
-		Assert.assertNotNull( RunToolException.convertEx( "g" , new RunToolException( "g" ) ) );
+	void testEx6() {
+		Assertions.assertNotNull( RunToolException.convertEx( "g" , new RunToolException( "g" ) ) );
 	}
 	
 	@Test
-	public void testEx7() {
-		Assert.assertNotNull( RunToolException.convertExMethod( "e" , new SQLException( "f" ) ) );
+	void testEx7() {
+		Assertions.assertNotNull( RunToolException.convertExMethod( "e" , new SQLException( "f" ) ) );
 	}
 	
 	

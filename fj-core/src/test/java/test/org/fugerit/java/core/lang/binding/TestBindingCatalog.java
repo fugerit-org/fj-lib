@@ -1,6 +1,6 @@
 package test.org.fugerit.java.core.lang.binding;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -9,7 +9,7 @@ import javax.xml.datatype.DatatypeFactory;
 
 import org.fugerit.java.core.lang.binding.BindingCatalogConfig;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ import test.org.fugerit.java.core.lang.helpers.reflect.TestModelOne;
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelThree;
 import test.org.fugerit.java.core.lang.helpers.reflect.TestModelTwo;
 
-public class TestBindingCatalog {
+class TestBindingCatalog {
 
 	private static final Logger logger = LoggerFactory.getLogger( TestBindingCatalog.class );
 	
@@ -101,32 +101,32 @@ public class TestBindingCatalog {
 	}
 	
 	@Test
-	public void bind001() {
+	void bind001() {
 		this.bind001WOrker( "binding-01" );
 	}
 	
 	@Test
-	public void bind001Def() {
+	void bind001Def() {
 		this.bind001WOrker( "binding-01-default" );
 	}
 	
 	@Test
-	public void bind002Def() {
+	void bind002Def() {
 		this.bind002WOrker( "binding-02-default" );
 	}
 
 	@Test
-	public void bind003() {
+	void bind003() {
 		this.bind003WOrker( "binding-03" );
 	}
 	
 	@Test
-	public void bind004() {
+	void bind004() {
 		this.bind004WOrker( "binding-04" );
 	}	
 
 	@Test
-	public void bind005() {
+	void bind005() {
 		this.bind003WOrker( "binding-05" );
 	}	
 	

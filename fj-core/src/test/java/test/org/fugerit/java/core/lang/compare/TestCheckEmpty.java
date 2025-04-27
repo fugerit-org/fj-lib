@@ -1,13 +1,13 @@
 package test.org.fugerit.java.core.lang.compare;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.fugerit.java.core.lang.compare.CheckEmptyHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestCheckEmpty extends BasicTest {
+class TestCheckEmpty extends BasicTest {
 	
 	public static boolean EMPTY = true;
 	
@@ -25,42 +25,42 @@ public class TestCheckEmpty extends BasicTest {
 	}
 	
 	@Test
-	public void test001() {
+	void test001() {
 		this.checkEmptyHelper( "test" , NOT_EMPTY );
 	}
 
 	@Test
-	public void test002() {
+	void test002() {
 		this.checkEmptyHelper( "" , EMPTY );
 	}
 	
 	@Test
-	public void test003() {
+	void test003() {
 		this.checkEmptyHelper( null , EMPTY );
 	}
 	
 	@Test
-	public void test004() {
+	void test004() {
 		this.checkEmptyHelper( new CheckEmptyModel( "", "" ) , EMPTY );
 	}
 	
 	@Test
-	public void test005() {
+	void test005() {
 		this.checkEmptyHelper( new CheckEmptyModel( "1", "2" ) , NOT_EMPTY );
 	}
 	
 	@Test
-	public void test006() {
+	void test006() {
 		this.checkEmptyHelper( new CheckEmptyModel( "1", null ) , NOT_EMPTY );
 	}
 	
 	@Test
-	public void test007() {
+	void test007() {
 		this.checkEmptyHelper( new CheckEmptyModel( null, "2" ) , NOT_EMPTY );
 	}
 	
 	@Test
-	public void test008() {
+	void test008() {
 		this.checkEmptyHelper( new CheckEmptyModel( null, null ) , EMPTY );
 	}
 	

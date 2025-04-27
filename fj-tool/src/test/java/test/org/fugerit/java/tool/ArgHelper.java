@@ -17,7 +17,7 @@ import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.io.file.AbstractFileFun;
 import org.fugerit.java.core.util.PropsIO;
 
-public class ArgHelper {
+class ArgHelper {
 
 	
 	public static void deleteDir( File file ) {

@@ -7,7 +7,7 @@ import org.fugerit.java.core.util.collection.ListMapStringKey;
 import org.fugerit.java.core.util.tree.InheritTreeDecorator;
 import org.fugerit.java.core.util.tree.TreeConfigKeyStringXML;
 
-public class TestTreeConfig extends TreeConfigKeyStringXML<TestNode, ListMapStringKey<TestNode>> {
+class TestTreeConfig extends TreeConfigKeyStringXML<TestNode, ListMapStringKey<TestNode>> {
 
 	/**
 	 * 

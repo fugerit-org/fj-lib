@@ -25,13 +25,13 @@ import org.fugerit.java.core.db.dao.QueryWrapper;
 import org.fugerit.java.core.db.dao.RSExtractor;
 import org.fugerit.java.core.db.dao.rse.StringRSE;
 import org.fugerit.java.core.function.SafeFunction;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestBasicDAO extends TestBasicDBHelper {
+class TestBasicDAO extends TestBasicDBHelper {
 
 	private ConnectionFactoryCloseable connFactory() {
 		return ConnectionFactoryImpl.wrap( new ConnectionFactoryImpl() {	
@@ -45,7 +45,7 @@ public class TestBasicDAO extends TestBasicDBHelper {
 	private static final String USERNAME_TEST = "user1";
 	
 	@Test
-	public void testBasicDAO() {
+	void testBasicDAO() {
 		SafeFunction.apply( () -> {
 			try ( ConnectionFactoryCloseable cf = this.connFactory() ) {
 				BasicDAOFactory bdf = new BasicDAOFactory( cf );
@@ -58,13 +58,13 @@ public class TestBasicDAO extends TestBasicDBHelper {
 				SafeFunction.apply( () -> {
 					List<String> result = dao.newList();
 					dao.loadAll( result , OpDAO.newQueryOp( "SELECT username FROM fugerit.user WHERE username = ?" , flUsernameTest, StringRSE.DEFAULT ) );
-					Assert.assertEquals( 1 , result.size() );
+					Assertions.assertEquals( 1 , result.size() );
 				} );
 				// select all
 				SafeFunction.apply( () -> {
 					List<String> result = dao.newList();
 					dao.loadAll( result , "SELECT username FROM fugerit.user", StringRSE.DEFAULT );
-					Assert.assertFalse( result.isEmpty() );
+					Assertions.assertFalse( result.isEmpty() );
 				} );
 				// select all
 				SafeFunction.apply( () -> {
@@ -73,43 +73,43 @@ public class TestBasicDAO extends TestBasicDBHelper {
 							Statement stm = conn.createStatement();
 							ResultSet rs = stm.executeQuery( "SELECT username FROM fugerit.user" )) {
 						dao.extractAll( rs , result, StringRSE.DEFAULT );
-						Assert.assertFalse( result.isEmpty() );	
+						Assertions.assertFalse( result.isEmpty() );	
 					}
 				} );
 				// select all
 				SafeFunction.apply( () -> {
 					List<String> result = dao.newList();
 					dao.loadAll( result , "SELECT username FROM fugerit.user WHERE username = ?", flUsernameTest.getField( 0 ), StringRSE.DEFAULT );
-					Assert.assertFalse( result.isEmpty() );
+					Assertions.assertFalse( result.isEmpty() );
 				} );
 				// select all
 				SafeFunction.apply( () -> {
 					List<String> result = dao.loadAll( "SELECT username FROM fugerit.user WHERE username = ?", flUsernameTest.getField( 0 ), StringRSE.DEFAULT );
-					Assert.assertFalse( result.isEmpty() );
+					Assertions.assertFalse( result.isEmpty() );
 				} );
 				// select all
 				SafeFunction.apply( () -> {
 					List<String> result = dao.newList();
 					dao.loadAll( result ,"SELECT username FROM fugerit.user", StringRSE.DEFAULT );
-					Assert.assertFalse( result.isEmpty() );
+					Assertions.assertFalse( result.isEmpty() );
 				} );
 				// select all
 				SafeFunction.apply( () -> {
 					List<String> result = dao.loadAll( "SELECT username FROM fugerit.user", StringRSE.DEFAULT );
-					Assert.assertFalse( result.isEmpty() );
+					Assertions.assertFalse( result.isEmpty() );
 				} );
 				// select result
 				SafeFunction.apply( () -> {
 					LoadResult<String> lr = dao.loadAllResult( "SELECT username FROM fugerit.user WHERE username = ?", flUsernameTest, StringRSE.DEFAULT );
 					try {
 						lr.start();
-						Assert.assertEquals( 1 , lr.startCount() );
+						Assertions.assertEquals( 1 , lr.startCount() );
 						int count = 0;
 						while ( lr.hasNext() ) {
 							lr.getNext();
 							count++;
 						}
-						Assert.assertEquals( 1 , count );
+						Assertions.assertEquals( 1 , count );
 					} finally {
 						lr.end();
 					}
@@ -117,57 +117,57 @@ public class TestBasicDAO extends TestBasicDBHelper {
 				// select one
 				SafeFunction.apply( () -> {
 					String username =  dao.loadOne( "SELECT username FROM fugerit.user WHERE username = ?" , flUsernameTest.getField( 0 ), StringRSE.DEFAULT );
-					Assert.assertEquals( USERNAME_TEST , username );
+					Assertions.assertEquals( USERNAME_TEST , username );
 				} );
 				// select one
 				SafeFunction.apply( () -> {
 					String username =  dao.loadOne( "SELECT username FROM fugerit.user WHERE username IS NULL" , StringRSE.DEFAULT );
-					Assert.assertNull( username );
+					Assertions.assertNull( username );
 				} );
 				// select one
 				SafeFunction.apply( () -> {
 					String username =  dao.loadOne(  OpDAO.newQueryOp( "SELECT username FROM fugerit.user WHERE username = ?" , flUsernameTest, StringRSE.DEFAULT ) );
-					Assert.assertEquals( USERNAME_TEST , username );
+					Assertions.assertEquals( USERNAME_TEST , username );
 				} );
 				// create 
 				SafeFunction.apply( () -> {
 					boolean res = dao.execute( "CREATE TABLE fugerit.basic_dao_test ( id VARCHAR(32) )" );
-					Assert.assertFalse(res);
+					Assertions.assertFalse(res);
 				} );
 				// insert one 
 				SafeFunction.apply( () -> {
 					int res = dao.update(  OpDAO.newUpdateOp( "INSERT INTO fugerit.basic_dao_test VALUES ( ? )" , flUsernameTest) );
-					Assert.assertEquals( 1 , res ) ;
+					Assertions.assertEquals( 1 , res ) ;
 				} );
 				// delete one 
 				SafeFunction.apply( () -> {
 					int res = dao.update(  OpDAO.newUpdateOp( "DELETE FROM fugerit.basic_dao_test WHERE ID = ?" , flUsernameTest) );
-					Assert.assertEquals( 1 , res ) ;
+					Assertions.assertEquals( 1 , res ) ;
 				} );
 				// insert one 
 				SafeFunction.apply( () -> {
 					int res = dao.update(  "INSERT INTO fugerit.basic_dao_test VALUES ( ? )" , flUsernameTest.getField( 0 ) );
-					Assert.assertEquals( 1 , res ) ;
+					Assertions.assertEquals( 1 , res ) ;
 				} );
 				// update zero 
 				SafeFunction.apply( () -> {
 					int res = dao.update(  "UPDATE fugerit.basic_dao_test SET id = id WHERE 1=0"  );
-					Assert.assertEquals( 0 , res ) ;
+					Assertions.assertEquals( 0 , res ) ;
 				} );
 				// delete one 
 				SafeFunction.apply( () -> {
 					int res = dao.delete(  "DELETE FROM fugerit.basic_dao_test WHERE ID = ?" , flUsernameTest );
-					Assert.assertEquals( 1 , res ) ;
+					Assertions.assertEquals( 1 , res ) ;
 				} );
 				// insert batch
 				SafeFunction.apply( () -> {
 					boolean res = dao.updateBatch( this.createInsertOps(dao, 100, 50 ) ); 
-					Assert.assertTrue(res);
+					Assertions.assertTrue(res);
 				} );
 				// insert batch
 				SafeFunction.apply( () -> {
 					boolean res = dao.updateTransaction( this.createInsertOps(dao, 100, 50 ) ); 
-					Assert.assertTrue(res);
+					Assertions.assertTrue(res);
 				} );
 				// test query wrapper
 				String[] products = TestBasicDBHelper.PRODUCT_NAME_STRING;
@@ -180,8 +180,8 @@ public class TestBasicDAO extends TestBasicDBHelper {
 					}
 				}
 				// other tests
-				Assert.assertNull( dao.getQueryWrapper() );
-				Assert.assertNotNull( new BasicDAOCheck( cf ) );
+				Assertions.assertNull( dao.getQueryWrapper() );
+				Assertions.assertNotNull( new BasicDAOCheck( cf ) );
 			}
 		});
 	}

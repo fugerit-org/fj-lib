@@ -1,20 +1,20 @@
 package test.org.fugerit.java.core.io;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestStreamIO extends BasicTest {
+class TestStreamIO extends BasicTest {
 	
 	@Test
-	public void testStreamIO() {
+	void testStreamIO() {
 		try {
 			String path = "core/util/filterchain/minifilter-test-config.xml";
 			InputStream is = ClassHelper.loadFromDefaultClassLoader( path );

@@ -20,16 +20,16 @@ import org.fugerit.java.core.jvfs.JMount;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.JVFSImpl;
 import org.fugerit.java.core.jvfs.helpers.AbstractJFile;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestAbstractJFile {
+class TestAbstractJFile {
 
 	@Test
-	public void test1() throws IOException {
+	 void test1() throws IOException {
 		File baseFolder = new File( "target/test_abstract_j_file" );	
 		if ( !baseFolder.exists() ) {
 			baseFolder.mkdirs();
@@ -43,15 +43,15 @@ public class TestAbstractJFile {
 		}
 		try ( Reader reader = file.getReader() ) {
 			String testRead = StreamIO.readString( reader );
-			Assert.assertEquals( test , testRead );
+			Assertions.assertEquals( test , testRead );
 		}
 		log.info( "describe : {}", file.describe() );
-		Assert.assertEquals( test.length() , file.getSupposedSize()  );
+		Assertions.assertEquals( test.length() , file.getSupposedSize()  );
 		Arrays.asList( jvfs.getRoot().list() ).stream().forEach( f -> log.info( "kid : {}", f ) );
 		log.info( "normalized path : {}", AbstractJFile.normalizePath( file.getPath() ) );
 		log.info( "normalized path : {}", AbstractJFile.normalizePath( jvfs.getRoot().getPath() ) );
-		Assert.assertTrue( file.isFile() );
-		Assert.assertTrue( jvfs.getRoot().isDirectory() );
+		Assertions.assertTrue( file.isFile() );
+		Assertions.assertTrue( jvfs.getRoot().isDirectory() );
 	}
 	
 }

@@ -1,22 +1,21 @@
 package test.org.fugerit.java.core.db.helpers;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import org.junit.Test;
-import org.junit.runner.notification.RunListener;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestMemDBTestBase extends MemDBTestBase {
+class TestMemDBTestBase extends MemDBTestBase {
 
 	public TestMemDBTestBase() throws Exception {
 		super();
 	}
 
-	protected static final Logger logger = LoggerFactory.getLogger(RunListener.class);
+	protected static final Logger logger = LoggerFactory.getLogger(MemDBTestBase.class);
 
 	public void execute( Statement stm, String sql ) throws Exception {
 		logger.info( "Execute : "+sql+" START!" );
@@ -41,7 +40,7 @@ public class TestMemDBTestBase extends MemDBTestBase {
 	}
 	
 	@Test
-	public void simpleTest01() {
+	void simpleTest01() {
 		try ( Statement stm = this.getConnection().createStatement() ) {
 			execute(stm, "CREATE SCHEMA TEST");
 			execute(stm, "CREATE TABLE TEST.TEST_01 ( id bigint NOT NULL )");

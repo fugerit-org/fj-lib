@@ -1,17 +1,17 @@
 package test.org.fugerit.java.core.db.helpers;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TestScriptFacade extends MemDBTestBase {
+class TestScriptFacade extends MemDBTestBase {
 
 	public TestScriptFacade() throws Exception {
 		super();
 	}
 
 	@Test
-	public void testSelect01() {
+	void testSelect01() {
 		boolean ok = false;
 		try {
 			this.simpleTestSelectWorker( "SELECT * FROM fugerit.user" );	
@@ -23,7 +23,7 @@ public class TestScriptFacade extends MemDBTestBase {
 	}
 	
 	@Test
-	public void testSelect02() {
+	void testSelect02() {
 		boolean ok = false;
 		try {
 			this.simpleTestSelectWorker( "SELECT * FROM fugerit.address" );	

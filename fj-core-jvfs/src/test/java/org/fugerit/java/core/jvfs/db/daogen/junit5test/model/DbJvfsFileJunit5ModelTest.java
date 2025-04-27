@@ -1,11 +1,11 @@
-package org.fugerit.java.core.jvfs.db.daogen.junit4test.model;
+package org.fugerit.java.core.jvfs.db.daogen.junit5test.model;
 
 import org.fugerit.java.core.jvfs.db.daogen.def.facade.DbJvfsFileFinder;
 import org.fugerit.java.core.jvfs.db.daogen.helper.HelperDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.daogen.helper.WrapperDbJvfsFile;
 import org.fugerit.java.core.jvfs.db.daogen.model.ModelDbJvfsFile;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 // custom import end ( code below here will be overwritten )
 
 /**
- * DbJvfsFileJunit4ModelTest, version : 1.0.0
+ * DbJvfsFileJunit5ModelTest, version : 1.0.0
  *
  * author: fugerit
  *
@@ -21,12 +21,12 @@ import org.slf4j.LoggerFactory;
  * // custom code start ( code above here will be overwritten )
  * // custom code end ( code below here will be overwritten )
  */
-public class DbJvfsFileJunit4ModelTest {
+class DbJvfsFileJunit5ModelTest {
 
 	// custom code start ( code above here will be overwritten )
 	// custom code end ( code below here will be overwritten )
 
-	private static final Logger logger = LoggerFactory.getLogger( DbJvfsFileJunit4ModelTest.class );
+	private static final Logger logger = LoggerFactory.getLogger( DbJvfsFileJunit5ModelTest.class );
 
 	public void printAll( ModelDbJvfsFile current ) { 
 		logger.info( "FILE_NAME-> {}", current.getFileName() );
@@ -41,36 +41,36 @@ public class DbJvfsFileJunit4ModelTest {
 	public ModelDbJvfsFile newInstance() { 
 		ModelDbJvfsFile model = new HelperDbJvfsFile();
 		WrapperDbJvfsFile current = new WrapperDbJvfsFile( model );
-		Assert.assertTrue( current.isEmpty() );
+		Assertions.assertTrue( current.isEmpty() );
 		current.setFileName("1");
-		Assert.assertFalse( current.isEmpty() );
+		Assertions.assertFalse( current.isEmpty() );
 		current.setParentPath("1");
-		Assert.assertFalse( current.isEmpty() );
+		Assertions.assertFalse( current.isEmpty() );
 		current.setFileProps("1");
-		Assert.assertFalse( current.isEmpty() );
+		Assertions.assertFalse( current.isEmpty() );
 		current.setCreationTime(new java.util.Date());
-		Assert.assertFalse( current.isEmpty() );
+		Assertions.assertFalse( current.isEmpty() );
 		current.setUpdateTime(new java.util.Date());
-		Assert.assertFalse( current.isEmpty() );
+		Assertions.assertFalse( current.isEmpty() );
 		current.setFileSize(new java.math.BigDecimal( "1" ));
-		Assert.assertFalse( current.isEmpty() );
+		Assertions.assertFalse( current.isEmpty() );
 		current.setFileContent(null);
-		Assert.assertFalse( current.isEmpty() );
+		Assertions.assertFalse( current.isEmpty() );
 		logger.info( "unwrap :  {}", current.unwrap( current ) );
 		return current;
 	}
 
 	@Test
-	public void testJUnit4ModelDbJvfsFile() { 
+	 void testJUnit5ModelDbJvfsFile() { 
 		ModelDbJvfsFile current = this.newInstance();
 		this.printAll( current );
 		logger.info( "current toString() : {}", current );
-		Assert.assertNotNull( current );
+		Assertions.assertNotNull( current );
 		DbJvfsFileFinder finder1 = new DbJvfsFileFinder();
 		finder1.setModel( current );
 		logger.info( "finder1.getModel() -> {}", finder1.getModel() );
-		Assert.assertNotNull( DbJvfsFileFinder.newInstance( current ) );
-		Assert.assertNotNull( finder1 );
+		Assertions.assertNotNull( DbJvfsFileFinder.newInstance( current ) );
+		Assertions.assertNotNull( finder1 );
 	}
 
 }

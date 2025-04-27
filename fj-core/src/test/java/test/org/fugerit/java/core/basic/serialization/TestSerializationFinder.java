@@ -2,15 +2,15 @@ package test.org.fugerit.java.core.basic.serialization;
 
 import org.fugerit.java.core.db.daogen.GenericIdFinder;
 import org.fugerit.java.core.db.helpers.DAOID;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
+import org.junit.jupiter.api.Test;
 import test.org.fugerit.java.BasicTest;
 
-public class TestSerializationFinder extends BasicTest {
+class TestSerializationFinder extends BasicTest {
 
 	@Test
-	public void testOkSerialization() {
+	void testOkSerialization() {
 		try {
 			long value = 1979L;
 			GenericIdFinder<DAOID> finder = new GenericIdFinder<>();
@@ -18,14 +18,14 @@ public class TestSerializationFinder extends BasicTest {
 			logger.info( "starting value {}", finder );
 			@SuppressWarnings("unchecked")
 			GenericIdFinder<DAOID> deserializaedValue = (GenericIdFinder<DAOID>) this.fullSerializationTest( finder );
-			Assert.assertEquals( value , deserializaedValue.getId().longValue() );
+			Assertions.assertEquals( value , deserializaedValue.getId().longValue() );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
 	}
 	
 	@Test
-	public void testFailSerialization() {
+	void testFailSerialization() {
 		boolean ok = false;
 		try {
 			long value = 1979L;
@@ -41,7 +41,7 @@ public class TestSerializationFinder extends BasicTest {
 		} catch (Exception e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 }

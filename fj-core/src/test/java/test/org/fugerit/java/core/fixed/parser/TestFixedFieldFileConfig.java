@@ -9,18 +9,18 @@ import org.fugerit.java.core.fixed.parser.FixedFieldFileDescriptor;
 import org.fugerit.java.core.fixed.parser.helper.ReaderFixedFieldFileReader;
 import org.fugerit.java.core.fixed.parser.helper.StreamFixedFieldFileReader;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestFixedFieldFileConfig extends BasicTest {
+class TestFixedFieldFileConfig extends BasicTest {
 
 	private static FixedFieldFileConfig config = null;
 	
-	@BeforeClass
-	public static void readConfig() {
+	@BeforeAll
+	 static void readConfig() {
 		boolean ok = false;
 		try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/fixed/fixed-file-config.xml" ) ) {
 			config = FixedFieldFileConfig.parseConfig( is );
@@ -32,11 +32,11 @@ public class TestFixedFieldFileConfig extends BasicTest {
 		} catch (Exception e) {
 			throw new ConfigRuntimeException( e );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void checkDescriptor() {
+	void checkDescriptor() {
 		boolean ok = false;
 		try {
 			FixedFieldFileDescriptor descriptor = config.getFileDescriptor( "testFixedValidator" );
@@ -59,7 +59,7 @@ public class TestFixedFieldFileConfig extends BasicTest {
 		} catch (Exception e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 }

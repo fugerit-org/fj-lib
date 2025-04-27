@@ -1,6 +1,6 @@
 package test.org.fugerit.java.core.util.colletion;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,18 +11,18 @@ import java.util.Properties;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.util.collection.SortedProperties;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestSortedReadProperties extends BasicTest {
+class TestSortedReadProperties extends BasicTest {
 
     private static final Logger logger = LoggerFactory.getLogger( TestSortedReadProperties.class );
 
     @Test
-    public void test1() {
+    void test1() {
     	boolean ok = false;
         try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/util/collection/test_store_1.properties" );
         		FileOutputStream fos = new FileOutputStream( new File( "target/test_sorted_properties.properties" ) ) ) {

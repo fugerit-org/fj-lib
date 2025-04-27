@@ -12,14 +12,14 @@ import java.io.Writer;
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.xml.XMLClean;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.helpers.io.ReaderFail;
 
 @Slf4j
-public class TestCleanXML {
+class TestCleanXML {
 
 	private void copy( File sourceBase, File fileBase ) throws FileNotFoundException, IOException {
 		for ( File current : sourceBase.listFiles( f -> f.isFile() ) ) {
@@ -33,7 +33,7 @@ public class TestCleanXML {
 	}
 	
 	@Test
-	public void testClean() throws IOException {
+	void testClean() throws IOException {
 		// prepare test data
 		File sourceBase = new File( "src/test/resources/core/xml/dtd" );
 		File fileBase = new File( "target/dtd" );
@@ -48,24 +48,24 @@ public class TestCleanXML {
 	}
 	
 	@Test 
-	public void testFailClean() throws IOException {
+	 void testFailClean() throws IOException {
 		try ( Reader reader = new ReaderFail();
 				Writer writer = new StringWriter() ) {
-			Assert.assertThrows( ConfigRuntimeException.class , () -> XMLClean.cleanStream( reader, writer ) );
+			Assertions.assertThrows( ConfigRuntimeException.class , () -> XMLClean.cleanStream( reader, writer ) );
 		}
 	}
 	
 	@Test 
-	public void testFailFolder() throws IOException {
+	 void testFailFolder() throws IOException {
 		try ( Reader reader = new ReaderFail();
 				Writer writer = new StringWriter() ) {
-			Assert.assertThrows( ConfigRuntimeException.class , () -> XMLClean.cleanFolder(null, null) );
+			Assertions.assertThrows( ConfigRuntimeException.class , () -> XMLClean.cleanFolder(null, null) );
 		}
 	}
 	
 	@Test 
-	public void testCleanString() throws IOException {
-		Assert.assertNotNull( XMLClean.cleanXML( "test" ) );
+	 void testCleanString() throws IOException {
+		Assertions.assertNotNull( XMLClean.cleanXML( "test" ) );
 	}
 	
 }

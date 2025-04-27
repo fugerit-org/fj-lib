@@ -14,15 +14,15 @@ import org.fugerit.java.core.xml.sax.ch.ContentHandlerWrapper;
 import org.fugerit.java.core.xml.sax.ch.ContentHandlerWriter;
 import org.fugerit.java.core.xml.sax.ch.DoNothingContentHandler;
 import org.fugerit.java.core.xml.sax.dh.DefaultHandlerComp;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestContentHandler {
+class TestContentHandler {
 
 	private static final String PATH_OK = "core/xml/dtd/test-content-handler.xml";
 	
@@ -40,15 +40,15 @@ public class TestContentHandler {
 	}
 	
 	@Test
-	public void testContentHandlerWrapper() throws IOException, XMLException, SAXException {
+	void testContentHandlerWrapper() throws IOException, XMLException, SAXException {
 		ContentHandlerWrapper handler = new ContentHandlerWrapper( new DoNothingContentHandler() );
 		boolean ok = this.worker(PATH_OK, handler);
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 		try ( StringWriter buffer = new StringWriter();
 				PrintWriter writer = new PrintWriter( buffer ) ) {
 			handler.setWrappedContentHandler( new ContentHandlerWriter( writer ) );
 			ok = this.worker(PATH_OK, handler);
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 			log.info( "xml : \n{}", buffer );
 		}
 	}

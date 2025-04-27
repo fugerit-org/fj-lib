@@ -7,15 +7,15 @@ import java.net.URI;
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.cl.UriFileClJMount;
 import org.fugerit.java.core.jvfs.file.RealJMount;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestUriFileCLMount extends TestJVFSHelper {
+class TestUriFileCLMount extends TestJVFSHelper {
 
 	@Test
-	public void testJVFSReal() {
+	 void testJVFSReal() {
 		try {
 			URI uri = Thread.currentThread().getContextClassLoader().getResource( "core-jvfs" ).toURI();
 			File root = new File( uri );
@@ -27,7 +27,7 @@ public class TestUriFileCLMount extends TestJVFSHelper {
 	}
 	
 	@Test
-	public void testToFile() throws IOException {
+	 void testToFile() throws IOException {
 		File file = UriFileClJMount.toFile( "org/fugerit/java/core/jvfs/db" );
 		log.info( "test -> {}", file );
 	}

@@ -1,13 +1,13 @@
 package test.org.fugerit.java.core.jvfs;
 
 import org.fugerit.java.core.jvfs.JVFS;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TestRealJMount extends TestJVFSHelper {
+class TestRealJMount extends TestJVFSHelper {
 
 	
 	@Test
-	public void testJVFSReal() {
+	 void testJVFSReal() {
 		try {
 			JVFS jvfs = TestJMountHelper.getRealJVFSDefault();
 			this.testJVFSWorker(jvfs);

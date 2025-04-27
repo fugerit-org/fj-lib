@@ -1,14 +1,14 @@
 package test.org.fugerit.java.core.lang.ex;
 
 import org.fugerit.java.core.lang.ex.ExUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class TestExUtils {
+class TestExUtils {
 
     @Test
-    public void testExUtils() {
-        Assert.assertThrows( UnsupportedOperationException.class, () -> ExUtils.THROW_UNSUPPORTED.accept( "test1()" ) );
+    void testExUtils() {
+        Assertions.assertThrows( UnsupportedOperationException.class, () -> ExUtils.THROW_UNSUPPORTED.accept( "test1()" ) );
         ExUtils.WARN_UNSUPPORTED.accept( "test2()" );
     }
 

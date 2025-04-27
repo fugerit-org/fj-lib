@@ -24,8 +24,8 @@ import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.util.PropsIO;
 import org.fugerit.java.core.xml.dom.DOMIO;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
 @Slf4j
-public class TestConnectionFactory extends BasicTest {
+class TestConnectionFactory extends BasicTest {
 
 	private static final String JNDI_DS_NAME = "java:/comp/env/datasource/ds";
 	
@@ -51,7 +51,7 @@ public class TestConnectionFactory extends BasicTest {
 	}
 	
 	@Test
-	public void testCFProps() throws Exception {
+	void testCFProps() throws Exception {
 		String name = "wrapped";
 		Properties props= PropsIO.loadFromClassLoaderSafe( TestBasicDBHelper.DEFAULT_DB_CONN_PATH );
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_EXT_POOLED_IC , "1" );
@@ -60,19 +60,19 @@ public class TestConnectionFactory extends BasicTest {
 		ConnectionFactory wrapped = ConnectionFactoryImpl.newInstance( props );
 		ConnectionFacade.registerFactory( name , wrapped );
 		boolean ok = this.worker( ConnectionFacade.getFactory( name ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 		// pooled
 		ok = this.worker( new DbcpConnectionFactory( props ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void testCFPropsPrefix() throws Exception {
+	void testCFPropsPrefix() throws Exception {
 		boolean ok = this.worker(
 				ConnectionFactoryImpl.newInstance( 
 						PropsIO.loadFromClassLoaderSafe( "core/db/base-db-conn.properties" ),
 						"prefixtest", TestConnectionFactory.class.getClassLoader() ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 		
 	private boolean loadXmlHelper( String path ) throws Exception {
@@ -81,35 +81,35 @@ public class TestConnectionFactory extends BasicTest {
 			Document doc = DOMIO.loadDOMDoc( is );
 			CfConfig cfConfig = ConnectionFactoryImpl.parseCfConfig( doc.getDocumentElement() );
 			ok = this.worker( cfConfig.getCfMap().get( "mem-db" ) );
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 			ok = this.worker( cfConfig.getCfMap().get( "mem-db-pooled" ) );
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 		}
 		return ok;
 	}
 	
 	@Test
-	public void testCFXml() throws Exception {
+	void testCFXml() throws Exception {
 		boolean ok = this.loadXmlHelper( "core/db/connct-properties-mem.xml" );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 
 	@Test
-	public void testCFXmlFail1() throws Exception {
-		Assert.assertThrows( ConfigRuntimeException.class , () -> this.loadXmlHelper( "core/db/connct-properties-mem-fail1.xml" ) );
+	void testCFXmlFail1() throws Exception {
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> this.loadXmlHelper( "core/db/connct-properties-mem-fail1.xml" ) );
 	}
 
 	@Test
-	public void testCFXmlFail2() throws Exception {
-		Assert.assertThrows( ConfigRuntimeException.class , () -> this.loadXmlHelper( "core/db/connct-properties-mem-fail2.xml" ) );
+	void testCFXmlFail2() throws Exception {
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> this.loadXmlHelper( "core/db/connct-properties-mem-fail2.xml" ) );
 	}
 	
 
 	@Test
-	public void testCFUnsupportedMode() throws Exception {
+	void testCFUnsupportedMode() throws Exception {
 		Properties props = new Properties();
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_MODE , "mode-not-exists" );
-		Assert.assertThrows( DAOException.class , () ->ConnectionFactoryImpl.newInstance(props) );
+		Assertions.assertThrows( DAOException.class , () ->ConnectionFactoryImpl.newInstance(props) );
 	}
 	
 	private DataSource createDS() throws NamingException {
@@ -118,66 +118,66 @@ public class TestConnectionFactory extends BasicTest {
 	}
 	
 	@Test
-	public void testCFDS() throws Exception {
+	void testCFDS() throws Exception {
 		boolean ok = this.worker( new ConnectionFacadeWrapper( ConnectionFactoryImpl.newInstance( this.createDS() ) ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void testCFDSTestConn() throws Exception {
+	void testCFDSTestConn() throws Exception {
 		boolean ok = this.worker( new ConnectionFacadeWrapper( ConnectionFactoryImpl.newInstance( this.createDS(), true ) ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void testCFSingle() throws Exception {
+	void testCFSingle() throws Exception {
 		DataSource ds = this.createDS();
 		try ( Connection conn = ds.getConnection() ) {
 			boolean ok = this.worker( new SingleConnectionFactory(conn) );
-			Assert.assertTrue(ok);
+			Assertions.assertTrue(ok);
 		}
 	}
 	
 	@Test
-	public void testCFJndi1() throws Exception {
+	void testCFJndi1() throws Exception {
 		Properties props = new Properties();
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_MODE , ConnectionFactoryImpl.PROP_CF_MODE_DS );
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_MODE_DS_NAME , JNDI_DS_NAME );
 		boolean ok = this.worker( ConnectionFactoryImpl.newInstance( props ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void testCFJndi2() throws Exception {
+	void testCFJndi2() throws Exception {
 		Properties props = new Properties();
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_MODE , ConnectionFactoryImpl.PROP_CF_MODE_DS2 );
 		props.setProperty( ConnectionFactoryImpl.PROP_CF_MODE_DS_NAME , JNDI_DS_NAME );
 		boolean ok = this.worker( ConnectionFactoryImpl.newInstance( props ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 
 	@Test
-	public void testCFDirect1() throws Exception {
+	void testCFDirect1() throws Exception {
 		boolean ok = this.worker( ConnectionFactoryImpl.newInstance( "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:base_db_direct1", "testuser", "testp" ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 
 	@Test
-	public void testCFDirect2() throws Exception {
+	void testCFDirect2() throws Exception {
 		boolean ok = this.worker( ConnectionFactoryImpl.newInstance( "org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:base_db_direct2", "testuser", "testp", TestConnectionFactory.class.getClassLoader() ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 	
 	@Test
-	public void testCFDirect3() throws Exception {
+	void testCFDirect3() throws Exception {
 		boolean ok = this.worker( ConnectionFactoryImpl.newInstance( new org.hsqldb.jdbcDriver(), "jdbc:hsqldb:mem:base_db_direct3", "testuser", "testp" ) );
-		Assert.assertTrue(ok);
+		Assertions.assertTrue(ok);
 	}
 
 	@Test
-	public void testDaoContextOnDS() {
-		Assert.assertTrue( SafeFunction.get( () -> {
+	void testDaoContextOnDS() {
+		Assertions.assertTrue( SafeFunction.get( () -> {
 			try (CloseableDAOContext context = CloseableDAOContextAbstract.newCloseableDAOContextDS(this.createDS());
 				 Connection conn = context.getConnection()) {
 				return Boolean.TRUE;
@@ -186,8 +186,8 @@ public class TestConnectionFactory extends BasicTest {
 	}
 
 	@Test
-	public void testDaoContextOnCF()  {
-		Assert.assertTrue( SafeFunction.get( () -> {
+	void testDaoContextOnCF()  {
+		Assertions.assertTrue( SafeFunction.get( () -> {
 			try (CloseableDAOContext context = CloseableDAOContextAbstract.newCloseableDAOContextCF(
 					ConnectionFactoryImpl.newInstance( new org.hsqldb.jdbcDriver(), "jdbc:hsqldb:mem:base_db_daocontext1", "testuser", "testp" )
 						);

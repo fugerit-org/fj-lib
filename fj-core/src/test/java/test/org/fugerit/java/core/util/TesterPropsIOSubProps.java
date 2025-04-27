@@ -1,16 +1,16 @@
 package test.org.fugerit.java.core.util;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Properties;
 
 import org.fugerit.java.core.util.PropsIO;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TesterPropsIOSubProps {
+class TesterPropsIOSubProps {
 
 	public static final String PROP_TEST_KEY = "TestPropKey1";
 	
@@ -19,13 +19,13 @@ public class TesterPropsIOSubProps {
 	private static final long EXPECTED_SUB_PROPS_SIZE = 2;
 	
 	@Test
-	public void testReadFromClassLoader() {
+	void testReadFromClassLoader() {
 		try {
 			Properties props = PropsIO.loadFromClassLoader( "core/util/test-props-io-prefix.properties" );
 			logger.info( "full props -> {}", props );
 			Properties subProps = PropsIO.subProps( props , "prefix1", "-", true );
 			logger.info( "sub  props -> {}", subProps );
-			Assert.assertEquals( "Correct sub props size", EXPECTED_SUB_PROPS_SIZE, subProps.size() );
+			Assertions.assertEquals( EXPECTED_SUB_PROPS_SIZE, subProps.size(), () -> "Correct sub props size" );
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail( "Error : "+e.getMessage() );	

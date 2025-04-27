@@ -6,8 +6,8 @@ import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.db.dao.FieldList;
 import org.fugerit.java.core.db.daogen.*;
 import org.fugerit.java.core.function.SafeFunction;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 import test.org.fugerit.java.core.db.dao.ModelUser;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Slf4j
-public class TestBasicDataFacade extends TestBasicDBHelper implements Serializable {
+class TestBasicDataFacade extends TestBasicDBHelper implements Serializable {
 
 	private static final long serialVersionUID = 2428066303144473612L;
 
@@ -25,47 +25,47 @@ public class TestBasicDataFacade extends TestBasicDBHelper implements Serializab
 	private static final String TABLE_NAME = "fugerit.user";
 	
 	@Test
-	public void testBasicDataFacade1() {
+	void testBasicDataFacade1() {
 		
 		SafeFunction.apply( () -> {
 			try ( CloseableDAOContextSC context =  new CloseableDAOContextSC( newConnection() ) ) {
 				// basic features
 				BasicDataFacade<ModelUser> facade = new BasicDataFacade<>( TABLE_NAME, ModelUser.RSE );
-				Assert.assertNotNull(  HELPER.fullSerializationTest(facade) );
-				Assert.assertNull( facade.getQueryView() );
-				Assert.assertNotNull( facade.getRse() );
-				Assert.assertNull( facade.getSequenceName() );
-				Assert.assertNull( facade.generateId( context ) );
-				Assert.assertEquals( TABLE_NAME , facade.getTableName() );	
+				Assertions.assertNotNull(  HELPER.fullSerializationTest(facade) );
+				Assertions.assertNull( facade.getQueryView() );
+				Assertions.assertNotNull( facade.getRse() );
+				Assertions.assertNull( facade.getSequenceName() );
+				Assertions.assertNull( facade.generateId( context ) );
+				Assertions.assertEquals( TABLE_NAME , facade.getTableName() );	
 				BasicDaoResult<ModelUser> resultAll = facade.loadAll(context);
-				Assert.assertFalse( resultAll.getList().isEmpty() );
+				Assertions.assertFalse( resultAll.getList().isEmpty() );
 				facade.loadAllStream( context ).forEach( m -> log.info( "test basic dao result stream {}", m) );
 				log.info( "test basic dao result first() {}", resultAll.getFirst() );
-				Assert.assertThrows( DAORuntimeException.class , resultAll::getOne );
+				Assertions.assertThrows( DAORuntimeException.class , resultAll::getOne );
 				BasicDaoResult<ModelUser> resultOne = new BasicDaoResult<>();
-				Assert.assertFalse( resultOne.getFirst().isPresent() );
-				Assert.assertFalse( resultOne.getOne().isPresent() );
+				Assertions.assertFalse( resultOne.getFirst().isPresent() );
+				Assertions.assertFalse( resultOne.getOne().isPresent() );
 				resultOne.getList().add( resultAll.getFirst().get() );
-				Assert.assertTrue( resultOne.getFirst().isPresent() );
-				Assert.assertTrue( resultOne.getOne().isPresent() );
+				Assertions.assertTrue( resultOne.getFirst().isPresent() );
+				Assertions.assertTrue( resultOne.getOne().isPresent() );
 			}
 		} );
 	}
 
 	@Test
-	public void testBasicDataFacade2() {
+	void testBasicDataFacade2() {
 		SafeFunction.apply( () -> {
 			try ( CloseableDAOContextSC context =  new CloseableDAOContextSC( newConnection() ) ) {
 				// advance feature features
 				ModeUserDataFacade facade = new ModeUserDataFacade();
-				Assert.assertNotNull(  HELPER.fullSerializationTest(facade) );
-				Assert.assertEquals( "SELECT * FROM "+TestBasicDataFacade.TABLE_NAME, facade.getQueryView() );
-				Assert.assertNotNull( facade.getRse() );
-				Assert.assertEquals( "fugerit.seq_test", facade.getSequenceName() );
-				Assert.assertNotEquals( BigDecimal.valueOf( 0 ), facade.generateId( context ) );
-				Assert.assertEquals( TABLE_NAME , facade.getTableName() );	
+				Assertions.assertNotNull(  HELPER.fullSerializationTest(facade) );
+				Assertions.assertEquals( "SELECT * FROM "+TestBasicDataFacade.TABLE_NAME, facade.getQueryView() );
+				Assertions.assertNotNull( facade.getRse() );
+				Assertions.assertEquals( "fugerit.seq_test", facade.getSequenceName() );
+				Assertions.assertNotEquals( BigDecimal.valueOf( 0 ), facade.generateId( context ) );
+				Assertions.assertEquals( TABLE_NAME , facade.getTableName() );	
 				BasicDaoResult<ModelUser> resultAll = facade.loadAll(context);
-				Assert.assertFalse( resultAll.getList().isEmpty() );
+				Assertions.assertFalse( resultAll.getList().isEmpty() );
 				// evaluate
 				facade.generateId(context);
 				ModelUser userTest = resultAll.getList().get( 0 );
@@ -80,11 +80,11 @@ public class TestBasicDataFacade extends TestBasicDBHelper implements Serializab
 				log.info( "test 3 : {}", HELPER.fullSerializationTest( userWrapper ) );
 				log.info( "test 4 : {}", userWrapper );
 				userWrapper.wrapModel( userTest );
-				Assert.assertThrows( UnsupportedOperationException.class , () -> BasicWrapper.throwUnsupported( "message" ) );
+				Assertions.assertThrows( UnsupportedOperationException.class , () -> BasicWrapper.throwUnsupported( "message" ) );
 				userWrapper.wrapModel( userTest );
 				// test DataEntityUtils
 				DataEntityUtils.unwrap( facade );
-				Assert.assertThrows( DAOException.class ,  () -> DataEntityUtils.unwrap( userTest ) );
+				Assertions.assertThrows( DAOException.class ,  () -> DataEntityUtils.unwrap( userTest ) );
 				QueryHelper helper = new QueryHelper( TABLE_NAME , new FieldList() );
 				DataEntityUtils.addToQuery( facade , helper );
 			}

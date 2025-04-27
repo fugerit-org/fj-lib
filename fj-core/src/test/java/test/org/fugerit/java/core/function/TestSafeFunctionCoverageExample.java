@@ -1,10 +1,10 @@
 package test.org.fugerit.java.core.function;
 
 import org.fugerit.java.core.cfg.ConfigRuntimeException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class TestSafeFunctionCoverageExample {
+class TestSafeFunctionCoverageExample {
 
 	private static final SafeFunctionCoverageExampleInput INPUT = SafeFunctionCoverageExampleInput.newInput( "test" );
 	
@@ -20,17 +20,17 @@ public class TestSafeFunctionCoverageExample {
 	}
 	
 	@Test
-	public void testClassic() {
+	void testClassic() {
 		SafeFunctionCoverageExample exampleImpl = new SafeFunctionCoverageExampleClassicImpl();
-		Assert.assertTrue( this.testWorker(exampleImpl) );
-		Assert.assertThrows( ConfigRuntimeException.class , () -> exampleImpl.error(INPUT_ERROR) );
+		Assertions.assertTrue( this.testWorker(exampleImpl) );
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> exampleImpl.error(INPUT_ERROR) );
 	}
 	
 	@Test
-	public void testSafe() {
+	void testSafe() {
 		SafeFunctionCoverageExample exampleImpl = new SafeFunctionCoverageExampleSafeImpl();
-		Assert.assertTrue( this.testWorker(exampleImpl) );
-		Assert.assertThrows( ConfigRuntimeException.class , () -> exampleImpl.error(INPUT_ERROR) );
+		Assertions.assertTrue( this.testWorker(exampleImpl) );
+		Assertions.assertThrows( ConfigRuntimeException.class , () -> exampleImpl.error(INPUT_ERROR) );
 	}
 	
 }

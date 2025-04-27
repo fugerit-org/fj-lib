@@ -19,8 +19,8 @@ import org.fugerit.java.core.io.FileIO;
 import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.xml.XMLException;
 import org.fugerit.java.core.xml.dom.DOMIO;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -31,7 +31,7 @@ import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.testhelpers.FailOutputStream;
 
 @Slf4j
-public class TestDOMIO extends BasicTest {
+class TestDOMIO extends BasicTest {
 
 	private static final String XML_TEST_PATH = "src/test/resources/core/cfg/xml/property-catalog-test.xml";
 	
@@ -46,7 +46,7 @@ public class TestDOMIO extends BasicTest {
 	};
 	
 	@Test
-	public void testNewDocumentBuilderFactoryFail() {
+	void testNewDocumentBuilderFactoryFail() {
 		boolean ok = false;
 		try {
 			Properties features = new Properties();
@@ -57,11 +57,11 @@ public class TestDOMIO extends BasicTest {
 			log.warn( "Exception OK : {}", e.toString() );
 			ok = true;
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testNewDocumentBuilderFactoryOk() {
+	void testNewDocumentBuilderFactoryOk() {
 		boolean ok = false;
 		try {
 			Properties features = new Properties();
@@ -73,136 +73,136 @@ public class TestDOMIO extends BasicTest {
 		} catch (ConfigRuntimeException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testNewUnsafeDocumentBuilderFactory() {
+	void testNewUnsafeDocumentBuilderFactory() {
 		DocumentBuilderFactory dbf = DOMIO.newDocumentBuilderFactory( true );
 		log.info( "DOMIO.newDocumentBuilderFactory -> {}", dbf );
-		Assert.assertNotNull( dbf );
+		Assertions.assertNotNull( dbf );
 	}
 	
 	
 	@Test
-	public void testNewSafeDocumentBuilderFactory() {
+	void testNewSafeDocumentBuilderFactory() {
 		DocumentBuilderFactory dbf = DOMIO.newSafeDocumentBuilderFactory();
 		log.info( "DOMIO.newSafeDocumentBuilderFactory -> {}", dbf );
-		Assert.assertNotNull( dbf );
+		Assertions.assertNotNull( dbf );
 	}
 	
 	@Test
-	public void testLoadDOMDocString() {
+	void testLoadDOMDocString() {
 		boolean ok = false;
 		try {
 			ok = DOMIO.loadDOMDoc( FileIO.readString( new File( XML_TEST_PATH ) ) ) != null;
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 
 	@Test
-	public void testLoadDOMDocSource() {
+	void testLoadDOMDocSource() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( new InputSource(is) ) != null;
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceNsa() {
+	void testLoadDOMDocSourceNsa() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( new InputSource(is), true ) != null;
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceEr() {
+	void testLoadDOMDocSourceEr() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( new InputSource(is), ENTITY_RESOLVER ) != null;
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceErNsa() {
+	void testLoadDOMDocSourceErNsa() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( new InputSource(is), ENTITY_RESOLVER, true ) != null;
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocStream() {
+	void testLoadDOMDocStream() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH ) ) {
 			ok = DOMIO.loadDOMDoc( is ) != null;
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocReader() {
+	void testLoadDOMDocReader() {
 		boolean ok = false;
 		try ( Reader reader = new InputStreamReader( new FileInputStream( XML_TEST_PATH ) ) ) {
 			ok = DOMIO.loadDOMDoc( reader ) != null;
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocNsaReader() {
+	void testLoadDOMDocNsaReader() {
 		boolean ok = false;
 		try ( Reader reader = new InputStreamReader( new FileInputStream( XML_TEST_PATH ) ) ) {
 			ok = DOMIO.loadDOMDoc( reader, false ) != null;
 		} catch (IOException | XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocFile() {
+	void testLoadDOMDocFile() {
 		boolean ok = false;
 		try {
 			ok = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) ) != null;
 		} catch (XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocNsaFile() {
+	void testLoadDOMDocNsaFile() {
 		boolean ok = false;
 		try {
 			ok = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ), false ) != null;
 		} catch (XMLException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocStringFail() {
+	void testLoadDOMDocStringFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( FileIO.readString( new File( XML_TEST_PATH_KO ) ) );
@@ -210,11 +210,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}	
 	
 	@Test
-	public void testLoadDOMDocSourceFail() {
+	void testLoadDOMDocSourceFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( new InputSource(is) );
@@ -222,11 +222,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceErFail() {
+	void testLoadDOMDocSourceErFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( new InputSource(is), ENTITY_RESOLVER );
@@ -234,11 +234,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocSourceErNsaFail() {
+	void testLoadDOMDocSourceErNsaFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( new InputSource(is), ENTITY_RESOLVER, true );
@@ -246,11 +246,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}	
 	
 	@Test
-	public void testLoadDOMDocSourceNsaFail() {
+	void testLoadDOMDocSourceNsaFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( new InputSource(is), false );
@@ -258,11 +258,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocStreamFail() {
+	void testLoadDOMDocStreamFail() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( XML_TEST_PATH_KO ) ) {
 			DOMIO.loadDOMDoc( is );
@@ -270,11 +270,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocReaderFail() {
+	void testLoadDOMDocReaderFail() {
 		boolean ok = false;
 		try ( Reader reader = new InputStreamReader( new FileInputStream( XML_TEST_PATH_KO ) ) ) {
 			DOMIO.loadDOMDoc( reader );
@@ -282,11 +282,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocFileFail() {
+	void testLoadDOMDocFileFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( new File( XML_TEST_PATH_KO ) );
@@ -294,11 +294,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocReaderNsaFail() {
+	void testLoadDOMDocReaderNsaFail() {
 		boolean ok = false;
 		try ( Reader reader = new InputStreamReader( new FileInputStream( XML_TEST_PATH_KO ) ) ) {
 			DOMIO.loadDOMDoc( reader, false );
@@ -306,11 +306,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocFileNsaFail() {
+	void testLoadDOMDocFileNsaFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( new File( XML_TEST_PATH_KO ), false );
@@ -318,11 +318,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocFileNotFoundFail() {
+	void testLoadDOMDocFileNotFoundFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( new File( "fadsfasfdasdas" ) );
@@ -330,11 +330,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadDOMDocFileNsaNotFoundFail() {
+	void testLoadDOMDocFileNsaNotFoundFail() {
 		boolean ok = false;
 		try {
 			DOMIO.loadDOMDoc( new File( "fadsfasfdasdas" ), false );
@@ -342,11 +342,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMIndentResult() {
+	void testWriteDOMIndentResult() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -357,11 +357,11 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMIndentResultFailIOExepction() {
+	void testWriteDOMIndentResultFailIOExepction() {
 		boolean ok = false;
 		try ( FailOutputStream os = new FailOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -370,11 +370,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMIndentResultFail() {
+	void testWriteDOMIndentResultFail() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH_KO ) );
@@ -385,11 +385,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMIndentWriter() {
+	void testWriteDOMIndentWriter() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -400,11 +400,11 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMIndentStream() {
+	void testWriteDOMIndentStream() {
 		boolean ok = false;
 		try ( ByteArrayOutputStream os = new ByteArrayOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -415,11 +415,11 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMWriter() {
+	void testWriteDOMWriter() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -430,11 +430,11 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMResult() {
+	void testWriteDOMResult() {
 		boolean ok = false;
 		try ( StringWriter sw = new StringWriter() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -445,11 +445,11 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMStream() {
+	void testWriteDOMStream() {
 		boolean ok = false;
 		try ( ByteArrayOutputStream os = new ByteArrayOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -460,11 +460,11 @@ public class TestDOMIO extends BasicTest {
 		} catch (XMLException | IOException e) {
 			this.failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMStreamFail() {
+	void testWriteDOMStreamFail() {
 		boolean ok = false;
 		try ( ByteArrayOutputStream os = new ByteArrayOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH_KO ) );
@@ -473,11 +473,11 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testWriteDOMStreamFailStream() {
+	void testWriteDOMStreamFailStream() {
 		boolean ok = false;
 		try ( OutputStream os = new FailOutputStream() ) {
 			Document doc = DOMIO.loadDOMDoc( new File( XML_TEST_PATH ) );
@@ -486,7 +486,7 @@ public class TestDOMIO extends BasicTest {
 			log.info( "Exception : {}", e.toString() );
 			ok = ( e instanceof XMLException );
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 		
 }

@@ -11,15 +11,15 @@ import org.fugerit.java.core.db.dao.idgen.IdGeneratorFacade;
 import org.fugerit.java.core.db.helpers.DAOID;
 import org.fugerit.java.core.db.helpers.DbUtils;
 import org.fugerit.java.core.function.SafeFunction;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import test.org.fugerit.java.BasicTest;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 @Slf4j
-public class TestDBUtils extends BasicTest {
+class TestDBUtils extends BasicTest {
 
 	private int testWorker( ConnectionFactory cf ) {
 		return SafeFunction.get( () -> {
@@ -29,27 +29,27 @@ public class TestDBUtils extends BasicTest {
 				BasicSeqIdGenerator idGenerator = IdGeneratorFacade.sequenceGenerator( conn, "test_seq" );
 				DAOID id = idGenerator.generateId( conn );
 				log.info( "generated id : {}", id );
-				Assert.assertNotNull( id );
+				Assertions.assertNotNull( id );
 				return res;
 			}
 		} );
 	}
 
 	@Test
-	public void testH2() {
+	void testH2() {
 		SafeFunction.apply( () -> {
 			ConnectionFactory cf = ConnectionFactoryImpl.newInstance( "org.h2.Driver",
 					"jdbc:h2:mem:default", "user_h2", "pass_h2" );
-			Assert.assertEquals( DbUtils.DB_H2, this.testWorker( cf ) );
+			Assertions.assertEquals( DbUtils.DB_H2, this.testWorker( cf ) );
 		} );
 	}
 
 	@Test
-	public void testHsqldb() {
+	void testHsqldb() {
 		SafeFunction.apply( () -> {
 			ConnectionFactory cf = ConnectionFactoryImpl.newInstance( "org.hsqldb.jdbc.JDBCDriver",
 					"jdbc:hsqldb:mem:dbutils_test", "user_hsqldb", "pass_hsqldb" );
-			Assert.assertEquals( DbUtils.DB_HSQLDB, this.testWorker( cf ) );
+			Assertions.assertEquals( DbUtils.DB_HSQLDB, this.testWorker( cf ) );
 		} );
 	}
 

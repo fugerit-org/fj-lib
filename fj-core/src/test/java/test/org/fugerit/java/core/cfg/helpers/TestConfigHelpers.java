@@ -13,28 +13,28 @@ import org.fugerit.java.core.cfg.helpers.XMLConfigurableObject;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.xml.XMLException;
 import org.fugerit.java.core.xml.dom.DOMIO;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Element;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestConfigHelpers {
+class TestConfigHelpers {
 
 	@Test
-	public void testUnsafeHelper() throws ConfigException {
+	void testUnsafeHelper() throws ConfigException {
 		UnsafeHelper.handleUnsafe( new IOException( "a" ) , UnsafeHelper.UNSAFE_TRUE ); 
-		Assert.assertThrows( Exception.class, () -> UnsafeHelper.handleUnsafe( new IOException( "a" ) , UnsafeHelper.UNSAFE_FALSE ) );
+		Assertions.assertThrows( Exception.class, () -> UnsafeHelper.handleUnsafe( new IOException( "a" ) , UnsafeHelper.UNSAFE_FALSE ) );
 	}
 	
 	@Test
-	public void testConfigurableObject() throws ConfigException, IOException, XMLException {
+	void testConfigurableObject() throws ConfigException, IOException, XMLException {
 		XMLConfigurableObject cfg = XMLConfigurableObject.DO_NOTHING;
 		cfg.configure( (Element) null );
-		Assert.assertNotNull( cfg );
-		Assert.assertThrows( ConfigException.class , () -> cfg.configure( new Properties() ) );
-		Assert.assertThrows( ConfigException.class , () -> {
+		Assertions.assertNotNull( cfg );
+		Assertions.assertThrows( ConfigException.class , () -> cfg.configure( new Properties() ) );
+		Assertions.assertThrows( ConfigException.class , () -> {
 			try ( InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/cfg/xml/props/props-01.properties" ) ) {
 				cfg.configureProperties(is);
 			}
@@ -57,7 +57,7 @@ public class TestConfigHelpers {
 				log.info( "pring props : {}", props );
 			}
 		};
-		Assert.assertThrows( ConfigException.class , () -> { 
+		Assertions.assertThrows( ConfigException.class , () -> { 
 			try ( StringReader reader = new StringReader( "<config test='prop1'/>" ) ) {
 				pCfg.configure( DOMIO.loadDOMDoc( reader ).getDocumentElement() );
 			}

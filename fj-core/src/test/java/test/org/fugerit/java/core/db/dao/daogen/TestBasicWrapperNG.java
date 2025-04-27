@@ -4,20 +4,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.db.daogen.BasicHelper;
 import org.fugerit.java.core.db.daogen.BasicWrapperNG;
 import org.fugerit.java.core.function.SafeFunction;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.db.dao.ModelUser;
 
 import java.io.NotSerializableException;
 
 @Slf4j
-public class TestBasicWrapperNG {
+class TestBasicWrapperNG {
 
     private static final BasicTest HELPER = new BasicTest();
 
     @Test
-    public void testBasicWrapperNG() {
+    void testBasicWrapperNG() {
         SafeFunction.apply( () -> {
             ModelUser userTest = new ModelUser();
             // wrapper ng
@@ -26,9 +26,9 @@ public class TestBasicWrapperNG {
             log.info( "test 2 : {}", userWrapperNG.unwrapModel() );
             log.info( "test 3 : {}", userWrapperNG );
             userWrapperNG.wrapModel( userTest );
-            Assert.assertThrows(NotSerializableException.class, () -> HELPER.fullSerializationTest( userWrapperNG ));
+            Assertions.assertThrows(NotSerializableException.class, () -> HELPER.fullSerializationTest( userWrapperNG ));
             BasicHelper.throwUnsupported( "test 0", () -> false ); // will not throw unsupported operation
-            Assert.assertThrows( UnsupportedOperationException.class, () -> BasicHelper.throwUnsupported( "test 1" ) );
+            Assertions.assertThrows( UnsupportedOperationException.class, () -> BasicHelper.throwUnsupported( "test 1" ) );
         } );
     }
 

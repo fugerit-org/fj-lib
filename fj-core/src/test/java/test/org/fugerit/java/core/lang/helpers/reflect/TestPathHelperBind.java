@@ -1,18 +1,18 @@
 package test.org.fugerit.java.core.lang.helpers.reflect;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.math.BigDecimal;
 
 import org.fugerit.java.core.lang.helpers.reflect.PathHelper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestPathHelperBind extends BasicTest {
+class TestPathHelperBind extends BasicTest {
 	
 	@Test
-	public void bind001() {
+	void bind001() {
 		try {
 			long testIdTwo = 2;
 			long testIdTwoBind = 3;

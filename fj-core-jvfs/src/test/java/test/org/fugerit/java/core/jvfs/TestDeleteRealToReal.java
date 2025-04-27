@@ -5,12 +5,12 @@ import java.io.IOException;
 
 import org.fugerit.java.core.jvfs.JVFS;
 import org.fugerit.java.core.jvfs.file.RealJMount;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TestDeleteRealToReal extends TestJVFSHelper {
+class TestDeleteRealToReal extends TestJVFSHelper {
 
 	@Test
-	public void testDelete01() {
+	 void testDelete01() {
 		try {
 			File dest = new File( "target/test_delete_01" );
 			logger.info( "create dest dir : {} -> {}", dest, dest.mkdirs() );

@@ -5,10 +5,10 @@ import java.io.StringWriter;
 
 import org.fugerit.java.core.function.SafeFunction;
 import org.fugerit.java.core.io.helper.CustomPrintWriter;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class TestCustomPrintWriter {
+class TestCustomPrintWriter {
 
 	private boolean worker( CustomPrintWriter writer ) {
 		boolean ok = false;
@@ -18,46 +18,46 @@ public class TestCustomPrintWriter {
 	}
 	
 	@Test
-	public void test() {
+	void test() {
 		SafeFunction.apply( () -> {
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new ByteArrayOutputStream() ) ) {
 				boolean ok = this.worker(writer);
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new ByteArrayOutputStream(), "\n" ) ) {
 				boolean ok = this.worker(writer);
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new ByteArrayOutputStream(), false, "\n" ) ) {
 				boolean ok = this.worker(writer);
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}	
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new ByteArrayOutputStream(), true ) ) {
 				boolean ok = this.worker(writer);
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new StringWriter() ) ) {
 				boolean ok = this.worker(writer);
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new StringWriter(), "\n" ) ) {
 				boolean ok = this.worker(writer);
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new StringWriter(), false, "\n" ) ) {
 				boolean ok = this.worker(writer);
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}
 			try ( CustomPrintWriter writer = new CustomPrintWriter( new StringWriter(), true ) ) {
 				boolean ok = this.worker(writer);
-				Assert.assertTrue(ok);
+				Assertions.assertTrue(ok);
 			}
 			// last test
 			CustomPrintWriter writer = new CustomPrintWriter( new StringWriter(), true, "\n" );
 			boolean ok = this.worker(writer);
 			writer.setLineSeparator( "\n" );
-			Assert.assertEquals( "\n", writer.getLineSeparator() );
-			Assert.assertTrue(ok);
+			Assertions.assertEquals( "\n", writer.getLineSeparator() );
+			Assertions.assertTrue(ok);
 			writer.close();
 			writer.println( "stop" );
 		} );

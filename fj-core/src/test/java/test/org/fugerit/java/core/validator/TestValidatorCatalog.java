@@ -1,6 +1,6 @@
 package test.org.fugerit.java.core.validator;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Locale;
 import java.util.Properties;
@@ -10,12 +10,12 @@ import org.fugerit.java.core.util.PropertyEntry;
 import org.fugerit.java.core.validator.ValidatorCatalog;
 import org.fugerit.java.core.validator.ValidatorDate;
 import org.fugerit.java.core.validator.ValidatorResult;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.BasicTest;
 
-public class TestValidatorCatalog extends BasicTest {
+class TestValidatorCatalog extends BasicTest {
 
 	private static final String CONFIG_PATH = "cl://core/validator/validator-catalog-test.xml";
 
@@ -29,14 +29,14 @@ public class TestValidatorCatalog extends BasicTest {
 	}
 	
 	@Test
-	public void testSerialization() {
+	void testSerialization() {
 		try {
 			ValidatorCatalog loadedCatalog = (ValidatorCatalog) this.fullSerializationTest( catalog );
 			ValidatorResult result = new ValidatorResult();
 			String label = "test label 1 (valid)";
 			String value = "test value one";
 			boolean valid = loadedCatalog.validate( "testRegexValidator" , result, Locale.ENGLISH, label, value, label, new Properties() );
-			Assert.assertTrue(valid);
+			Assertions.assertTrue(valid);
 		} catch (Exception e) {
 			this.failEx(e);
 		}
@@ -80,17 +80,17 @@ public class TestValidatorCatalog extends BasicTest {
 	}
 	
 	@Test
-	public void testRegexValidator001_EN() {
+	void testRegexValidator001_EN() {
 		this.testRegexValidator001( Locale.UK );
 	}
 	
 	@Test
-	public void testRegexValidator001_IT() {
+	void testRegexValidator001_IT() {
 		this.testRegexValidator001( Locale.ITALY );
 	}
 	
 	@Test
-	public void testNumberValidator001_EN() {
+	void testNumberValidator001_EN() {
 		Locale l = Locale.UK;
 		ValidatorResult result = new ValidatorResult();
 		Properties params = new Properties();
@@ -102,7 +102,7 @@ public class TestValidatorCatalog extends BasicTest {
 	}
 	
 	@Test
-	public void testNumberValidator001_IT() {
+	void testNumberValidator001_IT() {
 		Locale l = Locale.ITALY;
 		ValidatorResult result = new ValidatorResult();
 		Properties params = new Properties();

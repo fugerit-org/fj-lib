@@ -6,15 +6,16 @@ import org.fugerit.java.core.cfg.ConfigException;
 import org.fugerit.java.core.io.StreamIO;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
 import org.fugerit.java.core.lang.helpers.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import test.org.fugerit.java.BasicTest;
+import test.org.fugerit.java.core.db.dao.ModelUser;
 
 @Slf4j
-public class TestClassHelper extends BasicTest {
+class TestClassHelper extends BasicTest {
 
 	private static final String PATH_TXT_OK = "core/test_test.txt";
 	
@@ -77,84 +78,84 @@ public class TestClassHelper extends BasicTest {
 	}	
 	
 	@Test
-	public void testNewInstanceOk() {
-		boolean ok = this.testNewInstanceWorker( TestClassHelper.class.getName(), false );
-		Assert.assertTrue( ok );
+	void testNewInstanceOk() {
+		boolean ok = this.testNewInstanceWorker( ModelUser.class.getName(), false );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testNewInstanceClassNotFoundException() {
-		boolean ok = this.testNewInstanceWorker( TestClassHelper.class.getName()+"NotExist", true );
-		Assert.assertTrue( ok );
+	void testNewInstanceClassNotFoundException() {
+		boolean ok = this.testNewInstanceWorker( ModelUser.class.getName()+"NotExist", true );
+		Assertions.assertTrue( ok );
 	}
 
 	@Test
-	public void testNewInstanceConfigException() {
+	void testNewInstanceConfigException() {
 		boolean ok = this.testNewInstanceWorker( TestPrivateConstructor.class.getName(), true );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 
 	@Test
-	public void testNewInstanceNoSuchMethodException() {
+	void testNewInstanceNoSuchMethodException() {
 		boolean ok = this.testNewInstanceWorker( TestNoDefaultConstructor.class.getName(), true );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 
 	
 	@Test
-	public void testLoadFromDefaultClassLoaderOk() {
+	void testLoadFromDefaultClassLoaderOk() {
 		boolean ok = this.testLoadFromDefaultClassLoaderWorker( PATH_TXT_OK, false );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderOk1() {
-		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, TestClassHelper.class );
-		Assert.assertTrue( ok );
+	void testLoadFromClassLoaderOk1() {
+		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, ModelUser.class );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderOk2() {
+	void testLoadFromClassLoaderOk2() {
 		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, ClassHelper.class );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderOk3() {
+	void testLoadFromClassLoaderOk3() {
 		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_OK, false, null );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromDefaultClassLoaderko() {
+	void testLoadFromDefaultClassLoaderko() {
 		boolean ok = this.testLoadFromDefaultClassLoaderWorker( PATH_TXT_KO, true );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderko1() {
-		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_KO, true, TestClassHelper.class );
-		Assert.assertTrue( ok );
+	void testLoadFromClassLoaderko1() {
+		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_KO, true, ModelUser.class );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testLoadFromClassLoaderKo2() {
+	void testLoadFromClassLoaderKo2() {
 		boolean ok = this.testLoadFromClassLoaderWorker( PATH_TXT_KO, true, ClassHelper.class );
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testToFullClassName() {
-		String name = ClassHelper.toFullClassName( new TestClassHelper() );
+	void testToFullClassName() {
+		String name = ClassHelper.toFullClassName( new ModelUser() );
 		log.info( "tesToFullClassName {}", name );
-		Assert.assertEquals( TestClassHelper.class.getName(), name );
+		Assertions.assertEquals( ModelUser.class.getName(), name );
 	}
 	
 	@Test
-	public void testToSimpleClassName() {
-		String name = ClassHelper.toSimpleClassName( new TestClassHelper() );
+	void testToSimpleClassName() {
+		String name = ClassHelper.toSimpleClassName( new ModelUser() );
 		log.info( "testToSimpleClassName {}", name );
-		Assert.assertEquals( TestClassHelper.class.getSimpleName() , name );
+		Assertions.assertEquals( ModelUser.class.getSimpleName() , name );
 	}
 	
 }

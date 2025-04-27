@@ -9,12 +9,12 @@ import org.fugerit.java.core.db.dao.BasicDAOFactory;
 import org.fugerit.java.core.db.dao.DAOException;
 import org.fugerit.java.core.db.dao.DAORuntimeException;
 import org.fugerit.java.core.db.dao.DAOUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import test.org.fugerit.java.core.db.TestBasicDBHelper;
 
-public class TestDAOUtils extends TestBasicDBHelper {
+class TestDAOUtils extends TestBasicDBHelper {
 
 	private ConnectionFactoryCloseable connFactory() {
 		return ConnectionFactoryImpl.wrap( new ConnectionFactoryImpl() {	
@@ -29,18 +29,18 @@ public class TestDAOUtils extends TestBasicDBHelper {
 	private static final String DEF_USER = "user1";
 	
 	@Test
-	public void testDAOUtilsNG() {
+	void testDAOUtilsNG() {
 		DAORuntimeException.apply( () -> {
 			try ( Connection conn = newConnection() ) {
 				DAOUtils utils = new DAOUtils( new BasicDAOFactory( connFactory() ) );
 				String user = utils.extractString( "SELECT username FROM fugerit.user WHERE username = ''user1''" );
-				Assert.assertEquals( DEF_USER, user );
+				Assertions.assertEquals( DEF_USER, user );
 				List<String> list = utils.extractStringList( "SELECT username FROM fugerit.user" );
-				Assert.assertFalse( list.isEmpty() );
+				Assertions.assertFalse( list.isEmpty() );
 				long idL = utils.extractLong( "SELECT id FROM fugerit.user WHERE username = ''user1''" );
-				Assert.assertNotEquals( 0L , idL );
+				Assertions.assertNotEquals( 0L , idL );
 				double idD = utils.extractDouble( "SELECT id FROM fugerit.user WHERE username = ''user1''" );
-				Assert.assertNotEquals( 0D , idD );
+				Assertions.assertNotEquals( 0D , idD );
 			}
 		} );
 	}

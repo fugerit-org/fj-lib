@@ -1,18 +1,18 @@
 package test.org.fugerit.java.core.util;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Properties;
 
 import org.fugerit.java.core.util.PropsIO;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class TesterPropsIO {
+class TesterPropsIO {
 
 	public static final String PROP_TEST_KEY = "TestPropKey1";
 	
 	@Test
-	public void testReadFromClassLoader() {
+	void testReadFromClassLoader() {
 		try {
 			Properties props = PropsIO.loadFromClassLoader( "core/util/test-props.io.properties" );
 			String testValue = props.getProperty( PROP_TEST_KEY );

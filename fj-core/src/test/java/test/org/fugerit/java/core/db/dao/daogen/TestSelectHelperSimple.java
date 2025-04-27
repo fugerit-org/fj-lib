@@ -6,10 +6,10 @@ import org.fugerit.java.core.db.daogen.BasicDAOHelper;
 import org.fugerit.java.core.db.daogen.CloseableDAOContext;
 import org.fugerit.java.core.db.daogen.CloseableDAOContextSC;
 import org.fugerit.java.core.db.daogen.SelectHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-public class TestSelectHelperSimple extends TestAddressSelectHelper {
+class TestSelectHelperSimple extends TestAddressSelectHelper {
 	
 	
 	protected void testQueryHelperSimple( String syntax ) {
@@ -26,19 +26,19 @@ public class TestSelectHelperSimple extends TestAddressSelectHelper {
 			// result
 			String res = daoHelper.loadOneHelper( selectHelper, RSE_ADDRESS_COL_INFO );
 			logger.info( "res -> {}", res );
-			Assert.assertNotNull( "Result should not be null" , res );
+			Assertions.assertNotNull( "Result should not be null" , res );
 		} catch (Exception e) {
 			this.failEx(e);
 		}
 	}
 	
 	@Test
-	public void testQuerySelectSimplePostgres() {
+	void testQuerySelectSimplePostgres() {
 		testQueryHelperSimple( "PGS"  );
 	}
 	
 	@Test
-	public void testQuerySelectSimpleOracle() {
+	void testQuerySelectSimpleOracle() {
 		testQueryHelperSimple( "ORA" );
 	}
 	

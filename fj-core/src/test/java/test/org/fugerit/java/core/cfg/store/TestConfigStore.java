@@ -14,8 +14,8 @@ import org.fugerit.java.core.cfg.store.helper.ConfigStoreDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreMapDefault;
 import org.fugerit.java.core.cfg.store.helper.ConfigStoreProps;
 import org.fugerit.java.core.lang.helpers.ClassHelper;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ import test.org.fugerit.java.BasicTest;
 import test.org.fugerit.java.core.testhelpers.FailInputStream;
 
 @Slf4j
-public class TestConfigStore extends BasicTest {
+class TestConfigStore extends BasicTest {
 
     private static final Logger logger = LoggerFactory.getLogger( TestConfigStore.class );
 
@@ -43,7 +43,7 @@ public class TestConfigStore extends BasicTest {
     }
     
     @Test
-    public void test1() {
+    void test1() {
     	boolean ok = false;
         try (InputStream is = ClassHelper.loadFromDefaultClassLoader( "core/util/collection/test_store_1.properties" );
         		FileOutputStream fos = new FileOutputStream( new File( "target/test_config_store_props.properties" ) )) {
@@ -57,13 +57,13 @@ public class TestConfigStore extends BasicTest {
         } catch (Exception e) {
             throw new ConfigRuntimeException( e );
         }
-        Assert.assertTrue( ok );
+        Assertions.assertTrue( ok );
     }
 
 	private static final String PATH_PROPS = "src/test/resources/core/util/collection/test_store_1.properties";
 	
 	@Test
-	public void testRead() {
+	void testRead() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( new File( PATH_PROPS ) ) ) {
 			ConfigStoreDefault configStore = ConfigStoreProps.read( is );
@@ -72,11 +72,11 @@ public class TestConfigStore extends BasicTest {
 		} catch (IOException e) {
 			failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testReadKo() {
+	void testReadKo() {
 		boolean ok = false;
 		try ( InputStream is = new FailInputStream() ) {
 			ConfigStoreDefault configStore = ConfigStoreProps.read( is );
@@ -86,11 +86,11 @@ public class TestConfigStore extends BasicTest {
 		} catch (IOException e) {
 			failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testOperation() {
+	void testOperation() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( new File( PATH_PROPS ) ) ) {
 			ConfigStoreDefault configStore = ConfigStoreProps.read( is );
@@ -103,11 +103,11 @@ public class TestConfigStore extends BasicTest {
 		} catch (IOException e) {
 			failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 
 	@Test
-	public void testGetConfigProps() {
+	void testGetConfigProps() {
 		boolean ok = false;
 		try ( InputStream is = new FileInputStream( new File( PATH_PROPS ) ) ) {
 			ConfigStoreProps configStore = (ConfigStoreProps)ConfigStoreProps.read( is );
@@ -115,14 +115,14 @@ public class TestConfigStore extends BasicTest {
 		} catch (IOException e) {
 			failEx(e);
 		}
-		Assert.assertTrue( ok );
+		Assertions.assertTrue( ok );
 	}
 	
 	@Test
-	public void testToProperties() {
+	void testToProperties() {
 		Properties props = ConfigStoreUtils.toProperties( ADD_MAP );
 		log.info( "toProperties : {}", props );
-		Assert.assertEquals( ADD_MAP.getKeySet().size() , props.keySet().size() );
+		Assertions.assertEquals( ADD_MAP.getKeySet().size() , props.keySet().size() );
 	}
     
 }
