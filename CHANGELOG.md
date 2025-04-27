@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [8.6.7] - 2025-04-16
+## [8.6.9] - 2025-04-27
+
+### Changed
+
+- Migrating from "Legacy OSSRH" to "Central Portal"
+- fj-bom version set to 2.0.0
+- migrate from junit 4 to 5 <https://github.com/fugerit-org/fj-lib/issues/93>
+
+## [8.6.8] - 2025-04-16
 
 ### Added
 
