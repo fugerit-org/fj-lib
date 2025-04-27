@@ -1,22 +1,22 @@
 package test.org.fugerit.java.tool;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Properties;
 
 import org.fugerit.java.tool.Launcher;
 import org.fugerit.java.tool.ToolHandlerHelper;
 import org.fugerit.java.tool.fixed.ExtractFixedConfigHandler;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TestExtractFixedConfigHandler {
+class TestExtractFixedConfigHandler {
 
 	@Test
-	public void test() {
+	void test() {
 		boolean ok = false;
 		try {
 			Properties params = new Properties();
@@ -35,7 +35,7 @@ public class TestExtractFixedConfigHandler {
 	}
 	
 	@Test
-	public void testKo1() {
+	void testKo1() {
 		boolean ok = false;
 		try {
 			Properties params = new Properties();
