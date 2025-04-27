@@ -35,7 +35,7 @@ class TestMisc extends TestBasicDBHelper {
 			context.setAttribute( "a" , "b" );
 			return context;
 		}
-	};
+	}
 	
 	@Test
 	void testSimpleServiceProvider() {

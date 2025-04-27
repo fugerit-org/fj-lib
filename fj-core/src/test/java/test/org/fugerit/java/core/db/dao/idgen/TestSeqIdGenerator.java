@@ -156,7 +156,7 @@ class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	void testBasic() throws ConfigException, IOException, XMLException {
+	void testBasic() throws ConfigException, IOException {
 		BasicIdGenerator idGenerator = new BasicIdGenerator() {	
 			@Override
 			public DAOID generateId(Connection conn) throws DAOException {
@@ -177,7 +177,7 @@ class TestSeqIdGenerator extends MemDBTestBase {
 	}
 	
 	@Test
-	void testBasicSeq() throws ConfigException, IOException, XMLException {
+	void testBasicSeq() throws ConfigException, IOException {
 		BasicSeqIdGenerator idGenerator = new BasicSeqIdGenerator() {
 
 			@Override

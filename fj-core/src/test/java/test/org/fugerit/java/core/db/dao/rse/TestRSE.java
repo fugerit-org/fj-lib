@@ -37,9 +37,9 @@ class TestRSE extends TestBasicDBHelper {
 	
 	private static final int TEST_STATE = 1;
 	
-	private static Class<?>[] PARAM_STRING = { String.class };
+	private static final Class<?>[] PARAM_STRING = { String.class };
 	
-	private static Class<?>[] PARAM_INTEGER = { Integer.TYPE };
+	private static final Class<?>[] PARAM_INTEGER = { Integer.TYPE };
 	
 	private <T> T worker( String sql, String userId, RSExtractor<T> rse, String colName ) throws SQLException {
 		T res = null;
