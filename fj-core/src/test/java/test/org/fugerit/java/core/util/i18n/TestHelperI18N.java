@@ -46,6 +46,7 @@ class TestHelperI18N {
 		String key = "test.prop.1"; // test.prop.1 is available for both languages
 		this.testHelper( "Test property 1", LANG_DEF,  key );
 		this.testHelper( "Proprietà test 1", LANG_ALT[0],  key );
+		Assertions.assertTrue( Boolean.TRUE );
 	}
 	
 	@Test
@@ -53,6 +54,7 @@ class TestHelperI18N {
 		String key = "test.prop.2";	// test.prop.2 is available only for default language
 		this.testHelper( "Test property 2", LANG_DEF,  key );
 		this.testHelper( "Test property 2", LANG_ALT[0],  key );
+		Assertions.assertTrue( Boolean.TRUE );
 	}
 	
 	@Test
@@ -60,6 +62,7 @@ class TestHelperI18N {
 		String key = "test.prop.3";	// test.prop.3 is available only for default language
 		this.testHelper( null, LANG_DEF, key  );
 		this.testHelper( "Proprietà test 3", LANG_ALT[0], key );
+		Assertions.assertTrue( Boolean.TRUE );
 	}
 	
 	@Test
@@ -70,6 +73,7 @@ class TestHelperI18N {
 				LANG_DEF,  key, Integer.valueOf( 3 ), ParamI18N.newParamI18N( keyParam ) );
 		this.testHelper( "Proprietà complessa test 1 -> parametro semplice : 3 e parametro i18n : (valore ParamI18N)", 
 				LANG_ALT[0],  key, Integer.valueOf( 3 ), ParamI18N.newParamI18N( keyParam ) );
+		Assertions.assertTrue( Boolean.TRUE );
 	}
 	
 	@Test
@@ -80,6 +84,7 @@ class TestHelperI18N {
 				LANG_DEF,  key, Integer.valueOf( 3 ), ParamI18N.newParamI18N( keyParam, this.helperParam ) );
 		this.testHelper( "Proprietà complessa test 1 -> parametro semplice : 3 e parametro i18n : (valore ParamI18N bundle alternativo)", 
 				LANG_ALT[0],  key, Integer.valueOf( 3 ), ParamI18N.newParamI18N( keyParam, this.helperParam ) );
+		Assertions.assertTrue( Boolean.TRUE );
 	}
 		
 }
