@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Deprecated
+
+- MavenProps.getPropery() method. (flagged for removal in future versions)
+
+### Changed
+
+- new method MavenProps.getPropertyOptional()
+- fj-bom version set to 2.0.2
+
+### Fixed
+
+- typo in MavenProps utility, constant GROUP_ID value is "gropupId" should be "groupId" <https://github.com/fugerit-org/fj-lib/issues/97>
+
 ## [8.6.9] - 2025-04-27
 
 ### Changed
