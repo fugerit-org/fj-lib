@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Create version compare utility <https://github.com/fugerit-org/fj-lib/issues/99>
+
 ### Deprecated
 
 - MavenProps.getPropery() method. (flagged for removal in future versions)
