@@ -79,7 +79,7 @@ public class XmlBeanHelper {
 			setFromElement( bean , config, mode );
 			set = true;
 		} catch (Exception e) {
-			log.warn( "Cannot set all parameters from bean, usually safe to ignore : {}", e.toString() );
+			log.debug( "Cannot set all parameters from bean, usually safe to ignore : {}", e.toString() );
 		}
 		return set;
 	}

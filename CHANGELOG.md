@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- reduced logging level for XmlBeanHelper.setFromElementSafe
+
+### Changed
+
 - fj-bom version set to 2.0.5
 
 ## [8.7.0] - 2025-07-06
