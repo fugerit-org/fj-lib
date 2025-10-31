@@ -31,6 +31,10 @@ Here are the [Default Validator Messages](../../fj-core/src/main/resources/core/
 		<td><a href="#maxLength">maxength</a></td>
 		<td>If set checks for maximum length</td>
 	</tr>	
+	<tr>
+		<td><a href="#strict">strict</a></td>
+		<td>If set to true, the validator will not be lenient and check for input overflow</td>
+	</tr>	
 </table>
 
 <br/><a href="#top">top</a><br/>
@@ -134,6 +138,24 @@ Here are the [Default Validator Messages](../../fj-core/src/main/resources/core/
 	<tr>
 		<th>Since</th>
 		<td>0.7.4.6</td>
+	</tr>
+</table>
+
+<br/><a href="#top">top</a><br/>
+
+<table>
+	<caption>Entry <a name="strict">strict</a></caption>
+	<tr>
+		<th>Default</th>
+		<td>false</td>
+	</tr>
+	<tr>
+		<th>Example</th>
+		<td>true</td>
+	</tr>
+	<tr>
+		<th>Since</th>
+		<td>8.7.1</td>
 	</tr>
 </table>
 

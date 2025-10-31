@@ -2,6 +2,9 @@ package test.org.fugerit.java.core.validator;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -110,6 +113,16 @@ class TestValidatorCatalog extends BasicTest {
 		this.validatorWorker( "testNumberValidator1" , result, l, "1.000,123", "Valid Number 2", true, params );
 		this.validatorWorker( "testNumberValidator1" , result, l, "1.000,1234", "Invalid number 1", false, params );
 		this.validatorWorker( "testNumberValidator1" , result, l, "1.000.134.234.243,123", "Invalid number 2", false, params );
+		this.printResult(result);
+	}
+
+	@Test
+	void testDateValidatorStrict() {
+		Locale l = Locale.ITALY;
+		ValidatorResult result = new ValidatorResult();
+		Properties params = new Properties();
+		this.validatorWorker( "testDateValidatorStrict" , result, l, "01/03/2021AAA", "Valid date", Boolean.FALSE, params);
+		this.validatorWorker( "testDateValidatorStrict" , result, l, "01/03/2021", "Valid date", Boolean.TRUE, params);
 		this.printResult(result);
 	}
 		
