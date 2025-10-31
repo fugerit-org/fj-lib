@@ -2,9 +2,6 @@ package test.org.fugerit.java.core.validator;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
