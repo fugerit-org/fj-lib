@@ -18,6 +18,11 @@
 		<entry key="maxDate">31/12/2020</entry>
 	</validator>
 
+	<validator id="testDateValidatorStrict" type="org.fugerit.java.core.validator.ValidatorDate">
+		<entry key="dateFormat">dd/MM/yyyy</entry>
+		<entry key="strict">true</entry>
+	</validator>
+
 	<validator id="testRegexValidator" type="org.fugerit.java.core.validator.ValidatorRegex">
 		<entry key="regex">^[a-zA-ZÀ-ž' \-\.,]*$</entry>
 		<entry key="info">[A-ZÀ-ž]</entry>

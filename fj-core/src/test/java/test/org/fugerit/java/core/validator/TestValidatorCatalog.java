@@ -112,5 +112,15 @@ class TestValidatorCatalog extends BasicTest {
 		this.validatorWorker( "testNumberValidator1" , result, l, "1.000.134.234.243,123", "Invalid number 2", false, params );
 		this.printResult(result);
 	}
+
+	@Test
+	void testDateValidatorStrict() {
+		Locale l = Locale.ITALY;
+		ValidatorResult result = new ValidatorResult();
+		Properties params = new Properties();
+		this.validatorWorker( "testDateValidatorStrict" , result, l, "01/03/2021AAA", "Valid date", Boolean.FALSE, params);
+		this.validatorWorker( "testDateValidatorStrict" , result, l, "01/03/2021", "Valid date", Boolean.TRUE, params);
+		this.printResult(result);
+	}
 		
 }

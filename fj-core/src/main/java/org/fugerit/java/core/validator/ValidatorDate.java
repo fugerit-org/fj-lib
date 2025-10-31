@@ -1,11 +1,13 @@
 package org.fugerit.java.core.validator;
 
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
 import org.fugerit.java.core.cfg.ConfigException;
+import org.fugerit.java.core.lang.helpers.BooleanUtils;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 
 public class ValidatorDate extends BasicValidator {
@@ -20,7 +22,9 @@ public class ValidatorDate extends BasicValidator {
 	public static final String KEY_MINDATE = "minDate";
 	
 	public static final String KEY_MAXDATE = "maxDate";
-	
+
+	public static final String KEY_STRICT = "strict";
+
 	public static final String ERROR_KEY_DATE = "error.date";
 	
 	public static final String ERROR_KEY_DATE_MIN = "error.date.min";
@@ -32,7 +36,13 @@ public class ValidatorDate extends BasicValidator {
 	private String minDate;
 	
 	private String maxDate;
-	
+
+	private boolean strict;
+
+	public ValidatorDate() {
+		this.strict = Boolean.FALSE;
+	}
+
 	public String getDateFormat() {
 		return dateFormat;
 	}
@@ -43,6 +53,10 @@ public class ValidatorDate extends BasicValidator {
 
 	public String getMaxDate() {
 		return maxDate;
+	}
+
+	public boolean isStrict() {
+		return this.strict;
 	}
 
 	protected Date setDate( SimpleDateFormat sdf, String d ) throws ParseException {
@@ -77,6 +91,10 @@ public class ValidatorDate extends BasicValidator {
 			if ( StringUtils.isNotEmpty( maxDateLocal ) ) {
 				this.maxDate = maxDateLocal;
 			}
+			String strictLocal = atts.getProperty( KEY_STRICT );
+			if ( StringUtils.isNotEmpty( strictLocal ) ) {
+				this.strict = BooleanUtils.isTrue( strictLocal);
+			}
 		} catch (Exception e) {
 			throw new ConfigException( e );
 		}
@@ -93,7 +111,9 @@ public class ValidatorDate extends BasicValidator {
 		boolean valid = true;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat( this.getDateFormat() );
-			Date d = sdf.parse( context.getValue() );
+			sdf.setLenient( !this.isStrict() );
+			ParsePosition pp = new ParsePosition( 0 );
+			Date d = sdf.parse( context.getValue(), pp );
 			if ( StringUtils.isNotEmpty( minDate ) && d.before( sdf.parse( minDate ) ) ) {
 				valid = false;
 				String message = this.formatMessage( context.getBundle() , ERROR_KEY_DATE_MIN, context.getLabel(), context.getValue(), minDate );
@@ -103,6 +123,9 @@ public class ValidatorDate extends BasicValidator {
 				valid = false;
 				String message = this.formatMessage( context.getBundle() , ERROR_KEY_DATE_MAX, context.getLabel(), context.getValue(), maxDate );
 				context.getResult().addError( context.getFieldId(), message );
+			}
+			if ( this.isStrict() && pp.getIndex() != context.getValue().length() ) {
+				throw new ParseException( context.getValue(), pp.getIndex() );
 			}
 		} catch (Exception e) {
 			valid = false;
