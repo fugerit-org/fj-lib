@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [8.7.1] - 2025-10-31
+
 ### Changed
 
 - reduced logging level for XmlBeanHelper.setFromElementSafe
 - ValidatorDate always accepts date format overflow <https://github.com/fugerit-org/fj-lib/issues/111>
-
 
 ### Changed
 
