@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class BasicDAOHelper<T> implements LogObject {
-	
+
 	@Override
 	public Logger getLogger() {
 		return log;
@@ -52,12 +52,19 @@ public class BasicDAOHelper<T> implements LogObject {
 		return buffer.toString();
 	}
 	
-	private DAOContext daoContext; 
+	private DAOContext daoContext;
 
-	public BasicDAOHelper( DAOContext daoContext) {
-		this.daoContext =daoContext;
+	private Integer queryTimeout;
+
+	public BasicDAOHelper( DAOContext daoContext ) {
+		this( daoContext, null );
 	}
-	
+
+	public BasicDAOHelper(DAOContext daoContext, Integer queryTimeout) {
+		this.daoContext = daoContext;
+		this.queryTimeout = queryTimeout;
+	}
+
 	public FieldList newFieldList() {
 		return new FieldList( new FieldFactory() );
 	}
@@ -75,7 +82,13 @@ public class BasicDAOHelper<T> implements LogObject {
 	public void loadAllHelper( List<T> l, SelectHelper query, RSExtractor<T> re ) throws DAOException {
 		this.loadAllHelper( l, query.getQueryContent(), query.getFields(), re );
 	}
-	
+
+	private PreparedStatement prepareStatement( PreparedStatement ps ) throws SQLException {
+		if ( this.queryTimeout != null ) {
+			ps.setQueryTimeout( this.queryTimeout );
+		}
+		return ps;
+	}
 
 	public void loadAllHelper( List<T> l, String query, FieldList fields, RSExtractor<T> re ) throws DAOException {
 		long startTime = System.currentTimeMillis();
@@ -86,7 +99,7 @@ public class BasicDAOHelper<T> implements LogObject {
 		log.debug( "queryId:'{}', loadAll RSExtractor   : '{}'", queryId, re);
 		Connection conn = this.daoContext.getConnection();
 		int i=0;
-		try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
+		try ( PreparedStatement ps = this.prepareStatement( conn.prepareStatement( query ) ) ) {
 			DAOHelper.setAll( queryId, ps, fields , log );
 			long executeStart = System.currentTimeMillis();
 			try ( ResultSet rs = ps.executeQuery() ) {
@@ -108,7 +121,7 @@ public class BasicDAOHelper<T> implements LogObject {
 	private int updateWorker( String queryId, FieldList fields, String query , long startTime) throws DAOException {
 		int res = 0;
 		Connection conn = this.daoContext.getConnection();
-		try ( PreparedStatement ps = conn.prepareStatement( query ) ) {
+		try ( PreparedStatement ps = this.prepareStatement( conn.prepareStatement( query ) ) ) {
 			DAOHelper.setAll( queryId, ps, fields , log );
 			long executeStart = System.currentTimeMillis();
 			res = ps.executeUpdate();

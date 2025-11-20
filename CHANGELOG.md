@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- BasicDAOHelper has method to set query timeout
+
 ## [8.7.1] - 2025-10-31
 
 ### Changed

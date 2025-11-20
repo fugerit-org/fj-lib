@@ -17,7 +17,7 @@ class TestSelectHelperUpper extends TestAddressSelectHelper {
 				stm.execute( "SET DATABASE SQL SYNTAX "+syntax+" TRUE" );
 			}
 			// SelectHelper setup
-			BasicDAOHelper<String> daoHelper = new BasicDAOHelper<>(context);
+			BasicDAOHelper<String> daoHelper = new BasicDAOHelper<>(context, 10);
 			SelectHelper selectHelper = daoHelper.newSelectHelper( "fugerit.address" );
 			// select helper is basically a query builder, it is possible to add functions, instead of the simple column name
 			String column = String.format( "UPPER(%s)" , COL_INFO );		// will add 'UPPER(INFO)'
