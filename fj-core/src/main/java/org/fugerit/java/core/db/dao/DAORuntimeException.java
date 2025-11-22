@@ -20,6 +20,7 @@
  */
 package org.fugerit.java.core.db.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import org.fugerit.java.core.function.UnsafeSupplier;
 import org.fugerit.java.core.function.UnsafeVoid;
 import org.fugerit.java.core.lang.ex.ExConverUtils;
@@ -29,6 +30,7 @@ import org.fugerit.java.core.lang.ex.ExConverUtils;
 * @author Fugerit
 *
 */
+@Slf4j
 public class DAORuntimeException extends RuntimeException {
 
 	/*
@@ -86,6 +88,15 @@ public class DAORuntimeException extends RuntimeException {
 			fun.apply();
 		} catch (Exception e) {
 			throw convertEx( e );
+		}
+	}
+
+	public static <E extends Exception> void applySilent( UnsafeVoid<E> fun ) {
+		try {
+			fun.apply();
+		} catch (Exception e) {
+			String message = String.format( "Exception on DAORuntimeException.applySilent() %s", e.getMessage() );
+			log.warn( message, e );
 		}
 	}
 	

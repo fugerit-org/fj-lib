@@ -39,7 +39,6 @@ class TestBasicDAOHelper extends TestBasicDBHelper {
 				Assertions.assertNotNull( helper.getLogger() );
 			}
 		} );
-		
 	}
 	
 }

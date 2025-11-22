@@ -14,6 +14,11 @@ class TestDAORuntimeException {
 	}
 
 	@Test
+	void testApplySilent() {
+		DAORuntimeException.applySilent( () -> { throw new SQLException( "junit test scenario apply silent" ); });
+	}
+
+	@Test
 	void testGet() {
 		Assertions.assertThrows( DAORuntimeException.class ,() -> DAORuntimeException.get( () -> { throw new SQLException( "junit test scenario" ); } ) );
 	}
@@ -52,5 +57,5 @@ class TestDAORuntimeException {
 	void testEx7() {
 		Assertions.assertNotNull( DAORuntimeException.convertExMethod( "e" , new SQLException( "f" ) ) );
 	}
-	
+
 }
