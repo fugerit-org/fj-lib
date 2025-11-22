@@ -8,15 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
-import org.fugerit.java.core.db.dao.DAOException;
-import org.fugerit.java.core.db.dao.DAOHelper;
-import org.fugerit.java.core.db.dao.DAOUtilsNG;
-import org.fugerit.java.core.db.dao.FieldFactory;
-import org.fugerit.java.core.db.dao.FieldList;
-import org.fugerit.java.core.db.dao.RSExtractor;
+import org.fugerit.java.core.db.dao.*;
 import org.fugerit.java.core.lang.helpers.StringUtils;
 import org.fugerit.java.core.log.LogObject;
+import org.fugerit.java.core.util.ObjectUtils;
 import org.fugerit.java.core.util.checkpoint.CheckpointUtils;
 import org.slf4j.Logger;
 
@@ -24,11 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>BasicDAOHelper for database operation.</p>
- * 
- * @author	fugerit
+ *
+ * @author	Matteo Franci a.k.a. Fugerit
  *
  * @param <T>	the type returned by this DAOHelper
- * 
+ *
+ * NOTE: this object is not thread-safe
  */
 @Slf4j
 public class BasicDAOHelper<T> implements LogObject {
@@ -46,23 +44,28 @@ public class BasicDAOHelper<T> implements LogObject {
 			for ( int k=1; k<fl.size(); k++ ) {
 				buffer.append( "," );
 				buffer.append( fl.getField( k ).toString() );
-			}	
-		}		
+			}
+		}
 		buffer.append( "]" );
 		return buffer.toString();
 	}
-	
+
 	private DAOContext daoContext;
 
-	private Integer queryTimeout;
+	// by default, do nothing
+	private BiFunction<PreparedStatement, DAOContext, PreparedStatement> statementHelper;
 
 	public BasicDAOHelper( DAOContext daoContext ) {
-		this( daoContext, null );
+		this( daoContext, (BiFunction<PreparedStatement, DAOContext, PreparedStatement>)null );
 	}
 
 	public BasicDAOHelper(DAOContext daoContext, Integer queryTimeout) {
+		this( daoContext, StatementHelperLibrary.hewHelperSafeSilent( StatementHelperLibrary.newHelperWithQueryTimeout( queryTimeout ) ) );
+	}
+
+	public BasicDAOHelper(DAOContext daoContext, BiFunction<PreparedStatement, DAOContext, PreparedStatement> statementHelper) {
 		this.daoContext = daoContext;
-		this.queryTimeout = queryTimeout;
+		this.statementHelper = ObjectUtils.objectWithDefault( statementHelper, StatementHelperLibrary.DEFAULT_STATEMENT_HELPER );
 	}
 
 	public FieldList newFieldList() {
@@ -78,16 +81,13 @@ public class BasicDAOHelper<T> implements LogObject {
 		}
 		return res;
 	}
-	
+
 	public void loadAllHelper( List<T> l, SelectHelper query, RSExtractor<T> re ) throws DAOException {
 		this.loadAllHelper( l, query.getQueryContent(), query.getFields(), re );
 	}
 
-	private PreparedStatement prepareStatement( PreparedStatement ps ) throws SQLException {
-		if ( this.queryTimeout != null ) {
-			ps.setQueryTimeout( this.queryTimeout );
-		}
-		return ps;
+	private PreparedStatement prepareStatement( PreparedStatement ps, DAOContext context ) {
+		return this.statementHelper.apply( ps, context );
 	}
 
 	public void loadAllHelper( List<T> l, String query, FieldList fields, RSExtractor<T> re ) throws DAOException {
@@ -99,7 +99,7 @@ public class BasicDAOHelper<T> implements LogObject {
 		log.debug( "queryId:'{}', loadAll RSExtractor   : '{}'", queryId, re);
 		Connection conn = this.daoContext.getConnection();
 		int i=0;
-		try ( PreparedStatement ps = this.prepareStatement( conn.prepareStatement( query ) ) ) {
+		try ( PreparedStatement ps = this.prepareStatement( conn.prepareStatement( query ), this.daoContext ) ) {
 			DAOHelper.setAll( queryId, ps, fields , log );
 			long executeStart = System.currentTimeMillis();
 			try ( ResultSet rs = ps.executeQuery() ) {
@@ -117,11 +117,11 @@ public class BasicDAOHelper<T> implements LogObject {
 		}
 		log.debug("queryId:{}, loadAll END list : '{}'", queryId, l.size());
 	}
-	
+
 	private int updateWorker( String queryId, FieldList fields, String query , long startTime) throws DAOException {
 		int res = 0;
 		Connection conn = this.daoContext.getConnection();
-		try ( PreparedStatement ps = this.prepareStatement( conn.prepareStatement( query ) ) ) {
+		try ( PreparedStatement ps = this.prepareStatement( conn.prepareStatement( query ), this.daoContext ) ) {
 			DAOHelper.setAll( queryId, ps, fields , log );
 			long executeStart = System.currentTimeMillis();
 			res = ps.executeUpdate();
@@ -132,7 +132,7 @@ public class BasicDAOHelper<T> implements LogObject {
 		}
 		return res;
 	}
-	
+
 	public int update( QueryHelper queryHelper ) throws DAOException {
 		int res = 0;
 		try {
@@ -149,17 +149,17 @@ public class BasicDAOHelper<T> implements LogObject {
 		}
 		return res;
 	}
-	
+
 	private String createSequenceQuery( String sequence ) {
 		return " SELECT "+sequence+".NEXTVAL FROM DUAL";
 	}
-	
+
 	public BigDecimal newSequenceValue( String sequence ) throws DAOException {
 		BigDecimal id = null;
 		String sql = this.createSequenceQuery(sequence);
 		log.info( "newSequenceValue() sql > "+sql );
 		try ( Statement stm = this.daoContext.getConnection().createStatement();
-				ResultSet rs = stm.executeQuery( sql ) ) {
+			  ResultSet rs = stm.executeQuery( sql ) ) {
 			if ( rs.next() ) {
 				id = rs.getBigDecimal( 1 );
 			}
@@ -168,35 +168,34 @@ public class BasicDAOHelper<T> implements LogObject {
 		}
 		return id;
 	}
-	
+
 	public SelectHelper newSelectHelper( String queryView, String tableName ) {
 		SelectHelper helper = null;
 		if ( StringUtils.isNotEmpty( queryView ) ) {
 			helper = new SelectHelper( tableName , this.newFieldList() );
-			helper.appendToQuery( " SELECT * FROM ( "+queryView+" ) v " );	
+			helper.appendToQuery( " SELECT * FROM ( "+queryView+" ) v " );
 		} else {
 			helper = newSelectHelper( tableName );
 		}
 		return helper;
 	}
-	
+
 	public SelectHelper newSelectHelper( String tableName ) {
 		SelectHelper query = new SelectHelper( tableName , this.newFieldList() );
 		query.initSelectEntity();
 		return query;
 	}
-	
+
 	public InsertHelper newInsertHelper( String tableName ) {
 		return new InsertHelper( tableName , this.newFieldList() );
 	}
-	
+
 	public UpdateHelper newUpdateHelper( String tableName ) {
 		return new UpdateHelper( tableName , this.newFieldList() );
 	}
-	
+
 	public DeleteHelper newDeleteHelper( String tableName ) {
 		return new DeleteHelper( tableName , this.newFieldList() );
 	}
-	
-	
+
 }
