@@ -86,7 +86,7 @@ public class BasicDAOHelper<T> implements LogObject {
 		this.loadAllHelper( l, query.getQueryContent(), query.getFields(), re );
 	}
 
-	private PreparedStatement prepareStatement( PreparedStatement ps, DAOContext context ) throws SQLException {
+	private PreparedStatement prepareStatement( PreparedStatement ps, DAOContext context ) {
 		return this.statementHelper.apply( ps, context );
 	}
 
