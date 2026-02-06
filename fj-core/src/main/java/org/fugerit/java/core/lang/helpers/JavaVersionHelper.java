@@ -22,7 +22,9 @@ public class JavaVersionHelper {
 	public static final int MAJOR_VERSION_JAVA_17 = 17;
 	
 	public static final int MAJOR_VERSION_JAVA_21 = 21;
-	
+
+    public static final int MAJOR_VERSION_JAVA_25 = 25;
+
 	public static final int MAJOR_VERSION_FJ_CORE_REF = MAJOR_VERSION_JAVA_8;	// current reference version for fj-core library!
 	
 	private static final Logger logger = LoggerFactory.getLogger( JavaVersionHelper.class );
